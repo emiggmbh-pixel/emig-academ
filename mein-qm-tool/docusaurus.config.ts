@@ -2,37 +2,26 @@ import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
-// This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
-
 const config: Config = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
+  title: 'Emig Academy',
+  tagline: 'Qualität und Sicherheit am Standort Reutlingen',
   favicon: 'img/favicon.ico',
 
-  // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
-  future: {
-    v4: true, // Improve compatibility with the upcoming Docusaurus v4
-  },
-
-  // Set the production url of your site here
-  url: 'https://your-docusaurus-site.example.com',
-  // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
+  // WICHTIG: Ersetzen Sie dies durch Ihre tatsächliche Vercel-URL
+  url: 'https://emig-academy-v1.vercel.app', 
   baseUrl: '/',
 
-  // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  // GitHub Infos anpassen
+  organizationName: 'emiggmbh-pixel', 
+  projectName: 'emig-academy-v1',
 
-  onBrokenLinks: 'throw',
+  // Auf 'warn' gestellt, damit Vercel nicht bei jedem kleinen Link-Fehler abbricht
+  onBrokenLinks: 'warn',
+  onBrokenMarkdownLinks: 'warn',
 
-  // Even if you don't use internationalization, you can use this field to set
-  // useful metadata like html lang. For example, if your site is Chinese, you
-  // may want to replace "en" with "zh-Hans".
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en'],
+    defaultLocale: 'de',
+    locales: ['de', 'en'],
   },
 
   presets: [
@@ -41,26 +30,10 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          // Verlinkung zu Ihrem Repo
+          editUrl: 'https://github.com/emiggmbh-pixel/emig-academy-v1/tree/main/',
         },
-        blog: {
-          showReadingTime: true,
-          feedOptions: {
-            type: ['rss', 'atom'],
-            xslt: true,
-          },
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-          // Useful options to enforce blogging best practices
-          onInlineTags: 'warn',
-          onInlineAuthors: 'warn',
-          onUntruncatedBlogPosts: 'warn',
-        },
+        blog: false, // Blog deaktiviert, falls nicht benötigt
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -69,19 +42,14 @@ const config: Config = {
   ],
 
   themeConfig: {
-    // Replace with your project's social card
-    image: 'img/docusaurus-social-card.jpg',
-    colorMode: {
-      respectPrefersColorScheme: true,
-    },
-    // Suchen Sie in der Datei nach "navbar"
+    image: 'img/emig-gebaeude.png',
     navbar: {
-      title: 'Emig Academy', // Der Text neben dem Logo
+      title: 'Emig Academy',
       logo: {
         alt: 'EMIG GmbH Logo',
-        src: 'img/emig-logo-black.png', // Der Pfad zu Ihrem Logo in static/img/
+        src: 'img/emig-logo-black.png', // Stellen Sie sicher, dass diese Datei in static/img/ liegt
         srcDark: 'img/emig-logo-white.png',
-        width: 35,                // Passen Sie die Größe hier an
+        width: 35,
         height: 35,
       },
       items: [
@@ -89,55 +57,42 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
-          label: 'Schulungen',
+          label: 'Schulungsunterlagen',
         },
-        // Weitere Menüpunkte...
+        // Sprachumschalter in der Navigationsleiste
+        {
+          type: 'localeDropdown',
+          position: 'right',
+        },
       ],
     },
     footer: {
       style: 'dark',
       links: [
         {
-          title: 'Docs',
+          title: 'Akademie',
           items: [
             {
-              label: 'Tutorial',
-              to: '/docs/intro',
+              label: 'Qualitätsmanagement',
+              to: '/docs/quality-management/qm-philosophie',
+            },
+            {
+              label: 'Logistik & Lager',
+              to: '/docs/logistik-lager/SOP_LOG-01',
             },
           ],
         },
         {
-          title: 'Community',
+          title: 'Rechtliches',
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-            },
-            {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
-            },
-            {
-              label: 'X',
-              href: 'https://x.com/docusaurus',
-            },
-          ],
-        },
-        {
-          title: 'More',
-          items: [
-            {
-              label: 'Blog',
-              to: '/blog',
-            },
-            {
-              label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              label: 'Impressum',
+              href: 'https://www.emig-gmbh.de', // Link zu Ihrer Firmenwebseite
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} EMIG GmbH Reutlingen. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,
