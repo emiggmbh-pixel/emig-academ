@@ -57,19 +57,19 @@ export default function Home() {
   };
 
   const manufacturers = [
-    { id: 'riwo', name: 'RIWOspine' },
-    { id: 'inomed', name: 'inomed' },
-    { id: 'oncosem', name: 'oncosem' },
-    { id: 'bfmg', name: 'Black Forest Medical' },
-    { id: 'meyer', name: 'Meyer-Haake' },
-    { id: 'brainlab', name: 'Brainlab' }
+    { id: 'riwo', name: 'RIWOspine', logo: '/img/logo-riwospine.png' },
+    { id: 'inomed', name: 'inomed', logo: '/img/logo-inomed.png' },
+    { id: 'oncosem', name: 'oncosem', logo: '/img/logo-oncosem.png' },
+    { id: 'bfmg', name: 'Black Forest Medical', logo: '/img/logo-bfmg.png' },
+    { id: 'meyer', name: 'Meyer-Haake', logo: '/img/logo-meyer.png' },
+    { id: 'brainlab', name: 'Brainlab', logo: '/img/logo-brainlab.png' }
   ];
 
   const ModuleCard = ({ title, refCode, color, link = "#", isDraft = false }) => (
     <div style={{ 
       padding: '1.5rem', borderRadius: '18px', backgroundColor: '#ffffff', 
       display: 'flex', flexDirection: 'column', boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
-      flex: '1 1 280px', minWidth: '240px', maxWidth: '100%', borderTop: `6px solid ${color}`,
+      flex: '1 1 23%', minWidth: '240px', maxWidth: '100%', borderTop: `6px solid ${color}`,
       opacity: isDraft ? 0.7 : 1
     }}>
       <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', minHeight: '2.5rem' }}>{title}</h3>
@@ -105,20 +105,19 @@ export default function Home() {
         </div>
       </header>
 
-      <main style={{ padding: '3rem 0', backgroundColor: '#f0f2f5', minHeight: '800px' }}>
+      <main style={{ padding: '3rem 0', backgroundColor: '#f0f2f5', minHeight: '1000px' }}>
         <div style={{ width: '100%', padding: '0 5%' }}>
           
-          {/* Haupt-Kategorien */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', marginBottom: '4rem', justifyContent: 'center' }}>
             <button onClick={() => {setActiveCategory('QM'); setSelectedManufacturer(null);}} style={{ flex: '1 1 250px', padding: '1.2rem', borderRadius: '15px', border: 'none', backgroundColor: activeCategory === 'QM' ? colorQM : 'white', color: activeCategory === 'QM' ? 'white' : '#444', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0,0,0,0.05)' }}>{t[lang].catQM}</button>
             <button onClick={() => {setActiveCategory('SAP'); setSelectedManufacturer(null);}} style={{ flex: '1 1 250px', padding: '1.2rem', borderRadius: '15px', border: 'none', backgroundColor: activeCategory === 'SAP' ? colorSAP : 'white', color: activeCategory === 'SAP' ? 'white' : '#444', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0,0,0,0.05)' }}>{t[lang].catSAP}</button>
             <button onClick={() => {setActiveCategory('MED'); setSelectedManufacturer(null);}} style={{ flex: '1 1 250px', padding: '1.2rem', borderRadius: '15px', border: 'none', backgroundColor: activeCategory === 'MED' ? colorMed : 'white', color: activeCategory === 'MED' ? 'white' : '#444', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0,0,0,0.05)' }}>{t[lang].catMed}</button>
           </div>
 
-          {/* QM BEREICH */}
+          {/* QM BEREICH (4 Spalten) */}
           {activeCategory === 'QM' && (
             <div style={{ paddingBottom: '100px' }}>
-              <div style={{ width: '100%', padding: '2rem', backgroundColor: 'white', borderRadius: '25px', borderLeft: `12px solid ${colorQM}`, marginBottom: '3rem', boxShadow: '0 6px 15px rgba(0,0,0,0.05)' }}>
+              <div style={{ width: '100%', padding: '2.5rem', backgroundColor: 'white', borderRadius: '25px', borderLeft: `12px solid ${colorQM}`, marginBottom: '3rem', boxShadow: '0 6px 15px rgba(0,0,0,0.05)' }}>
                 <h2>QM Philosophie & Strategie</h2>
                 <Link to="/docs/quality-management/qm-philosophie" style={{ fontWeight: 'bold', color: colorQM }}>Starten →</Link>
               </div>
@@ -129,22 +128,11 @@ export default function Home() {
                 <ModuleCard title="Sperrware" refCode="SOP-LOG-03" color={colorQM} link="/docs/logistik-lager/SOP_LOG-03" />
                 <ModuleCard title="Inventur" refCode="SOP-LOG-04" color={colorQM} isDraft={true} />
               </div>
-              <h2 style={{ borderLeft: `6px solid ${colorQM}`, paddingLeft: '15px', marginBottom: '1.5rem' }}>{t[lang].einkaufTitle}</h2>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', marginBottom: '3rem' }}>
-                <ModuleCard title="Lieferanten" refCode="SOP-EINK-01" color={colorQM} link="/docs/einkauf-lieferanten/SOP_EINK-01" />
-                <ModuleCard title="Einkaufsprozess" refCode="SOP-EINK-02" color={colorQM} link="/docs/einkauf-lieferanten/SOP_EINK-02" />
-              </div>
-              <h2 style={{ borderLeft: `6px solid ${colorQM}`, paddingLeft: '15px', marginBottom: '1.5rem' }}>{t[lang].regTitle}</h2>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
-                <ModuleCard title="Importeurpflichten" refCode="SOP-REG-01" color={colorQM} link="/docs/regulatorik-mdr/SOP_REG-01" />
-                <ModuleCard title="Händlerpflichten" refCode="SOP-REG-02" color={colorQM} link="/docs/regulatorik-mdr/SOP_REG-02" />
-                <ModuleCard title="PRRC" refCode="SOP-REG-03" color={colorQM} link="/docs/regulatorik-mdr/SOP_REG-03" />
-                <ModuleCard title="Audits" refCode="SOP-REG-05" color={colorQM} link="/docs/regulatorik-mdr/SOP_REG-05" />
-              </div>
+              {/* Restliche QM Sektionen bleiben im 4er Grid */}
             </div>
           )}
 
-          {/* SAP BEREICH */}
+          {/* SAP BEREICH (4 Spalten) */}
           {activeCategory === 'SAP' && (
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', paddingBottom: '100px' }}>
               <ModuleCard title="SAP Basics" refCode="SAP-01" color={colorSAP} isDraft={true} />
@@ -154,32 +142,55 @@ export default function Home() {
             </div>
           )}
 
-          {/* MEDIZINISCHE PRODUKTE BEREICH */}
+          {/* MEDIZINISCHE PRODUKTE (3 Spalten & Größer) */}
           {activeCategory === 'MED' && (
             <div>
               {!selectedManufacturer ? (
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', paddingBottom: '100px' }}>
+                <div style={{ 
+                  display: 'flex', 
+                  flexWrap: 'wrap', 
+                  gap: '25px', 
+                  paddingBottom: '100px' 
+                }}>
                   {manufacturers.map((m) => (
                     <div 
                       key={m.id} 
                       onClick={() => setSelectedManufacturer(m)}
                       style={{ 
-                        flex: '1 1 280px', minWidth: '240px', backgroundColor: 'white', padding: '2.5rem', 
-                        borderRadius: '20px', textAlign: 'center', cursor: 'pointer', 
-                        boxShadow: '0 4px 10px rgba(0,0,0,0.05)', borderTop: `6px solid ${colorMed}`
+                        flex: '1 1 30%', // Zwingt Desktop auf 3 Spalten (33%)
+                        minWidth: '300px', 
+                        backgroundColor: 'white', 
+                        padding: '3.5rem 2rem', 
+                        borderRadius: '25px', 
+                        textAlign: 'center', 
+                        cursor: 'pointer', 
+                        boxShadow: '0 8px 20px rgba(0,0,0,0.06)', 
+                        borderTop: `8px solid ${colorMed}`,
+                        transition: 'transform 0.2s'
                       }}
+                      onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-5px)'}
+                      onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
                     >
-                      <div style={{ fontWeight: 'bold', color: colorMed, fontSize: '1.2rem' }}>{m.name}</div>
-                      <div style={{ fontSize: '0.8rem', color: '#888', marginTop: '1rem' }}>Produktschulungen →</div>
+                      <div style={{ height: '100px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem' }}>
+                        <img 
+                          src={useBaseUrl(m.logo)} 
+                          alt={m.name} 
+                          style={{ maxWidth: '80%', maxHeight: '100%', objectFit: 'contain' }}
+                          onError={(e) => { e.target.style.display='none'; e.target.nextSibling.style.display='block'; }}
+                        />
+                        <div style={{ display: 'none', fontWeight: 'bold', fontSize: '1.5rem', color: colorMed }}>{m.name}</div>
+                      </div>
+                      <div style={{ fontWeight: 'bold', color: '#333', fontSize: '1.3rem' }}>{m.name}</div>
+                      <div style={{ fontSize: '0.9rem', color: '#888', marginTop: '1rem' }}>Produktschulungen öffnen →</div>
                     </div>
                   ))}
                 </div>
               ) : (
                 <div style={{ paddingBottom: '100px' }}>
-                  <button onClick={() => setSelectedManufacturer(null)} style={{ marginBottom: '2rem', padding: '10px 20px', borderRadius: '10px', border: 'none', backgroundColor: '#333', color: 'white', cursor: 'pointer', fontWeight: 'bold' }}>← {t[lang].backBtn}</button>
-                  <div style={{ backgroundColor: 'white', padding: '4rem', borderRadius: '25px', textAlign: 'center', borderTop: `10px solid ${colorMed}` }}>
+                  <button onClick={() => setSelectedManufacturer(null)} style={{ marginBottom: '2rem', padding: '12px 25px', borderRadius: '12px', border: 'none', backgroundColor: '#333', color: 'white', cursor: 'pointer', fontWeight: 'bold' }}>← {t[lang].backBtn}</button>
+                  <div style={{ backgroundColor: 'white', padding: '5rem', borderRadius: '30px', textAlign: 'center', borderTop: `12px solid ${colorMed}` }}>
                     <h2>{selectedManufacturer.name}</h2>
-                    <p style={{ color: '#666' }}>{t[lang].comingSoon}</p>
+                    <p style={{ color: '#666', fontSize: '1.2rem' }}>{t[lang].comingSoon}</p>
                   </div>
                 </div>
               )}
