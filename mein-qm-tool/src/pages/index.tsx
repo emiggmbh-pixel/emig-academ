@@ -70,7 +70,7 @@ export default function Home() {
       padding: '1.5rem', borderRadius: '18px', backgroundColor: '#ffffff', 
       display: 'flex', flexDirection: 'column', boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
       flex: '1 1 23%', minWidth: '240px', maxWidth: '100%', borderTop: `6px solid ${color}`,
-      opacity: isDraft ? 0.7 : 1
+      opacity: isDraft ? 0.7 : 1, margin: '10px'
     }}>
       <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', minHeight: '2.5rem' }}>{title}</h3>
       <div style={{ fontSize: '0.8rem', color: '#888', marginBottom: '1.5rem', fontWeight: 'bold' }}>{refCode}</div>
@@ -90,7 +90,6 @@ export default function Home() {
     <Layout>
       <Head><title>{t[lang].title}</title></Head>
 
-      {/* Sprachumschalter */}
       <div style={{ position: 'absolute', top: '75px', right: '20px', zIndex: 100, backgroundColor: 'white', padding: '6px', borderRadius: '12px', boxShadow: '0 4px 15px rgba(0,0,0,0.1)', display: 'flex', gap: '4px' }}>
         {['de', 'en', 'uk'].map((l) => (
           <button key={l} onClick={() => setLang(l)} style={{ padding: '6px 12px', fontSize: '0.8rem', fontWeight: 'bold', cursor: 'pointer', borderRadius: '8px', border: 'none', backgroundColor: lang === l ? '#333' : 'transparent', color: lang === l ? 'white' : '#333' }}>{l.toUpperCase()}</button>
@@ -114,7 +113,7 @@ export default function Home() {
             <button onClick={() => {setActiveCategory('MED'); setSelectedManufacturer(null);}} style={{ flex: '1 1 250px', padding: '1.2rem', borderRadius: '15px', border: 'none', backgroundColor: activeCategory === 'MED' ? colorMed : 'white', color: activeCategory === 'MED' ? 'white' : '#444', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0,0,0,0.05)' }}>{t[lang].catMed}</button>
           </div>
 
-          {/* QM BEREICH (4 Spalten) */}
+          {/* QM BEREICH */}
           {activeCategory === 'QM' && (
             <div style={{ paddingBottom: '100px' }}>
               <div style={{ width: '100%', padding: '2.5rem', backgroundColor: 'white', borderRadius: '25px', borderLeft: `12px solid ${colorQM}`, marginBottom: '3rem', boxShadow: '0 6px 15px rgba(0,0,0,0.05)' }}>
@@ -122,19 +121,18 @@ export default function Home() {
                 <Link to="/docs/quality-management/qm-philosophie" style={{ fontWeight: 'bold', color: colorQM }}>Starten →</Link>
               </div>
               <h2 style={{ borderLeft: `6px solid ${colorQM}`, paddingLeft: '15px', marginBottom: '1.5rem' }}>{t[lang].logTitle}</h2>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', marginBottom: '3rem' }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-start' }}>
                 <ModuleCard title="Lagerbedingungen" refCode="SOP-LOG-01" color={colorQM} link="/docs/logistik-lager/SOP_LOG-01" />
                 <ModuleCard title="Rückverfolgbarkeit" refCode="SOP-LOG-02" color={colorQM} link="/docs/logistik-lager/SOP_LOG-02" />
                 <ModuleCard title="Sperrware" refCode="SOP-LOG-03" color={colorQM} link="/docs/logistik-lager/SOP_LOG-03" />
                 <ModuleCard title="Inventur" refCode="SOP-LOG-04" color={colorQM} isDraft={true} />
               </div>
-              {/* Restliche QM Sektionen bleiben im 4er Grid */}
             </div>
           )}
 
-          {/* SAP BEREICH (4 Spalten) */}
+          {/* SAP BEREICH */}
           {activeCategory === 'SAP' && (
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', paddingBottom: '100px' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-start', paddingBottom: '100px' }}>
               <ModuleCard title="SAP Basics" refCode="SAP-01" color={colorSAP} isDraft={true} />
               <ModuleCard title="SAP Warehouse" refCode="SAP-02" color={colorSAP} isDraft={true} />
               <ModuleCard title="SAP Purchasing" refCode="SAP-03" color={colorSAP} isDraft={true} />
@@ -142,46 +140,23 @@ export default function Home() {
             </div>
           )}
 
-          {/* MEDIZINISCHE PRODUKTE (3 Spalten & Größer) */}
+          {/* MEDIZINISCHE PRODUKTE (Stabile Version) */}
           {activeCategory === 'MED' && (
             <div>
               {!selectedManufacturer ? (
-                <div style={{ 
-                  display: 'flex', 
-                  flexWrap: 'wrap', 
-                  gap: '25px', 
-                  paddingBottom: '100px' 
-                }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', paddingBottom: '100px', justifyContent: 'center' }}>
                   {manufacturers.map((m) => (
                     <div 
                       key={m.id} 
                       onClick={() => setSelectedManufacturer(m)}
                       style={{ 
-                        flex: '1 1 30%', // Zwingt Desktop auf 3 Spalten (33%)
-                        minWidth: '300px', 
-                        backgroundColor: 'white', 
-                        padding: '3.5rem 2rem', 
-                        borderRadius: '25px', 
-                        textAlign: 'center', 
-                        cursor: 'pointer', 
-                        boxShadow: '0 8px 20px rgba(0,0,0,0.06)', 
-                        borderTop: `8px solid ${colorMed}`,
-                        transition: 'transform 0.2s'
+                        flex: '1 1 30%', minWidth: '300px', backgroundColor: 'white', padding: '3.5rem 2rem', 
+                        borderRadius: '25px', textAlign: 'center', cursor: 'pointer', 
+                        boxShadow: '0 8px 20px rgba(0,0,0,0.06)', borderTop: `8px solid ${colorMed}`
                       }}
-                      onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-5px)'}
-                      onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
                     >
-                      <div style={{ height: '100px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem' }}>
-                        <img 
-                          src={useBaseUrl(m.logo)} 
-                          alt={m.name} 
-                          style={{ maxWidth: '80%', maxHeight: '100%', objectFit: 'contain' }}
-                          onError={(e) => { e.target.style.display='none'; e.target.nextSibling.style.display='block'; }}
-                        />
-                        <div style={{ display: 'none', fontWeight: 'bold', fontSize: '1.5rem', color: colorMed }}>{m.name}</div>
-                      </div>
-                      <div style={{ fontWeight: 'bold', color: '#333', fontSize: '1.3rem' }}>{m.name}</div>
-                      <div style={{ fontSize: '0.9rem', color: '#888', marginTop: '1rem' }}>Produktschulungen öffnen →</div>
+                      <div style={{ fontWeight: 'bold', color: colorMed, fontSize: '1.5rem', marginBottom: '1rem' }}>{m.name}</div>
+                      <div style={{ fontSize: '0.9rem', color: '#888' }}>Produktschulungen öffnen →</div>
                     </div>
                   ))}
                 </div>
@@ -196,7 +171,6 @@ export default function Home() {
               )}
             </div>
           )}
-
         </div>
       </main>
     </Layout>
