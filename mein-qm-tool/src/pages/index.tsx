@@ -69,7 +69,7 @@ export default function Home() {
     <div style={{ 
       padding: '1.5rem', borderRadius: '18px', backgroundColor: '#ffffff', 
       display: 'flex', flexDirection: 'column', boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
-      flex: '1 1 23%', minWidth: '240px', maxWidth: '100%', borderTop: `6px solid ${color}`,
+      flex: '1 1 calc(25% - 20px)', minWidth: '240px', maxWidth: '100%', borderTop: `6px solid ${color}`,
       opacity: isDraft ? 0.7 : 1, margin: '10px'
     }}>
       <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', minHeight: '2.5rem' }}>{title}</h3>
@@ -92,7 +92,7 @@ export default function Home() {
 
       <div style={{ position: 'absolute', top: '75px', right: '20px', zIndex: 100, backgroundColor: 'white', padding: '6px', borderRadius: '12px', boxShadow: '0 4px 15px rgba(0,0,0,0.1)', display: 'flex', gap: '4px' }}>
         {['de', 'en', 'uk'].map((l) => (
-          <button key={l} onClick={() => setLang(l)} style={{ padding: '6px 12px', fontSize: '0.8rem', fontWeight: 'bold', cursor: 'pointer', borderRadius: '8px', border: 'none', backgroundColor: lang === l ? '#333' : 'transparent', color: lang === l ? 'white' : '#333' }}>{l.toUpperCase()}</button>
+          <button key={l} onClick={() => setLang(l as any)} style={{ padding: '6px 12px', fontSize: '0.8rem', fontWeight: 'bold', cursor: 'pointer', borderRadius: '8px', border: 'none', backgroundColor: lang === l ? '#333' : 'transparent', color: lang === l ? 'white' : '#333' }}>{l.toUpperCase()}</button>
         ))}
       </div>
 
@@ -113,26 +113,39 @@ export default function Home() {
             <button onClick={() => {setActiveCategory('MED'); setSelectedManufacturer(null);}} style={{ flex: '1 1 250px', padding: '1.2rem', borderRadius: '15px', border: 'none', backgroundColor: activeCategory === 'MED' ? colorMed : 'white', color: activeCategory === 'MED' ? 'white' : '#444', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0,0,0,0.05)' }}>{t[lang].catMed}</button>
           </div>
 
-          {/* QM BEREICH */}
           {activeCategory === 'QM' && (
             <div style={{ paddingBottom: '100px' }}>
               <div style={{ width: '100%', padding: '2.5rem', backgroundColor: 'white', borderRadius: '25px', borderLeft: `12px solid ${colorQM}`, marginBottom: '3rem', boxShadow: '0 6px 15px rgba(0,0,0,0.05)' }}>
                 <h2>QM Philosophie & Strategie</h2>
                 <Link to="/docs/quality-management/qm-philosophie" style={{ fontWeight: 'bold', color: colorQM }}>Starten →</Link>
               </div>
+              
               <h2 style={{ borderLeft: `6px solid ${colorQM}`, paddingLeft: '15px', marginBottom: '1.5rem' }}>{t[lang].logTitle}</h2>
-              <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-start' }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', marginBottom: '3rem' }}>
                 <ModuleCard title="Lagerbedingungen" refCode="SOP-LOG-01" color={colorQM} link="/docs/logistik-lager/SOP_LOG-01" />
                 <ModuleCard title="Rückverfolgbarkeit" refCode="SOP-LOG-02" color={colorQM} link="/docs/logistik-lager/SOP_LOG-02" />
                 <ModuleCard title="Sperrware" refCode="SOP-LOG-03" color={colorQM} link="/docs/logistik-lager/SOP_LOG-03" />
                 <ModuleCard title="Inventur" refCode="SOP-LOG-04" color={colorQM} isDraft={true} />
               </div>
+
+              <h2 style={{ borderLeft: `6px solid ${colorQM}`, paddingLeft: '15px', marginBottom: '1.5rem' }}>{t[lang].einkaufTitle}</h2>
+              <div style={{ display: 'flex', flexWrap: 'wrap', marginBottom: '3rem' }}>
+                <ModuleCard title="Lieferanten" refCode="SOP-EINK-01" color={colorQM} link="/docs/einkauf-lieferanten/SOP_EINK-01" />
+                <ModuleCard title="Einkaufsprozess" refCode="SOP-EINK-02" color={colorQM} link="/docs/einkauf-lieferanten/SOP_EINK-02" />
+              </div>
+
+              <h2 style={{ borderLeft: `6px solid ${colorQM}`, paddingLeft: '15px', marginBottom: '1.5rem' }}>{t[lang].regTitle}</h2>
+              <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                <ModuleCard title="Importeurpflichten" refCode="SOP-REG-01" color={colorQM} link="/docs/regulatorik-mdr/SOP_REG-01" />
+                <ModuleCard title="Händlerpflichten" refCode="SOP-REG-02" color={colorQM} link="/docs/regulatorik-mdr/SOP_REG-02" />
+                <ModuleCard title="PRRC" refCode="SOP-REG-03" color={colorQM} link="/docs/regulatorik-mdr/SOP_REG-03" />
+                <ModuleCard title="Audits" refCode="SOP-REG-05" color={colorQM} link="/docs/regulatorik-mdr/SOP_REG-05" />
+              </div>
             </div>
           )}
 
-          {/* SAP BEREICH */}
           {activeCategory === 'SAP' && (
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-start', paddingBottom: '100px' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', paddingBottom: '100px' }}>
               <ModuleCard title="SAP Basics" refCode="SAP-01" color={colorSAP} isDraft={true} />
               <ModuleCard title="SAP Warehouse" refCode="SAP-02" color={colorSAP} isDraft={true} />
               <ModuleCard title="SAP Purchasing" refCode="SAP-03" color={colorSAP} isDraft={true} />
@@ -140,7 +153,6 @@ export default function Home() {
             </div>
           )}
 
-          {/* MEDIZINISCHE PRODUKTE (Stabile Version) */}
           {activeCategory === 'MED' && (
             <div>
               {!selectedManufacturer ? (
@@ -150,13 +162,27 @@ export default function Home() {
                       key={m.id} 
                       onClick={() => setSelectedManufacturer(m)}
                       style={{ 
-                        flex: '1 1 30%', minWidth: '300px', backgroundColor: 'white', padding: '3.5rem 2rem', 
+                        flex: '1 1 calc(33.33% - 20px)', minWidth: '300px', backgroundColor: 'white', padding: '3rem 2rem', 
                         borderRadius: '25px', textAlign: 'center', cursor: 'pointer', 
-                        boxShadow: '0 8px 20px rgba(0,0,0,0.06)', borderTop: `8px solid ${colorMed}`
+                        boxShadow: '0 8px 20px rgba(0,0,0,0.06)', borderTop: `8px solid ${colorMed}`,
+                        transition: 'transform 0.2s'
                       }}
                     >
-                      <div style={{ fontWeight: 'bold', color: colorMed, fontSize: '1.5rem', marginBottom: '1rem' }}>{m.name}</div>
-                      <div style={{ fontSize: '0.9rem', color: '#888' }}>Produktschulungen öffnen →</div>
+                      <div style={{ height: '100px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
+                        <img 
+                          src={useBaseUrl(m.logo)} 
+                          alt={m.name}
+                          style={{ maxWidth: '80%', maxHeight: '100%', objectFit: 'contain' }}
+                          onError={(e) => { 
+                            const target = e.target as HTMLImageElement;
+                            target.style.display = 'none';
+                            const sibling = target.nextSibling as HTMLDivElement;
+                            if (sibling) sibling.style.display = 'block';
+                          }}
+                        />
+                        <div style={{ display: 'none', fontWeight: 'bold', color: colorMed, fontSize: '1.4rem' }}>{m.name}</div>
+                      </div>
+                      <div style={{ fontWeight: 'bold', color: '#333', fontSize: '1.2rem' }}>{m.name}</div>
                     </div>
                   ))}
                 </div>
@@ -165,7 +191,7 @@ export default function Home() {
                   <button onClick={() => setSelectedManufacturer(null)} style={{ marginBottom: '2rem', padding: '12px 25px', borderRadius: '12px', border: 'none', backgroundColor: '#333', color: 'white', cursor: 'pointer', fontWeight: 'bold' }}>← {t[lang].backBtn}</button>
                   <div style={{ backgroundColor: 'white', padding: '5rem', borderRadius: '30px', textAlign: 'center', borderTop: `12px solid ${colorMed}` }}>
                     <h2>{selectedManufacturer.name}</h2>
-                    <p style={{ color: '#666', fontSize: '1.2rem' }}>{t[lang].comingSoon}</p>
+                    <p style={{ color: '#666' }}>{t[lang].comingSoon}</p>
                   </div>
                 </div>
               )}
