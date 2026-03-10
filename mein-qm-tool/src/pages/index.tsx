@@ -1,8 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from '@docusaurus/Link';
 import Layout from '@theme/Layout';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import Head from '@docusaurus/Head';
+
+// EIGENE KOMPONENTE FÜR HERSTELLER (Verhindert den SSR-Crash)
+const ManufacturerCard = ({ m, onClick, colorMed }) => {
+  const [imgError, setImgError] = useState(false);
+  const logoUrl = useBaseUrl(m.logo);
+
+  return (
+    <div 
+      onClick={onClick}
+      style={{ 
+        flex: '1 1 calc(33.33% - 20px)', minWidth: '300px', backgroundColor: 'white', padding: '3rem 2rem', 
+        borderRadius: '25px', textAlign: 'center', cursor: 'pointer', 
+        boxShadow: '0 8px 20px rgba(0,0,0,0.06)', borderTop: `8px solid ${colorMed}`,
+        transition: 'transform 0.2s'
+      }}
+    >
+      <div style={{ height: '100px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
+        {!imgError ? (
+          <img 
+            src={logoUrl} 
+            alt={m.name}
+            style={{ maxWidth: '80%', maxHeight: '100%', objectFit: 'contain' }}
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          <div style={{ fontWeight: 'bold', color: colorMed, fontSize: '1.4rem' }}>{m.name}</div>
+        )}
+      </div>
+      <div style={{ fontWeight: 'bold', color: '#333', fontSize: '1.2rem' }}>{m.name}</div>
+    </div>
+  );
+};
 
 export default function Home() {
   const bgImageUrl = useBaseUrl('/img/emig-gebaeude.png');
@@ -158,32 +190,12 @@ export default function Home() {
               {!selectedManufacturer ? (
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', paddingBottom: '100px', justifyContent: 'center' }}>
                   {manufacturers.map((m) => (
-                    <div 
+                    <ManufacturerCard 
                       key={m.id} 
-                      onClick={() => setSelectedManufacturer(m)}
-                      style={{ 
-                        flex: '1 1 calc(33.33% - 20px)', minWidth: '300px', backgroundColor: 'white', padding: '3rem 2rem', 
-                        borderRadius: '25px', textAlign: 'center', cursor: 'pointer', 
-                        boxShadow: '0 8px 20px rgba(0,0,0,0.06)', borderTop: `8px solid ${colorMed}`,
-                        transition: 'transform 0.2s'
-                      }}
-                    >
-                      <div style={{ height: '100px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
-                        <img 
-                          src={useBaseUrl(m.logo)} 
-                          alt={m.name}
-                          style={{ maxWidth: '80%', maxHeight: '100%', objectFit: 'contain' }}
-                          onError={(e) => { 
-                            const target = e.target as HTMLImageElement;
-                            target.style.display = 'none';
-                            const sibling = target.nextSibling as HTMLDivElement;
-                            if (sibling) sibling.style.display = 'block';
-                          }}
-                        />
-                        <div style={{ display: 'none', fontWeight: 'bold', color: colorMed, fontSize: '1.4rem' }}>{m.name}</div>
-                      </div>
-                      <div style={{ fontWeight: 'bold', color: '#333', fontSize: '1.2rem' }}>{m.name}</div>
-                    </div>
+                      m={m} 
+                      onClick={() => setSelectedManufacturer(m)} 
+                      colorMed={colorMed} 
+                    />
                   ))}
                 </div>
               ) : (
