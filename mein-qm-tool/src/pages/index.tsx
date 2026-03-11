@@ -87,7 +87,7 @@ export default function Home() {
     <Layout>
       <Head><title>Emig Academy</title></Head>
 
-      <header style={{ position: 'relative', backgroundImage: `url(${bgImageUrl})`, backgroundSize: 'cover', backgroundPosition: '50% 30%', color: 'white', padding: '8rem 1rem', textAlign: 'center' }}>
+      <header style={{ position: 'relative', backgroundImage: `url(${bgImageUrl})`, backgroundSize: 'cover', backgroundPosition: '70% 30%', color: 'white', padding: '8rem 1rem', textAlign: 'center' }}>
         <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.6)', zIndex: 1 }} />
         <div style={{ position: 'relative', zIndex: 2 }}>
           <h1 style={{ fontSize: 'clamp(2.5rem, 8vw, 4rem)', fontWeight: '800' }}>Emig Academy</h1>
