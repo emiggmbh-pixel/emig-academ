@@ -11,7 +11,7 @@ const ALL_QM_MODULES = [
   'SOP-REG-01', 'SOP-REG-02', 'SOP-REG-03', 'SOP-REG-05'
 ];
 
-// Stabile Hersteller-Karte für Medizinprodukte (Dark Mode fähig)
+// Stabile Hersteller-Karte für Medizinprodukte
 const ManufacturerCard = ({ m, onClick, colorMed }) => {
   const [imgError, setImgError] = useState(false);
   const logoUrl = useBaseUrl(m.logo);
@@ -20,18 +20,10 @@ const ManufacturerCard = ({ m, onClick, colorMed }) => {
     <div 
       onClick={onClick}
       style={{ 
-        flex: '1 1 calc(33.33% - 40px)', 
-        minWidth: '300px', 
-        backgroundColor: 'var(--card-background)', // Variable für Dark Mode
-        color: 'var(--ifm-font-color-base)',       // Variable für Textfarbe
-        padding: '3rem 2rem', 
-        borderRadius: '25px', 
-        textAlign: 'center', 
-        cursor: 'pointer', 
-        boxShadow: '0 8px 20px rgba(0,0,0,0.15)', 
-        borderTop: `8px solid ${colorMed}`,
-        transition: 'transform 0.2s', 
-        margin: '10px'
+        flex: '1 1 calc(33.33% - 40px)', minWidth: '300px', backgroundColor: 'white', padding: '3rem 2rem', 
+        borderRadius: '25px', textAlign: 'center', cursor: 'pointer', 
+        boxShadow: '0 8px 20px rgba(0,0,0,0.06)', borderTop: `8px solid ${colorMed}`,
+        transition: 'transform 0.2s', margin: '10px'
       }}
     >
       <div style={{ height: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem' }}>
@@ -46,7 +38,7 @@ const ManufacturerCard = ({ m, onClick, colorMed }) => {
           <div style={{ fontWeight: 'bold', color: colorMed, fontSize: '1.5rem' }}>{m.name}</div>
         )}
       </div>
-      <div style={{ fontSize: '0.9rem', opacity: 0.8, fontWeight: 'bold' }}>Produktschulungen →</div>
+      <div style={{ fontSize: '0.9rem', color: '#888', fontWeight: 'bold' }}>Produktschulungen →</div>
     </div>
   );
 };
@@ -57,7 +49,6 @@ export default function Home() {
   const [completedModules, setCompletedModules] = useState<string[]>([]);
   const [selectedManufacturer, setSelectedManufacturer] = useState(null);
 
-  // Fortschritt laden
   useEffect(() => {
     const saved = localStorage.getItem('emig_progress');
     if (saved) { try { setCompletedModules(JSON.parse(saved)); } catch (e) {}}
@@ -70,30 +61,19 @@ export default function Home() {
   const colorSAP = '#0070f3';
   const colorMed = '#d32f2f';
 
-  // Modul-Karte (Dark Mode fähig)
   const ModuleCard = ({ title, refCode, color, link = "#", isDraft = false }) => {
     const isDone = completedModules.includes(refCode);
     return (
       <div style={{ 
-        padding: '1.5rem', 
-        borderRadius: '18px', 
-        backgroundColor: 'var(--card-background)', // Variable nutzen
-        color: 'var(--ifm-font-color-base)',       // Variable nutzen
-        display: 'flex', 
-        flexDirection: 'column', 
-        boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-        flex: '1 1 calc(25% - 20px)', 
-        minWidth: '240px', 
-        maxWidth: '100%', 
-        borderTop: `6px solid ${isDone ? '#4caf50' : color}`,
-        opacity: isDraft ? 0.7 : 1, 
-        margin: '10px', 
-        position: 'relative'
+        padding: '1.5rem', borderRadius: '18px', backgroundColor: '#ffffff', 
+        display: 'flex', flexDirection: 'column', boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+        flex: '1 1 calc(25% - 20px)', minWidth: '240px', borderTop: `6px solid ${isDone ? '#4caf50' : color}`,
+        opacity: isDraft ? 0.7 : 1, margin: '10px', position: 'relative'
       }}>
         {isDone && <div style={{ position: 'absolute', top: '10px', right: '15px' }}>✅</div>}
-        <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', paddingRight: '25px', color: 'inherit' }}>{title}</h3>
-        <div style={{ fontSize: '0.75rem', opacity: 0.7, marginBottom: '1rem' }}>{refCode}</div>
-        <div style={{ width: '100%', height: '4px', backgroundColor: 'rgba(128,128,128,0.2)', borderRadius: '2px', marginBottom: '1rem' }}>
+        <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', paddingRight: '25px' }}>{title}</h3>
+        <div style={{ fontSize: '0.75rem', color: '#888', marginBottom: '1rem' }}>{refCode}</div>
+        <div style={{ width: '100%', height: '4px', backgroundColor: '#eee', borderRadius: '2px', marginBottom: '1rem' }}>
           <div style={{ width: isDone ? '100%' : '0%', height: '100%', backgroundColor: isDone ? '#4caf50' : color, borderRadius: '2px' }} />
         </div>
         <Link style={{ backgroundColor: isDraft ? '#ccc' : (isDone ? '#4caf50' : color), color: 'white', padding: '10px', borderRadius: '10px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }} to={isDraft ? "#" : link}>
@@ -107,58 +87,45 @@ export default function Home() {
     <Layout>
       <Head><title>Emig Academy</title></Head>
 
-      <header style={{ 
-        position: 'relative', 
-        backgroundImage: `url(${bgImageUrl})`, 
-        backgroundSize: '140%', // Zoom
-        backgroundPosition: '20% 30%', // Position nach Links verschoben
-        color: 'white', 
-        padding: '8rem 1rem', 
-        textAlign: 'center' 
-      }}>
-        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.6)', zIndex: 1 }} />
+      <header style={{ position: 'relative', backgroundImage: `url(${bgImageUrl})`, backgroundSize: '120%', backgroundPosition: '20%', color: 'white', padding: '8rem 1rem', textAlign: 'center' }}>
+        <div style={{ position: 'absolute', top: 0, left: 20, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.6)', zIndex: 1 }} />
         <div style={{ position: 'relative', zIndex: 2 }}>
           <h1 style={{ fontSize: 'clamp(2.5rem, 8vw, 4rem)', fontWeight: '800' }}>Emig Academy</h1>
           <p style={{ fontSize: '1.5rem', opacity: 0.9 }}>Lernplattform</p>
         </div>
       </header>
 
-      <main style={{ 
-        padding: '3rem 0', 
-        backgroundColor: 'var(--ifm-background-color)', // Dark Mode fähig
-        minHeight: '1000px' 
-      }}>
+      <main style={{ padding: '3rem 0', backgroundColor: '#f0f2f5', minHeight: '1000px' }}>
         <div style={{ width: '100%', padding: '0 5%' }}>
           
-          {/* Kategorien-Auswahl */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', marginBottom: '3rem', justifyContent: 'center' }}>
-            <button onClick={() => {setActiveCategory('QM'); setSelectedManufacturer(null);}} style={{ flex: '1 1 200px', padding: '1rem', borderRadius: '12px', border: 'none', backgroundColor: activeCategory === 'QM' ? colorQM : 'var(--card-background)', color: activeCategory === 'QM' ? 'white' : 'var(--ifm-font-color-base)', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }}>Quality Management</button>
-            <button onClick={() => {setActiveCategory('SAP'); setSelectedManufacturer(null);}} style={{ flex: '1 1 200px', padding: '1rem', borderRadius: '12px', border: 'none', backgroundColor: activeCategory === 'SAP' ? colorSAP : 'var(--card-background)', color: activeCategory === 'SAP' ? 'white' : 'var(--ifm-font-color-base)', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }}>SAP-System</button>
-            <button onClick={() => {setActiveCategory('MED'); setSelectedManufacturer(null);}} style={{ flex: '1 1 200px', padding: '1rem', borderRadius: '12px', border: 'none', backgroundColor: activeCategory === 'MED' ? colorMed : 'var(--card-background)', color: activeCategory === 'MED' ? 'white' : 'var(--ifm-font-color-base)', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }}>Medizinprodukte</button>
+            <button onClick={() => {setActiveCategory('QM'); setSelectedManufacturer(null);}} style={{ flex: '1 1 200px', padding: '1rem', borderRadius: '12px', border: 'none', backgroundColor: activeCategory === 'QM' ? colorQM : 'white', color: activeCategory === 'QM' ? 'white' : '#444', fontWeight: 'bold', cursor: 'pointer' }}>Quality Management</button>
+            <button onClick={() => {setActiveCategory('SAP'); setSelectedManufacturer(null);}} style={{ flex: '1 1 200px', padding: '1rem', borderRadius: '12px', border: 'none', backgroundColor: activeCategory === 'SAP' ? colorSAP : 'white', color: activeCategory === 'SAP' ? 'white' : '#444', fontWeight: 'bold', cursor: 'pointer' }}>SAP-System</button>
+            <button onClick={() => {setActiveCategory('MED'); setSelectedManufacturer(null);}} style={{ flex: '1 1 200px', padding: '1rem', borderRadius: '12px', border: 'none', backgroundColor: activeCategory === 'MED' ? colorMed : 'white', color: activeCategory === 'MED' ? 'white' : '#444', fontWeight: 'bold', cursor: 'pointer' }}>Medizinprodukte</button>
           </div>
 
           {activeCategory === 'QM' && (
             <div>
-              {/* Fortschritt QM */}
-              <div style={{ maxWidth: '450px', margin: '0 auto 2.5rem', backgroundColor: 'var(--card-background)', color: 'var(--ifm-font-color-base)', padding: '1.2rem', borderRadius: '18px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
+              {/* LMS Fortschritt QM */}
+              <div style={{ maxWidth: '450px', margin: '0 auto 2.5rem', backgroundColor: 'white', padding: '1.2rem', borderRadius: '18px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '0.85rem', fontWeight: 'bold' }}>
                   <span>QM Gesamtfortschritt</span>
                   <span>{progressPercent}%</span>
                 </div>
-                <div style={{ width: '100%', height: '8px', backgroundColor: 'rgba(128,128,128,0.2)', borderRadius: '4px', overflow: 'hidden' }}>
+                <div style={{ width: '100%', height: '8px', backgroundColor: '#eee', borderRadius: '4px', overflow: 'hidden' }}>
                   <div style={{ width: `${progressPercent}%`, height: '100%', backgroundColor: '#4caf50', transition: 'width 1s' }} />
                 </div>
               </div>
 
               {/* Finaler Test */}
-              <div style={{ marginBottom: '3rem', padding: '2rem', borderRadius: '25px', backgroundColor: 'var(--card-background)', color: 'var(--ifm-font-color-base)', border: `2px dashed ${isFinalTestReady ? '#4caf50' : '#666'}`, textAlign: 'center' }}>
-                <h3 style={{ color: isFinalTestReady ? '#4caf50' : 'inherit' }}>{isFinalTestReady ? '🏆 Finaler Test & Zertifikat' : '🔒 Finaler Test (Gesperrt)'}</h3>
-                <button disabled={!isFinalTestReady} style={{ padding: '10px 25px', borderRadius: '10px', border: 'none', backgroundColor: isFinalTestReady ? '#4caf50' : '#666', color: 'white', fontWeight: 'bold', cursor: isFinalTestReady ? 'pointer' : 'not-allowed' }}>Prüfung starten</button>
+              <div style={{ marginBottom: '3rem', padding: '2rem', borderRadius: '25px', backgroundColor: isFinalTestReady ? '#fff' : '#f5f5f5', border: `2px dashed ${isFinalTestReady ? '#4caf50' : '#ccc'}`, textAlign: 'center' }}>
+                <h3 style={{ color: isFinalTestReady ? '#2e7d32' : '#999' }}>{isFinalTestReady ? '🏆 Finaler Test & Zertifikat' : '🔒 Finaler Test (Gesperrt)'}</h3>
+                <button disabled={!isFinalTestReady} style={{ padding: '10px 25px', borderRadius: '10px', border: 'none', backgroundColor: isFinalTestReady ? '#4caf50' : '#ccc', color: 'white', fontWeight: 'bold', cursor: isFinalTestReady ? 'pointer' : 'not-allowed' }}>Prüfung starten</button>
               </div>
 
-              {/* Philosophie Banner */}
-              <div style={{ width: '100%', padding: '2.5rem', backgroundColor: 'var(--card-background)', color: 'var(--ifm-font-color-base)', borderRadius: '25px', borderLeft: `12px solid ${colorQM}`, marginBottom: '3rem', boxShadow: '0 6px 15px rgba(0,0,0,0.1)' }}>
-                <h2 style={{ color: 'inherit' }}>QM Philosophie & Strategie</h2>
+              {/* Philosophie (Größeres Modul) */}
+              <div style={{ width: '100%', padding: '2.5rem', backgroundColor: 'white', borderRadius: '25px', borderLeft: `12px solid ${colorQM}`, marginBottom: '3rem', boxShadow: '0 6px 15px rgba(0,0,0,0.05)' }}>
+                <h2>QM Philosophie & Strategie</h2>
                 <p>Grundpfeiler unseres Qualitätsmanagementsystems.</p>
                 <Link to="/docs/quality-management/qm-philosophie" style={{ fontWeight: 'bold', color: colorQM }}>Hier zur Philosophie →</Link>
               </div>
@@ -212,10 +179,10 @@ export default function Home() {
                   ))}
                 </div>
               ) : (
-                <div style={{ textAlign: 'center', padding: '4rem', backgroundColor: 'var(--card-background)', color: 'var(--ifm-font-color-base)', borderRadius: '30px', borderTop: `10px solid ${colorMed}` }}>
+                <div style={{ textAlign: 'center', padding: '4rem', backgroundColor: 'white', borderRadius: '30px', borderTop: `10px solid ${colorMed}` }}>
                   <button onClick={() => setSelectedManufacturer(null)} style={{ marginBottom: '2rem', padding: '10px 20px', borderRadius: '10px', border: 'none', backgroundColor: '#333', color: 'white', cursor: 'pointer' }}>← Zurück</button>
-                  <h2 style={{ color: 'inherit' }}>{selectedManufacturer.name}</h2>
-                  <p>Produktschulungen folgen in Kürze.</p>
+                  <h2>{selectedManufacturer.name}</h2>
+                  <p>Inhalte folgen.</p>
                 </div>
               )}
             </div>
