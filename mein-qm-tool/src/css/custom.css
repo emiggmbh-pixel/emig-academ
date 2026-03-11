@@ -1,30 +1,77 @@
 /**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
+ * Global Styles for Emig Academy
+ * Optimized for LMS Progress, Category Colors and Dark Mode
  */
 
-/* You can override the default Infima variables here. */
+/* HELLER MODUS (Standard) */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  /* EMIG Branding & QM Farbe */
+  --ifm-color-primary: #e65100; 
+  --ifm-color-primary-dark: #cf4900;
+  --ifm-color-primary-darker: #c44500;
+  --ifm-color-primary-darkest: #a13900;
+  --ifm-color-primary-light: #f35600;
+  --ifm-color-primary-lighter: #f85800;
+  --ifm-color-primary-lightest: #ff6e22;
+
+  /* Hintergrund-Variablen */
+  --ifm-background-color: #f0f2f5; /* Seitenhintergrund */
+  --card-background: #ffffff;      /* Kartenhintergrund */
+  --ifm-font-color-base: #1c1e21;  /* Standard Textfarbe */
+  --ifm-heading-color: #1c1e21;
+
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
+/* DUNKLER MODUS (Dark Mode) */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-color-primary: #ff9800;
+  --ifm-color-primary-dark: #f57c00;
+  --ifm-color-primary-darker: #ef6c00;
+  --ifm-color-primary-darkest: #e65100;
+
+  /* Dark Mode Farben */
+  --ifm-background-color: #121212; /* Tiefer Hintergrund */
+  --card-background: #1e1e1e;      /* Dunkle Kacheln */
+  --ifm-font-color-base: #ffffff;  /* SCHRIFT WEISS */
+  --ifm-heading-color: #ffffff;    /* ÜBERSCHRIFTEN WEISS */
+  
+  --docusaurus-highlighted-code-line-bg: rgba(255, 255, 255, 0.1);
+
+  /* Navbar & Footer im Dark Mode */
+  --ifm-navbar-background-color: #1a1a1b;
+  --ifm-footer-background-color: #1a1a1b;
+}
+
+/* ZUSÄTZLICHE STYLES FÜR DAS DASHBOARD */
+
+/* Sanfter Übergang beim Umschalten (Heller/Dunkler Modus) */
+body, .card, div, header, main {
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Hover-Effekt für alle Modul-Karten */
+[class*='ModuleCard'], .card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+[class*='ModuleCard']:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+}
+
+/* Scrollbar Styling für moderne Optik */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--ifm-background-color);
+}
+::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ifm-color-primary);
 }
