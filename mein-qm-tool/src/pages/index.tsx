@@ -11,7 +11,7 @@ const ALL_QM_MODULES = [
   'SOP-REG-01', 'SOP-REG-02', 'SOP-REG-03', 'SOP-REG-05'
 ];
 
-// NEU: Liste der RIWOspine Produkte
+// Liste der RIWOspine Produkte
 const RIWOSPINE_PRODUCTS = [
   { title: 'Vertebris Stenose', refCode: 'RIWO-01', link: '/docs/medizinprodukte/riwospine/stenose' },
   { title: 'Vertebris Lumbar', refCode: 'RIWO-02', link: '/docs/medizinprodukte/riwospine/lumbar' },
@@ -94,16 +94,21 @@ export default function Home() {
     <Layout>
       <Head><title>Emig Academy</title></Head>
 
+      {/* OPTIMIERTER HEADER FÜR DESKTOP & HANDY */}
       <header style={{ 
         position: 'relative', 
         backgroundImage: `url(${bgImageUrl})`, 
-        backgroundSize: '150%', 
-        backgroundPosition: '10% 40%', 
+        backgroundSize: 'cover',      // Bild füllt immer den kompletten Raum aus
+        backgroundPosition: 'center', // Zentriert das Bild (wichtig für Handy)
+        backgroundRepeat: 'no-repeat',
         color: 'white', 
         padding: '8rem 1rem', 
-        textAlign: 'center' 
+        textAlign: 'center',
+        overflow: 'hidden'
       }}>
+        {/* Dunkles Overlay */}
         <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.6)', zIndex: 1 }} />
+        
         <div style={{ position: 'relative', zIndex: 2 }}>
           <h1 style={{ fontSize: 'clamp(2.5rem, 8vw, 4rem)', fontWeight: '800' }}>Emig Academy</h1>
           <p style={{ fontSize: '1.5rem', opacity: 0.9 }}>Lernplattform</p>
@@ -204,7 +209,6 @@ export default function Home() {
                     <p>Wählen Sie ein Produktmodul aus, um die Produktschulung zu starten.</p>
                   </div>
 
-                  {/* Spezielle Logik für RIWOspine Produkte */}
                   {selectedManufacturer.id === 'riwo' ? (
                     <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
                       {RIWOSPINE_PRODUCTS.map((prod) => (
