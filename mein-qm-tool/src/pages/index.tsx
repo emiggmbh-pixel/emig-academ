@@ -22,25 +22,19 @@ const RIWOSPINE_PRODUCTS = [
 const ManufacturerCard = ({ m, onClick, colorMed }) => {
   const [imgError, setImgError] = useState(false);
   const logoUrl = useBaseUrl(m.logo);
-
   return (
     <div 
-      onClick={onClick}
+      onClick={onClick} 
       style={{ 
         flex: '1 1 calc(33.33% - 40px)', minWidth: '300px', backgroundColor: 'white', padding: '3rem 2rem', 
         borderRadius: '25px', textAlign: 'center', cursor: 'pointer', 
-        boxShadow: '0 8px 20px rgba(0,0,0,0.06)', borderTop: `8px solid ${colorMed}`,
-        transition: 'transform 0.2s', margin: '10px'
+        boxShadow: '0 8px 20px rgba(0,0,0,0.06)', borderTop: `8px solid ${colorMed}`, 
+        transition: 'transform 0.2s', margin: '10px' 
       }}
     >
       <div style={{ height: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem' }}>
         {!imgError ? (
-          <img 
-            src={logoUrl} 
-            alt={m.name}
-            style={{ maxWidth: '90%', maxHeight: '100%', objectFit: 'contain' }}
-            onError={() => setImgError(true)}
-          />
+          <img src={logoUrl} alt={m.name} style={{ maxWidth: '90%', maxHeight: '100%', objectFit: 'contain' }} onError={() => setImgError(true)} />
         ) : (
           <div style={{ fontWeight: 'bold', color: colorMed, fontSize: '1.5rem' }}>{m.name}</div>
         )}
@@ -64,8 +58,8 @@ export default function Home() {
   const progressPercent = Math.round((completedModules.length / ALL_QM_MODULES.length) * 100);
   const isFinalTestReady = progressPercent >= 100;
 
-  const colorQM = '#e65100';
-  const colorSAP = '#0070f3';
+  const colorQM = '#e65100'; 
+  const colorSAP = '#0070f3'; 
   const colorMed = '#d32f2f';
 
   const ModuleCard = ({ title, refCode, color, link = "#", isDraft = false }) => {
@@ -73,17 +67,20 @@ export default function Home() {
     return (
       <div style={{ 
         padding: '1.5rem', borderRadius: '18px', backgroundColor: '#ffffff', 
-        display: 'flex', flexDirection: 'column', boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
-        flex: '1 1 calc(25% - 20px)', minWidth: '240px', borderTop: `6px solid ${isDone ? '#4caf50' : color}`,
-        opacity: isDraft ? 0.7 : 1, margin: '10px', position: 'relative'
+        display: 'flex', flexDirection: 'column', boxShadow: '0 4px 12px rgba(0,0,0,0.08)', 
+        flex: '1 1 calc(25% - 20px)', minWidth: '240px', borderTop: `6px solid ${isDone ? '#4caf50' : color}`, 
+        opacity: isDraft ? 0.7 : 1, margin: '10px', position: 'relative' 
       }}>
         {isDone && <div style={{ position: 'absolute', top: '10px', right: '15px' }}>✅</div>}
-        <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', paddingRight: '25px' }}>{title}</h3>
+        <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem' }}>{title}</h3>
         <div style={{ fontSize: '0.75rem', color: '#888', marginBottom: '1rem' }}>{refCode}</div>
         <div style={{ width: '100%', height: '4px', backgroundColor: '#eee', borderRadius: '2px', marginBottom: '1rem' }}>
           <div style={{ width: isDone ? '100%' : '0%', height: '100%', backgroundColor: isDone ? '#4caf50' : color, borderRadius: '2px' }} />
         </div>
-        <Link style={{ backgroundColor: isDraft ? '#ccc' : (isDone ? '#4caf50' : color), color: 'white', padding: '10px', borderRadius: '10px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }} to={isDraft ? "#" : link}>
+        <Link 
+          style={{ backgroundColor: isDraft ? '#ccc' : (isDone ? '#4caf50' : color), color: 'white', padding: '10px', borderRadius: '10px', textAlign: 'center', fontWeight: 'bold', textDecoration: 'none' }} 
+          to={isDraft ? "#" : link}
+        >
           {isDone ? "Wiederholen" : "Starten"}
         </Link>
       </div>
@@ -94,58 +91,54 @@ export default function Home() {
     <Layout>
       <Head><title>Emig Academy</title></Head>
 
-      {/* FULL-WIDTH HEADER BREAKOUT: Korrigiert die grauen Ränder auf Desktop */}
-      <header style={{ 
-        position: 'relative', 
-        backgroundImage: `url(${bgImageUrl})`, 
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        
-        // BREAKOUT-LOGIK: Erzwingt Edge-to-Edge über die Container-Grenzen hinaus
-        width: '100vw',
-        marginLeft: 'calc(-50vw + 50%)',
-        marginRight: 'calc(-50vw + 50%)',
-        left: 0,
-        
-        color: 'white', 
-        padding: '10rem 1rem', 
-        textAlign: 'center',
-        overflow: 'hidden',
-        minHeight: '450px',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center'
-      }}>
-        {/* Overlay (deckt die gesamte 100vw Breite ab) */}
-        <div style={{ 
-          position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, 
-          backgroundColor: 'rgba(0, 0, 0, 0.55)', zIndex: 1 
-        }} />
-        
-        <div style={{ position: 'relative', zIndex: 2 }}>
-          <h1 style={{ 
-            fontSize: 'clamp(2.5rem, 8vw, 4.5rem)', 
-            fontWeight: '850',
-            textShadow: '2px 2px 10px rgba(0,0,0,0.5)' 
-          }}>
-            Emig Academy
-          </h1>
-          <p style={{ fontSize: '1.6rem', opacity: 0.95, fontWeight: '500' }}>
-            Lernplattform
-          </p>
-        </div>
-      </header>
+      {/* FULL-WIDTH HEADER OHNE GRAUE RÄNDER */}
+      <div style={{ width: '100%', overflow: 'hidden', backgroundColor: '#333' }}>
+        <header style={{ 
+          position: 'relative', 
+          backgroundImage: `url(${bgImageUrl})`, 
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          
+          width: '100vw',
+          left: '50%',
+          right: '50%',
+          marginLeft: '-50vw',
+          marginRight: '-50vw',
+          
+          color: 'white', 
+          padding: '12rem 1rem', 
+          textAlign: 'center',
+          minHeight: '500px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0, 0, 0, 0.55)', zIndex: 1 }} />
+          
+          <div style={{ position: 'relative', zIndex: 2 }}>
+            <h1 style={{ fontSize: 'clamp(2.5rem, 8vw, 5rem)', fontWeight: '900', textShadow: '3px 3px 15px rgba(0,0,0,0.6)' }}>
+              Emig Academy
+            </h1>
+            <p style={{ fontSize: '1.8rem', fontWeight: '500', textShadow: '2px 2px 10px rgba(0,0,0,0.6)' }}>
+              Lernplattform
+            </p>
+          </div>
+        </header>
+      </div>
 
-      <main style={{ padding: '3rem 0', backgroundColor: '#f0f2f5', minHeight: '1000px' }}>
+      <main style={{ padding: '3rem 0', backgroundColor: '#f0f2f5' }}>
         <div style={{ width: '100%', padding: '0 5%' }}>
           
+          {/* KATEGORIE-BUTTONS */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', marginBottom: '3rem', justifyContent: 'center' }}>
             <button onClick={() => {setActiveCategory('QM'); setSelectedManufacturer(null);}} style={{ flex: '1 1 200px', padding: '1rem', borderRadius: '12px', border: 'none', backgroundColor: activeCategory === 'QM' ? colorQM : 'white', color: activeCategory === 'QM' ? 'white' : '#444', fontWeight: 'bold', cursor: 'pointer' }}>Quality Management</button>
             <button onClick={() => {setActiveCategory('SAP'); setSelectedManufacturer(null);}} style={{ flex: '1 1 200px', padding: '1rem', borderRadius: '12px', border: 'none', backgroundColor: activeCategory === 'SAP' ? colorSAP : 'white', color: activeCategory === 'SAP' ? 'white' : '#444', fontWeight: 'bold', cursor: 'pointer' }}>SAP-System</button>
             <button onClick={() => {setActiveCategory('MED'); setSelectedManufacturer(null);}} style={{ flex: '1 1 200px', padding: '1rem', borderRadius: '12px', border: 'none', backgroundColor: activeCategory === 'MED' ? colorMed : 'white', color: activeCategory === 'MED' ? 'white' : '#444', fontWeight: 'bold', cursor: 'pointer' }}>Medizinprodukte</button>
           </div>
 
+          {/* QM BEREICH */}
           {activeCategory === 'QM' && (
             <div>
               <div style={{ maxWidth: '450px', margin: '0 auto 2.5rem', backgroundColor: 'white', padding: '1.2rem', borderRadius: '18px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
@@ -157,18 +150,10 @@ export default function Home() {
                   <div style={{ width: `${progressPercent}%`, height: '100%', backgroundColor: '#4caf50', transition: 'width 1s' }} />
                 </div>
               </div>
-
               <div style={{ marginBottom: '3rem', padding: '2rem', borderRadius: '25px', backgroundColor: isFinalTestReady ? '#fff' : '#f5f5f5', border: `2px dashed ${isFinalTestReady ? '#4caf50' : '#ccc'}`, textAlign: 'center' }}>
                 <h3 style={{ color: isFinalTestReady ? '#2e7d32' : '#999' }}>{isFinalTestReady ? '🏆 Finaler Test & Zertifikat' : '🔒 Finaler Test (Gesperrt)'}</h3>
-                <button disabled={!isFinalTestReady} style={{ padding: '10px 25px', borderRadius: '10px', border: 'none', backgroundColor: isFinalTestReady ? '#4caf50' : '#ccc', color: 'white', fontWeight: 'bold', cursor: isFinalTestReady ? 'pointer' : 'not-allowed' }}>Prüfung starten</button>
+                <button disabled={!isFinalTestReady} style={{ padding: '10px 25px', borderRadius: '10px', border: 'none', backgroundColor: isFinalTestReady ? '#4caf50' : '#ccc', color: 'white', fontWeight: 'bold' }}>Prüfung starten</button>
               </div>
-
-              <div style={{ width: '100%', padding: '2.5rem', backgroundColor: 'white', borderRadius: '25px', borderLeft: `12px solid ${colorQM}`, marginBottom: '3rem', boxShadow: '0 6px 15px rgba(0,0,0,0.05)' }}>
-                <h2>QM Philosophie & Strategie</h2>
-                <p>Grundpfeiler unseres Qualitätsmanagementsystems.</p>
-                <Link to="/docs/quality-management/qm-philosophie" style={{ fontWeight: 'bold', color: colorQM }}>Hier zur Philosophie →</Link>
-              </div>
-
               <h2 style={{ borderLeft: `6px solid ${colorQM}`, paddingLeft: '15px', marginBottom: '1.5rem' }}>Logistik & Lager</h2>
               <div style={{ display: 'flex', flexWrap: 'wrap', marginBottom: '3rem' }}>
                 <ModuleCard title="Lagerbedingungen" refCode="SOP-LOG-01" color={colorQM} link="/docs/logistik-lager/SOP_LOG-01" />
@@ -176,32 +161,19 @@ export default function Home() {
                 <ModuleCard title="Sperrware" refCode="SOP-LOG-03" color={colorQM} link="/docs/logistik-lager/SOP_LOG-03" />
                 <ModuleCard title="Inventur" refCode="SOP-LOG-04" color={colorQM} isDraft={true} />
               </div>
-
-              <h2 style={{ borderLeft: `6px solid ${colorQM}`, paddingLeft: '15px', marginBottom: '1.5rem' }}>Einkauf & Lieferanten</h2>
-              <div style={{ display: 'flex', flexWrap: 'wrap', marginBottom: '3rem' }}>
-                <ModuleCard title="Lieferanten" refCode="SOP-EINK-01" color={colorQM} link="/docs/einkauf-lieferanten/SOP_EINK-01" />
-                <ModuleCard title="Einkaufsprozess" refCode="SOP-EINK-02" color={colorQM} link="/docs/einkauf-lieferanten/SOP_EINK-02" />
-              </div>
-
-              <h2 style={{ borderLeft: `6px solid ${colorQM}`, paddingLeft: '15px', marginBottom: '1.5rem' }}>Regulatorik & MDR</h2>
-              <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                <ModuleCard title="Importeurpflichten" refCode="SOP-REG-01" color={colorQM} link="/docs/regulatorik-mdr/SOP_REG-01" />
-                <ModuleCard title="Händlerpflichten" refCode="SOP-REG-02" color={colorQM} link="/docs/regulatorik-mdr/SOP_REG-02" />
-                <ModuleCard title="PRRC" refCode="SOP-REG-03" color={colorQM} link="/docs/regulatorik-mdr/SOP_REG-03" />
-                <ModuleCard title="Audits" refCode="SOP-REG-05" color={colorQM} link="/docs/regulatorik-mdr/SOP_REG-05" />
-              </div>
             </div>
           )}
 
+          {/* SAP BEREICH */}
           {activeCategory === 'SAP' && (
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
               <ModuleCard title="SAP Basics" refCode="SAP-01" color={colorSAP} isDraft={true} />
               <ModuleCard title="SAP Warehouse" refCode="SAP-02" color={colorSAP} isDraft={true} />
               <ModuleCard title="SAP Purchasing" refCode="SAP-03" color={colorSAP} isDraft={true} />
-              <ModuleCard title="SAP Batch Mgt" refCode="SAP-04" color={colorSAP} isDraft={true} />
             </div>
           )}
 
+          {/* MEDIZINPRODUKTE BEREICH */}
           {activeCategory === 'MED' && (
             <div>
               {!selectedManufacturer ? (
@@ -219,33 +191,19 @@ export default function Home() {
                 </div>
               ) : (
                 <div style={{ padding: '2rem' }}>
-                  <button 
-                    onClick={() => setSelectedManufacturer(null)} 
-                    style={{ marginBottom: '2rem', padding: '10px 20px', borderRadius: '10px', border: 'none', backgroundColor: '#333', color: 'white', cursor: 'pointer', fontWeight: 'bold' }}
-                  >
-                    ← Zurück zur Übersicht
-                  </button>
-
+                  <button onClick={() => setSelectedManufacturer(null)} style={{ marginBottom: '2rem', padding: '10px 20px', borderRadius: '10px', border: 'none', backgroundColor: '#333', color: 'white', cursor: 'pointer', fontWeight: 'bold' }}>← Zurück</button>
                   <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
                     <h2 style={{ fontSize: '2.5rem', color: colorMed }}>{selectedManufacturer.name}</h2>
-                    <p>Wählen Sie ein Produktmodul aus, um die Produktschulung zu starten.</p>
                   </div>
-
                   {selectedManufacturer.id === 'riwo' ? (
                     <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
                       {RIWOSPINE_PRODUCTS.map((prod) => (
-                        <ModuleCard 
-                          key={prod.refCode}
-                          title={prod.title} 
-                          refCode={prod.refCode} 
-                          color={colorMed} 
-                          link={prod.link} 
-                        />
+                        <ModuleCard key={prod.refCode} title={prod.title} refCode={prod.refCode} color={colorMed} link={prod.link} />
                       ))}
                     </div>
                   ) : (
                     <div style={{ textAlign: 'center', padding: '4rem', backgroundColor: 'white', borderRadius: '30px' }}>
-                      <p>Inhalte für {selectedManufacturer.name} folgen in Kürze.</p>
+                      <p>Inhalte für {selectedManufacturer.name} folgen.</p>
                     </div>
                   )}
                 </div>
