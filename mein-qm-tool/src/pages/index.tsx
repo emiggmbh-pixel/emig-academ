@@ -4,6 +4,9 @@ import Layout from '@theme/Layout';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import Head from '@docusaurus/Head';
 
+// Import der neuen interaktiven Komponente
+import ProcessDashboard from '../components/ProcessDashboard';
+
 // Liste aller QM-Module für die Berechnung des Fortschritts
 const ALL_QM_MODULES = [
   'SOP-LOG-01', 'SOP-LOG-02', 'SOP-LOG-03', 'SOP-LOG-04',
@@ -99,13 +102,11 @@ export default function Home() {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          
           width: '100vw',
           left: '50%',
           right: '50%',
           marginLeft: '-50vw',
           marginRight: '-50vw',
-          
           color: 'white', 
           padding: '12rem 1rem', 
           textAlign: 'center',
@@ -116,7 +117,6 @@ export default function Home() {
           alignItems: 'center'
         }}>
           <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0, 0, 0, 0.55)', zIndex: 1 }} />
-          
           <div style={{ position: 'relative', zIndex: 2 }}>
             <h1 style={{ fontSize: 'clamp(2.5rem, 8vw, 5rem)', fontWeight: '900', textShadow: '3px 3px 15px rgba(0,0,0,0.6)' }}>
               Emig Academy
@@ -131,14 +131,12 @@ export default function Home() {
       <main style={{ padding: '3rem 0', backgroundColor: '#f0f2f5' }}>
         <div style={{ width: '100%', padding: '0 5%' }}>
           
-          {/* KATEGORIE-BUTTONS */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', marginBottom: '3rem', justifyContent: 'center' }}>
             <button onClick={() => {setActiveCategory('QM'); setSelectedManufacturer(null);}} style={{ flex: '1 1 200px', padding: '1rem', borderRadius: '12px', border: 'none', backgroundColor: activeCategory === 'QM' ? colorQM : 'white', color: activeCategory === 'QM' ? 'white' : '#444', fontWeight: 'bold', cursor: 'pointer' }}>Quality Management</button>
             <button onClick={() => {setActiveCategory('SAP'); setSelectedManufacturer(null);}} style={{ flex: '1 1 200px', padding: '1rem', borderRadius: '12px', border: 'none', backgroundColor: activeCategory === 'SAP' ? colorSAP : 'white', color: activeCategory === 'SAP' ? 'white' : '#444', fontWeight: 'bold', cursor: 'pointer' }}>SAP-System</button>
             <button onClick={() => {setActiveCategory('MED'); setSelectedManufacturer(null);}} style={{ flex: '1 1 200px', padding: '1rem', borderRadius: '12px', border: 'none', backgroundColor: activeCategory === 'MED' ? colorMed : 'white', color: activeCategory === 'MED' ? 'white' : '#444', fontWeight: 'bold', cursor: 'pointer' }}>Medizinprodukte</button>
           </div>
 
-          {/* QM BEREICH */}
           {activeCategory === 'QM' && (
             <div>
               <div style={{ maxWidth: '450px', margin: '0 auto 2.5rem', backgroundColor: 'white', padding: '1.2rem', borderRadius: '18px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
@@ -150,10 +148,6 @@ export default function Home() {
                   <div style={{ width: `${progressPercent}%`, height: '100%', backgroundColor: '#4caf50', transition: 'width 1s' }} />
                 </div>
               </div>
-              <div style={{ marginBottom: '3rem', padding: '2rem', borderRadius: '25px', backgroundColor: isFinalTestReady ? '#fff' : '#f5f5f5', border: `2px dashed ${isFinalTestReady ? '#4caf50' : '#ccc'}`, textAlign: 'center' }}>
-                <h3 style={{ color: isFinalTestReady ? '#2e7d32' : '#999' }}>{isFinalTestReady ? '🏆 Finaler Test & Zertifikat' : '🔒 Finaler Test (Gesperrt)'}</h3>
-                <button disabled={!isFinalTestReady} style={{ padding: '10px 25px', borderRadius: '10px', border: 'none', backgroundColor: isFinalTestReady ? '#4caf50' : '#ccc', color: 'white', fontWeight: 'bold' }}>Prüfung starten</button>
-              </div>
               <h2 style={{ borderLeft: `6px solid ${colorQM}`, paddingLeft: '15px', marginBottom: '1.5rem' }}>Logistik & Lager</h2>
               <div style={{ display: 'flex', flexWrap: 'wrap', marginBottom: '3rem' }}>
                 <ModuleCard title="Lagerbedingungen" refCode="SOP-LOG-01" color={colorQM} link="/docs/logistik-lager/SOP_LOG-01" />
@@ -164,16 +158,19 @@ export default function Home() {
             </div>
           )}
 
-          {/* SAP BEREICH */}
           {activeCategory === 'SAP' && (
-            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-              <ModuleCard title="SAP Basics" refCode="SAP-01" color={colorSAP} isDraft={true} />
-              <ModuleCard title="SAP Warehouse" refCode="SAP-02" color={colorSAP} isDraft={true} />
-              <ModuleCard title="SAP Purchasing" refCode="SAP-03" color={colorSAP} isDraft={true} />
+            <div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', marginBottom: '3rem' }}>
+                <ModuleCard title="SAP Basics" refCode="SAP-01" color={colorSAP} isDraft={true} />
+                <ModuleCard title="SAP Warehouse" refCode="SAP-02" color={colorSAP} isDraft={true} />
+                <ModuleCard title="SAP Purchasing" refCode="SAP-03" color={colorSAP} isDraft={true} />
+              </div>
+              
+              {/* Die neue interaktive Prozesslandschaft */}
+              <ProcessDashboard />
             </div>
           )}
 
-          {/* MEDIZINPRODUKTE BEREICH */}
           {activeCategory === 'MED' && (
             <div>
               {!selectedManufacturer ? (
