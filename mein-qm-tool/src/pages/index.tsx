@@ -11,6 +11,14 @@ const ALL_QM_MODULES = [
   'SOP-REG-01', 'SOP-REG-02', 'SOP-REG-03', 'SOP-REG-05'
 ];
 
+// NEU: Liste der RIWOspine Produkte
+const RIWOSPINE_PRODUCTS = [
+  { title: 'Vertebris Stenose', refCode: 'RIWO-01', link: '/docs/medizinprodukte/riwospine/stenose' },
+  { title: 'Vertebris Lumbar', refCode: 'RIWO-02', link: '/docs/medizinprodukte/riwospine/lumbar' },
+  { title: 'Vertebris Cervical', refCode: 'RIWO-03', link: '/docs/medizinprodukte/riwospine/cervical' },
+  { title: 'Instrumentarium & Optiken', refCode: 'RIWO-04', link: '/docs/medizinprodukte/riwospine/instrumente' },
+];
+
 const ManufacturerCard = ({ m, onClick, colorMed }) => {
   const [imgError, setImgError] = useState(false);
   const logoUrl = useBaseUrl(m.logo);
@@ -89,15 +97,12 @@ export default function Home() {
       <header style={{ 
         position: 'relative', 
         backgroundImage: `url(${bgImageUrl})`, 
-        // ZOOM: Von 120% auf 150% erhöht
         backgroundSize: '150%', 
-        // POSITION: Von 20% auf 10% (horizontal) und 40% (vertikal) angepasst
         backgroundPosition: '10% 40%', 
         color: 'white', 
         padding: '8rem 1rem', 
         textAlign: 'center' 
       }}>
-        {/* Overlay korrigiert (left: 0 statt 20) */}
         <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.6)', zIndex: 1 }} />
         <div style={{ position: 'relative', zIndex: 2 }}>
           <h1 style={{ fontSize: 'clamp(2.5rem, 8vw, 4rem)', fontWeight: '800' }}>Emig Academy</h1>
@@ -106,7 +111,6 @@ export default function Home() {
       </header>
 
       <main style={{ padding: '3rem 0', backgroundColor: '#f0f2f5', minHeight: '1000px' }}>
-        {/* ... Rest des Codes bleibt identisch ... */}
         <div style={{ width: '100%', padding: '0 5%' }}>
           
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', marginBottom: '3rem', justifyContent: 'center' }}>
@@ -187,10 +191,37 @@ export default function Home() {
                   ))}
                 </div>
               ) : (
-                <div style={{ textAlign: 'center', padding: '4rem', backgroundColor: 'white', borderRadius: '30px', borderTop: `10px solid ${colorMed}` }}>
-                  <button onClick={() => setSelectedManufacturer(null)} style={{ marginBottom: '2rem', padding: '10px 20px', borderRadius: '10px', border: 'none', backgroundColor: '#333', color: 'white', cursor: 'pointer' }}>← Zurück</button>
-                  <h2>{selectedManufacturer.name}</h2>
-                  <p>Inhalte folgen.</p>
+                <div style={{ padding: '2rem' }}>
+                  <button 
+                    onClick={() => setSelectedManufacturer(null)} 
+                    style={{ marginBottom: '2rem', padding: '10px 20px', borderRadius: '10px', border: 'none', backgroundColor: '#333', color: 'white', cursor: 'pointer', fontWeight: 'bold' }}
+                  >
+                    ← Zurück zur Übersicht
+                  </button>
+
+                  <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+                    <h2 style={{ fontSize: '2.5rem', color: colorMed }}>{selectedManufacturer.name}</h2>
+                    <p>Wählen Sie ein Produktmodul aus, um die Produktschulung zu starten.</p>
+                  </div>
+
+                  {/* Spezielle Logik für RIWOspine Produkte */}
+                  {selectedManufacturer.id === 'riwo' ? (
+                    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+                      {RIWOSPINE_PRODUCTS.map((prod) => (
+                        <ModuleCard 
+                          key={prod.refCode}
+                          title={prod.title} 
+                          refCode={prod.refCode} 
+                          color={colorMed} 
+                          link={prod.link} 
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <div style={{ textAlign: 'center', padding: '4rem', backgroundColor: 'white', borderRadius: '30px' }}>
+                      <p>Inhalte für {selectedManufacturer.name} folgen in Kürze.</p>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
