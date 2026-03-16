@@ -11,7 +11,6 @@ const ALL_QM_MODULES = [
   'SOP-REG-01', 'SOP-REG-02', 'SOP-REG-03', 'SOP-REG-05'
 ];
 
-// Stabile Hersteller-Karte für Medizinprodukte
 const ManufacturerCard = ({ m, onClick, colorMed }) => {
   const [imgError, setImgError] = useState(false);
   const logoUrl = useBaseUrl(m.logo);
@@ -87,8 +86,19 @@ export default function Home() {
     <Layout>
       <Head><title>Emig Academy</title></Head>
 
-      <header style={{ position: 'relative', backgroundImage: `url(${bgImageUrl})`, backgroundSize: '120%', backgroundPosition: '20%', color: 'white', padding: '8rem 1rem', textAlign: 'center' }}>
-        <div style={{ position: 'absolute', top: 0, left: 20, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.6)', zIndex: 1 }} />
+      <header style={{ 
+        position: 'relative', 
+        backgroundImage: `url(${bgImageUrl})`, 
+        // ZOOM: Von 120% auf 150% erhöht
+        backgroundSize: '150%', 
+        // POSITION: Von 20% auf 10% (horizontal) und 40% (vertikal) angepasst
+        backgroundPosition: '10% 40%', 
+        color: 'white', 
+        padding: '8rem 1rem', 
+        textAlign: 'center' 
+      }}>
+        {/* Overlay korrigiert (left: 0 statt 20) */}
+        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.6)', zIndex: 1 }} />
         <div style={{ position: 'relative', zIndex: 2 }}>
           <h1 style={{ fontSize: 'clamp(2.5rem, 8vw, 4rem)', fontWeight: '800' }}>Emig Academy</h1>
           <p style={{ fontSize: '1.5rem', opacity: 0.9 }}>Lernplattform</p>
@@ -96,6 +106,7 @@ export default function Home() {
       </header>
 
       <main style={{ padding: '3rem 0', backgroundColor: '#f0f2f5', minHeight: '1000px' }}>
+        {/* ... Rest des Codes bleibt identisch ... */}
         <div style={{ width: '100%', padding: '0 5%' }}>
           
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', marginBottom: '3rem', justifyContent: 'center' }}>
@@ -106,7 +117,6 @@ export default function Home() {
 
           {activeCategory === 'QM' && (
             <div>
-              {/* LMS Fortschritt QM */}
               <div style={{ maxWidth: '450px', margin: '0 auto 2.5rem', backgroundColor: 'white', padding: '1.2rem', borderRadius: '18px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '0.85rem', fontWeight: 'bold' }}>
                   <span>QM Gesamtfortschritt</span>
@@ -117,13 +127,11 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Finaler Test */}
               <div style={{ marginBottom: '3rem', padding: '2rem', borderRadius: '25px', backgroundColor: isFinalTestReady ? '#fff' : '#f5f5f5', border: `2px dashed ${isFinalTestReady ? '#4caf50' : '#ccc'}`, textAlign: 'center' }}>
                 <h3 style={{ color: isFinalTestReady ? '#2e7d32' : '#999' }}>{isFinalTestReady ? '🏆 Finaler Test & Zertifikat' : '🔒 Finaler Test (Gesperrt)'}</h3>
                 <button disabled={!isFinalTestReady} style={{ padding: '10px 25px', borderRadius: '10px', border: 'none', backgroundColor: isFinalTestReady ? '#4caf50' : '#ccc', color: 'white', fontWeight: 'bold', cursor: isFinalTestReady ? 'pointer' : 'not-allowed' }}>Prüfung starten</button>
               </div>
 
-              {/* Philosophie (Größeres Modul) */}
               <div style={{ width: '100%', padding: '2.5rem', backgroundColor: 'white', borderRadius: '25px', borderLeft: `12px solid ${colorQM}`, marginBottom: '3rem', boxShadow: '0 6px 15px rgba(0,0,0,0.05)' }}>
                 <h2>QM Philosophie & Strategie</h2>
                 <p>Grundpfeiler unseres Qualitätsmanagementsystems.</p>
