@@ -94,24 +94,41 @@ export default function Home() {
     <Layout>
       <Head><title>Emig Academy</title></Head>
 
-      {/* OPTIMIERTER HEADER FÜR DESKTOP & HANDY */}
+      {/* FULL-WIDTH HEADER FIX FÜR DESKTOP & HANDY */}
       <header style={{ 
         position: 'relative', 
         backgroundImage: `url(${bgImageUrl})`, 
-        backgroundSize: 'cover',      // Bild füllt immer den kompletten Raum aus
-        backgroundPosition: 'center', // Zentriert das Bild (wichtig für Handy)
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
+        
+        // Breakout-Logik: Erzwingt Edge-to-Edge Breite auf dem Desktop
+        width: '100vw',
+        marginLeft: 'calc(-50vw + 50%)',
+        marginRight: 'calc(-50vw + 50%)',
+        
         color: 'white', 
-        padding: '8rem 1rem', 
+        padding: '10rem 1rem', 
         textAlign: 'center',
         overflow: 'hidden'
       }}>
-        {/* Dunkles Overlay */}
-        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.6)', zIndex: 1 }} />
+        {/* Dunkles Overlay (deckt jetzt 100vw ab) */}
+        <div style={{ 
+          position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, 
+          backgroundColor: 'rgba(0, 0, 0, 0.55)', zIndex: 1 
+        }} />
         
         <div style={{ position: 'relative', zIndex: 2 }}>
-          <h1 style={{ fontSize: 'clamp(2.5rem, 8vw, 4rem)', fontWeight: '800' }}>Emig Academy</h1>
-          <p style={{ fontSize: '1.5rem', opacity: 0.9 }}>Lernplattform</p>
+          <h1 style={{ 
+            fontSize: 'clamp(2.5rem, 8vw, 4.5rem)', 
+            fontWeight: '850',
+            textShadow: '2px 2px 8px rgba(0,0,0,0.4)' 
+          }}>
+            Emig Academy
+          </h1>
+          <p style={{ fontSize: '1.6rem', opacity: 0.95, fontWeight: '500' }}>
+            Lernplattform
+          </p>
         </div>
       </header>
 
