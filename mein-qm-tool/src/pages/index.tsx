@@ -1637,10 +1637,55 @@ export default function Home() {
                 <div className="ea-prog-pct">{pct}%</div>
               </div>
 
-              <div className="ea-philo">
-                <div className="ea-philo-t">QM Philosophie & Strategie</div>
-                <p className="ea-philo-b">Grundpfeiler unseres Qualitätsmanagementsystems nach ISO 13485.</p>
-                <Link to="/docs/quality-management/qm-philosophie" className="ea-philo-lnk">Zur QM-Philosophie →</Link>
+              {/* ── QM Philosophy with building image ── */}
+              <div style={{
+                position:'relative', borderRadius:'18px', overflow:'hidden',
+                marginBottom:'1.75rem', minHeight:'195px', display:'flex', alignItems:'flex-end',
+                boxShadow:'0 4px 28px rgba(0,0,0,0.14)',
+              }}>
+                <div style={{ position:'absolute', inset:0, zIndex:0 }}>
+                  <img src={bgImg} alt="Emig GmbH Standort Reutlingen"
+                    style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'center 40%', display:'block' }}
+                  />
+                </div>
+                <div style={{
+                  position:'absolute', inset:0, zIndex:1,
+                  background:'linear-gradient(to top, rgba(6,6,10,0.92) 0%, rgba(6,6,10,0.52) 45%, rgba(6,6,10,0.14) 100%)',
+                }} />
+                <div style={{
+                  position:'absolute', inset:0, zIndex:2, opacity:0.025, pointerEvents:'none',
+                  backgroundImage:`url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='280' height='280' filter='url(%23n)'/%3E%3C/svg%3E")`,
+                  backgroundSize:'180px',
+                }} />
+                <div style={{ position:'relative', zIndex:3, padding:'1.75rem 2.25rem', width:'100%' }}>
+                  <div style={{
+                    display:'inline-block', background:'rgba(200,152,58,0.15)', border:'1px solid rgba(200,152,58,0.28)',
+                    color:'#e8d5a8', fontSize:'0.62rem', fontWeight:700, letterSpacing:'0.18em',
+                    textTransform:'uppercase', padding:'4px 11px', borderRadius:'5px', marginBottom:'0.7rem',
+                  }}>ISO 13485:2016 · EU MDR 2017/745</div>
+                  <div style={{
+                    fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(1.5rem,3vw,2.1rem)',
+                    color:'#fff', letterSpacing:'0.06em', lineHeight:1, marginBottom:'0.45rem',
+                  }}>QM Philosophie & Strategie</div>
+                  <p style={{ color:'rgba(255,255,255,0.42)', fontSize:'0.82rem', margin:'0 0 1.1rem', fontWeight:300, lineHeight:1.55 }}>
+                    Leitbild, PDCA, Rollen, Normen und QM-KPIs — mit umfangreichem Wissenstest.
+                  </p>
+                  <div style={{ display:'flex', gap:'10px', flexWrap:'wrap', alignItems:'center' }}>
+                    <Link to="/docs/quality-management/qm-philosophie" style={{
+                      display:'inline-flex', alignItems:'center', gap:'7px',
+                      background:'#92400e', color:'#fff', padding:'9px 20px', borderRadius:'10px',
+                      fontFamily:"'Outfit',sans-serif", fontWeight:600, fontSize:'0.84rem',
+                      textDecoration:'none',
+                    }}>Modul öffnen →</Link>
+                    {['5 Kapitel','12 Fragen','~15 Min.'].map(t => (
+                      <span key={t} style={{
+                        background:'rgba(255,255,255,0.07)', border:'1px solid rgba(255,255,255,0.11)',
+                        color:'rgba(255,255,255,0.45)', fontSize:'0.66rem', fontWeight:600,
+                        padding:'3px 10px', borderRadius:'99px', letterSpacing:'0.08em',
+                      }}>{t}</span>
+                    ))}
+                  </div>
+                </div>
               </div>
 
               <div className="ea-test" style={{background:ready?'#f0fdf4':'#f8f7f3',borderColor:ready?'#bbf7d0':'#dedad4'}}>
