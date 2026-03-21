@@ -18,10 +18,17 @@ const config = {
   onBrokenMarkdownLinks: 'warn',
 
   i18n: {
-    defaultLocale: 'de',
-    locales: ['de'],
-  },
-
+      defaultLocale: 'de',
+      locales: ['de'],
+      localeConfigs: {
+        de: {
+          label: 'Deutsch',
+          direction: 'ltr',
+          htmlLang: 'de-DE',
+        },
+      },
+    },
+    
   presets: [
     [
       'classic',
