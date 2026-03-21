@@ -1,0 +1,840 @@
+---
+id: SOP_EINK-01
+title: Lieferantenauswahl und -bewertung
+sidebar_label: Lieferantenqualifizierung
+---
+
+import SopQuiz from '@site/src/components/SopQuiz';
+
+export const quizData = [
+  {
+    id: 1,
+    question: "Welche Lieferantenklasse bezeichnet Hersteller von Medizinprodukten und spezialisierte Logistikdienstleister?",
+    options: [
+      "Klasse B – Wichtige Lieferanten",
+      "Klasse C – Standardlieferanten",
+      "Klasse A – Kritische Lieferanten",
+      "Klasse D – Gelegentliche Lieferanten"
+    ],
+    correct: 2,
+    explanation: "Klasse A (Kritisch) umfasst Hersteller von Medizinprodukten und spezialisierte Logistikdienstleister, da diese direkt die Produktqualität und Patientensicherheit beeinflussen."
+  },
+  {
+    id: 2,
+    question: "Welches Dokument ist bei der Erstqualifizierung eines Klasse-A-Lieferanten NICHT zwingend erforderlich?",
+    options: [
+      "Aktuelles ISO 13485 oder ISO 9001 Zertifikat",
+      "Ausgefüllter Lieferantenselbstauskunftsbogen",
+      "Unternehmensbroschüre des Lieferanten",
+      "Gültige CE-Zertifikate und EU-Konformitätserklärungen"
+    ],
+    correct: 2,
+    explanation: "Eine Unternehmensbroschüre ist kein normativ gefordertes Dokument. Zwingend sind: ISO-Zertifikat, CE-Zertifikate, EU-Konformitätserklärungen und der Selbstauskunftsbogen."
+  },
+  {
+    id: 3,
+    question: "In welchem Intervall führt die kaufmännische Leitung die kontinuierliche Lieferantenbewertung durch?",
+    options: [
+      "Monatlich",
+      "Quartalsweise",
+      "Einmal jährlich",
+      "Alle drei Jahre"
+    ],
+    correct: 2,
+    explanation: "Gemäß SOP-EINK-01 findet die kontinuierliche Bewertung einmal jährlich statt. Die Kriterien umfassen Qualitätsrate, Liefertreue und Reaktionszeit bei Reklamationen."
+  },
+  {
+    id: 4,
+    question: "Was passiert mit einem Lieferanten, dessen Bewertung dauerhaft unter den Mindestanforderungen liegt?",
+    options: [
+      "Er wird automatisch auf Klasse B herabgestuft",
+      "Er wird auf die Sperrliste gesetzt und nicht mehr beauftragt",
+      "Er erhält eine einmalige Verwarnung ohne weitere Konsequenzen",
+      "Seine Bestellmengen werden um 50% reduziert"
+    ],
+    correct: 1,
+    explanation: "Lieferanten, die dauerhaft Mindestanforderungen nicht erfüllen, werden auf die Sperrliste gesetzt. Dies ist eine zwingende Maßnahme zur Sicherstellung der Produktqualität gemäß ISO 13485."
+  },
+  {
+    id: 5,
+    question: "Welche Lieferanten müssen VOR der ersten Bestellung qualifiziert werden?",
+    options: [
+      "Nur Klasse-C-Lieferanten für Bürobedarf",
+      "Alle Lieferanten ohne Ausnahme",
+      "Kritische Lieferanten der Klassen A und B",
+      "Ausschließlich neue Lieferanten im ersten Kalenderjahr"
+    ],
+    correct: 2,
+    explanation: "Kritische Lieferanten der Klassen A (Medizinprodukte, Logistik) und B (Berater, IT-Dienstleister für QMS) müssen vor der ersten Bestellung vollständig qualifiziert werden."
+  },
+  {
+    id: 6,
+    question: "Welche Norm bildet die zentrale Grundlage für das Lieferantenmanagement der Emig GmbH?",
+    options: [
+      "DIN EN ISO 9001:2015",
+      "ISO 13485:2016 in Verbindung mit der MDR",
+      "ISO 14001 (Umweltmanagement)",
+      "IATF 16949 (Automobilindustrie)"
+    ],
+    correct: 1,
+    explanation: "Die ISO 13485:2016 ist die spezifische Qualitätsnorm für Medizinprodukte und bildet gemeinsam mit der EU-MDR die Grundlage für alle QM-Anforderungen, einschließlich des Lieferantenmanagements."
+  },
+  {
+    id: 7,
+    question: "Berater und IT-Dienstleister für das QMS gehören zu welcher Lieferantenklasse?",
+    options: [
+      "Klasse A – Kritisch",
+      "Klasse B – Wichtig",
+      "Klasse C – Standard",
+      "Sie werden nicht klassifiziert"
+    ],
+    correct: 1,
+    explanation: "Berater und IT-Dienstleister für das QMS werden als Klasse B (Wichtig) eingestuft, da sie indirekten Einfluss auf die Produktqualität und das Qualitätsmanagementsystem haben."
+  },
+  {
+    id: 8,
+    question: "Was ist das primäre Ziel des Lieferantenmanagements nach SOP-EINK-01?",
+    options: [
+      "Möglichst günstige Einkaufspreise zu erzielen",
+      "Sicherzustellen, dass nur qualifizierte Partner die ISO 13485- und MDR-Anforderungen erfüllen",
+      "Die Anzahl der Lieferanten auf maximal 10 zu begrenzen",
+      "Alle Lieferanten im ERP-System zu dokumentieren"
+    ],
+    correct: 1,
+    explanation: "Das primäre Ziel ist die Sicherstellung, dass nur Partner beauftragt werden, die die Anforderungen der ISO 13485 und der MDR erfüllen – zum Schutz der Produktqualität und Patientensicherheit."
+  }
+];
+
+<style>{`
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&family=Bebas+Neue&display=swap');
+
+  /* ── Reset article typography for our custom layout ── */
+  .theme-doc-markdown h1,
+  .theme-doc-markdown h2,
+  .theme-doc-markdown h3,
+  .theme-doc-markdown p,
+  .theme-doc-markdown ul,
+  .theme-doc-markdown li {
+    all: revert;
+  }
+
+  /* ── Module page root ── */
+  .sop-page {
+    font-family: 'DM Sans', sans-serif;
+    color: #18181f;
+    max-width: 860px;
+  }
+
+  /* ── Hero banner ── */
+  .sop-hero {
+    background: #111116;
+    border-radius: 20px;
+    padding: 2.25rem 2.5rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sop-hero::after {
+    content: 'SOP';
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 7rem;
+    color: rgba(200,169,110,0.06);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: 0.1em;
+  }
+
+  .sop-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(200,169,110,0.12);
+    border: 1px solid rgba(200,169,110,0.25);
+    color: #e8d5a8;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+  }
+
+  .sop-hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: #fff;
+    margin: 0 0 0.75rem;
+    letter-spacing: 0.06em;
+    line-height: 1.05;
+  }
+
+  .sop-hero-desc {
+    font-size: 0.92rem;
+    color: rgba(255,255,255,0.45);
+    margin: 0 0 1.5rem;
+    line-height: 1.6;
+    max-width: 540px;
+  }
+
+  .sop-hero-meta {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .sop-hero-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.35);
+    font-weight: 500;
+  }
+
+  .sop-hero-meta-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #c8a96e;
+    flex-shrink: 0;
+  }
+
+  /* ── Table of contents cards ── */
+  .sop-toc {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    margin-bottom: 3rem;
+  }
+
+  .sop-toc-card {
+    background: #fff;
+    border: 1px solid #ece9e3;
+    border-radius: 14px;
+    padding: 1.1rem 1.25rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.2s ease;
+    color: #374151;
+  }
+
+  .sop-toc-card:hover {
+    border-color: #c8a96e;
+    background: #fffbf3;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+    color: #111;
+  }
+
+  .sop-toc-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    color: #dedad4;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+    transition: color 0.2s;
+  }
+
+  .sop-toc-card:hover .sop-toc-num { color: #c8a96e; }
+
+  .sop-toc-info {}
+
+  .sop-toc-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 2px;
+  }
+
+  .sop-toc-sub {
+    font-size: 0.7rem;
+    color: #9ca3af;
+  }
+
+  /* ── Section wrapper ── */
+  .sop-section {
+    margin-bottom: 3rem;
+    scroll-margin-top: 80px;
+  }
+
+  /* ── Section heading ── */
+  .sop-section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #f0ede8;
+  }
+
+  .sop-section-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    color: #e8e4dc;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+  }
+
+  .sop-section-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .sop-section-subtitle {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    font-weight: 500;
+    margin-top: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* ── Info box ── */
+  .sop-info {
+    background: #f8f7f3;
+    border-radius: 14px;
+    padding: 1.25rem 1.5rem;
+    font-size: 0.9rem;
+    color: #374151;
+    line-height: 1.65;
+    margin-bottom: 1.5rem;
+    border-left: 3px solid #c8a96e;
+  }
+
+  /* ── Classification cards ── */
+  .sop-class-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+    margin-bottom: 1.5rem;
+  }
+
+  .sop-class-card {
+    border-radius: 14px;
+    padding: 1.4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sop-class-badge {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 5px;
+    margin-bottom: 0.75rem;
+  }
+
+  .sop-class-name {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
+
+  .sop-class-desc {
+    font-size: 0.82rem;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* Class A */
+  .sop-class-a { background: #fef2f2; }
+  .sop-class-a .sop-class-badge { background: #fee2e2; color: #991b1b; }
+  .sop-class-a .sop-class-name  { color: #7f1d1d; }
+  .sop-class-a .sop-class-desc  { color: #b91c1c; opacity: 0.8; }
+
+  /* Class B */
+  .sop-class-b { background: #fffbeb; }
+  .sop-class-b .sop-class-badge { background: #fef3c7; color: #92400e; }
+  .sop-class-b .sop-class-name  { color: #78350f; }
+  .sop-class-b .sop-class-desc  { color: #92400e; opacity: 0.8; }
+
+  /* Class C */
+  .sop-class-c { background: #f0fdf4; }
+  .sop-class-c .sop-class-badge { background: #dcfce7; color: #14532d; }
+  .sop-class-c .sop-class-name  { color: #14532d; }
+  .sop-class-c .sop-class-desc  { color: #166534; opacity: 0.8; }
+
+  /* ── Document checklist ── */
+  .sop-checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 1.5rem;
+  }
+
+  .sop-checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: #fff;
+    border: 1px solid #ece9e3;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    transition: all 0.18s;
+  }
+
+  .sop-checklist-item:hover {
+    border-color: #c8a96e;
+    background: #fffbf3;
+  }
+
+  .sop-checklist-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: #f0ede8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+  }
+
+  .sop-checklist-label {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 2px;
+  }
+
+  .sop-checklist-sub {
+    font-size: 0.76rem;
+    color: #9ca3af;
+    line-height: 1.4;
+  }
+
+  /* ── Process flow ── */
+  .sop-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 1.5rem;
+  }
+
+  .sop-flow-step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .sop-flow-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .sop-flow-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #111116;
+    color: #e8d5a8;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+  }
+
+  .sop-flow-line {
+    width: 1px;
+    flex: 1;
+    background: linear-gradient(to bottom, #dedad4, transparent);
+    min-height: 24px;
+    margin: 3px 0;
+  }
+
+  .sop-flow-content {
+    padding-bottom: 1.5rem;
+    flex: 1;
+  }
+
+  .sop-flow-title {
+    font-size: 0.94rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .sop-flow-desc {
+    font-size: 0.82rem;
+    color: #6b7280;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* ── KPI / metric cards ── */
+  .sop-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 10px;
+    margin-bottom: 1.5rem;
+  }
+
+  .sop-kpi {
+    background: #fff;
+    border: 1px solid #ece9e3;
+    border-radius: 14px;
+    padding: 1.25rem;
+    text-align: center;
+  }
+
+  .sop-kpi-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: #111;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    margin-bottom: 4px;
+  }
+
+  .sop-kpi-label {
+    font-size: 0.72rem;
+    color: #9ca3af;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* ── Warning / note box ── */
+  .sop-warning {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    font-size: 0.86rem;
+    color: #7f1d1d;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .sop-warning-icon {
+    font-size: 1rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── Norm reference pill ── */
+  .sop-norm-refs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 1rem;
+  }
+
+  .sop-norm-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #f0ede8;
+    color: #374151;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-family: 'SF Mono','Fira Code', monospace;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── Divider ── */
+  .sop-divider {
+    height: 1px;
+    background: linear-gradient(90deg, #e5e1da, transparent);
+    margin: 2.5rem 0;
+  }
+
+  /* ── Animations ── */
+  @keyframes sop-fade {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .sop-page > * { animation: sop-fade 0.4s ease both; }
+  .sop-toc-card:nth-child(1) { animation-delay: 0.05s; }
+  .sop-toc-card:nth-child(2) { animation-delay: 0.10s; }
+  .sop-toc-card:nth-child(3) { animation-delay: 0.15s; }
+  .sop-toc-card:nth-child(4) { animation-delay: 0.20s; }
+`}</style>
+
+<div className="sop-page">
+
+{/* ═══════════════════════════════════════════
+    HERO BANNER
+═══════════════════════════════════════════ */}
+
+<div className="sop-hero">
+  <div className="sop-hero-badge">SOP-EINK-01 · Einkauf & Lieferanten</div>
+  <h1 className="sop-hero-title">Lieferantenauswahl<br />und -bewertung</h1>
+  <p className="sop-hero-desc">
+    Dieses Modul beschreibt, wie die Emig GmbH sicherstellt, dass nur qualifizierte Partner beauftragt werden, die die Anforderungen der ISO 13485 und der MDR erfüllen.
+  </p>
+  <div className="sop-hero-meta">
+    <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot" /> ISO 13485:2016</div>
+    <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot" /> EU MDR 2017/745</div>
+    <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot" /> 3 Kapitel · 8 Fragen</div>
+    <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot" /> ca. 8 Min. Lesezeit</div>
+  </div>
+</div>
+
+{/* ═══════════════════════════════════════════
+    TABLE OF CONTENTS (clickable cards)
+═══════════════════════════════════════════ */}
+
+<div className="sop-toc">
+  <a href="#klassifizierung" className="sop-toc-card">
+    <div className="sop-toc-num">01</div>
+    <div className="sop-toc-info">
+      <div className="sop-toc-label">Lieferantenklassifizierung</div>
+      <div className="sop-toc-sub">Klassen A · B · C</div>
+    </div>
+  </a>
+  <a href="#qualifizierung" className="sop-toc-card">
+    <div className="sop-toc-num">02</div>
+    <div className="sop-toc-info">
+      <div className="sop-toc-label">Erstauswahl & Qualifizierung</div>
+      <div className="sop-toc-sub">Nachweise · Prozessschritte</div>
+    </div>
+  </a>
+  <a href="#bewertung" className="sop-toc-card">
+    <div className="sop-toc-num">03</div>
+    <div className="sop-toc-info">
+      <div className="sop-toc-label">Kontinuierliche Bewertung</div>
+      <div className="sop-toc-sub">KPIs · Maßnahmen</div>
+    </div>
+  </a>
+  <a href="#wissenstest" className="sop-toc-card">
+    <div className="sop-toc-num">★</div>
+    <div className="sop-toc-info">
+      <div className="sop-toc-label">Wissenstest</div>
+      <div className="sop-toc-sub">8 Fragen · Quiz</div>
+    </div>
+  </a>
+</div>
+
+{/* ═══════════════════════════════════════════
+    SECTION 1: LIEFERANTENKLASSIFIZIERUNG
+═══════════════════════════════════════════ */}
+
+<div className="sop-section" id="klassifizierung">
+  <div className="sop-section-header">
+    <div className="sop-section-num">01</div>
+    <div>
+      <div className="sop-section-title">Lieferantenklassifizierung</div>
+      <div className="sop-section-subtitle">Einfluss auf Produktqualität · Drei Kategorien</div>
+    </div>
+  </div>
+
+  <div className="sop-info">
+    Lieferanten werden nach ihrem Einfluss auf die Produktqualität eingestuft. Die Klassifizierung bestimmt den Umfang der erforderlichen Qualifizierungsmaßnahmen und die Intensität der laufenden Überwachung.
+  </div>
+
+  <div className="sop-class-grid">
+    <div className="sop-class-card sop-class-a">
+      <div className="sop-class-badge">Klasse A — Kritisch</div>
+      <div className="sop-class-name">Höchste Priorität</div>
+      <p className="sop-class-desc">Hersteller von Medizinprodukten und spezialisierte Logistikdienstleister. Direkter Einfluss auf Patientensicherheit.</p>
+    </div>
+    <div className="sop-class-card sop-class-b">
+      <div className="sop-class-badge">Klasse B — Wichtig</div>
+      <div className="sop-class-name">Hohe Priorität</div>
+      <p className="sop-class-desc">Berater und IT-Dienstleister für das QMS. Indirekter Einfluss auf Qualitätsprozesse und Compliance.</p>
+    </div>
+    <div className="sop-class-card sop-class-c">
+      <div className="sop-class-badge">Klasse C — Standard</div>
+      <div className="sop-class-name">Normale Priorität</div>
+      <p className="sop-class-desc">Allgemeiner Bürobedarf und nicht-regulierte Dienstleistungen. Kein direkter Einfluss auf Produktqualität.</p>
+    </div>
+  </div>
+
+  <div className="sop-norm-refs">
+    <span className="sop-norm-pill">ISO 13485:2016 §7.4</span>
+    <span className="sop-norm-pill">MDR Art. 10 Abs. 9</span>
+  </div>
+</div>
+
+<div className="sop-divider" />
+
+{/* ═══════════════════════════════════════════
+    SECTION 2: ERSTAUSWAHL UND QUALIFIZIERUNG
+═══════════════════════════════════════════ */}
+
+<div className="sop-section" id="qualifizierung">
+  <div className="sop-section-header">
+    <div className="sop-section-num">02</div>
+    <div>
+      <div className="sop-section-title">Erstauswahl und Qualifizierung</div>
+      <div className="sop-section-subtitle">Bevor eine Bestellung erfolgt · Klasse A & B</div>
+    </div>
+  </div>
+
+  <div className="sop-info">
+    Kritische Lieferanten der Klassen A und B müssen <strong>vor der ersten Bestellung</strong> vollständig qualifiziert werden. Folgende Nachweise sind zwingend einzuholen und im QMS zu dokumentieren:
+  </div>
+
+  <div className="sop-checklist">
+    <div className="sop-checklist-item">
+      <div className="sop-checklist-icon">📄</div>
+      <div>
+        <div className="sop-checklist-label">ISO 13485 oder ISO 9001 Zertifikat</div>
+        <div className="sop-checklist-sub">Aktuell gültig, ausgestellt von akkreditierter Zertifizierungsstelle</div>
+      </div>
+    </div>
+    <div className="sop-checklist-item">
+      <div className="sop-checklist-icon">🏷️</div>
+      <div>
+        <div className="sop-checklist-label">CE-Zertifikate & EU-Konformitätserklärungen</div>
+        <div className="sop-checklist-sub">Gültige Unterlagen für alle gelieferten Medizinprodukte gemäß MDR</div>
+      </div>
+    </div>
+    <div className="sop-checklist-item">
+      <div className="sop-checklist-icon">📋</div>
+      <div>
+        <div className="sop-checklist-label">Lieferantenselbstauskunftsbogen</div>
+        <div className="sop-checklist-sub">Vollständig ausgefüllt und durch Geschäftsführung des Lieferanten unterzeichnet</div>
+      </div>
+    </div>
+  </div>
+
+  <div style={{ marginBottom: '1.5rem' }}>
+    <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#374151', marginBottom: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Qualifizierungsprozess</div>
+    <div className="sop-flow">
+      {[
+        { t: 'Bedarfsermittlung', d: 'Identifikation des Lieferantenbedarfs durch Einkauf oder Fachabteilung.' },
+        { t: 'Dokumentenanforderung', d: 'Anforderung aller Pflichtdokumente beim potenziellen Lieferanten.' },
+        { t: 'Prüfung & Freigabe', d: 'Prüfung der Unterlagen durch QM-Beauftragten. Bei Vollständigkeit: Freigabe zur Aufnahme.' },
+        { t: 'Aufnahme in die Lieferantenliste', d: 'Dokumentation im QMS mit Klassifizierung, Freigabedatum und zuständiger Person.' },
+      ].map((s, i, arr) => (
+        <div className="sop-flow-step" key={i}>
+          <div className="sop-flow-left">
+            <div className="sop-flow-circle">{i + 1}</div>
+            {i < arr.length - 1 && <div className="sop-flow-line" />}
+          </div>
+          <div className="sop-flow-content">
+            <div className="sop-flow-title">{s.t}</div>
+            <p className="sop-flow-desc">{s.d}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div className="sop-norm-refs">
+    <span className="sop-norm-pill">ISO 13485:2016 §7.4.1</span>
+    <span className="sop-norm-pill">ISO 13485:2016 §7.4.2</span>
+  </div>
+</div>
+
+<div className="sop-divider" />
+
+{/* ═══════════════════════════════════════════
+    SECTION 3: KONTINUIERLICHE BEWERTUNG
+═══════════════════════════════════════════ */}
+
+<div className="sop-section" id="bewertung">
+  <div className="sop-section-header">
+    <div className="sop-section-num">03</div>
+    <div>
+      <div className="sop-section-title">Kontinuierliche Bewertung</div>
+      <div className="sop-section-subtitle">Jährliche Überprüfung · KPIs · Konsequenzen</div>
+    </div>
+  </div>
+
+  <div className="sop-info">
+    Einmal jährlich führt die kaufmännische Leitung eine Bewertung aller aktiven Lieferanten der Klassen A und B durch. Grundlage sind messbare Leistungskennzahlen aus dem Tagesgeschäft.
+  </div>
+
+  <div className="sop-kpi-grid">
+    <div className="sop-kpi">
+      <div className="sop-kpi-val" style={{ color: '#10b981' }}>≥95%</div>
+      <div className="sop-kpi-label">Qualitätsrate</div>
+    </div>
+    <div className="sop-kpi">
+      <div className="sop-kpi-val" style={{ color: '#c8a96e' }}>≥90%</div>
+      <div className="sop-kpi-label">Liefertreue</div>
+    </div>
+    <div className="sop-kpi">
+      <div className="sop-kpi-val" style={{ color: '#6ea8c8' }}>≤48h</div>
+      <div className="sop-kpi-label">Reaktionszeit</div>
+    </div>
+    <div className="sop-kpi">
+      <div className="sop-kpi-val" style={{ color: '#111' }}>1×</div>
+      <div className="sop-kpi-label">Jährlich</div>
+    </div>
+  </div>
+
+  <div style={{ marginBottom: '1.5rem' }}>
+    <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#374151', marginBottom: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Bewertungsergebnis & Maßnahmen</div>
+    <div className="sop-checklist">
+      <div className="sop-checklist-item" style={{ borderColor: '#d1fae5', background: '#f0fdf4' }}>
+        <div className="sop-checklist-icon" style={{ background: '#d1fae5' }}>✓</div>
+        <div>
+          <div className="sop-checklist-label" style={{ color: '#065f46' }}>Bewertung bestanden</div>
+          <div className="sop-checklist-sub">Lieferant verbleibt auf der genehmigten Liste. Nächste Bewertung in 12 Monaten.</div>
+        </div>
+      </div>
+      <div className="sop-checklist-item" style={{ borderColor: '#fef3c7', background: '#fffbeb' }}>
+        <div className="sop-checklist-icon" style={{ background: '#fef3c7' }}>⚠</div>
+        <div>
+          <div className="sop-checklist-label" style={{ color: '#92400e' }}>Verbesserungsbedarf</div>
+          <div className="sop-checklist-sub">Corrective Action Plan (CAPA) wird eingeleitet. Lieferant erhält 90 Tage zur Verbesserung.</div>
+        </div>
+      </div>
+      <div className="sop-checklist-item" style={{ borderColor: '#fecaca', background: '#fef2f2' }}>
+        <div className="sop-checklist-icon" style={{ background: '#fee2e2' }}>✕</div>
+        <div>
+          <div className="sop-checklist-label" style={{ color: '#7f1d1d' }}>Dauerhaft nicht bestanden</div>
+          <div className="sop-checklist-sub">Aufnahme in die Sperrliste. Keine weiteren Bestellungen. Suche nach Alternativlieferanten.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div className="sop-warning">
+    <div className="sop-warning-icon">⚠</div>
+    <div>
+      <strong>Wichtig:</strong> Lieferanten auf der Sperrliste dürfen nicht beauftragt werden, auch nicht für Einzelbestellungen. Eine Entsperrung ist nur nach erneuter vollständiger Qualifizierung und schriftlicher Freigabe durch den QM-Beauftragten möglich.
+    </div>
+  </div>
+
+  <div className="sop-norm-refs">
+    <span className="sop-norm-pill">ISO 13485:2016 §7.4.1</span>
+    <span className="sop-norm-pill">MDR Annex IX</span>
+  </div>
+</div>
+
+<div className="sop-divider" />
+
+{/* ═══════════════════════════════════════════
+    QUIZ
+═══════════════════════════════════════════ */}
+
+</div>
+
+<SopQuiz
+  refCode="SOP-EINK-01"
+  questions={quizData}
+/>
