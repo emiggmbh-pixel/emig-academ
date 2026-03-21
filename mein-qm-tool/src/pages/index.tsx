@@ -8,20 +8,122 @@ import Head from '@docusaurus/Head';
 
 const ALL_QM = ['SOP-LOG-01','SOP-LOG-02','SOP-LOG-03','SOP-LOG-04','SOP-EINK-01','SOP-EINK-02','SOP-REG-01','SOP-REG-02','SOP-REG-03','SOP-REG-05'];
 
-const RIWO = [
-  { title:'Vertebris Stenose',         code:'RIWO-01', link:'/docs/medizinprodukte/riwospine/stenose',     desc:'Vollendoskopische Dekompression bei spinaler Stenose' },
-  { title:'Vertebris Lumbar',          code:'RIWO-02', link:'/docs/medizinprodukte/riwospine/lumbar',      desc:'Bandscheibenchirurgie der Lendenwirbelsäule' },
-  { title:'Vertebris Cervical',        code:'RIWO-03', link:'/docs/medizinprodukte/riwospine/cervical',    desc:'Vollendoskopische Chirurgie der Halswirbelsäule' },
-  { title:'Instrumentarium & Optiken', code:'RIWO-04', link:'/docs/medizinprodukte/riwospine/instrumente', desc:'Hochpräzisions-Endoskope und Instrumente' },
-];
+// ─── MEDIZINPRODUKTE DATA ────────────────────────────────────────────────────
 
 const MFRS = [
-  { id:'riwo',     name:'RIWOspine',           logo:'/img/logo-riwospine.png' },
-  { id:'inomed',   name:'inomed',               logo:'/img/logo-inomed.png' },
-  { id:'oncosem',  name:'oncosem',              logo:'/img/logo-oncosem.png' },
-  { id:'bfmg',     name:'Black Forest Medical', logo:'/img/logo-bfmg.png' },
-  { id:'meyer',    name:'Meyer-Haake',          logo:'/img/logo-meyer.png' },
-  { id:'brainlab', name:'Brainlab',             logo:'/img/logo-brainlab.png' },
+  {
+    id: 'riwo',
+    name: 'RIWOspine',
+    logo: '/img/logo-riwospine.png',
+    tagline: 'Endoskopische Wirbelsäulenchirurgie',
+    origin: 'Deutschland · Richard Wolf Company',
+    accent: '#c0392b',
+    bg: 'linear-gradient(135deg,#1a0a08 0%,#2d1208 50%,#1a0a08 100%)',
+    description: 'RIWOspine ist ein führender Spezialist für vollendoskopische Wirbelsäulenchirurgie. Als Teil der Richard Wolf Unternehmensgruppe entwickelt RIWOspine hochpräzise Endoskopiesysteme für minimalinvasive Eingriffe an Hals-, Brust- und Lendenwirbelsäule.',
+    focus: ['Vollendoskopische Chirurgie','Minimalinvasive Eingriffe','Spine-Endoskopie','Neurochirurgie'],
+    facts: [
+      { label: 'Gegründet', value: '1906' },
+      { label: 'Hauptsitz', value: 'Knittlingen, DE' },
+      { label: 'Mitarbeiter', value: '2.000+' },
+      { label: 'Länder', value: '100+' },
+    ],
+    products: [
+      { title: 'Vertebris Stenose',         code: 'RIWO-01', link: '/docs/medizinprodukte/riwospine/stenose',     desc: 'Vollendoskopische Dekompression bei lumbaler und zervikaler Spinalstenose. Minimalinvasive Technik für kürzere Rehabilitation.' },
+      { title: 'Vertebris Lumbar',          code: 'RIWO-02', link: '/docs/medizinprodukte/riwospine/lumbar',      desc: 'Endoskopisches System für Bandscheibenchirurgie der Lendenwirbelsäule. Transforaminaler und interaktiver Zugang.' },
+      { title: 'Vertebris Cervical',        code: 'RIWO-03', link: '/docs/medizinprodukte/riwospine/cervical',    desc: 'Vollendoskopische Chirurgie der Halswirbelsäule. Anteriorer und posteriorer Zugang für zervikale Pathologien.' },
+      { title: 'Instrumentarium & Optiken', code: 'RIWO-04', link: '/docs/medizinprodukte/riwospine/instrumente', desc: 'Hochpräzisions-Endoskope, Optiken und Instrumente für alle Vertebris-Systeme. Optimale Visualisierung und Ergonomie.' },
+    ],
+  },
+  {
+    id: 'inomed',
+    name: 'inomed',
+    logo: '/img/logo-inomed.png',
+    tagline: 'Intraoperatives Neuromonitoring',
+    origin: 'Deutschland · Emmendingen',
+    accent: '#1565c0',
+    bg: 'linear-gradient(135deg,#040d1a 0%,#081430 50%,#040d1a 100%)',
+    description: 'inomed Medizintechnik ist Weltmarktführer im Bereich intraoperatives Neuromonitoring (IOM). Die Systeme schützen das Nervensystem während neurochirurgischer, orthopädischer und gefäßchirurgischer Eingriffe.',
+    focus: ['Intraoperatives Neuromonitoring','Neurophysiologie','Hirnstimulation','Schlafdiagnostik'],
+    facts: [
+      { label: 'Gegründet', value: '1989' },
+      { label: 'Hauptsitz', value: 'Emmendingen, DE' },
+      { label: 'Zertifizierung', value: 'ISO 13485' },
+      { label: 'Anwendung', value: 'Weltweit' },
+    ],
+    products: [],
+  },
+  {
+    id: 'oncosem',
+    name: 'oncosem',
+    logo: '/img/logo-oncosem.png',
+    tagline: 'Onkologische Diagnostik & Therapie',
+    origin: 'Deutschland · Hechingen',
+    accent: '#00695c',
+    bg: 'linear-gradient(135deg,#011a14 0%,#022a1e 50%,#011a14 100%)',
+    description: 'oncosem Onkologische Systeme entwickelt und vertreibt innovative Lösungen für onkologische Diagnostik und Therapie. Spezialisiert auf Sentinellymphknoten-Biopsie und nuklearmedizinische Verfahren.',
+    focus: ['Sentinellymphknoten-Biopsie','Nuklearmedizin','Onkologie','Gammaproben'],
+    facts: [
+      { label: 'Spezialisierung', value: 'Onkologie' },
+      { label: 'Hauptsitz', value: 'Hechingen, DE' },
+      { label: 'Zertifizierung', value: 'MDR 2017/745' },
+      { label: 'Kernprodukt', value: 'Gammasonden' },
+    ],
+    products: [],
+  },
+  {
+    id: 'bfmg',
+    name: 'Black Forest Medical',
+    logo: '/img/logo-bfmg.png',
+    tagline: 'Transplantationsmedizin & Gefäßchirurgie',
+    origin: 'Deutschland · Freiburg im Breisgau',
+    accent: '#4a148c',
+    bg: 'linear-gradient(135deg,#0d0414 0%,#160a20 50%,#0d0414 100%)',
+    description: 'Black Forest Medical Group spezialisiert sich auf hochwertige Implantate und Instrumente für die Transplantationsmedizin, Gefäßchirurgie und rekonstruktive Chirurgie. Präzisionsfertigung aus dem Schwarzwald.',
+    focus: ['Transplantationsmedizin','Gefäßchirurgie','Implantate','Rekonstruktive Chirurgie'],
+    facts: [
+      { label: 'Region', value: 'Schwarzwald, DE' },
+      { label: 'Fokus', value: 'Transplantation' },
+      { label: 'Qualität', value: 'Made in Germany' },
+      { label: 'Zertifizierung', value: 'ISO 13485' },
+    ],
+    products: [],
+  },
+  {
+    id: 'meyer',
+    name: 'Meyer-Haake',
+    logo: '/img/logo-meyer.png',
+    tagline: 'Wirbelsäulen-Implantate & Fixationssysteme',
+    origin: 'Deutschland · Wehrheim',
+    accent: '#e65100',
+    bg: 'linear-gradient(135deg,#1a0800 0%,#2d1200 50%,#1a0800 100%)',
+    description: 'Meyer-Haake Medical Innovations entwickelt und fertigt innovative Wirbelsäulen-Implantate und Fixationssysteme. Spezialisiert auf Pedikelschraubensysteme, Cages und dynamische Stabilisierung.',
+    focus: ['Pedikelschraubensysteme','Interkorporale Cages','Dynamische Stabilisierung','Minimalinvasive Implantologie'],
+    facts: [
+      { label: 'Gegründet', value: '1990' },
+      { label: 'Hauptsitz', value: 'Wehrheim, DE' },
+      { label: 'Fokus', value: 'Spine Implantate' },
+      { label: 'Zertifizierung', value: 'ISO 13485' },
+    ],
+    products: [],
+  },
+  {
+    id: 'brainlab',
+    name: 'Brainlab',
+    logo: '/img/logo-brainlab.png',
+    tagline: 'Digitale Chirurgie & Strahlentherapie',
+    origin: 'Deutschland · München',
+    accent: '#880e4f',
+    bg: 'linear-gradient(135deg,#14020a 0%,#200510 50%,#14020a 100%)',
+    description: 'Brainlab ist ein globaler Technologieführer für softwaregestützte medizinische Technologie. Ihre Lösungen für Neurochirurgie, Orthopädie und Strahlentherapie werden in über 6.000 Krankenhäusern weltweit eingesetzt.',
+    focus: ['Navigationsgestützte Chirurgie','Strahlentherapie','Neurochirurgie','Digitale OR-Integration'],
+    facts: [
+      { label: 'Gegründet', value: '1989' },
+      { label: 'Hauptsitz', value: 'München, DE' },
+      { label: 'Installationen', value: '6.000+ Kliniken' },
+      { label: 'Länder', value: '121' },
+    ],
+    products: [],
+  },
 ];
 
 const SAP_PROC = [
@@ -282,21 +384,183 @@ body{background:var(--bg);}
 .ea-card-btn:hover{filter:brightness(1.07);transform:translateY(-1px);}
 
 /* ── MANUFACTURER ── */
-.ea-mfr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;}
-.ea-mfr-card{background:var(--card);border-radius:var(--r);padding:2rem 1.5rem 1.5rem;text-align:center;
-  cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.06),0 0 0 1px var(--card-border);
-  transition:all .22s;position:relative;overflow:hidden;}
-.ea-mfr-card:hover{transform:translateY(-4px);box-shadow:0 14px 32px rgba(0,0,0,.1);}
-.ea-mfr-top{position:absolute;top:0;left:0;right:0;height:2px;background:#dc2626;}
-.ea-mfr-lbl{font-size:.7rem;color:var(--text-faint);font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-top:.9rem;}
-.ea-back{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:10px;
-  border:1px solid var(--section-border);background:var(--card);font-family:'Outfit',sans-serif;font-weight:600;
-  font-size:.84rem;cursor:pointer;margin-bottom:1.5rem;color:var(--text);transition:all .2s;}
-.ea-back:hover{background:var(--bg2);}
-.ea-manu-hd{background:var(--card);border:1px solid var(--card-border);border-radius:16px;
-  padding:1.75rem 2.25rem;margin-bottom:1.75rem;box-shadow:0 1px 4px rgba(0,0,0,.05);}
-.ea-manu-hd-t{font-size:1.7rem;font-weight:700;color:var(--text);margin:0 0 4px;}
-.ea-manu-hd-s{font-size:.84rem;color:var(--text-dim);margin:0;}
+/* ── MANUFACTURER LIST — full-width cards ── */
+.med-list{display:flex;flex-direction:column;gap:0;}
+
+/* Each manufacturer = full-width banner card */
+.med-banner{
+  position:relative;width:100%;overflow:hidden;cursor:pointer;
+  border-radius:20px;margin-bottom:16px;
+  min-height:180px;display:flex;align-items:center;
+  transition:transform .3s ease,box-shadow .3s ease;
+  box-shadow:0 4px 20px rgba(0,0,0,.12);
+}
+.med-banner:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.2);}
+[data-theme="dark"] .med-banner{box-shadow:0 4px 20px rgba(0,0,0,.4);}
+[data-theme="dark"] .med-banner:hover{box-shadow:0 16px 48px rgba(0,0,0,.6);}
+
+/* Dark gradient background */
+.med-banner-bg{
+  position:absolute;inset:0;z-index:0;
+  transition:transform .6s ease;
+}
+.med-banner:hover .med-banner-bg{transform:scale(1.03);}
+
+/* Overlay for readability */
+.med-banner-overlay{
+  position:absolute;inset:0;z-index:1;
+  background:linear-gradient(90deg, rgba(0,0,0,.7) 0%, rgba(0,0,0,.4) 50%, rgba(0,0,0,.1) 100%);
+}
+
+/* Accent line on left */
+.med-banner-accent{
+  position:absolute;left:0;top:0;bottom:0;width:4px;z-index:3;border-radius:20px 0 0 20px;
+}
+
+/* Content inside banner */
+.med-banner-content{
+  position:relative;z-index:2;padding:2.5rem 3rem;
+  display:flex;align-items:center;gap:3rem;width:100%;
+}
+.med-banner-logo-wrap{
+  flex-shrink:0;
+  width:180px;height:80px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.08);
+  border-radius:14px;
+  backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.12);
+  padding:12px 20px;
+}
+.med-banner-logo{max-width:100%;max-height:100%;object-fit:contain;filter:brightness(0) invert(1);}
+.med-banner-logo.dark-logo{filter:none;}
+.med-banner-text{flex:1;min-width:0;}
+.med-banner-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.6rem,3vw,2.4rem);
+  color:#fff;letter-spacing:.06em;line-height:1;margin-bottom:.4rem;}
+.med-banner-tagline{font-size:.85rem;color:rgba(255,255,255,.65);font-weight:300;
+  letter-spacing:.06em;text-transform:uppercase;margin-bottom:.8rem;}
+.med-banner-origin{display:flex;align-items:center;gap:6px;font-size:.72rem;
+  color:rgba(255,255,255,.45);font-weight:500;}
+.med-banner-origin::before{content:'📍';font-size:.75rem;}
+.med-banner-arrow{
+  flex-shrink:0;width:48px;height:48px;border-radius:50%;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.7);font-size:1.1rem;
+  transition:all .25s;
+  backdrop-filter:blur(8px);
+}
+.med-banner:hover .med-banner-arrow{background:rgba(255,255,255,.2);color:#fff;transform:translateX(4px);}
+
+/* Status badge */
+.med-banner-badge{
+  position:absolute;top:1.25rem;right:1.5rem;z-index:3;
+  font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;
+  padding:4px 12px;border-radius:99px;
+  background:rgba(255,255,255,.12);color:rgba(255,255,255,.7);
+  border:1px solid rgba(255,255,255,.15);
+  backdrop-filter:blur(8px);
+}
+.med-banner-badge.active{background:rgba(16,185,129,.2);color:#6ee7b7;border-color:rgba(16,185,129,.3);}
+
+/* ── MANUFACTURER DETAIL PAGE ── */
+.med-detail{}
+
+.med-detail-hero{
+  position:relative;overflow:hidden;border-radius:20px;
+  min-height:280px;display:flex;align-items:flex-end;
+  margin-bottom:2rem;
+  box-shadow:0 8px 40px rgba(0,0,0,.2);
+}
+[data-theme="dark"] .med-detail-hero{box-shadow:0 8px 40px rgba(0,0,0,.5);}
+.med-detail-hero-bg{position:absolute;inset:0;z-index:0;}
+.med-detail-hero-overlay{
+  position:absolute;inset:0;z-index:1;
+  background:linear-gradient(to top,rgba(0,0,0,.85) 0%,rgba(0,0,0,.4) 50%,rgba(0,0,0,.1) 100%);
+}
+.med-detail-hero-content{
+  position:relative;z-index:2;padding:2.5rem 3rem;width:100%;
+  display:flex;align-items:flex-end;gap:2.5rem;flex-wrap:wrap;
+}
+.med-detail-logo-wrap{
+  width:160px;height:64px;
+  background:rgba(255,255,255,.1);border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(255,255,255,.15);
+  padding:10px 18px;backdrop-filter:blur(8px);flex-shrink:0;
+}
+.med-detail-logo{max-width:100%;max-height:100%;object-fit:contain;filter:brightness(0) invert(1);}
+.med-detail-hero-text{flex:1;min-width:0;}
+.med-detail-hero-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,3.5rem);
+  color:#fff;letter-spacing:.05em;line-height:.95;margin-bottom:.5rem;}
+.med-detail-hero-tag{font-size:.82rem;color:rgba(255,255,255,.6);font-weight:300;
+  letter-spacing:.1em;text-transform:uppercase;}
+
+/* Info grid below hero */
+.med-info-grid{display:grid;grid-template-columns:1fr 2fr;gap:1.5rem;margin-bottom:2rem;}
+.med-info-card{background:var(--card);border:1px solid var(--card-border);border-radius:16px;
+  padding:1.75rem;box-shadow:0 1px 4px rgba(0,0,0,.05);}
+.med-info-card-t{font-size:.75rem;font-weight:700;color:var(--text-faint);text-transform:uppercase;
+  letter-spacing:.12em;margin-bottom:1rem;}
+.med-facts{display:flex;flex-direction:column;gap:.75rem;}
+.med-fact{display:flex;align-items:center;justify-content:space-between;padding:.6rem .75rem;
+  background:var(--bg2);border-radius:8px;}
+.med-fact-l{font-size:.75rem;color:var(--text-dim);font-weight:500;}
+.med-fact-v{font-size:.82rem;color:var(--text);font-weight:700;}
+.med-focus-tags{display:flex;flex-wrap:wrap;gap:8px;}
+.med-focus-tag{padding:6px 14px;border-radius:99px;font-size:.75rem;font-weight:600;
+  background:var(--bg2);color:var(--text-dim);border:1px solid var(--section-border);}
+
+/* Description */
+.med-desc{font-size:.9rem;color:var(--text-dim);line-height:1.75;margin-bottom:.75rem;}
+
+/* Back button */
+.med-back{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;
+  border:1px solid var(--section-border);background:var(--card);font-family:'Outfit',sans-serif;
+  font-weight:600;font-size:.84rem;cursor:pointer;margin-bottom:2rem;color:var(--text);transition:all .2s;
+  box-shadow:0 1px 3px rgba(0,0,0,.05);}
+.med-back:hover{background:var(--bg2);}
+
+/* Product cards — full width each */
+.med-prod-list{display:flex;flex-direction:column;gap:12px;}
+.med-prod-card{
+  background:var(--card);border:1px solid var(--card-border);border-radius:16px;
+  padding:1.75rem 2rem;display:flex;align-items:center;gap:2rem;
+  box-shadow:0 1px 4px rgba(0,0,0,.05);transition:all .22s;
+  text-decoration:none;color:inherit;position:relative;overflow:hidden;
+}
+.med-prod-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.1);border-color:rgba(200,152,58,.3);}
+[data-theme="dark"] .med-prod-card:hover{box-shadow:0 8px 24px rgba(0,0,0,.3);}
+.med-prod-accent{position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:16px 0 0 16px;}
+.med-prod-num{
+  font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--text-faint);
+  letter-spacing:.04em;line-height:1;min-width:48px;text-align:center;flex-shrink:0;
+}
+.med-prod-divider{width:1px;height:60px;background:var(--section-border);flex-shrink:0;}
+.med-prod-body{flex:1;min-width:0;}
+.med-prod-code{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--text-faint);
+  background:var(--bg2);border:1px solid var(--section-border);padding:2px 8px;
+  border-radius:4px;display:inline-block;margin-bottom:.5rem;}
+.med-prod-title{font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:.4rem;line-height:1.3;}
+.med-prod-desc{font-size:.82rem;color:var(--text-dim);line-height:1.6;}
+.med-prod-cta{
+  flex-shrink:0;padding:10px 20px;border-radius:10px;
+  font-family:'Outfit',sans-serif;font-weight:600;font-size:.82rem;
+  text-decoration:none;transition:all .2s;white-space:nowrap;
+  background:var(--bg2);color:var(--text-dim);border:1px solid var(--section-border);
+}
+.med-prod-card:hover .med-prod-cta{background:var(--gold);color:#fff;border-color:var(--gold);}
+
+/* Draft state */
+.med-draft{
+  text-align:center;padding:5rem 2rem;background:var(--card);
+  border-radius:20px;border:2px dashed var(--section-border);
+  margin-top:1.5rem;
+}
+.med-draft-icon{font-size:3rem;margin-bottom:1rem;display:block;}
+.med-draft-t{font-size:1.15rem;font-weight:700;color:var(--text);margin:0 0 .5rem;}
+.med-draft-s{font-size:.86rem;color:var(--text-faint);margin:0;max-width:360px;margin:0 auto;}
+
 .ea-draft{text-align:center;padding:4rem 2rem;background:var(--card);border-radius:16px;border:1.5px dashed var(--section-border);}
 .ea-draft-t{font-size:1.1rem;font-weight:600;color:var(--text);margin:0 0 .4rem;}
 .ea-draft-s{font-size:.86rem;color:var(--text-faint);margin:0;}
@@ -583,7 +847,6 @@ body{background:var(--bg);}
 }
 @media(min-width:768px) and (max-width:1099px){
   .ea-grid{grid-template-columns:repeat(3,1fr);gap:11px;}
-  .ea-mfr-grid{grid-template-columns:repeat(3,1fr);gap:11px;}
   .sap-pgrid{grid-template-columns:repeat(3,1fr);gap:12px;}
   .sap-mgrid{grid-template-columns:repeat(2,1fr);}
   .sap-rgrid{grid-template-columns:repeat(3,1fr);}
@@ -592,11 +855,15 @@ body{background:var(--bg);}
   .sap-content{padding:2.5rem 5% 4rem;}
   .sap-dp-grid{grid-template-columns:repeat(2,1fr);}
   .sap-esc-acts{grid-template-columns:repeat(2,1fr);}
+  /* MED tablet */
+  .med-banner{min-height:150px;}
+  .med-banner-content{padding:2rem;}
+  .med-banner-logo-wrap{width:150px;height:66px;}
+  .med-info-grid{grid-template-columns:1fr;}
 }
 @media(min-width:480px) and (max-width:767px){
   .ea-wrap{padding:0 4%;}
   .ea-grid{grid-template-columns:repeat(2,1fr);gap:10px;}
-  .ea-mfr-grid{grid-template-columns:repeat(2,1fr);gap:10px;}
   .sap-pgrid{grid-template-columns:repeat(2,1fr);gap:10px;}
   .sap-mgrid{grid-template-columns:1fr;}
   .sap-rgrid{grid-template-columns:repeat(2,1fr);}
@@ -613,6 +880,16 @@ body{background:var(--bg);}
   .ea-prog{gap:1.25rem;}
   .ea-test{flex-direction:column;align-items:flex-start;}
   .ea-test-btn{width:100%;}
+  /* MED small tablet */
+  .med-banner{min-height:130px;border-radius:14px;}
+  .med-banner-content{padding:1.5rem;gap:1.5rem;}
+  .med-banner-logo-wrap{width:120px;height:54px;}
+  .med-banner-name{font-size:1.6rem;}
+  .med-info-grid{grid-template-columns:1fr;}
+  .med-detail-hero{min-height:200px;}
+  .med-detail-hero-content{padding:1.75rem;}
+  .med-prod-card{padding:1.25rem 1.5rem;gap:1.25rem;}
+  .med-prod-cta{display:none;}
 }
 @media(max-width:479px){
   .ea-wrap{padding:0 16px;}
@@ -628,8 +905,26 @@ body{background:var(--bg);}
   .ea-tabs{flex-wrap:nowrap;padding:3px;}
   .ea-tab{flex:0 0 auto;padding:10px 13px;font-size:.8rem;}
   .ea-grid{grid-template-columns:1fr;gap:9px;}
-  .ea-mfr-grid{grid-template-columns:1fr;gap:9px;}
   .ea-prog{padding:1.2rem;gap:1rem;}
+  /* MED mobile */
+  .med-banner{min-height:120px;border-radius:12px;margin-bottom:10px;}
+  .med-banner-content{padding:1.25rem;gap:1rem;}
+  .med-banner-logo-wrap{width:90px;height:44px;padding:8px 12px;}
+  .med-banner-name{font-size:1.4rem;}
+  .med-banner-tagline{font-size:.72rem;display:none;}
+  .med-banner-origin{font-size:.65rem;}
+  .med-banner-arrow{width:36px;height:36px;font-size:.9rem;}
+  .med-banner-badge{font-size:.58rem;padding:3px 9px;top:.9rem;right:1rem;}
+  .med-info-grid{grid-template-columns:1fr;}
+  .med-detail-hero{min-height:160px;border-radius:14px;}
+  .med-detail-hero-content{padding:1.25rem;gap:1.25rem;flex-direction:column;align-items:flex-start;}
+  .med-detail-logo-wrap{width:120px;height:50px;}
+  .med-detail-hero-name{font-size:1.8rem;}
+  .med-prod-card{padding:1.1rem 1.25rem;gap:1rem;flex-wrap:wrap;}
+  .med-prod-num{font-size:1.6rem;min-width:36px;}
+  .med-prod-divider{display:none;}
+  .med-prod-cta{display:none;}
+  .med-draft{padding:3rem 1.5rem;}
   .ea-prog-pct{font-size:2.2rem;min-width:56px;}
   .ea-philo{padding:1.35rem 1.2rem;}
   .ea-philo::before{display:none;}
@@ -1024,20 +1319,129 @@ function SAPUniverse() {
   );
 }
 
-// ─── MANUFACTURER CARD ───────────────────────────────────────────────────────
+// ─── MANUFACTURER BANNER CARD ────────────────────────────────────────────────
 
-function MfrCard({m, onClick}:any) {
+function MfrBanner({m, onClick}:any) {
   const [err, setErr] = useState(false);
   const logo = useBaseUrl(m.logo);
+  const hasProducts = m.products && m.products.length > 0;
+
   return (
-    <div className="ea-mfr-card" onClick={onClick}>
-      <div className="ea-mfr-top"/>
-      <div style={{height:'56px',display:'flex',alignItems:'center',justifyContent:'center',marginBottom:'.6rem'}}>
-        {!err
-          ? <img src={logo} alt={m.name} style={{maxWidth:'80%',maxHeight:'100%',objectFit:'contain'}} onError={()=>setErr(true)}/>
-          : <span style={{fontWeight:700,color:'#dc2626',fontSize:'.95rem'}}>{m.name}</span>}
+    <div className="med-banner" onClick={onClick}>
+      {/* Background gradient */}
+      <div className="med-banner-bg" style={{background: m.bg}} />
+      {/* Overlay */}
+      <div className="med-banner-overlay" />
+      {/* Accent stripe */}
+      <div className="med-banner-accent" style={{background: m.accent}} />
+      {/* Status badge */}
+      <div className={`med-banner-badge ${hasProducts ? 'active' : ''}`}>
+        {hasProducts ? 'Module verfügbar' : 'In Vorbereitung'}
       </div>
-      <div className="ea-mfr-lbl">Produktschulungen</div>
+      {/* Content */}
+      <div className="med-banner-content">
+        <div className="med-banner-logo-wrap">
+          {!err
+            ? <img src={logo} alt={m.name} className="med-banner-logo" onError={()=>setErr(true)}/>
+            : <span style={{fontFamily:'Bebas Neue,sans-serif',fontSize:'1.2rem',color:'#fff',letterSpacing:'.06em'}}>{m.name}</span>}
+        </div>
+        <div className="med-banner-text">
+          <div className="med-banner-name">{m.name}</div>
+          <div className="med-banner-tagline">{m.tagline}</div>
+          <div className="med-banner-origin">{m.origin}</div>
+        </div>
+        <div className="med-banner-arrow">&#8594;</div>
+      </div>
+    </div>
+  );
+}
+
+// ─── MANUFACTURER DETAIL ──────────────────────────────────────────────────────
+
+function MfrDetail({m, onBack}:any) {
+  const [err, setErr] = useState(false);
+  const logo = useBaseUrl(m.logo);
+  const hasProducts = m.products && m.products.length > 0;
+
+  return (
+    <div className="med-detail">
+      <button className="med-back" onClick={onBack}>&#8592; Alle Hersteller</button>
+
+      {/* Hero banner */}
+      <div className="med-detail-hero">
+        <div className="med-detail-hero-bg" style={{background: m.bg}} />
+        <div className="med-detail-hero-overlay" />
+        <div className="med-detail-hero-content">
+          <div className="med-detail-logo-wrap">
+            {!err
+              ? <img src={logo} alt={m.name} className="med-detail-logo" onError={()=>setErr(true)}/>
+              : <span style={{fontFamily:'Bebas Neue,sans-serif',fontSize:'1.2rem',color:'#fff'}}>{m.name}</span>}
+          </div>
+          <div className="med-detail-hero-text">
+            <div className="med-detail-hero-name">{m.name}</div>
+            <div className="med-detail-hero-tag">{m.tagline}</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Info grid */}
+      <div className="med-info-grid">
+        {/* Left: facts */}
+        <div className="med-info-card">
+          <div className="med-info-card-t">Unternehmens­daten</div>
+          <div className="med-facts">
+            {m.facts.map((f:any, i:number) => (
+              <div className="med-fact" key={i}>
+                <span className="med-fact-l">{f.label}</span>
+                <span className="med-fact-v">{f.value}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Right: description + focus */}
+        <div className="med-info-card">
+          <div className="med-info-card-t">Über {m.name}</div>
+          <p className="med-desc">{m.description}</p>
+          <div className="med-info-card-t" style={{marginBottom:'.75rem'}}>Schwerpunkte</div>
+          <div className="med-focus-tags">
+            {m.focus.map((f:string, i:number) => (
+              <span className="med-focus-tag" key={i}>{f}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Products */}
+      <div className="ea-sh" style={{marginTop:'2rem'}}>
+        <div className="ea-sh-bar" style={{background: m.accent}}/>
+        Produktmodule
+        <div className="ea-sh-rule"/>
+      </div>
+
+      {hasProducts ? (
+        <div className="med-prod-list">
+          {m.products.map((p:any, i:number) => (
+            <Link key={p.code} to={p.link} className="med-prod-card">
+              <div className="med-prod-accent" style={{background: m.accent}}/>
+              <div className="med-prod-num">0{i+1}</div>
+              <div className="med-prod-divider"/>
+              <div className="med-prod-body">
+                <div className="med-prod-code">{p.code}</div>
+                <div className="med-prod-title">{p.title}</div>
+                <div className="med-prod-desc">{p.desc}</div>
+              </div>
+              <span className="med-prod-cta">Modul starten &#8594;</span>
+            </Link>
+          ))}
+        </div>
+      ) : (
+        <div className="med-draft">
+          <span className="med-draft-icon">🔬</span>
+          <div className="med-draft-t">Module in Vorbereitung</div>
+          <p className="med-draft-s">Die Produktschulungen für {m.name} werden aktuell erstellt und sind bald verfügbar.</p>
+        </div>
+      )}
     </div>
   );
 }
@@ -1235,45 +1639,20 @@ export default function Home() {
           {/* ── SAP TAB — full width, no wrap ── */}
           {tab==='SAP' && <SAPUniverse/>}
 
-          {/* ── MED TAB ── */}
+          {/* ── MED TAB — full-width, no wrap ── */}
           {tab==='MED' && (
             <div className="ea-wrap">
-              {!mfr?(
+              {!mfr ? (
                 <>
                   <SH color={CMED}>Hersteller & Produktschulungen</SH>
-                  <div className="ea-mfr-grid">
-                    {MFRS.map(m=><MfrCard key={m.id} m={m} onClick={()=>setMfr(m)}/>)}
+                  <div className="med-list">
+                    {MFRS.map(m => (
+                      <MfrBanner key={m.id} m={m} onClick={() => setMfr(m)} />
+                    ))}
                   </div>
                 </>
-              ):(
-                <div>
-                  <button className="ea-back" onClick={()=>setMfr(null)}>← Zurück</button>
-                  <div className="ea-manu-hd">
-                    <div className="ea-manu-hd-t">{mfr.name}</div>
-                    <p className="ea-manu-hd-s">Wählen Sie ein Produktmodul.</p>
-                  </div>
-                  {mfr.id==='riwo'?(
-                    <>
-                      <SH color={CMED}>Produktmodule</SH>
-                      <div className="ea-grid">
-                        {RIWO.map(p=>(
-                          <div key={p.code} className="ea-card">
-                            <div className="ea-card-stripe" style={{background:CMED}}/>
-                            <h3 className="ea-card-t">{p.title}</h3>
-                            <div className="ea-card-code">{p.code}</div>
-                            <p style={{fontSize:'.8rem',color:'#6b7280',lineHeight:1.55,margin:'0 0 1rem',flex:1}}>{p.desc}</p>
-                            <Link className="ea-card-btn" style={{background:CMED,color:'#fff'}} to={p.link}>Modul starten</Link>
-                          </div>
-                        ))}
-                      </div>
-                    </>
-                  ):(
-                    <div className="ea-draft">
-                      <div className="ea-draft-t">In Vorbereitung</div>
-                      <p className="ea-draft-s">Inhalte für <strong>{mfr.name}</strong> werden erstellt.</p>
-                    </div>
-                  )}
-                </div>
+              ) : (
+                <MfrDetail m={mfr} onBack={() => setMfr(null)} />
               )}
             </div>
           )}
