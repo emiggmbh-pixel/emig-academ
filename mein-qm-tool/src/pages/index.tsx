@@ -18,7 +18,7 @@ const MFRS = [
     tagline: 'Endoskopische Wirbelsäulenchirurgie',
     origin: 'Deutschland · Richard Wolf Company',
     accent: '#c0392b',
-    bg: 'linear-gradient(135deg,#1a0a08 0%,#2d1208 50%,#1a0a08 100%)',
+    bg: 'linear-gradient(160deg,#0f0404 0%,#1e0606 35%,#2a0808 60%,#1e0606 100%)',
     description: 'RIWOspine ist ein führender Spezialist für vollendoskopische Wirbelsäulenchirurgie. Als Teil der Richard Wolf Unternehmensgruppe entwickelt RIWOspine hochpräzise Endoskopiesysteme für minimalinvasive Eingriffe an Hals-, Brust- und Lendenwirbelsäule.',
     focus: ['Vollendoskopische Chirurgie','Minimalinvasive Eingriffe','Spine-Endoskopie','Neurochirurgie'],
     facts: [
@@ -41,7 +41,7 @@ const MFRS = [
     tagline: 'Intraoperatives Neuromonitoring',
     origin: 'Deutschland · Emmendingen',
     accent: '#1565c0',
-    bg: 'linear-gradient(135deg,#040d1a 0%,#081430 50%,#040d1a 100%)',
+    bg: 'linear-gradient(160deg,#020610 0%,#040c1e 35%,#071428 60%,#040c1e 100%)',
     description: 'inomed Medizintechnik ist Weltmarktführer im Bereich intraoperatives Neuromonitoring (IOM). Die Systeme schützen das Nervensystem während neurochirurgischer, orthopädischer und gefäßchirurgischer Eingriffe.',
     focus: ['Intraoperatives Neuromonitoring','Neurophysiologie','Hirnstimulation','Schlafdiagnostik'],
     facts: [
@@ -59,7 +59,7 @@ const MFRS = [
     tagline: 'Onkologische Diagnostik & Therapie',
     origin: 'Deutschland · Hechingen',
     accent: '#00695c',
-    bg: 'linear-gradient(135deg,#011a14 0%,#022a1e 50%,#011a14 100%)',
+    bg: 'linear-gradient(160deg,#010e0b 0%,#021810 35%,#032214 60%,#021810 100%)',
     description: 'oncosem Onkologische Systeme entwickelt und vertreibt innovative Lösungen für onkologische Diagnostik und Therapie. Spezialisiert auf Sentinellymphknoten-Biopsie und nuklearmedizinische Verfahren.',
     focus: ['Sentinellymphknoten-Biopsie','Nuklearmedizin','Onkologie','Gammaproben'],
     facts: [
@@ -77,7 +77,7 @@ const MFRS = [
     tagline: 'Transplantationsmedizin & Gefäßchirurgie',
     origin: 'Deutschland · Freiburg im Breisgau',
     accent: '#4a148c',
-    bg: 'linear-gradient(135deg,#0d0414 0%,#160a20 50%,#0d0414 100%)',
+    bg: 'linear-gradient(160deg,#080210 0%,#0e0519 35%,#150822 60%,#0e0519 100%)',
     description: 'Black Forest Medical Group spezialisiert sich auf hochwertige Implantate und Instrumente für die Transplantationsmedizin, Gefäßchirurgie und rekonstruktive Chirurgie. Präzisionsfertigung aus dem Schwarzwald.',
     focus: ['Transplantationsmedizin','Gefäßchirurgie','Implantate','Rekonstruktive Chirurgie'],
     facts: [
@@ -95,7 +95,7 @@ const MFRS = [
     tagline: 'Wirbelsäulen-Implantate & Fixationssysteme',
     origin: 'Deutschland · Wehrheim',
     accent: '#e65100',
-    bg: 'linear-gradient(135deg,#1a0800 0%,#2d1200 50%,#1a0800 100%)',
+    bg: 'linear-gradient(160deg,#0e0400 0%,#1c0900 35%,#271200 60%,#1c0900 100%)',
     description: 'Meyer-Haake Medical Innovations entwickelt und fertigt innovative Wirbelsäulen-Implantate und Fixationssysteme. Spezialisiert auf Pedikelschraubensysteme, Cages und dynamische Stabilisierung.',
     focus: ['Pedikelschraubensysteme','Interkorporale Cages','Dynamische Stabilisierung','Minimalinvasive Implantologie'],
     facts: [
@@ -113,7 +113,7 @@ const MFRS = [
     tagline: 'Digitale Chirurgie & Strahlentherapie',
     origin: 'Deutschland · München',
     accent: '#880e4f',
-    bg: 'linear-gradient(135deg,#14020a 0%,#200510 50%,#14020a 100%)',
+    bg: 'linear-gradient(160deg,#0b0106 0%,#180410 35%,#220618 60%,#180410 100%)',
     description: 'Brainlab ist ein globaler Technologieführer für softwaregestützte medizinische Technologie. Ihre Lösungen für Neurochirurgie, Orthopädie und Strahlentherapie werden in über 6.000 Krankenhäusern weltweit eingesetzt.',
     focus: ['Navigationsgestützte Chirurgie','Strahlentherapie','Neurochirurgie','Digitale OR-Integration'],
     facts: [
@@ -390,14 +390,17 @@ body{background:var(--bg);}
 /* Each manufacturer = full-width banner card */
 .med-banner{
   position:relative;width:100%;overflow:hidden;cursor:pointer;
-  border-radius:20px;margin-bottom:16px;
-  min-height:180px;display:flex;align-items:center;
-  transition:transform .3s ease,box-shadow .3s ease;
-  box-shadow:0 4px 20px rgba(0,0,0,.12);
+  border-radius:20px;margin-bottom:14px;
+  min-height:200px;display:flex;align-items:center;
+  transition:transform .35s cubic-bezier(.2,.8,.3,1), box-shadow .35s ease;
+  box-shadow:0 2px 12px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.08);
 }
-.med-banner:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.2);}
-[data-theme="dark"] .med-banner{box-shadow:0 4px 20px rgba(0,0,0,.4);}
-[data-theme="dark"] .med-banner:hover{box-shadow:0 16px 48px rgba(0,0,0,.6);}
+.med-banner:hover{
+  transform:translateY(-5px);
+  box-shadow:0 20px 56px rgba(0,0,0,.18), 0 6px 16px rgba(0,0,0,.1);
+}
+[data-theme="dark"] .med-banner{box-shadow:0 4px 20px rgba(0,0,0,.5);}
+[data-theme="dark"] .med-banner:hover{box-shadow:0 20px 56px rgba(0,0,0,.7);}
 
 /* Dark gradient background */
 .med-banner-bg{
@@ -409,12 +412,24 @@ body{background:var(--bg);}
 /* Overlay for readability */
 .med-banner-overlay{
   position:absolute;inset:0;z-index:1;
-  background:linear-gradient(90deg, rgba(0,0,0,.7) 0%, rgba(0,0,0,.4) 50%, rgba(0,0,0,.1) 100%);
+  background:
+    linear-gradient(90deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.3) 45%, rgba(0,0,0,.08) 100%),
+    linear-gradient(to bottom, rgba(0,0,0,.15) 0%, rgba(0,0,0,.0) 100%);
 }
 
 /* Accent line on left */
 .med-banner-accent{
-  position:absolute;left:0;top:0;bottom:0;width:4px;z-index:3;border-radius:20px 0 0 20px;
+  position:absolute;left:0;top:0;bottom:0;width:5px;z-index:3;
+  border-radius:20px 0 0 20px;
+  /* Subtle outward glow matching brand color */
+  box-shadow:2px 0 18px rgba(255,255,255,.08);
+}
+/* Ambient glow from accent color into the bg */
+.med-banner::before{
+  content:'';
+  position:absolute;left:0;top:0;bottom:0;width:35%;z-index:1;
+  background:linear-gradient(90deg,var(--accent-glow,rgba(200,0,0,.12)) 0%,transparent 100%);
+  pointer-events:none;
 }
 
 /* Content inside banner */
@@ -424,16 +439,32 @@ body{background:var(--bg);}
 }
 .med-banner-logo-wrap{
   flex-shrink:0;
-  width:180px;height:80px;
+  width:200px;height:88px;
   display:flex;align-items:center;justify-content:center;
-  background:rgba(255,255,255,.08);
+  /* White background so logos with white bg blend naturally */
+  background:#ffffff;
   border-radius:14px;
-  backdrop-filter:blur(8px);
-  border:1px solid rgba(255,255,255,.12);
-  padding:12px 20px;
+  padding:14px 22px;
+  /* Subtle shadow to separate from dark gradient bg */
+  box-shadow:0 4px 24px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,.15);
+  position:relative;overflow:hidden;
 }
-.med-banner-logo{max-width:100%;max-height:100%;object-fit:contain;filter:brightness(0) invert(1);}
-.med-banner-logo.dark-logo{filter:none;}
+/* Soft glow behind logo matching brand accent */
+.med-banner-logo-wrap::after{
+  content:'';
+  position:absolute;inset:0;
+  border-radius:14px;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
+  pointer-events:none;
+}
+/* Logo: no filter — keep original colors */
+.med-banner-logo{
+  max-width:100%;max-height:100%;object-fit:contain;
+  display:block;
+  /* remove white bg bleed with mix-blend-mode */
+  mix-blend-mode:multiply;
+}
+[data-theme="dark"] .med-banner-logo{mix-blend-mode:normal;}
 .med-banner-text{flex:1;min-width:0;}
 .med-banner-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.6rem,3vw,2.4rem);
   color:#fff;letter-spacing:.06em;line-height:1;margin-bottom:.4rem;}
@@ -483,13 +514,18 @@ body{background:var(--bg);}
   display:flex;align-items:flex-end;gap:2.5rem;flex-wrap:wrap;
 }
 .med-detail-logo-wrap{
-  width:160px;height:64px;
-  background:rgba(255,255,255,.1);border-radius:12px;
+  width:180px;height:72px;
+  background:#ffffff;
+  border-radius:12px;
   display:flex;align-items:center;justify-content:center;
-  border:1px solid rgba(255,255,255,.15);
-  padding:10px 18px;backdrop-filter:blur(8px);flex-shrink:0;
+  padding:12px 20px;flex-shrink:0;
+  box-shadow:0 4px 20px rgba(0,0,0,.35), 0 1px 0 rgba(255,255,255,.1);
 }
-.med-detail-logo{max-width:100%;max-height:100%;object-fit:contain;filter:brightness(0) invert(1);}
+.med-detail-logo{
+  max-width:100%;max-height:100%;object-fit:contain;
+  mix-blend-mode:multiply;
+}
+[data-theme="dark"] .med-detail-logo{mix-blend-mode:normal;}
 .med-detail-hero-text{flex:1;min-width:0;}
 .med-detail-hero-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,3.5rem);
   color:#fff;letter-spacing:.05em;line-height:.95;margin-bottom:.5rem;}
@@ -831,12 +867,17 @@ body{background:var(--bg);}
   .sap-hd{padding:5rem 3% 4rem;}
   .sap-nav-inner{padding:0 3%;}
   .ea-grid{grid-template-columns:repeat(5,1fr);}
-  .ea-mfr-grid{grid-template-columns:repeat(4,1fr);}
   .sap-pgrid{grid-template-columns:repeat(5,1fr);}
   .sap-mgrid{grid-template-columns:repeat(3,1fr);}
   .sap-rgrid{grid-template-columns:repeat(6,1fr);}
   .sap-dp-grid{grid-template-columns:repeat(4,1fr);}
   .sap-esc-acts{grid-template-columns:repeat(4,1fr);}
+  /* MED large desktop */
+  .med-banner{min-height:220px;border-radius:24px;}
+  .med-banner-content{padding:3rem 4rem;}
+  .med-banner-logo-wrap{width:240px;height:100px;}
+  .med-banner-name{font-size:2.8rem;}
+  .med-info-grid{grid-template-columns:320px 1fr;}
 }
 @media(min-width:1100px) and (max-width:1399px){
   .ea-grid{grid-template-columns:repeat(4,1fr);}
@@ -1327,7 +1368,9 @@ function MfrBanner({m, onClick}:any) {
   const hasProducts = m.products && m.products.length > 0;
 
   return (
-    <div className="med-banner" onClick={onClick}>
+    <div className="med-banner"
+      style={{'--accent-glow': m.accent + '22'} as any}
+      onClick={onClick}>
       {/* Background gradient */}
       <div className="med-banner-bg" style={{background: m.bg}} />
       {/* Overlay */}
@@ -1342,8 +1385,11 @@ function MfrBanner({m, onClick}:any) {
       <div className="med-banner-content">
         <div className="med-banner-logo-wrap">
           {!err
-            ? <img src={logo} alt={m.name} className="med-banner-logo" onError={()=>setErr(true)}/>
-            : <span style={{fontFamily:'Bebas Neue,sans-serif',fontSize:'1.2rem',color:'#fff',letterSpacing:'.06em'}}>{m.name}</span>}
+            ? <img src={logo} alt={m.name} className="med-banner-logo"
+                style={{filter: m.invertLogo ? 'none' : undefined}}
+                onError={()=>setErr(true)}/>
+            : <span style={{fontFamily:'Bebas Neue,sans-serif',fontSize:'1.1rem',
+                color:m.accent,fontWeight:700,letterSpacing:'.04em'}}>{m.name}</span>}
         </div>
         <div className="med-banner-text">
           <div className="med-banner-name">{m.name}</div>
@@ -1375,7 +1421,8 @@ function MfrDetail({m, onBack}:any) {
           <div className="med-detail-logo-wrap">
             {!err
               ? <img src={logo} alt={m.name} className="med-detail-logo" onError={()=>setErr(true)}/>
-              : <span style={{fontFamily:'Bebas Neue,sans-serif',fontSize:'1.2rem',color:'#fff'}}>{m.name}</span>}
+              : <span style={{fontFamily:'Bebas Neue,sans-serif',fontSize:'1.1rem',
+                  color:m.accent,fontWeight:700}}>{m.name}</span>}
           </div>
           <div className="med-detail-hero-text">
             <div className="med-detail-hero-name">{m.name}</div>
