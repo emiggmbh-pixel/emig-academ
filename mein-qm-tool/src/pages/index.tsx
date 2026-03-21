@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from '@docusaurus/Link';
 import Layout from '@theme/Layout';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import Head from '@docusaurus/Head';
 
-// ─── DATEN ─────────────────────────────────────────────────────────────────
+// ─── DATA ────────────────────────────────────────────────────────────────────
 
 const ALL_QM_MODULES = [
   'SOP-LOG-01', 'SOP-LOG-02', 'SOP-LOG-03', 'SOP-LOG-04',
@@ -13,651 +13,825 @@ const ALL_QM_MODULES = [
 ];
 
 const RIWOSPINE_PRODUCTS = [
-  { title: 'Vertebris Stenose', refCode: 'RIWO-01', link: '/docs/medizinprodukte/riwospine/stenose', icon: '🦴', desc: 'Vollendoskopische Dekompression bei spinaler Stenose' },
-  { title: 'Vertebris Lumbar', refCode: 'RIWO-02', link: '/docs/medizinprodukte/riwospine/lumbar', icon: '🔬', desc: 'Bandscheibenchirurgie der Lendenwirbelsäule' },
-  { title: 'Vertebris Cervical', refCode: 'RIWO-03', link: '/docs/medizinprodukte/riwospine/cervical', icon: '🏥', desc: 'Vollendoskopische Chirurgie der Halswirbelsäule' },
-  { title: 'Instrumentarium & Optiken', refCode: 'RIWO-04', link: '/docs/medizinprodukte/riwospine/instrumente', icon: '🔧', desc: 'Hochpräzisions-Endoskope & Instrumente' },
+  { title: 'Vertebris Stenose',         refCode: 'RIWO-01', link: '/docs/medizinprodukte/riwospine/stenose',      desc: 'Vollendoskopische Dekompression bei spinaler Stenose' },
+  { title: 'Vertebris Lumbar',          refCode: 'RIWO-02', link: '/docs/medizinprodukte/riwospine/lumbar',       desc: 'Bandscheibenchirurgie der Lendenwirbelsäule' },
+  { title: 'Vertebris Cervical',        refCode: 'RIWO-03', link: '/docs/medizinprodukte/riwospine/cervical',     desc: 'Vollendoskopische Chirurgie der Halswirbelsäule' },
+  { title: 'Instrumentarium & Optiken', refCode: 'RIWO-04', link: '/docs/medizinprodukte/riwospine/instrumente',  desc: 'Hochpräzisions-Endoskope und Instrumente' },
 ];
 
 const SAP_PHASES = [
   {
-    id: 'vertrieb', title: 'Vertrieb & Angebot', icon: '📊', color: '#667eea',
+    id: 'vertrieb', title: 'Vertrieb & Angebot', color: '#c8a96e',
     steps: [
-      { label: 'Anfrageeingang', detail: 'Kunde sieht Produkt im digitalen Katalog und sendet Anfrage per E-Mail oder Formular ein.' },
-      { label: 'CRM & Kalkulation', detail: 'Auswahl des Kunden und Kalkulation in SAP. Das System zeigt automatisch Einkaufspreis und Marge an.' },
-      { label: 'PDF-Angebot', detail: 'Erstellung und Versand des Angebots als PDF direkt aus dem SAP-System.' },
-      { label: 'Kundenauftrag', detail: 'Umwandlung des Angebots in einen Kundenauftrag. Bestandsreservierung findet automatisch statt.' },
+      { label: 'Anfrageeingang',    detail: 'Kunde sendet Anfrage per E-Mail oder Formular. Aufnahme im CRM.' },
+      { label: 'CRM & Kalkulation', detail: 'Auswahl des Kunden in SAP. System zeigt Einkaufspreis und Marge an.' },
+      { label: 'PDF-Angebot',       detail: 'Erstellung und Versand des Angebots direkt aus SAP als PDF.' },
+      { label: 'Kundenauftrag',     detail: 'Umwandlung in Auftrag mit einem Klick. Bestandsreservierung erfolgt automatisch.' },
     ],
   },
   {
-    id: 'beschaffung', title: 'Beschaffung & WE', icon: '📦', color: '#f093fb',
+    id: 'beschaffung', title: 'Beschaffung & Wareneingang', color: '#6ea8c8',
     steps: [
-      { label: 'Bestellvorschläge', detail: 'SAP prüft Mindestbestände und generiert automatisch Bestellvorschläge für den Einkauf.' },
-      { label: 'Lieferantenbestellung', detail: 'Bestellung beim Lieferanten in Einkaufseinheiten (Karton/Palette). Buchung in SAP.' },
-      { label: 'Wareneingang', detail: 'LKW liefert Ware. Buchung von z.B. 150 Stück direkt ins Lager-Buchungssystem.' },
-      { label: 'MDR-Check', detail: 'Scan von UDI/Barcode, Erfassung von Charge und Verfallsdatum gemäß MDR-Pflicht.' },
+      { label: 'Bestellvorschläge',     detail: 'SAP prüft Mindestbestände und generiert automatisch Bestellvorschläge.' },
+      { label: 'Lieferantenbestellung', detail: 'Bestellung in Einkaufseinheiten (Karton/Palette). Buchung in SAP.' },
+      { label: 'Wareneingang',          detail: 'LKW liefert Ware. Einbuchung ins Lagersystem in Echtzeit.' },
+      { label: 'MDR-Check',             detail: 'Scan UDI/Barcode, Erfassung Charge und Verfallsdatum gemäß MDR.' },
     ],
   },
   {
-    id: 'lager', title: 'Lager & Versand', icon: '🏭', color: '#4facfe',
+    id: 'lager', title: 'Lager & Versand', color: '#6ec8a0',
     steps: [
-      { label: 'Pickliste', detail: 'Trigger: Kundenauftrag freigegeben. SAP generiert automatisch die Entnahmeliste für das Lager.' },
-      { label: 'MDR-Pflicht Scan', detail: 'Lagerist scannt beim Entnehmen die konkrete Charge und Seriennummer für den Kunden.' },
-      { label: 'Versandpapiere', detail: 'Verpackung und Erstellung aller Lieferpapiere und Etiketten direkt aus SAP.' },
+      { label: 'Pickliste',      detail: 'Kundenauftrag freigegeben – SAP generiert die Entnahmeliste automatisch.' },
+      { label: 'MDR-Pflicht',    detail: 'Lagerist scannt beim Entnehmen die konkrete Charge für den Kunden.' },
+      { label: 'Versandpapiere', detail: 'Verpackung und Erstellung aller Lieferpapiere direkt aus SAP.' },
     ],
   },
   {
-    id: 'service', title: 'Service-Prozess', icon: '🔩', color: '#43e97b',
+    id: 'service', title: 'Service-Prozess', color: '#c86e6e',
     steps: [
-      { label: 'Serviceabruf', detail: 'Anlage eines Serviceauftrags: Szenario A (Vor-Ort-Service) oder Szenario B (Rücksendung/RMA).' },
-      { label: 'Ersatzteilmanagement', detail: 'Entnahme vom Techniker-Wagen oder direkt vom Hauptlager. Buchung in Echtzeit.' },
-      { label: 'Equipment-Update', detail: 'Aktualisierung der Gerätestammkarte bei Austausch von Seriennummern und Komponenten.' },
+      { label: 'Serviceabruf',          detail: 'Anlage Serviceauftrag: Szenario A (Vor-Ort) oder Szenario B (Rücksendung).' },
+      { label: 'Ersatzteilmanagement',  detail: 'Entnahme vom Techniker-Wagen oder Hauptlager. Buchung in Echtzeit.' },
+      { label: 'Equipment-Update',      detail: 'Aktualisierung der Gerätestammkarte bei Seriennummern-Tausch.' },
     ],
   },
 ];
 
 const MANUFACTURERS = [
-  { id: 'riwo', name: 'RIWOspine', logo: '/img/logo-riwospine.png' },
-  { id: 'inomed', name: 'inomed', logo: '/img/logo-inomed.png' },
-  { id: 'oncosem', name: 'oncosem', logo: '/img/logo-oncosem.png' },
-  { id: 'bfmg', name: 'Black Forest Medical', logo: '/img/logo-bfmg.png' },
-  { id: 'meyer', name: 'Meyer-Haake', logo: '/img/logo-meyer.png' },
-  { id: 'brainlab', name: 'Brainlab', logo: '/img/logo-brainlab.png' },
+  { id: 'riwo',     name: 'RIWOspine',           logo: '/img/logo-riwospine.png' },
+  { id: 'inomed',   name: 'inomed',               logo: '/img/logo-inomed.png' },
+  { id: 'oncosem',  name: 'oncosem',              logo: '/img/logo-oncosem.png' },
+  { id: 'bfmg',     name: 'Black Forest Medical', logo: '/img/logo-bfmg.png' },
+  { id: 'meyer',    name: 'Meyer-Haake',          logo: '/img/logo-meyer.png' },
+  { id: 'brainlab', name: 'Brainlab',             logo: '/img/logo-brainlab.png' },
 ];
 
-// ─── STYLES (CSS-in-JS Konstanten) ─────────────────────────────────────────
+// ─── GLOBAL STYLES ───────────────────────────────────────────────────────────
 
-const STYLES = `
-  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap');
+const CSS = `
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,600&family=Outfit:wght@300;400;500;600;700&display=swap');
 
-  * { box-sizing: border-box; }
-
-  .ea-root { font-family: 'DM Sans', sans-serif; }
-
-  .ea-hero {
-    position: relative;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
-    margin-right: calc(-50vw + 50%);
-    min-height: 560px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-  }
-
-  .ea-hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(10,10,20,0.75) 0%, rgba(30,10,60,0.55) 100%);
-    backdrop-filter: blur(1px);
-    z-index: 1;
-  }
-
-  .ea-hero-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    padding: 2rem;
-  }
-
-  .ea-hero-badge {
-    display: inline-block;
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.25);
-    color: rgba(255,255,255,0.9);
-    padding: 6px 18px;
-    border-radius: 50px;
-    font-size: 0.8rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-    backdrop-filter: blur(10px);
-  }
-
-  .ea-hero-title {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(3rem, 9vw, 6rem);
-    font-weight: 800;
-    color: #fff;
-    line-height: 1.0;
-    margin: 0 0 1rem;
-    text-shadow: 0 4px 30px rgba(0,0,0,0.4);
-    letter-spacing: -0.02em;
-  }
-
-  .ea-hero-title span {
-    background: linear-gradient(90deg, #a78bfa, #60a5fa);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .ea-hero-sub {
-    font-size: 1.2rem;
-    color: rgba(255,255,255,0.75);
-    font-weight: 300;
-    margin: 0;
-    letter-spacing: 0.05em;
-  }
-
-  .ea-hero-stats {
-    display: flex;
-    gap: 2rem;
-    justify-content: center;
-    margin-top: 2.5rem;
-    flex-wrap: wrap;
-  }
-
-  .ea-stat {
-    text-align: center;
-    color: #fff;
-  }
-
-  .ea-stat-num {
-    font-family: 'Syne', sans-serif;
-    font-size: 2rem;
-    font-weight: 800;
-    line-height: 1;
-  }
-
-  .ea-stat-label {
-    font-size: 0.75rem;
-    opacity: 0.6;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-top: 4px;
-  }
-
-  .ea-nav {
-    display: flex;
-    gap: 12px;
-    padding: 2rem 0 0;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .ea-nav-btn {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 14px 28px;
-    border-radius: 16px;
-    border: 2px solid transparent;
-    font-size: 0.95rem;
-    font-weight: 600;
-    font-family: 'DM Sans', sans-serif;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    flex: 1 1 160px;
-    justify-content: center;
-    max-width: 220px;
-  }
-
-  .ea-nav-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
-
-  .ea-nav-btn.active { border-color: transparent; }
-
-  .ea-section-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin: 0 0 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: #1a1a2e;
-  }
-
-  .ea-section-title::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg, #e2e8f0, transparent);
-  }
-
-  .ea-section-accent {
-    display: inline-block;
-    width: 6px;
-    height: 28px;
-    border-radius: 3px;
-  }
-
-  .ea-card {
-    background: #ffffff;
-    border-radius: 20px;
-    padding: 1.75rem;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05), 0 0 0 1px rgba(0,0,0,0.04);
-    transition: all 0.25s ease;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .ea-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    border-radius: 20px 20px 0 0;
-  }
-
-  .ea-card:hover {
-    box-shadow: 0 12px 32px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.04);
-    transform: translateY(-3px);
-  }
-
-  .ea-card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 16px;
-    margin-bottom: 2.5rem;
-  }
-
-  .ea-progress-ring-wrap {
-    max-width: 480px;
-    margin: 0 auto 2.5rem;
-    background: #fff;
-    border-radius: 20px;
-    padding: 1.5rem 2rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05), 0 0 0 1px rgba(0,0,0,0.04);
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-  }
-
-  .ea-progress-bar-wrap {
-    flex: 1;
-  }
-
-  .ea-progress-bar-bg {
-    background: #f1f5f9;
-    border-radius: 99px;
-    height: 10px;
-    overflow: hidden;
-  }
-
-  .ea-progress-bar-fill {
-    height: 100%;
-    border-radius: 99px;
-    background: linear-gradient(90deg, #10b981, #34d399);
-    transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .ea-progress-percent {
-    font-family: 'Syne', sans-serif;
-    font-size: 2.2rem;
-    font-weight: 800;
-    color: #10b981;
-    min-width: 70px;
-    text-align: right;
-  }
-
-  .ea-final-test {
-    border-radius: 20px;
-    padding: 2rem;
-    margin-bottom: 2.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-  }
-
-  .ea-philo-card {
-    background: linear-gradient(135deg, #fff7ed, #fff);
-    border-radius: 20px;
-    padding: 2rem 2.5rem;
-    border-left: 6px solid #e65100;
-    margin-bottom: 2.5rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  }
-
-  .ea-mfr-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 16px;
-  }
-
-  .ea-mfr-card {
-    background: #fff;
-    border-radius: 20px;
-    padding: 2.5rem 2rem;
-    text-align: center;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05), 0 0 0 1px rgba(0,0,0,0.04);
-    transition: all 0.25s ease;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .ea-mfr-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 16px 40px rgba(0,0,0,0.1);
-  }
-
-  .ea-mfr-card::after {
-    content: '→';
-    position: absolute;
-    bottom: 1rem;
-    right: 1.5rem;
-    font-size: 1.2rem;
-    opacity: 0;
-    transition: all 0.2s;
-    transform: translateX(-4px);
-  }
-
-  .ea-mfr-card:hover::after {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  .ea-sap-phase-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 14px;
-    margin-bottom: 2rem;
-  }
-
-  .ea-sap-phase-btn {
-    padding: 1.5rem;
-    border-radius: 18px;
-    border: 2px solid #e2e8f0;
-    background: #fff;
-    cursor: pointer;
-    text-align: center;
-    transition: all 0.2s ease;
-    font-family: 'DM Sans', sans-serif;
-  }
-
-  .ea-sap-phase-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-  }
-
-  .ea-sap-phase-icon {
-    font-size: 2rem;
-    display: block;
-    margin-bottom: 0.75rem;
-  }
-
-  .ea-sap-phase-title {
-    font-weight: 700;
-    font-size: 0.95rem;
-    line-height: 1.3;
-  }
-
-  .ea-sap-detail {
-    background: #fff;
-    border-radius: 20px;
-    padding: 2rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    animation: fadeSlide 0.3s ease;
-  }
-
-  .ea-sap-steps-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 14px;
-    margin-top: 1.5rem;
-  }
-
-  .ea-sap-step {
-    padding: 1.25rem;
-    border-radius: 14px;
-    background: #f8fafc;
-    border-left: 4px solid;
-    transition: background 0.2s;
-  }
-
-  .ea-sap-step:hover { background: #f1f5f9; }
-
-  .ea-back-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 20px;
-    border-radius: 12px;
-    border: 2px solid #e2e8f0;
-    background: #fff;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-    margin-bottom: 2rem;
-    color: #374151;
-    transition: all 0.2s;
-  }
-
-  .ea-back-btn:hover {
-    background: #f8fafc;
-    border-color: #cbd5e1;
-    transform: translateX(-2px);
-  }
-
-  .ea-link-btn {
-    display: block;
-    border-radius: 12px;
-    padding: 12px;
-    text-align: center;
-    font-weight: 700;
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: all 0.2s;
-    margin-top: auto;
-  }
-
-  .ea-link-btn:hover {
-    filter: brightness(1.1);
-    transform: translateY(-1px);
-  }
-
-  .ea-badge {
-    display: inline-block;
-    padding: 4px 10px;
-    border-radius: 999px;
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-
-  .ea-welcome-strip {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 20px;
-    padding: 1.5rem 2rem;
-    color: #fff;
-    margin-bottom: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
-    box-shadow: 0 8px 24px rgba(102,126,234,0.35);
-  }
-
-  .ea-checklist-wrap {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-top: 1.5rem;
-  }
-
-  .ea-checklist-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 14px;
-    background: #f8fafc;
-    border-radius: 10px;
-    font-size: 0.88rem;
-    font-weight: 500;
-    color: #374151;
-  }
-
-  .ea-checklist-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  @keyframes fadeSlide {
-    from { opacity: 0; transform: translateY(10px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes shimmer {
-    0%   { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-  }
-
-  .ea-skeleton {
-    background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
-    border-radius: 8px;
-  }
-
-  .ea-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    background: #f1f5f9;
-    color: #64748b;
-    padding: 3px 10px;
-    border-radius: 6px;
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    font-family: 'SF Mono', 'Fira Code', monospace;
-  }
-`;
-
-// ─── SUB-COMPONENTS ─────────────────────────────────────────────────────────
-
-function ManufacturerCard({ m, onClick, colorMed }: any) {
-  const [imgError, setImgError] = useState(false);
-  const logoUrl = useBaseUrl(m.logo);
-
-  return (
-    <div
-      className="ea-mfr-card"
-      onClick={onClick}
-      style={{ borderTop: `4px solid ${colorMed}` }}
-    >
-      <div style={{ height: '70px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
-        {!imgError ? (
-          <img src={logoUrl} alt={m.name} style={{ maxWidth: '85%', maxHeight: '100%', objectFit: 'contain' }} onError={() => setImgError(true)} />
-        ) : (
-          <span style={{ fontWeight: 700, color: colorMed, fontSize: '1.25rem' }}>{m.name}</span>
-        )}
-      </div>
-      <div style={{ fontSize: '0.85rem', color: '#94a3b8', fontWeight: 600, letterSpacing: '0.05em' }}>
-        Produktschulungen
-      </div>
-    </div>
-  );
+:root {
+  --gold:      #c8a96e;
+  --gold-lt:   #e8d5a8;
+  --dark:      #0a0a0e;
+  --dark2:     #12121a;
+  --dark3:     #1c1c28;
+  --border-d:  rgba(200,169,110,0.18);
+  --cream:     #f7f5f0;
+  --text-body: #1a1a22;
+  --radius:    16px;
 }
 
-function SAPDashboard({ colorSAP }: { colorSAP: string }) {
-  const [activePhase, setActivePhase] = useState<any>(null);
-  const [readSteps, setReadSteps] = useState<string[]>([]);
+*, *::before, *::after { box-sizing: border-box; }
+body { background: var(--cream); }
 
-  const toggleRead = (key: string) => {
-    setReadSteps(prev => prev.includes(key) ? prev.filter(k => k !== key) : [...prev, key]);
+.ea { font-family: 'Outfit', sans-serif; color: var(--text-body); }
+
+/* ════════════════════════════
+   HERO
+════════════════════════════ */
+.ea-hero {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  background: var(--dark);
+}
+
+.ea-hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* Video stretches to fill, shows poster while loading or if no src */
+.ea-hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  display: block;
+}
+
+/* Cinematic multi-stop gradient: deep bottom, lighter top */
+.ea-hero-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(to top,
+      rgba(8,8,12,0.96) 0%,
+      rgba(8,8,12,0.70) 30%,
+      rgba(8,8,12,0.30) 60%,
+      rgba(8,8,12,0.08) 85%,
+      transparent 100%
+    ),
+    linear-gradient(to right,
+      rgba(8,8,12,0.45) 0%,
+      transparent 55%
+    );
+}
+
+/* Film grain texture for cinematic feel */
+.ea-hero-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.032;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 220px;
+}
+
+/* Letterbox bars – top and bottom thin lines for cinematic framing */
+.ea-hero-letterbox-top,
+.ea-hero-letterbox-bottom {
+  position: absolute;
+  left: 0; right: 0;
+  z-index: 3;
+  height: 3px;
+  background: rgba(200,169,110,0.12);
+}
+.ea-hero-letterbox-top    { top: 0; }
+.ea-hero-letterbox-bottom { bottom: 0; }
+
+.ea-hero-content {
+  position: relative;
+  z-index: 4;
+  padding: 0 7% 8vh;
+  max-width: 860px;
+}
+
+.ea-hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 2rem;
+}
+
+.ea-hero-eyebrow-line {
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.75;
+}
+
+.ea-hero-eyebrow-text {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* Display title uses Cormorant for editorial elegance */
+.ea-hero-h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(4rem, 10vw, 8rem);
+  color: #fff;
+  line-height: 0.9;
+  margin: 0;
+  letter-spacing: -0.015em;
+}
+
+.ea-hero-h1 em {
+  font-style: italic;
+  font-weight: 600;
+  color: var(--gold-lt);
+}
+
+.ea-hero-tagline {
+  font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+  color: rgba(240,236,228,0.5);
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  margin: 1.6rem 0 0;
+}
+
+/* Stats row */
+.ea-hero-stats {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin-top: 3.5rem;
+  flex-wrap: wrap;
+}
+
+.ea-hero-stat {
+  padding-right: 2.5rem;
+  margin-right: 2.5rem;
+  border-right: 1px solid rgba(200,169,110,0.2);
+}
+.ea-hero-stat:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+
+.ea-hero-stat-n {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.6rem;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1;
+  display: block;
+}
+
+.ea-hero-stat-l {
+  font-size: 0.68rem;
+  color: rgba(240,236,228,0.38);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 500;
+  display: block;
+  margin-top: 5px;
+}
+
+/* Video pause button */
+.ea-video-toggle {
+  position: absolute;
+  bottom: 2.5rem;
+  right: 4%;
+  z-index: 5;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.55);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  backdrop-filter: blur(12px);
+  font-size: 0.75rem;
+  letter-spacing: 0;
+}
+.ea-video-toggle:hover {
+  background: rgba(200,169,110,0.2);
+  color: var(--gold-lt);
+  border-color: var(--gold);
+}
+
+/* ════════════════════════════
+   MAIN AREA
+════════════════════════════ */
+.ea-main {
+  background: var(--cream);
+  padding: 3rem 0 6rem;
+  min-height: 60vh;
+}
+
+.ea-wrap {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 5%;
+}
+
+/* ── Welcome bar ── */
+.ea-welcome {
+  background: var(--dark2);
+  border: 1px solid var(--border-d);
+  border-radius: 14px;
+  padding: 1.35rem 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.ea-welcome-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.ea-welcome-sub { font-size: 0.8rem; color: rgba(255,255,255,0.35); margin-top: 3px; }
+
+.ea-welcome-pill {
+  background: rgba(200,169,110,0.12);
+  border: 1px solid rgba(200,169,110,0.28);
+  color: var(--gold-lt);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 7px 16px;
+  border-radius: 99px;
+  white-space: nowrap;
+}
+
+/* ── Tab navigation ── */
+.ea-tabs {
+  display: flex;
+  gap: 0;
+  background: #fff;
+  border-radius: 14px;
+  padding: 5px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.07), 0 0 0 1px rgba(0,0,0,0.05);
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.ea-tab {
+  flex: 1 1 140px;
+  padding: 13px 18px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.ea-tab.active {
+  background: var(--dark2);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+
+.ea-tab:hover:not(.active) { background: #f5f4f0; color: #1f2937; }
+
+/* ── Section heading ── */
+.ea-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.45rem;
+  font-weight: 600;
+  color: #111;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 2.5rem 0 1.5rem;
+  letter-spacing: -0.01em;
+}
+
+.ea-heading-bar {
+  width: 22px;
+  height: 2px;
+  border-radius: 99px;
+  flex-shrink: 0;
+}
+
+.ea-heading-rule {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, #e2ded8, transparent);
+}
+
+/* ── Progress card ── */
+.ea-prog-card {
+  background: var(--dark2);
+  border-radius: 18px;
+  padding: 1.75rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  border: 1px solid var(--border-d);
+  flex-wrap: wrap;
+  position: relative;
+  overflow: hidden;
+}
+
+.ea-prog-card::after {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 240px; height: 240px;
+  background: radial-gradient(circle, rgba(200,169,110,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.ea-prog-info { flex: 1; min-width: 160px; }
+
+.ea-prog-label {
+  font-size: 0.68rem;
+  color: rgba(200,169,110,0.75);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+
+.ea-prog-track {
+  height: 5px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.ea-prog-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), #edd9a3);
+  border-radius: 99px;
+  transition: width 1.5s cubic-bezier(0.4,0,0.2,1);
+}
+
+.ea-prog-sub { font-size: 0.75rem; color: rgba(255,255,255,0.28); margin-top: 8px; }
+
+.ea-prog-pct {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.2rem;
+  font-weight: 600;
+  color: var(--gold-lt);
+  line-height: 1;
+  min-width: 88px;
+  text-align: right;
+}
+
+/* ── Philosophy card ── */
+.ea-philo {
+  background: var(--dark2);
+  border: 1px solid var(--border-d);
+  border-radius: 18px;
+  padding: 2rem 2.5rem;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.ea-philo::before {
+  content: 'QM';
+  position: absolute;
+  right: 1.5rem; top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 7rem;
+  font-weight: 700;
+  color: rgba(200,169,110,0.06);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.ea-philo-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 0.5rem;
+}
+
+.ea-philo-body { color: rgba(255,255,255,0.4); font-size: 0.88rem; margin: 0 0 1.25rem; }
+
+.ea-philo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--gold-lt);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+}
+.ea-philo-link:hover { color: #fff; }
+
+/* ── Final test ── */
+.ea-test-box {
+  border-radius: 18px;
+  padding: 1.6rem 2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  border: 1.5px solid;
+  transition: all 0.3s;
+}
+
+.ea-test-btn {
+  padding: 12px 26px;
+  border-radius: 11px;
+  border: none;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+/* ── Module grid ── */
+.ea-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(228px, 1fr));
+  gap: 13px;
+  margin-bottom: 2rem;
+}
+
+/* ── Module card ── */
+.ea-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.22s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.048);
+}
+.ea-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.09);
+}
+
+.ea-card-stripe {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+
+.ea-card-title {
+  font-weight: 600;
+  font-size: 0.94rem;
+  color: #111;
+  margin: 0 0 5px;
+  line-height: 1.35;
+}
+
+.ea-card-code {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.68rem;
+  color: #9ca3af;
+  background: #f8f8f6;
+  border: 1px solid #edece8;
+  padding: 2px 8px;
+  border-radius: 5px;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.ea-card-bar-wrap {
+  height: 2px;
+  background: #f3f3f0;
+  border-radius: 99px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+.ea-card-bar-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.8s ease;
+}
+
+.ea-card-btn {
+  display: block;
+  text-align: center;
+  padding: 11px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-decoration: none;
+  font-family: 'Outfit', sans-serif;
+  transition: all 0.2s;
+  margin-top: auto;
+}
+.ea-card-btn:hover { filter: brightness(1.07); transform: translateY(-1px); }
+
+/* ── Manufacturer grid ── */
+.ea-mfr-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+  gap: 13px;
+}
+
+.ea-mfr-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 2.25rem 1.75rem 1.75rem;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.048);
+  transition: all 0.22s ease;
+  position: relative;
+  overflow: hidden;
+}
+.ea-mfr-card:hover { transform: translateY(-4px); box-shadow: 0 14px 36px rgba(0,0,0,0.09); }
+
+.ea-mfr-top {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  border-radius: 14px 14px 0 0;
+}
+
+.ea-mfr-label { font-size: 0.75rem; color: #9ca3af; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 1rem; }
+
+/* ── Back button ── */
+.ea-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-radius: 10px;
+  border: 1px solid #e2ded8;
+  background: #fff;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 0.84rem;
+  cursor: pointer;
+  margin-bottom: 2rem;
+  color: #374151;
+  transition: all 0.2s;
+}
+.ea-back:hover { background: #f8f7f4; }
+
+/* ── Manufacturer detail header ── */
+.ea-manu-hd {
+  background: var(--dark2);
+  border: 1px solid var(--border-d);
+  border-radius: 18px;
+  padding: 1.75rem 2.25rem;
+  margin-bottom: 2rem;
+}
+.ea-manu-hd-title { font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; font-weight: 600; color: #fff; margin: 0 0 4px; }
+.ea-manu-hd-sub { font-size: 0.85rem; color: rgba(255,255,255,0.35); margin: 0; }
+
+/* ── SAP phases ── */
+.ea-sap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
+  gap: 11px;
+  margin-bottom: 1.5rem;
+}
+
+.ea-sap-btn {
+  padding: 1.5rem;
+  border-radius: 14px;
+  border: 1px solid #e2ded8;
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+  font-family: 'Outfit', sans-serif;
+}
+.ea-sap-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.07); }
+
+.ea-sap-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.4rem;
+  font-weight: 600;
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+.ea-sap-name { font-size: 0.86rem; font-weight: 600; line-height: 1.3; }
+.ea-sap-count { font-size: 0.7rem; color: #9ca3af; margin-top: 4px; }
+
+/* ── SAP detail panel ── */
+.ea-sap-panel {
+  background: #fff;
+  border-radius: 18px;
+  padding: 2rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.048);
+  animation: ea-slide 0.28s ease;
+}
+
+.ea-sap-panel-hd {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid #f3f3f0;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.ea-sap-panel-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600; color: #111; }
+.ea-sap-panel-sub { font-size: 0.75rem; color: #9ca3af; }
+
+.ea-sap-step-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+  gap: 11px;
+}
+
+.ea-sap-step {
+  padding: 1.25rem;
+  border-radius: 12px;
+  border-left: 3px solid;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.ea-sap-step:hover { filter: brightness(0.97); }
+
+.ea-sap-step-label { font-weight: 700; font-size: 0.86rem; margin-bottom: 6px; }
+.ea-sap-step-body { font-size: 0.81rem; color: #6b7280; line-height: 1.55; margin: 0; }
+.ea-sap-step-action { font-size: 0.7rem; font-weight: 600; margin-top: 10px; opacity: 0.65; }
+
+/* ── Draft placeholder ── */
+.ea-draft {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: #fff;
+  border-radius: 18px;
+  border: 1.5px dashed #e2ded8;
+}
+.ea-draft-title { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; color: #374151; margin: 0.75rem 0 0.5rem; }
+.ea-draft-sub { font-size: 0.88rem; color: #9ca3af; margin: 0; }
+
+/* ── Animations ── */
+@keyframes ea-slide {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.ea-animate { animation: ea-slide 0.35s ease; }
+`;
+
+// ─── SAP DASHBOARD ───────────────────────────────────────────────────────────
+
+function SAPDashboard() {
+  const [activePhase, setActivePhase] = useState<(typeof SAP_PHASES)[0] | null>(null);
+  const [readSteps, setReadSteps] = useState<Set<string>>(new Set());
+
+  const toggleStep = (key: string) => {
+    setReadSteps(prev => {
+      const s = new Set(prev);
+      s.has(key) ? s.delete(key) : s.add(key);
+      return s;
+    });
   };
 
   return (
-    <div style={{ marginTop: '1rem' }}>
-      <div style={{ marginBottom: '1.5rem' }}>
-        <div className="ea-section-title">
-          <div className="ea-section-accent" style={{ background: colorSAP }} />
-          Interaktive SAP Prozesslandschaft
-        </div>
-        <p style={{ color: '#64748b', fontSize: '0.95rem', margin: 0 }}>
-          Klicken Sie auf eine Prozessphase, um die einzelnen Schritte zu erkunden.
-        </p>
-      </div>
-
-      <div className="ea-sap-phase-grid">
-        {SAP_PHASES.map((phase) => {
+    <div>
+      <div className="ea-sap-grid">
+        {SAP_PHASES.map((phase, i) => {
           const isActive = activePhase?.id === phase.id;
+          const done = [...readSteps].filter(k => k.startsWith(phase.id + '-')).length;
           return (
             <button
               key={phase.id}
-              className="ea-sap-phase-btn"
+              className="ea-sap-btn"
               onClick={() => setActivePhase(isActive ? null : phase)}
               style={{
-                background: isActive ? phase.color : '#fff',
-                borderColor: isActive ? phase.color : '#e2e8f0',
-                color: isActive ? '#fff' : '#1e293b',
-                boxShadow: isActive ? `0 8px 24px ${phase.color}40` : undefined,
+                background:   isActive ? '#12121a' : '#fff',
+                borderColor:  isActive ? phase.color : '#e2ded8',
+                boxShadow:    isActive ? `0 0 0 1px ${phase.color}50, 0 8px 24px rgba(0,0,0,0.14)` : undefined,
               }}
             >
-              <span className="ea-sap-phase-icon">{phase.icon}</span>
-              <span className="ea-sap-phase-title">{phase.title}</span>
-              <div style={{ marginTop: '8px', fontSize: '0.75rem', opacity: 0.7 }}>
-                {phase.steps.length} Schritte
-              </div>
+              <div className="ea-sap-num" style={{ color: isActive ? phase.color : '#d1cec8' }}>0{i + 1}</div>
+              <div className="ea-sap-name" style={{ color: isActive ? '#fff' : '#1f2937' }}>{phase.title}</div>
+              <div className="ea-sap-count">{done}/{phase.steps.length} gelesen</div>
             </button>
           );
         })}
       </div>
 
       {activePhase && (
-        <div className="ea-sap-detail">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '0.5rem' }}>
-            <span style={{ fontSize: '1.75rem' }}>{activePhase.icon}</span>
+        <div className="ea-sap-panel">
+          <div className="ea-sap-panel-hd">
             <div>
-              <h3 style={{ margin: 0, fontFamily: 'Syne, sans-serif', color: '#1e293b' }}>{activePhase.title}</h3>
-              <div style={{ fontSize: '0.8rem', color: '#94a3b8', marginTop: '2px' }}>
-                {readSteps.filter(k => k.startsWith(activePhase.id)).length}/{activePhase.steps.length} Schritte gelesen
+              <div className="ea-sap-panel-title">{activePhase.title}</div>
+              <div className="ea-sap-panel-sub">
+                {[...readSteps].filter(k => k.startsWith(activePhase.id + '-')).length} von {activePhase.steps.length} Schritten abgehakt
+              </div>
+            </div>
+            {/* phase mini bar */}
+            <div style={{ width: '100px' }}>
+              <div style={{ height: '3px', background: '#f0ede8', borderRadius: '99px', overflow: 'hidden' }}>
+                <div style={{
+                  height: '100%',
+                  background: activePhase.color,
+                  borderRadius: '99px',
+                  width: `${([...readSteps].filter(k => k.startsWith(activePhase.id + '-')).length / activePhase.steps.length) * 100}%`,
+                  transition: 'width 0.45s ease',
+                }} />
               </div>
             </div>
           </div>
 
-          {/* Mini progress for this phase */}
-          <div style={{ height: '4px', background: '#f1f5f9', borderRadius: '99px', marginBottom: '1.5rem', overflow: 'hidden' }}>
-            <div style={{
-              height: '100%',
-              background: activePhase.color,
-              borderRadius: '99px',
-              width: `${(readSteps.filter(k => k.startsWith(activePhase.id)).length / activePhase.steps.length) * 100}%`,
-              transition: 'width 0.5s ease',
-            }} />
-          </div>
-
-          <div className="ea-sap-steps-grid">
-            {activePhase.steps.map((step: any, i: number) => {
+          <div className="ea-sap-step-grid">
+            {activePhase.steps.map((step, i) => {
               const key = `${activePhase.id}-${i}`;
-              const done = readSteps.includes(key);
+              const done = readSteps.has(key);
               return (
                 <div
                   key={i}
                   className="ea-sap-step"
                   style={{
                     borderLeftColor: done ? '#10b981' : activePhase.color,
-                    background: done ? '#f0fdf4' : '#f8fafc',
-                    cursor: 'pointer',
+                    background: done ? '#f0fdf4' : '#f9f8f5',
                   }}
-                  onClick={() => toggleRead(key)}
+                  onClick={() => toggleStep(key)}
                 >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '6px' }}>
-                    <span style={{ fontWeight: 700, fontSize: '0.9rem', color: done ? '#10b981' : activePhase.color }}>
-                      {i + 1}. {step.label}
-                    </span>
-                    {done && <span style={{ fontSize: '1rem' }}>✅</span>}
+                  <div className="ea-sap-step-label" style={{ color: done ? '#059669' : '#111827' }}>
+                    {i + 1}.  {step.label}{done ? '  ✓' : ''}
                   </div>
-                  <p style={{ margin: 0, fontSize: '0.85rem', color: '#4b5563', lineHeight: 1.5 }}>{step.detail}</p>
-                  <div style={{ marginTop: '10px', fontSize: '0.75rem', color: done ? '#10b981' : '#94a3b8', fontWeight: 600 }}>
-                    {done ? 'Gelesen ✓' : '→ Klicken zum Abhaken'}
+                  <p className="ea-sap-step-body">{step.detail}</p>
+                  <div className="ea-sap-step-action" style={{ color: done ? '#10b981' : '#9ca3af' }}>
+                    {done ? 'Gelesen' : 'Klicken zum Markieren'}
                   </div>
                 </div>
               );
@@ -667,103 +841,100 @@ function SAPDashboard({ colorSAP }: { colorSAP: string }) {
       )}
 
       {!activePhase && (
-        <div style={{ textAlign: 'center', padding: '3rem', color: '#94a3b8', fontStyle: 'italic' }}>
-          Wählen Sie eine Phase oben aus, um zu beginnen.
+        <div style={{ textAlign: 'center', padding: '2.5rem', color: '#9ca3af', fontSize: '0.88rem' }}>
+          Wählen Sie eine Phase, um die Prozessschritte zu erkunden.
         </div>
       )}
     </div>
   );
 }
 
-// ─── MAIN COMPONENT ─────────────────────────────────────────────────────────
+// ─── MANUFACTURER CARD ───────────────────────────────────────────────────────
+
+function ManufacturerCard({ m, onClick }: any) {
+  const [err, setErr] = useState(false);
+  const logo = useBaseUrl(m.logo);
+  return (
+    <div className="ea-mfr-card" onClick={onClick}>
+      <div className="ea-mfr-top" style={{ background: 'linear-gradient(90deg, #dc2626, #b91c1c)' }} />
+      <div style={{ height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '0.75rem' }}>
+        {!err
+          ? <img src={logo} alt={m.name} style={{ maxWidth: '82%', maxHeight: '100%', objectFit: 'contain' }} onError={() => setErr(true)} />
+          : <span style={{ fontWeight: 700, color: '#dc2626', fontSize: '1rem' }}>{m.name}</span>
+        }
+      </div>
+      <div className="ea-mfr-label">Produktschulungen</div>
+    </div>
+  );
+}
+
+// ─── HOME ────────────────────────────────────────────────────────────────────
 
 export default function Home() {
-  const bgImageUrl = useBaseUrl('/img/emig-gebaeude.png');
-  const [activeCategory, setActiveCategory] = useState('QM');
-  const [completedModules, setCompletedModules] = useState<string[]>([]);
-  const [selectedManufacturer, setSelectedManufacturer] = useState<any>(null);
-  const [greeting, setGreeting] = useState('');
+  const bgImg = useBaseUrl('/img/emig-gebaeude.png');
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [paused, setPaused] = useState(false);
+
+  const [tab, setTab] = useState<'QM'|'SAP'|'MED'>('QM');
+  const [done, setDone] = useState<string[]>([]);
+  const [mfr, setMfr] = useState<any>(null);
+  const [greet, setGreet] = useState('');
 
   useEffect(() => {
-    const saved = localStorage.getItem('emig_progress');
-    if (saved) { try { setCompletedModules(JSON.parse(saved)); } catch (_) {} }
-
+    try { const s = localStorage.getItem('emig_progress'); if (s) setDone(JSON.parse(s)); } catch (_) {}
     const h = new Date().getHours();
-    if (h < 12) setGreeting('Guten Morgen');
-    else if (h < 17) setGreeting('Guten Tag');
-    else setGreeting('Guten Abend');
+    setGreet(h < 12 ? 'Guten Morgen' : h < 17 ? 'Guten Tag' : 'Guten Abend');
   }, []);
 
-  const toggleModule = (refCode: string) => {
-    setCompletedModules(prev => {
-      const next = prev.includes(refCode) ? prev.filter(r => r !== refCode) : [...prev, refCode];
-      localStorage.setItem('emig_progress', JSON.stringify(next));
-      return next;
-    });
+  const pct = Math.round((done.length / ALL_QM_MODULES.length) * 100);
+  const ready = pct >= 100;
+
+  const toggleVideo = () => {
+    if (!videoRef.current) return;
+    if (videoRef.current.paused) { videoRef.current.play(); setPaused(false); }
+    else { videoRef.current.pause(); setPaused(true); }
   };
 
-  const progressPercent = Math.round((completedModules.length / ALL_QM_MODULES.length) * 100);
-  const isFinalTestReady = progressPercent >= 100;
-
-  const colorQM = '#e65100';
-  const colorSAP = '#4f46e5';
+  const colorQM  = '#92400e';
+  const colorSAP = '#1e40af';
   const colorMed = '#dc2626';
 
-  // ── Module Card ──
-  function ModuleCard({ title, refCode, color, link = '#', isDraft = false }: any) {
-    const isDone = completedModules.includes(refCode);
-
+  // Module card
+  function ModCard({ title, refCode, color, link = '#', draft = false }: any) {
+    const done_ = done.includes(refCode);
     return (
-      <div
-        className="ea-card"
-        style={{ opacity: isDraft ? 0.6 : 1 }}
-      >
-        <div
-          style={{
-            position: 'absolute', top: 0, left: 0, right: 0, height: '3px',
-            borderRadius: '20px 20px 0 0',
-            background: isDone ? '#10b981' : color,
-          }}
-        />
-
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
-          <h3 style={{ fontSize: '1rem', margin: 0, fontWeight: 600, color: '#1e293b', lineHeight: 1.3 }}>{title}</h3>
-          {isDone && <span style={{ fontSize: '1.1rem', flexShrink: 0, marginLeft: '8px' }}>✅</span>}
+      <div className="ea-card" style={{ opacity: draft ? 0.5 : 1 }}>
+        <div className="ea-card-stripe" style={{ background: done_ ? '#10b981' : color }} />
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '5px' }}>
+          <h3 className="ea-card-title">{title}</h3>
+          {done_ && <span style={{ color: '#10b981', fontSize: '0.9rem', marginLeft: '6px', flexShrink: 0 }}>✓</span>}
         </div>
-
-        <div className="ea-tag" style={{ marginBottom: '1rem' }}>{refCode}</div>
-
-        {/* Mini progress bar */}
-        <div style={{ height: '3px', background: '#f1f5f9', borderRadius: '99px', marginBottom: '1rem', overflow: 'hidden' }}>
-          <div style={{
-            width: isDone ? '100%' : '0%',
-            height: '100%',
-            background: isDone ? '#10b981' : color,
-            borderRadius: '99px',
-            transition: 'width 0.6s ease',
-          }} />
+        <div className="ea-card-code">{refCode}</div>
+        <div className="ea-card-bar-wrap">
+          <div className="ea-card-bar-fill" style={{ width: done_ ? '100%' : '0%', background: done_ ? '#10b981' : color }} />
         </div>
-
         <Link
-          className="ea-link-btn"
+          className="ea-card-btn"
+          to={draft ? '#' : link}
           style={{
-            background: isDraft ? '#e2e8f0' : isDone ? '#10b981' : color,
-            color: isDraft ? '#94a3b8' : '#fff',
+            background: draft ? '#f3f3f0' : done_ ? '#ecfdf5' : color,
+            color:      draft ? '#9ca3af'  : done_ ? '#059669' : '#fff',
+            border:     done_ ? '1px solid #d1fae5' : 'none',
           }}
-          to={isDraft ? '#' : link}
         >
-          {isDraft ? '🔒 In Vorbereitung' : isDone ? 'Wiederholen' : 'Modul starten →'}
+          {draft ? 'In Vorbereitung' : done_ ? 'Wiederholen' : 'Starten'}
         </Link>
       </div>
     );
   }
 
-  // ── Section Header ──
-  function SectionHeader({ label, color }: { label: string; color: string }) {
+  // Section heading
+  function H({ children, color = '#111' }: any) {
     return (
-      <div className="ea-section-title" style={{ marginTop: '2.5rem' }}>
-        <div className="ea-section-accent" style={{ background: color }} />
-        {label}
+      <div className="ea-heading">
+        <div className="ea-heading-bar" style={{ background: color }} />
+        {children}
+        <div className="ea-heading-rule" />
       </div>
     );
   }
@@ -771,284 +942,248 @@ export default function Home() {
   return (
     <Layout>
       <Head>
-        <title>Emig Academy – Lernplattform</title>
-        <style>{STYLES}</style>
+        <title>Emig Academy</title>
+        <style>{CSS}</style>
       </Head>
 
-      <div className="ea-root">
-        {/* ── HERO ── */}
+      <div className="ea">
+
+        {/* ═══ HERO ═══════════════════════════════════════════════════════ */}
         <div style={{ width: '100%', overflow: 'hidden' }}>
-          <header
-            className="ea-hero"
-            style={{ backgroundImage: `url(${bgImageUrl})` }}
-          >
-            <div className="ea-hero-overlay" />
+          <div className="ea-hero">
+
+            {/* Media layer */}
+            <div className="ea-hero-media">
+              <video
+                ref={videoRef}
+                className="ea-hero-video"
+                autoPlay
+                muted
+                loop
+                playsInline
+                poster={bgImg}
+              >
+                {/*
+                  Place your video file at:  static/video/emig-gebaeude.mp4
+                  If the file doesn't exist, the poster (building photo) is shown.
+                  Recommended: 1920×1080, H.264, 8–15 sec loop, muted
+                */}
+                <source src="/video/emig-gebaeude.mp4" type="video/mp4" />
+              </video>
+            </div>
+
+            {/* Cinematic overlays */}
+            <div className="ea-hero-vignette" />
+            <div className="ea-hero-grain" />
+            <div className="ea-hero-letterbox-top" />
+            <div className="ea-hero-letterbox-bottom" />
+
+            {/* Video toggle */}
+            <button className="ea-video-toggle" onClick={toggleVideo} title={paused ? 'Abspielen' : 'Pause'}>
+              {paused ? '▶' : '⏸'}
+            </button>
+
+            {/* Hero text */}
             <div className="ea-hero-content">
-              <div className="ea-hero-badge">✦ Interne Lernplattform</div>
-              <h1 className="ea-hero-title">
-                Emig <span>Academy</span>
+              <div className="ea-hero-eyebrow">
+                <span className="ea-hero-eyebrow-line" />
+                <span className="ea-hero-eyebrow-text">Emig GmbH · Interne Lernplattform</span>
+              </div>
+
+              <h1 className="ea-hero-h1">
+                Emig<br /><em>Academy</em>
               </h1>
-              <p className="ea-hero-sub">Ihr Wissen. Ihr Wachstum. Ihr Erfolg.</p>
+
+              <p className="ea-hero-tagline">Qualität. Wissen. Exzellenz.</p>
 
               <div className="ea-hero-stats">
-                <div className="ea-stat">
-                  <div className="ea-stat-num">{ALL_QM_MODULES.length}</div>
-                  <div className="ea-stat-label">QM Module</div>
+                <div className="ea-hero-stat">
+                  <span className="ea-hero-stat-n">{ALL_QM_MODULES.length}</span>
+                  <span className="ea-hero-stat-l">QM Module</span>
                 </div>
-                <div style={{ width: '1px', background: 'rgba(255,255,255,0.2)', margin: '4px 0' }} />
-                <div className="ea-stat">
-                  <div className="ea-stat-num">{MANUFACTURERS.length}</div>
-                  <div className="ea-stat-label">Hersteller</div>
+                <div className="ea-hero-stat">
+                  <span className="ea-hero-stat-n">{MANUFACTURERS.length}</span>
+                  <span className="ea-hero-stat-l">Hersteller</span>
                 </div>
-                <div style={{ width: '1px', background: 'rgba(255,255,255,0.2)', margin: '4px 0' }} />
-                <div className="ea-stat">
-                  <div className="ea-stat-num">{SAP_PHASES.length}</div>
-                  <div className="ea-stat-label">SAP Phasen</div>
+                <div className="ea-hero-stat">
+                  <span className="ea-hero-stat-n">{SAP_PHASES.length}</span>
+                  <span className="ea-hero-stat-l">SAP Phasen</span>
                 </div>
               </div>
             </div>
-          </header>
+          </div>
         </div>
 
-        {/* ── MAIN ── */}
-        <main style={{ padding: '2.5rem 0 4rem', background: '#f8fafc', minHeight: '80vh' }}>
-          <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 5%' }}>
+        {/* ═══ MAIN ════════════════════════════════════════════════════════ */}
+        <main className="ea-main">
+          <div className="ea-wrap">
 
-            {/* Welcome strip */}
-            {greeting && (
-              <div className="ea-welcome-strip">
+            {/* Welcome */}
+            {greet && (
+              <div className="ea-welcome">
                 <div>
-                  <div style={{ fontFamily: 'Syne, sans-serif', fontSize: '1.2rem', fontWeight: 700 }}>
-                    {greeting}, willkommen zurück! 👋
-                  </div>
-                  <div style={{ fontSize: '0.88rem', opacity: 0.8, marginTop: '4px' }}>
-                    {completedModules.length > 0
-                      ? `Sie haben bereits ${completedModules.length} von ${ALL_QM_MODULES.length} QM-Modulen abgeschlossen.`
+                  <div className="ea-welcome-name">{greet}, willkommen zurück.</div>
+                  <div className="ea-welcome-sub">
+                    {done.length > 0
+                      ? `${done.length} von ${ALL_QM_MODULES.length} QM-Modulen abgeschlossen`
                       : 'Starten Sie Ihr erstes Lernmodul.'}
                   </div>
                 </div>
-                <div style={{
-                  background: 'rgba(255,255,255,0.2)',
-                  borderRadius: '12px',
-                  padding: '12px 20px',
-                  fontSize: '0.85rem',
-                  fontWeight: 700,
-                  backdropFilter: 'blur(10px)',
-                  whiteSpace: 'nowrap',
-                }}>
-                  {progressPercent}% abgeschlossen
-                </div>
+                <div className="ea-welcome-pill">{pct} % abgeschlossen</div>
               </div>
             )}
 
-            {/* Category Navigation */}
-            <div className="ea-nav" style={{ marginBottom: '2.5rem' }}>
-              {[
-                { id: 'QM', label: 'Quality Management', icon: '📋', color: colorQM },
-                { id: 'SAP', label: 'SAP-System', icon: '💻', color: colorSAP },
-                { id: 'MED', label: 'Medizinprodukte', icon: '🏥', color: colorMed },
-              ].map(({ id, label, icon, color }) => {
-                const isActive = activeCategory === id;
-                return (
-                  <button
-                    key={id}
-                    className={`ea-nav-btn ${isActive ? 'active' : ''}`}
-                    onClick={() => { setActiveCategory(id); setSelectedManufacturer(null); }}
-                    style={{
-                      background: isActive ? color : '#fff',
-                      color: isActive ? '#fff' : '#374151',
-                      border: `2px solid ${isActive ? color : '#e2e8f0'}`,
-                      boxShadow: isActive ? `0 8px 20px ${color}35` : undefined,
-                    }}
-                  >
-                    <span style={{ fontSize: '1.1rem' }}>{icon}</span>
-                    {label}
-                  </button>
-                );
-              })}
+            {/* Tabs */}
+            <div className="ea-tabs">
+              {(['QM', 'SAP', 'MED'] as const).map(id => (
+                <button
+                  key={id}
+                  className={`ea-tab ${tab === id ? 'active' : ''}`}
+                  onClick={() => { setTab(id); setMfr(null); }}
+                >
+                  {{ QM: 'Quality Management', SAP: 'SAP-System', MED: 'Medizinprodukte' }[id]}
+                </button>
+              ))}
             </div>
 
-            {/* ─── QM SECTION ─── */}
-            {activeCategory === 'QM' && (
-              <div style={{ animation: 'fadeSlide 0.35s ease' }}>
-                {/* Progress */}
-                <div className="ea-progress-ring-wrap">
-                  <div>
-                    <div style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '8px' }}>
-                      QM Gesamtfortschritt
+            {/* ── QM ──────────────────────────────────────────────────── */}
+            {tab === 'QM' && (
+              <div className="ea-animate">
+
+                <div className="ea-prog-card">
+                  <div className="ea-prog-info">
+                    <div className="ea-prog-label">QM Gesamtfortschritt</div>
+                    <div className="ea-prog-track">
+                      <div className="ea-prog-fill" style={{ width: `${pct}%` }} />
                     </div>
-                    <div className="ea-progress-bar-bg">
-                      <div className="ea-progress-bar-fill" style={{ width: `${progressPercent}%` }} />
-                    </div>
-                    <div style={{ fontSize: '0.78rem', color: '#94a3b8', marginTop: '6px' }}>
-                      {completedModules.length} von {ALL_QM_MODULES.length} Modulen abgeschlossen
-                    </div>
+                    <div className="ea-prog-sub">{done.length} von {ALL_QM_MODULES.length} Modulen abgeschlossen</div>
                   </div>
-                  <div className="ea-progress-percent">{progressPercent}%</div>
+                  <div className="ea-prog-pct">{pct}%</div>
                 </div>
 
-                {/* Final test */}
-                <div
-                  className="ea-final-test"
-                  style={{
-                    background: isFinalTestReady
-                      ? 'linear-gradient(135deg, #f0fdf4, #dcfce7)'
-                      : '#fff',
-                    border: `2px dashed ${isFinalTestReady ? '#10b981' : '#e2e8f0'}`,
-                  }}
-                >
-                  <div>
-                    <div style={{ fontFamily: 'Syne, sans-serif', fontSize: '1.1rem', fontWeight: 700, color: isFinalTestReady ? '#065f46' : '#94a3b8' }}>
-                      {isFinalTestReady ? '🏆 Finaler Test & Zertifikat' : '🔒 Finaler Test'}
-                    </div>
-                    <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginTop: '4px' }}>
-                      {isFinalTestReady ? 'Alle Module abgeschlossen – Sie können jetzt die Prüfung starten.' : `Noch ${ALL_QM_MODULES.length - completedModules.length} Module bis zur Freischaltung.`}
-                    </div>
-                  </div>
-                  <button
-                    disabled={!isFinalTestReady}
-                    style={{
-                      padding: '12px 28px',
-                      borderRadius: '14px',
-                      border: 'none',
-                      background: isFinalTestReady ? 'linear-gradient(135deg, #10b981, #059669)' : '#e2e8f0',
-                      color: isFinalTestReady ? '#fff' : '#94a3b8',
-                      fontWeight: 700,
-                      fontFamily: 'DM Sans, sans-serif',
-                      cursor: isFinalTestReady ? 'pointer' : 'not-allowed',
-                      fontSize: '0.95rem',
-                      boxShadow: isFinalTestReady ? '0 8px 20px rgba(16,185,129,0.35)' : undefined,
-                      whiteSpace: 'nowrap',
-                    }}
-                  >
-                    Prüfung starten →
-                  </button>
-                </div>
-
-                {/* Philosophy */}
-                <div className="ea-philo-card">
-                  <div style={{ fontFamily: 'Syne, sans-serif', fontSize: '1.2rem', fontWeight: 700, color: '#1e293b', marginBottom: '0.5rem' }}>
-                    QM Philosophie & Strategie
-                  </div>
-                  <p style={{ color: '#4b5563', margin: '0 0 1rem', fontSize: '0.95rem' }}>
-                    Grundpfeiler unseres Qualitätsmanagementsystems nach ISO 13485.
-                  </p>
-                  <Link to="/docs/quality-management/qm-philosophie" style={{ fontWeight: 700, color: colorQM, textDecoration: 'none', fontSize: '0.9rem' }}>
-                    Zur QM-Philosophie →
+                <div className="ea-philo">
+                  <div className="ea-philo-title">QM Philosophie & Strategie</div>
+                  <p className="ea-philo-body">Grundpfeiler unseres Qualitätsmanagementsystems nach ISO 13485.</p>
+                  <Link to="/docs/quality-management/qm-philosophie" className="ea-philo-link">
+                    Zur QM-Philosophie &nbsp;→
                   </Link>
                 </div>
 
-                {/* Modules */}
-                <SectionHeader label="Logistik & Lager" color={colorQM} />
-                <div className="ea-card-grid">
-                  <ModuleCard title="Lagerbedingungen" refCode="SOP-LOG-01" color={colorQM} link="/docs/logistik-lager/SOP_LOG-01" />
-                  <ModuleCard title="Rückverfolgbarkeit" refCode="SOP-LOG-02" color={colorQM} link="/docs/logistik-lager/SOP_LOG-02" />
-                  <ModuleCard title="Sperrware" refCode="SOP-LOG-03" color={colorQM} link="/docs/logistik-lager/SOP_LOG-03" />
-                  <ModuleCard title="Inventur" refCode="SOP-LOG-04" color={colorQM} isDraft />
+                <div
+                  className="ea-test-box"
+                  style={{
+                    background: ready ? '#f0fdf4' : '#faf9f6',
+                    borderColor: ready ? '#bbf7d0' : '#e2ded8',
+                  }}
+                >
+                  <div>
+                    <div style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.05rem', fontWeight: 600, color: ready ? '#065f46' : '#9ca3af' }}>
+                      {ready ? 'Finaler Test & Zertifikat' : 'Finaler Test — gesperrt'}
+                    </div>
+                    <div style={{ fontSize: '0.78rem', color: '#9ca3af', marginTop: '4px' }}>
+                      {ready
+                        ? 'Alle Module abgeschlossen. Prüfung jetzt verfügbar.'
+                        : `Noch ${ALL_QM_MODULES.length - done.length} Module bis zur Freischaltung.`}
+                    </div>
+                  </div>
+                  <button
+                    disabled={!ready}
+                    className="ea-test-btn"
+                    style={{
+                      background: ready ? '#059669' : '#e5e1da',
+                      color: ready ? '#fff' : '#9ca3af',
+                      cursor: ready ? 'pointer' : 'not-allowed',
+                      boxShadow: ready ? '0 4px 14px rgba(5,150,105,0.3)' : undefined,
+                    }}
+                  >
+                    Prüfung starten
+                  </button>
                 </div>
 
-                <SectionHeader label="Einkauf & Lieferanten" color={colorQM} />
-                <div className="ea-card-grid">
-                  <ModuleCard title="Lieferantenbewertung" refCode="SOP-EINK-01" color={colorQM} link="/docs/einkauf-lieferanten/SOP_EINK-01" />
-                  <ModuleCard title="Einkaufsprozess" refCode="SOP-EINK-02" color={colorQM} link="/docs/einkauf-lieferanten/SOP_EINK-02" />
+                <H color={colorQM}>Logistik & Lager</H>
+                <div className="ea-grid">
+                  <ModCard title="Lagerbedingungen"  refCode="SOP-LOG-01" color={colorQM} link="/docs/logistik-lager/SOP_LOG-01" />
+                  <ModCard title="Rückverfolgbarkeit" refCode="SOP-LOG-02" color={colorQM} link="/docs/logistik-lager/SOP_LOG-02" />
+                  <ModCard title="Sperrware"          refCode="SOP-LOG-03" color={colorQM} link="/docs/logistik-lager/SOP_LOG-03" />
+                  <ModCard title="Inventur"           refCode="SOP-LOG-04" color={colorQM} draft />
                 </div>
 
-                <SectionHeader label="Regulatorik & MDR" color={colorQM} />
-                <div className="ea-card-grid">
-                  <ModuleCard title="Importeurpflichten" refCode="SOP-REG-01" color={colorQM} link="/docs/regulatorik-mdr/SOP_REG-01" />
-                  <ModuleCard title="Händlerpflichten" refCode="SOP-REG-02" color={colorQM} link="/docs/regulatorik-mdr/SOP_REG-02" />
-                  <ModuleCard title="PRRC" refCode="SOP-REG-03" color={colorQM} link="/docs/regulatorik-mdr/SOP_REG-03" />
-                  <ModuleCard title="Audits & Inspektionen" refCode="SOP-REG-05" color={colorQM} link="/docs/regulatorik-mdr/SOP_REG-05" />
+                <H color={colorQM}>Einkauf & Lieferanten</H>
+                <div className="ea-grid">
+                  <ModCard title="Lieferantenbewertung" refCode="SOP-EINK-01" color={colorQM} link="/docs/einkauf-lieferanten/SOP_EINK-01" />
+                  <ModCard title="Einkaufsprozess"      refCode="SOP-EINK-02" color={colorQM} link="/docs/einkauf-lieferanten/SOP_EINK-02" />
+                </div>
+
+                <H color={colorQM}>Regulatorik & MDR</H>
+                <div className="ea-grid">
+                  <ModCard title="Importeurpflichten" refCode="SOP-REG-01" color={colorQM} link="/docs/regulatorik-mdr/SOP_REG-01" />
+                  <ModCard title="Händlerpflichten"   refCode="SOP-REG-02" color={colorQM} link="/docs/regulatorik-mdr/SOP_REG-02" />
+                  <ModCard title="PRRC"               refCode="SOP-REG-03" color={colorQM} link="/docs/regulatorik-mdr/SOP_REG-03" />
+                  <ModCard title="Audits"             refCode="SOP-REG-05" color={colorQM} link="/docs/regulatorik-mdr/SOP_REG-05" />
                 </div>
               </div>
             )}
 
-            {/* ─── SAP SECTION ─── */}
-            {activeCategory === 'SAP' && (
-              <div style={{ animation: 'fadeSlide 0.35s ease' }}>
-                <SectionHeader label="SAP Lernmodule" color={colorSAP} />
-                <div className="ea-card-grid" style={{ marginBottom: '3rem' }}>
-                  <ModuleCard title="SAP Basics" refCode="SAP-01" color={colorSAP} isDraft />
-                  <ModuleCard title="SAP Warehouse Management" refCode="SAP-02" color={colorSAP} isDraft />
-                  <ModuleCard title="SAP Purchasing" refCode="SAP-03" color={colorSAP} isDraft />
-                  <ModuleCard title="SAP Batch Management" refCode="SAP-04" color={colorSAP} isDraft />
+            {/* ── SAP ─────────────────────────────────────────────────── */}
+            {tab === 'SAP' && (
+              <div className="ea-animate">
+                <H color={colorSAP}>SAP Lernmodule</H>
+                <div className="ea-grid" style={{ marginBottom: '2.5rem' }}>
+                  <ModCard title="SAP Basics"           refCode="SAP-01" color={colorSAP} draft />
+                  <ModCard title="SAP Warehouse Mgmt."  refCode="SAP-02" color={colorSAP} draft />
+                  <ModCard title="SAP Purchasing"       refCode="SAP-03" color={colorSAP} draft />
+                  <ModCard title="SAP Batch Management" refCode="SAP-04" color={colorSAP} draft />
                 </div>
 
-                <SAPDashboard colorSAP={colorSAP} />
+                <H color={colorSAP}>SAP Prozesslandschaft</H>
+                <SAPDashboard />
               </div>
             )}
 
-            {/* ─── MED SECTION ─── */}
-            {activeCategory === 'MED' && (
-              <div style={{ animation: 'fadeSlide 0.35s ease' }}>
-                {!selectedManufacturer ? (
+            {/* ── MED ─────────────────────────────────────────────────── */}
+            {tab === 'MED' && (
+              <div className="ea-animate">
+                {!mfr ? (
                   <>
-                    <SectionHeader label="Hersteller & Produktschulungen" color={colorMed} />
+                    <H color={colorMed}>Hersteller & Produktschulungen</H>
                     <div className="ea-mfr-grid">
-                      {MANUFACTURERS.map((m) => (
-                        <ManufacturerCard
-                          key={m.id}
-                          m={m}
-                          onClick={() => setSelectedManufacturer(m)}
-                          colorMed={colorMed}
-                        />
+                      {MANUFACTURERS.map(m => (
+                        <ManufacturerCard key={m.id} m={m} onClick={() => setMfr(m)} />
                       ))}
                     </div>
                   </>
                 ) : (
                   <div>
-                    <button className="ea-back-btn" onClick={() => setSelectedManufacturer(null)}>
-                      ← Zurück zur Übersicht
-                    </button>
+                    <button className="ea-back" onClick={() => setMfr(null)}>← Zurück</button>
 
-                    <div style={{
-                      background: `linear-gradient(135deg, ${colorMed}12, #fff)`,
-                      border: `1px solid ${colorMed}25`,
-                      borderRadius: '20px',
-                      padding: '1.75rem 2rem',
-                      marginBottom: '2rem',
-                    }}>
-                      <div style={{ fontFamily: 'Syne, sans-serif', fontSize: '1.8rem', fontWeight: 800, color: '#1e293b' }}>
-                        {selectedManufacturer.name}
-                      </div>
-                      <p style={{ color: '#64748b', margin: '8px 0 0', fontSize: '0.95rem' }}>
-                        Wählen Sie ein Produktmodul, um die Schulung zu starten.
-                      </p>
+                    <div className="ea-manu-hd">
+                      <div className="ea-manu-hd-title">{mfr.name}</div>
+                      <p className="ea-manu-hd-sub">Wählen Sie ein Produktmodul, um die Schulung zu starten.</p>
                     </div>
 
-                    {selectedManufacturer.id === 'riwo' ? (
+                    {mfr.id === 'riwo' ? (
                       <>
-                        <SectionHeader label="RIWOspine Produktmodule" color={colorMed} />
-                        <div className="ea-card-grid">
-                          {RIWOSPINE_PRODUCTS.map((prod) => (
-                            <div key={prod.refCode} className="ea-card">
-                              <div style={{
-                                position: 'absolute', top: 0, left: 0, right: 0, height: '3px',
-                                borderRadius: '20px 20px 0 0', background: colorMed,
-                              }} />
-                              <div style={{ fontSize: '2rem', marginBottom: '0.75rem' }}>{prod.icon}</div>
-                              <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#1e293b', margin: '0 0 4px' }}>{prod.title}</h3>
-                              <div className="ea-tag" style={{ marginBottom: '0.75rem' }}>{prod.refCode}</div>
-                              <p style={{ fontSize: '0.85rem', color: '#64748b', margin: '0 0 1rem', lineHeight: 1.5, flex: 1 }}>{prod.desc}</p>
-                              <Link
-                                className="ea-link-btn"
-                                style={{ background: colorMed, color: '#fff' }}
-                                to={prod.link}
-                              >
-                                Modul starten →
+                        <H color={colorMed}>Produktmodule</H>
+                        <div className="ea-grid">
+                          {RIWOSPINE_PRODUCTS.map(p => (
+                            <div key={p.refCode} className="ea-card">
+                              <div className="ea-card-stripe" style={{ background: colorMed }} />
+                              <h3 className="ea-card-title">{p.title}</h3>
+                              <div className="ea-card-code">{p.refCode}</div>
+                              <p style={{ fontSize: '0.82rem', color: '#6b7280', lineHeight: 1.55, margin: '0 0 1rem', flex: 1 }}>{p.desc}</p>
+                              <Link className="ea-card-btn" style={{ background: colorMed, color: '#fff' }} to={p.link}>
+                                Modul starten
                               </Link>
                             </div>
                           ))}
                         </div>
                       </>
                     ) : (
-                      <div style={{ textAlign: 'center', padding: '4rem 2rem', background: '#fff', borderRadius: '20px', border: '2px dashed #e2e8f0' }}>
-                        <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🚧</div>
-                        <div style={{ fontFamily: 'Syne, sans-serif', fontSize: '1.2rem', fontWeight: 700, color: '#1e293b', marginBottom: '0.5rem' }}>
-                          In Vorbereitung
-                        </div>
-                        <p style={{ color: '#94a3b8', margin: 0, fontSize: '0.95rem' }}>
-                          Die Schulungsinhalte für <strong>{selectedManufacturer.name}</strong> werden gerade vorbereitet.
+                      <div className="ea-draft">
+                        <div style={{ width: '32px', height: '1px', background: '#e2ded8', margin: '0 auto' }} />
+                        <div className="ea-draft-title">In Vorbereitung</div>
+                        <p className="ea-draft-sub">
+                          Inhalte für <strong>{mfr.name}</strong> werden derzeit erstellt.
                         </p>
                       </div>
                     )}
@@ -1056,6 +1191,7 @@ export default function Home() {
                 )}
               </div>
             )}
+
           </div>
         </main>
       </div>
