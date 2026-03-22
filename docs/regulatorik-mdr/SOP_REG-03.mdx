@@ -1,39 +1,786 @@
 ---
 id: SOP_REG-03
-sidebar_label: 'Rolle der PRRC'
+title: Rolle und Aufgaben der PRRC
+sidebar_label: PRRC
 ---
 
-import PrrcQuiz from '@site/src/components/PrrcQuiz';
+import React, { useState, useEffect } from 'react';
+import SopQuiz from '@site/src/components/SopQuiz';
 
-# Schulung: Rolle und Aufgaben der PRRC (MDR Art. 15)
+export const quizData = [
+  { id:1, question:"Wofür steht PRRC?", options:["Product Registration and Regulatory Control","Person Responsible for Regulatory Compliance — die für die Einhaltung der Regulierungsvorschriften verantwortliche Person","Process Review and Risk Control","Product Release and Review Coordinator"], correct:1, explanation:"PRRC = Person Responsible for Regulatory Compliance. Die Rolle ist in MDR Art. 15 definiert und ist eine Pflichtrolle für alle Hersteller, Importeure und Händler von Medizinprodukten in der EU." },
+  { id:2, question:"Welchem MDR-Artikel liegt die PRRC-Pflicht zugrunde?", options:["MDR Art. 13","MDR Art. 14","MDR Art. 15","MDR Art. 27"], correct:2, explanation:"MDR Art. 15 definiert die PRRC als Pflichtrolle. Sie muss von jedem Hersteller, Importeur und bestimmten Händlern benannt werden und nachweislich qualifiziert sein." },
+  { id:3, question:"Wer benennt die PRRC bei der EMIG GmbH?", options:["Der QMB ernennt die PRRC aus seinen Reihen","Die Geschäftsführung durch schriftliche Bestellung","Die Mitarbeiter durch Wahl","Der Betriebsrat im Einvernehmen mit der GF"], correct:1, explanation:"Die PRRC wird von der Geschäftsführung schriftlich bestellt. Bei EMIG ist die PRRC als Stabstelle direkt der GF unterstellt — um die erforderliche Unabhängigkeit zu gewährleisten." },
+  { id:4, question:"Welche Qualifikation Weg 1 berechtigt zur PRRC-Benennung?", options:["Jeder kaufmännische Abschluss mit 5 Jahren Erfahrung","Abgeschlossenes Studium (Jura/Medizin/Pharmazie/Ingenieurwesen) + mind. 1 Jahr Berufserfahrung in reg. Fragen oder QM für Medizinprodukte","Nur promovierte Juristen mit MDR-Zertifikat","Ausschließlich Ingenieure mit ISO-13485-Auditor-Zertifikat"], correct:1, explanation:"Weg 1: Abgeschlossenes Hochschulstudium in Rechtswissenschaften, Medizin, Pharmazie oder Ingenieurwesen PLUS mindestens 1 Jahr einschlägige Berufserfahrung in regulatorischen Fragen oder im QM für Medizinprodukte." },
+  { id:5, question:"Was ist Qualifikationsweg 2 zur PRRC-Benennung (ohne Hochschulstudium)?", options:["Nur ein einschlägiges Zertifikat reicht","4 Jahre einschlägige Berufserfahrung in regulatorischen Fragen bei Medizinprodukten","10 Jahre allgemeine Berufserfahrung in der Medizinbranche","Erfahrung in einem anderen regulierten Bereich (z.B. Pharmaindustrie)"], correct:1, explanation:"Weg 2: Mindestens 4 Jahre einschlägige Berufserfahrung in regulatorischen Fragen bei Medizinprodukten — auch ohne Hochschulabschluss. Qualifikationsnachweise werden in Personalakte und QM-Aufzeichnungen geführt." },
+  { id:6, question:"Welche 5 Kernaufgaben hat die PRRC bei EMIG gemäß MDR Art. 15?", options:["Einkauf, Vertrieb, Lager, Service, Buchhaltung","Konformitätsprüfung, technische Dokumentation, Vigilanz/Meldesystem, Post-Market Surveillance, Bescheinigungen","Nur Freigabe von Produkten und Dokumentenablage","Ausschließlich Behördenkommunikation"], correct:1, explanation:"5 Kernaufgaben: (1) Konformitätsprüfung vor Auslieferung, (2) Überwachung technischer Dokumentationen und EU-DoC, (3) Vigilanz und Berichtspflichten, (4) Post-Market Surveillance und Herstellerkoordination, (5) Bescheinigungen bei Sonderanfertigungen." },
+  { id:7, question:"Darf die PRRC Weisungen erhalten, die ihre fachliche Urteilsfähigkeit einschränken?", options:["Ja, von der Geschäftsführung immer","Ja, vom QMB bei dringenden Lieferungen","Nein — die PRRC darf in Bezug auf regulatorische Pflichten keinen einschränkenden Weisungen unterliegen","Nur bei wirtschaftlichen Notfällen"], correct:2, explanation:"Nein. Die PRRC darf in Bezug auf die Erfüllung ihrer regulatorischen Pflichten KEINEN Weisungen unterliegen, die ihre fachliche Urteilsfähigkeit einschränken könnten. Diese Unabhängigkeit ist gesetzlich vorgeschrieben (MDR Art. 15)." },
+  { id:8, question:"Was ist das Schnittstellen-Risiko zwischen PRRC und dem Vertrieb?", options:["Kein Risiko, da die PRRC dem Vertrieb untergeordnet ist","Interessenkonflikt zwischen wirtschaftlichen Zielen (schneller Vertrieb) und regulatorischer Sicherheit","Doppelarbeit bei der Dokumentation","Kommunikationsprobleme bei der Auftragsanlage"], correct:1, explanation:"Das zentrale Risiko ist der Interessenkonflikt: Der Vertrieb möchte schnell liefern, die PRRC muss regulatorische Sicherheit gewährleisten. Deshalb ist die PRRC organisatorisch unabhängig und darf nicht aus wirtschaftlichen Gründen unter Druck gesetzt werden." },
+  { id:9, question:"Welche Aufzeichnungen führt die PRRC zwingend?", options:["Nur Freigabeprotokolle","Bestellungsurkunde (Benennung), Qualifikationsmatrix (Eignung gem. MDR Art. 15), Freigabeprotokolle (Konformitätsprüfung vor Auslieferung)","Ausschließlich Vigilanzmeldungen","Nur die EUDAMED-Zugangsdaten"], correct:1, explanation:"3 Pflichtaufzeichnungen: (1) Bestellungsurkunde (formelle Benennung inkl. Stellvertreterregelung), (2) Qualifikationsmatrix (Nachweis der Eignung gem. MDR Art. 15), (3) Freigabeprotokolle (dokumentierte Konformitätsprüfung vor jeder Auslieferung)." },
+  { id:10, question:"Was überwacht die PRRC im Rahmen der Post-Market Surveillance?", options:["Nur die Lagerbestände","Sammlung von Erfahrungen aus der klinischen Anwendung — Koordination mit Herstellern über Kundenfeedback, Serviceberichte und Reklamationen","Ausschließlich Preisänderungen bei Lieferanten","Nur behördliche Mitteilungen"], correct:1, explanation:"Im Rahmen der PMS überwacht die PRRC die Sammlung von Erfahrungen aus der klinischen Anwendung und koordiniert mit den Herstellern der MiaMed-Gruppe. Quellen: Kundenfeedback, Serviceberichte, Reklamationen, Herstellerinformationen." }
+];
 
-In dieser Schulung zur **SOP-REG-03** lernen Sie die Bedeutung der „für die Einhaltung der Regulierungsvorschriften verantwortlichen Person“ (PRRC) kennen. Diese Rolle ist das regulatorische Gewissen der EMIG GmbH.
+<style>{`
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
 
-## 1. Zweck und Stellung im Unternehmen
-[cite_start]Die PRRC stellt sicher, dass die EMIG GmbH alle gesetzlichen Anforderungen beim Import und Vertrieb von Medizinprodukten überwacht[cite: 493, 494]. 
+  /* ── Override Docusaurus article defaults ── */
+  .sop-page h1, .sop-page h2, .sop-page h3,
+  .sop-page p,  .sop-page ul, .sop-page li { all: revert; }
+  .sop-page h1, .sop-page h2, .sop-page h3,
+  .sop-page p,  .sop-page ul, .sop-page li { font-family: 'Outfit', sans-serif; }
 
-:::important Unabhängigkeit
-[cite_start]Die PRRC ist als **Stabstelle direkt der Geschäftsführung** unterstellt[cite: 541]. [cite_start]Sie darf bei der Erfüllung ihrer Fachpflichten **keinen Weisungen** unterliegen, die ihre Urteilsfähigkeit einschränken könnten[cite: 542].
-:::
+  /* ── Make the doc container full width ── */
+  .theme-doc-markdown { max-width: 100% !important; }
+  article.sop-wrap     { max-width: 100% !important; padding: 0 !important; }
 
-## 2. Die 5 Kernaufgaben der PRRC
-[cite_start]Gemäß Artikel 15 MDR übernimmt die PRRC bei uns folgende Funktionen[cite: 544]:
+  /* ══════════════════════════════════════
+     OUTER WRAPPER
+  ══════════════════════════════════════ */
+  .sop-page {
+    font-family: 'Outfit', sans-serif;
+    color: #18181f;
+    width: 100%;
+    --accent: #c8983a;
+    --accent-lt: #e8d5a8;
+    --dark: #0e0e14;
+    --radius: 14px;
+  }
 
-1. [cite_start]**Konformitätsprüfung:** Sicherstellung der Produktprüfung gemäß QMS vor der Auslieferung[cite: 545].
-2. [cite_start]**Technische Dokumentation:** Überwachung der Vollständigkeit von EU-Konformitätserklärungen[cite: 546].
-3. [cite_start]**Vigilanz:** Sicherstellung der Berichtspflichten bei Vorkommnissen oder Rückrufen[cite: 547].
-4. [cite_start]**Post-Market Surveillance:** Koordination der Marktbeobachtung mit der MiaMed-Gruppe[cite: 548].
-5. [cite_start]**Bescheinigungen:** Prüfung von Erklärungen bei Sonderanfertigungen[cite: 549].
+  /* ══════════════════════════════════════
+     HERO — light, editorial, not a dark box
+  ══════════════════════════════════════ */
+  .sop-hero {
+    background: #f8f7f3;
+    border: 1px solid #e8e4dc;
+    border-radius: 20px;
+    padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1.5rem, 4vw, 2.75rem);
+    margin-bottom: 2rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
 
-## 3. Qualifikation und Befugnisse
-[cite_start]Die PRRC muss über ein abgeschlossenes Fachstudium und Berufserfahrung verfügen[cite: 552, 553]. [cite_start]Sie besitzt die explizite **Befugnis, die Freigabe von Produkten zu stoppen**, sofern begründete Zweifel an der Konformität bestehen[cite: 529].
+  .sop-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #c8983a08 0%, transparent 60%);
+    pointer-events: none;
+  }
 
-## 4. Schnittstellen
-[cite_start]Die PRRC arbeitet eng mit der Logistik zusammen und gibt die Kriterien für die Wareneingangsprüfung vor[cite: 575]. [cite_start]Bei Änderungen am Produktdesign erfolgt ein direkter Austausch mit den Herstellern[cite: 576].
+  .sop-hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.75rem;
+  }
 
----
+  .sop-hero-eyebrow-line {
+    width: 28px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 99px;
+    flex-shrink: 0;
+  }
 
-## 🎓 Wissenstest: SOP-REG-03
-Zeigen Sie, dass Sie die verantwortungsvolle Rolle der PRRC verstanden haben.
+  .sop-hero-eyebrow-text {
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
 
-<PrrcQuiz />
+  .sop-hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    color: #0e0e14;
+    margin: 0 0 0.6rem;
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+
+  .sop-hero-desc {
+    font-size: clamp(0.82rem, 1.4vw, 0.9rem);
+    color: #6b7280;
+    margin: 0;
+    line-height: 1.65;
+    max-width: 500px;
+  }
+
+  .sop-hero-meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1.25rem;
+  }
+
+  .sop-hero-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    color: #9ca3af;
+    font-weight: 500;
+  }
+
+  .sop-hero-meta-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* KPI block on right */
+  .sop-hero-kpis {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    align-items: flex-end;
+    flex-shrink: 0;
+  }
+
+  .sop-hero-kpi { text-align: right; }
+
+  .sop-hero-kpi-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: var(--accent);
+    line-height: 1;
+    letter-spacing: 0.04em;
+  }
+
+  .sop-hero-kpi-label {
+    font-size: 0.58rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-top: 1px;
+  }
+
+  .sop-hero-divider {
+    width: 1px;
+    height: 24px;
+    background: #e2ded8;
+    align-self: center;
+  }
+
+  /* ══════════════════════════════════════
+     TWO-COLUMN LAYOUT
+     Left: content (flexible)
+     Right: sticky nav (260px)
+  ══════════════════════════════════════ */
+  .sop-layout {
+    display: grid;
+    grid-template-columns: 1fr 240px;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .sop-content { min-width: 0; }
+
+  /* Sticky side nav */
+  .sop-sidenav {
+    position: sticky;
+    top: 80px;
+    background: #fff;
+    border: 1px solid #ece9e3;
+    border-radius: 16px;
+    padding: 1.25rem;
+    overflow: hidden;
+  }
+
+  .sop-sidenav-title {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    margin-bottom: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sop-sidenav-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #f0ede8;
+  }
+
+  .sop-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.6rem 0.75rem;
+    border-radius: 9px;
+    text-decoration: none;
+    margin-bottom: 3px;
+    transition: all 0.18s;
+    border: 1px solid transparent;
+  }
+
+  .sop-nav-item:hover {
+    background: #f8f7f3;
+    border-color: #e8e4dc;
+    color: #111;
+  }
+
+  .sop-nav-item.active {
+    background: #fff8ec;
+    border-color: rgba(200,152,58,0.25);
+    color: #92400e;
+  }
+
+  .sop-nav-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    color: #d1cec8;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 20px;
+    transition: color 0.18s;
+  }
+
+  .sop-nav-item.active .sop-nav-num { color: var(--accent); }
+
+  .sop-nav-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #374151;
+    line-height: 1.2;
+  }
+
+  .sop-nav-item.active .sop-nav-label { color: #92400e; }
+
+  /* Progress bar inside sidenav */
+  .sop-nav-progress {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f0ede8;
+  }
+
+  .sop-nav-progress-label {
+    font-size: 0.62rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .sop-nav-progress-pct {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    color: var(--accent);
+  }
+
+  .sop-nav-bar-bg {
+    height: 3px;
+    background: #f0ede8;
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .sop-nav-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-lt));
+    border-radius: 99px;
+    transition: width 0.4s ease;
+  }
+
+  /* Quiz button in sidenav */
+  .sop-nav-quiz-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 0.9rem;
+    padding: 9px 14px;
+    background: #0e0e14;
+    color: var(--accent-lt);
+    border: none;
+    border-radius: 10px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    letter-spacing: 0.04em;
+  }
+
+  .sop-nav-quiz-btn:hover {
+    background: #1a1a26;
+    color: #fff;
+  }
+
+  /* ══════════════════════════════════════
+     SECTION
+  ══════════════════════════════════════ */
+  .sop-section {
+    margin-bottom: 3rem;
+    scroll-margin-top: 100px;
+  }
+
+  .sop-section-hd {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #f0ede8;
+  }
+
+  .sop-section-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 3rem);
+    color: #ede9e2;
+    line-height: 1;
+    flex-shrink: 0;
+    letter-spacing: 0.04em;
+  }
+
+  .sop-section-title {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 3px;
+    line-height: 1.2;
+    padding-top: 0.3rem;
+  }
+
+  .sop-section-sub {
+    font-size: 0.68rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+  }
+
+  /* ══════════════════════════════════════
+     INFO BOX
+  ══════════════════════════════════════ */
+  .sop-info {
+    background: #fffbf3;
+    border: 1px solid rgba(200,152,58,0.2);
+    border-left: 3px solid var(--accent);
+    border-radius: 12px;
+    padding: 1rem 1.3rem;
+    font-size: 0.87rem;
+    color: #374151;
+    line-height: 1.72;
+    margin-bottom: 1.5rem;
+  }
+  .sop-info strong { color: #92400e; }
+
+  /* ══════════════════════════════════════
+     RULE CARDS
+  ══════════════════════════════════════ */
+  .sop-rules {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+    gap: 11px;
+    margin-bottom: 1.5rem;
+  }
+
+  .sop-rule {
+    background: #fff;
+    border: 1px solid #ece9e3;
+    border-radius: var(--radius);
+    padding: 1.2rem;
+    display: flex;
+    gap: 13px;
+    align-items: flex-start;
+    transition: border-color 0.18s, box-shadow 0.18s, transform 0.18s;
+  }
+
+  .sop-rule:hover {
+    border-color: rgba(200,152,58,0.3);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    transform: translateY(-2px);
+  }
+
+  .sop-rule-icon {
+    width: 36px; height: 36px;
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.05rem;
+    flex-shrink: 0;
+  }
+
+  .sop-rule-title {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .sop-rule-desc {
+    font-size: 0.77rem;
+    color: #6b7280;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .sop-rule-desc strong { color: #374151; }
+
+  /* ══════════════════════════════════════
+     PROCESS FLOW
+  ══════════════════════════════════════ */
+  .sop-flow { display: flex; flex-direction: column; margin-bottom: 1.5rem; }
+
+  .sop-flow-step { display: flex; gap: 14px; align-items: flex-start; }
+
+  .sop-flow-left {
+    display: flex; flex-direction: column; align-items: center; flex-shrink: 0;
+  }
+
+  .sop-flow-circle {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: #111116; color: #e8d5a8;
+    font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .sop-flow-line {
+    width: 1px; flex: 1; min-height: 20px;
+    background: linear-gradient(to bottom, #dedad4, transparent);
+    margin: 3px 0;
+  }
+
+  .sop-flow-content { padding-bottom: 1.4rem; flex: 1; }
+
+  .sop-flow-title {
+    font-size: 0.88rem; font-weight: 700; color: #111827; margin-bottom: 3px;
+  }
+
+  .sop-flow-desc {
+    font-size: 0.79rem; color: #6b7280; line-height: 1.6; margin: 0;
+  }
+
+  /* ══════════════════════════════════════
+     CHECKLIST
+  ══════════════════════════════════════ */
+  .sop-checklist { display: flex; flex-direction: column; gap: 7px; margin-bottom: 1.5rem; }
+
+  .sop-check {
+    display: flex; align-items: flex-start; gap: 11px;
+    background: #fff; border: 1px solid #ece9e3; border-radius: 12px;
+    padding: 0.9rem 1.1rem;
+    transition: all 0.18s;
+  }
+  .sop-check:hover { border-color: rgba(200,152,58,0.25); background: #fffbf5; }
+
+  .sop-check-icon {
+    width: 28px; height: 28px; border-radius: 7px;
+    background: #f5f3ee; display: flex; align-items: center;
+    justify-content: center; font-size: 0.82rem; flex-shrink: 0;
+  }
+
+  .sop-check-label { font-size: 0.84rem; font-weight: 600; color: #111827; margin-bottom: 2px; }
+  .sop-check-sub   { font-size: 0.73rem; color: #9ca3af; line-height: 1.45; }
+
+  /* ══════════════════════════════════════
+     WARNING / TIP
+  ══════════════════════════════════════ */
+  .sop-warning {
+    background: #fef2f2; border: 1px solid #fecaca; border-radius: 12px;
+    padding: 1rem 1.2rem; font-size: 0.83rem; color: #7f1d1d; line-height: 1.65;
+    margin-bottom: 1.5rem; display: flex; gap: 10px; align-items: flex-start;
+  }
+
+  .sop-tip {
+    background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px;
+    padding: 1rem 1.2rem; font-size: 0.83rem; color: #14532d; line-height: 1.65;
+    margin-bottom: 1.5rem; display: flex; gap: 10px; align-items: flex-start;
+  }
+
+  /* ══════════════════════════════════════
+     KPI ROW
+  ══════════════════════════════════════ */
+  .sop-kpis {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 140px), 1fr));
+    gap: 10px;
+    margin-bottom: 1.5rem;
+  }
+
+  .sop-kpi {
+    background: #fff; border: 1px solid #ece9e3;
+    border-radius: var(--radius); padding: 1.1rem; text-align: center;
+  }
+
+  .sop-kpi-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; line-height: 1; letter-spacing: 0.04em; margin-bottom: 3px;
+  }
+
+  .sop-kpi-label {
+    font-size: 0.64rem; color: #9ca3af; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+
+  /* ══════════════════════════════════════
+     NORM PILLS
+  ══════════════════════════════════════ */
+  .sop-norms { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1rem; }
+
+  .sop-norm {
+    background: #f5f3ee; color: #374151;
+    font-size: 0.65rem; font-weight: 600; padding: 3px 9px;
+    border-radius: 5px; font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em; border: 1px solid #e8e4dc;
+  }
+
+  /* ── Divider ── */
+  .sop-divider {
+    height: 1px;
+    background: linear-gradient(90deg, #e5e1da 0%, transparent 80%);
+    margin: 2.5rem 0;
+  }
+
+  /* ══════════════════════════════════════
+     QUIZ SECTION HEADER
+  ══════════════════════════════════════ */
+  .sop-quiz-header {
+    background: #0e0e14;
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .sop-quiz-header-icon {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    color: var(--accent);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .sop-quiz-header-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 3px;
+  }
+
+  .sop-quiz-header-sub {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.38);
+  }
+
+  /* ══════════════════════════════════════
+     RESPONSIVE
+  ══════════════════════════════════════ */
+  @media (max-width: 900px) {
+    .sop-layout { grid-template-columns: 1fr; }
+    .sop-sidenav { display: none; }
+    .sop-hero  { grid-template-columns: 1fr; }
+    .sop-hero-kpis { flex-direction: row; align-items: flex-start; justify-content: flex-start; }
+    .sop-hero-kpi { text-align: left; }
+  }
+
+  @media (max-width: 640px) {
+    .sop-rules { grid-template-columns: 1fr; }
+    .sop-kpis  { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (min-width: 1400px) {
+    .sop-layout { grid-template-columns: 1fr 260px; gap: 3rem; }
+  }
+
+  /* ── Fade in animation ── */
+  @keyframes sop-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .sop-page { animation: sop-in 0.4s ease both; }
+`}</style>
+
+export function SopReg03Page() {
+  const [activeSection, setActiveSection] = useState('zweck');
+  const [scrollPct, setScrollPct] = useState(0);
+  useEffect(() => {
+    const ids = ['zweck','benennung','kernaufgaben','qualifikation','schnittstellen','wissenstest'];
+    const onScroll = () => {
+      const el = document.querySelector('.sop-content');
+      if (el) setScrollPct(Math.min(100, Math.round((Math.max(0,-el.getBoundingClientRect().top+100)/el.scrollHeight)*100)));
+      let cur = 'zweck';
+      ids.forEach(id => { const e = document.getElementById(id); if(e && e.getBoundingClientRect().top < 130) cur = id; });
+      setActiveSection(cur);
+    };
+    window.addEventListener('scroll', onScroll, {passive:true});
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  const nav = [
+    {id:'zweck',num:'01',label:'Zweck & Geltungsbereich'},
+    {id:'benennung',num:'02',label:'Benennung & Stellung'},
+    {id:'kernaufgaben',num:'03',label:'5 Kernaufgaben'},
+    {id:'qualifikation',num:'04',label:'Qualifikationsanforderungen'},
+    {id:'schnittstellen',num:'05',label:'Schnittstellen & Risiken'},
+    {id:'wissenstest',num:'★',label:'Wissenstest'},
+  ];
+  return (
+    <div className="sop-page">
+      <div className="sop-hero">
+        <div>
+          <div className="sop-hero-eyebrow"><div className="sop-hero-eyebrow-line"/><span className="sop-hero-eyebrow-text">SOP-REG-03 · Regulatorik & MDR</span></div>
+          <div className="sop-hero-title">Rolle & Aufgaben<br/>der PRRC</div>
+          <p className="sop-hero-desc">Definition der Rolle, Verantwortlichkeiten und Befugnisse der Person Responsible for Regulatory Compliance (PRRC) gemäß MDR Art. 15 — Benennung, 5 Kernaufgaben, Qualifikation und organisatorische Unabhängigkeit.</p>
+          <div className="sop-hero-meta">
+            <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>MDR Art. 15 PRRC-Pflicht</div>
+            <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>Gültig ab 31.01.2026</div>
+            <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>5 Kapitel · 10 Fragen</div>
+          </div>
+        </div>
+        <div className="sop-hero-kpis">
+          <div className="sop-hero-kpi"><div className="sop-hero-kpi-val">5</div><div className="sop-hero-kpi-label">Kernaufgaben</div></div>
+          <div className="sop-hero-divider"/>
+          <div className="sop-hero-kpi"><div className="sop-hero-kpi-val">Art.15</div><div className="sop-hero-kpi-label">MDR-Grundlage</div></div>
+          <div className="sop-hero-divider"/>
+          <div className="sop-hero-kpi"><div className="sop-hero-kpi-val">GF</div><div className="sop-hero-kpi-label">Benennung</div></div>
+        </div>
+      </div>
+      <div className="sop-layout">
+        <div className="sop-content">
+          <div className="sop-section" id="zweck">
+            <div className="sop-section-hd"><div className="sop-section-num">01</div><div><div className="sop-section-title">Zweck & Geltungsbereich</div><div className="sop-section-sub">MDR Art. 15 · Reutlingen · Neurochirurgie & Onkologie</div></div></div>
+            <div className="sop-info">Definition der Rolle der PRRC gemäß MDR Art. 15. Gilt für die EMIG GmbH am Standort Reutlingen für das Produktportfolio der EMIG-MiaMed Gruppe, insbesondere <strong>Neurochirurgie und Onkologie</strong>. Zusammenarbeit mit GF und europäischen Behörden.</div>
+            <div className="sop-kpis">
+              <div className="sop-kpi"><div className="sop-kpi-val" style={{color:'#c8983a'}}>Art.15</div><div className="sop-kpi-label">MDR-Pflicht</div></div>
+              <div className="sop-kpi"><div className="sop-kpi-val" style={{color:'#8b5cf6'}}>5</div><div className="sop-kpi-label">Kernaufgaben</div></div>
+              <div className="sop-kpi"><div className="sop-kpi-val" style={{color:'#3b82f6'}}>2</div><div className="sop-kpi-label">Qualifizierungswege</div></div>
+              <div className="sop-kpi"><div className="sop-kpi-val" style={{color:'#10b981'}}>100%</div><div className="sop-kpi-label">Unabhängigkeit</div></div>
+            </div>
+            <div className="sop-norms"><span className="sop-norm">MDR 2017/745 Art. 15</span><span className="sop-norm">ISO 13485:2016 §5.5</span></div>
+          </div>
+          <div className="sop-divider"/>
+          <div className="sop-section" id="benennung">
+            <div className="sop-section-hd"><div className="sop-section-num">02</div><div><div className="sop-section-title">Benennung & Stellung im Unternehmen</div><div className="sop-section-sub">Schriftliche Bestellung · Stabstelle · Weisungsfreiheit</div></div></div>
+            <div className="sop-info">Die PRRC wird von der <strong>Geschäftsführung schriftlich bestellt</strong>. Bei EMIG ist die Rolle als <strong>Stabstelle direkt der GF unterstellt</strong> — um vollständige Unabhängigkeit von operativen Bereichen zu gewährleisten.</div>
+            <div style={{background:'#fff',border:'1px solid #ece9e3',borderRadius:'14px',padding:'1.4rem',marginBottom:'1.5rem'}}>
+              <div style={{fontSize:'0.72rem',fontWeight:700,color:'#9ca3af',textTransform:'uppercase',letterSpacing:'0.12em',marginBottom:'1rem'}}>Organisatorische Einordnung</div>
+              <div style={{display:'flex',flexDirection:'column',gap:'10px'}}>
+                <div style={{background:'#0e0e14',borderRadius:'10px',padding:'0.85rem 1.2rem',textAlign:'center'}}>
+                  <div style={{fontSize:'0.85rem',fontWeight:700,color:'#fff'}}>Geschäftsführung</div>
+                  <div style={{fontSize:'0.68rem',color:'rgba(255,255,255,0.4)',marginTop:'2px'}}>Gesamtverantwortung · benennt PRRC schriftlich</div>
+                </div>
+                <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'8px'}}>
+                  <div style={{background:'rgba(200,152,58,0.12)',border:'1.5px solid rgba(200,152,58,0.3)',borderRadius:'10px',padding:'0.75rem',textAlign:'center'}}>
+                    <div style={{fontSize:'0.8rem',fontWeight:700,color:'#92400e'}}>PRRC</div>
+                    <div style={{fontSize:'0.64rem',color:'#b45309',marginTop:'2px'}}>Stabstelle · direkt GF · unabhängig</div>
+                  </div>
+                  <div style={{background:'#f5f3ee',borderRadius:'10px',padding:'0.75rem',textAlign:'center'}}>
+                    <div style={{fontSize:'0.8rem',fontWeight:600,color:'#374151'}}>QMB</div>
+                    <div style={{fontSize:'0.64rem',color:'#9ca3af',marginTop:'2px'}}>Wirksamkeit überwachen</div>
+                  </div>
+                  <div style={{background:'#f5f3ee',borderRadius:'10px',padding:'0.75rem',textAlign:'center'}}>
+                    <div style={{fontSize:'0.8rem',fontWeight:600,color:'#374151'}}>Logistik/Einkauf</div>
+                    <div style={{fontSize:'0.64rem',color:'#9ca3af',marginTop:'2px'}}>Operative Umsetzung</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="sop-warning"><span style={{fontSize:'1rem',flexShrink:0}}>⚠</span><div><strong>Weisungsfreiheit ist gesetzlich vorgeschrieben:</strong> Die PRRC darf in Bezug auf regulatorische Pflichten KEINEN Weisungen unterliegen, die ihre fachliche Urteilsfähigkeit einschränken — auch nicht von der GF.</div></div>
+            <div className="sop-norms"><span className="sop-norm">MDR Art. 15 §1</span></div>
+          </div>
+          <div className="sop-divider"/>
+          <div className="sop-section" id="kernaufgaben">
+            <div className="sop-section-hd"><div className="sop-section-num">03</div><div><div className="sop-section-title">5 Kernaufgaben der PRRC</div><div className="sop-section-sub">Konformität · Dokumentation · Vigilanz · PMS · Bescheinigungen</div></div></div>
+            <div className="sop-info">In Anlehnung an <strong>MDR Art. 15 Abs. 3</strong> übernimmt die PRRC bei EMIG folgende 5 Kernaufgaben — alle sind Pflicht, keine ist optional.</div>
+            <div style={{display:'flex',flexDirection:'column',gap:'10px',marginBottom:'1.5rem'}}>
+              {[
+                {num:'1',color:'#c8983a',t:'Konformitätsprüfung vor Auslieferung',d:'Sicherstellung, dass die Konformität der Produkte gemäß QMS geprüft wurde, bevor diese ausgeliefert werden. PRRC-Freigabe ist Voraussetzung.'},
+                {num:'2',color:'#8b5cf6',t:'Technische Dokumentation',d:'Überwachung der Vollständigkeit und Aktualität der technischen Dokumentationen und EU-Konformitätserklärungen für das importierte Portfolio.'},
+                {num:'3',color:'#ef4444',t:'Vigilanz & Meldesystem',d:'Sicherstellung der Berichtspflichten im Vigilanzsystem bei Vorkommnissen oder Rückrufen. Koordination mit Herstellern und Meldung an Behörden.'},
+                {num:'4',color:'#3b82f6',t:'Post-Market Surveillance (PMS)',d:'Überwachung der Sammlung von Erfahrungen aus der klinischen Anwendung. Koordination mit den Herstellern der MiaMed-Gruppe.'},
+                {num:'5',color:'#10b981',t:'Bescheinigungen',d:'Prüfung und Abzeichnung von Erklärungen bei Sonderanfertigungen oder klinischen Prüfungen (sofern zutreffend).'},
+              ].map((k,i) => (
+                <div key={i} style={{background:'#fff',border:'1px solid #ece9e3',borderRadius:'12px',padding:'1rem 1.2rem',display:'flex',gap:'12px',alignItems:'flex-start'}}>
+                  <div style={{background:k.color,color:'#fff',borderRadius:'8px',width:'28px',height:'28px',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:'Bebas Neue,sans-serif',fontSize:'1rem',flexShrink:0}}>{k.num}</div>
+                  <div><div style={{fontSize:'0.86rem',fontWeight:700,color:'#111827',marginBottom:'3px'}}>{k.t}</div><p style={{fontSize:'0.77rem',color:'#6b7280',lineHeight:1.6,margin:0}}>{k.d}</p></div>
+                </div>
+              ))}
+            </div>
+            <div className="sop-norms"><span className="sop-norm">MDR Art. 15 Abs. 3</span></div>
+          </div>
+          <div className="sop-divider"/>
+          <div className="sop-section" id="qualifikation">
+            <div className="sop-section-hd"><div className="sop-section-num">04</div><div><div className="sop-section-title">Qualifikationsanforderungen</div><div className="sop-section-sub">Weg 1: Studium + 1J · Weg 2: 4J Erfahrung</div></div></div>
+            <div className="sop-info">Die PRRC muss über nachgewiesene <strong>Fachkunde</strong> verfügen. Zwei gleichwertige Qualifizierungswege sind zulässig.</div>
+            <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(min(100%,240px),1fr))',gap:'11px',marginBottom:'1.5rem'}}>
+              {[
+                {num:'Weg 1',color:'#3b82f6',bg:'#eff6ff',border:'rgba(59,130,246,0.2)',
+                  req:'Hochschulstudium',
+                  detail:'Abgeschlossenes Studium in Rechtswissenschaften, Medizin, Pharmazie oder Ingenieurwesen',
+                  plus:'+ mindestens 1 Jahr einschlägige Berufserfahrung in regulatorischen Fragen oder im QM für Medizinprodukte'},
+                {num:'Weg 2',color:'#10b981',bg:'#f0fdf4',border:'rgba(16,185,129,0.2)',
+                  req:'Berufserfahrung',
+                  detail:'Kein Hochschulabschluss erforderlich',
+                  plus:'Mindestens 4 Jahre einschlägige Berufserfahrung in regulatorischen Fragen bei Medizinprodukten'},
+              ].map((w,i) => (
+                <div key={i} style={{background:w.bg,border:`1px solid ${w.border}`,borderRadius:'14px',padding:'1.3rem'}}>
+                  <div style={{display:'flex',alignItems:'center',gap:'10px',marginBottom:'0.75rem'}}>
+                    <div style={{background:w.color,color:'#fff',borderRadius:'8px',padding:'3px 10px',fontFamily:'Bebas Neue,sans-serif',fontSize:'0.9rem',letterSpacing:'0.08em'}}>{w.num}</div>
+                    <div style={{fontSize:'0.86rem',fontWeight:700,color:'#111827'}}>{w.req}</div>
+                  </div>
+                  <p style={{fontSize:'0.77rem',color:'#6b7280',lineHeight:1.6,margin:'0 0 0.5rem'}}>{w.detail}</p>
+                  <div style={{fontSize:'0.75rem',fontWeight:600,color:w.color,background:`${w.color}12`,padding:'5px 10px',borderRadius:'7px'}}>{w.plus}</div>
+                </div>
+              ))}
+            </div>
+            <div className="sop-tip"><span style={{fontSize:'1rem',flexShrink:0}}>📁</span><div>Qualifikationsnachweise werden in der <strong>Personalakte</strong> und als Kopie in den <strong>QM-Aufzeichnungen</strong> geführt. Bei Behördenprüfung müssen sie unverzüglich vorgelegt werden können.</div></div>
+            <div className="sop-norms"><span className="sop-norm">MDR Art. 15 §2</span></div>
+          </div>
+          <div className="sop-divider"/>
+          <div className="sop-section" id="schnittstellen">
+            <div className="sop-section-hd"><div className="sop-section-num">05</div><div><div className="sop-section-title">Schnittstellen & Risiken</div><div className="sop-section-sub">Logistik · Hersteller · Interessenkonflikt · Normänderungen</div></div></div>
+            <div className="sop-info">Die PRRC agiert an zwei <strong>kritischen Schnittstellen</strong> — intern zur Logistik und extern zu den Herstellern. Zwei Hauptrisiken müssen aktiv gemanagt werden.</div>
+            <div className="sop-rules">
+              {[
+                {icon:'📦',bg:'#eff6ff',t:'Schnittstelle Logistik',d:'PRRC gibt die Kriterien für die Wareneingangsprüfung vor und wird bei Abweichungen sofort informiert. Enge Zusammenarbeit bei Sperrware-Entscheidungen.'},
+                {icon:'🏭',bg:'#f0fdf4',t:'Schnittstelle Hersteller',d:'Austausch über Änderungen am Design oder der Zweckbestimmung der Produkte. PRRC muss bei jeder produktrelevanten Änderung eingebunden werden.'},
+                {icon:'⚠️',bg:'#fef9c3',t:'Risiko: Interessenkonflikt',d:'Konflikt zwischen wirtschaftlichen Zielen (schneller Vertrieb) und regulatorischer Sicherheit. Durch organisatorische Unabhängigkeit der PRRC minimiert.'},
+                {icon:'📚',bg:'#fef2f2',t:'Risiko: Fehlende Normaktualisierung',d:'Normänderungen (MDR, ISO 13485) müssen aktiv durch die PRRC überwacht werden. Kein Änderungsdienst = regulatorische Lücken und Compliance-Verstöße.'},
+              ].map((r,i) => (
+                <div className="sop-rule" key={i}><div className="sop-rule-icon" style={{background:r.bg}}>{r.icon}</div><div><div className="sop-rule-title">{r.t}</div><p className="sop-rule-desc">{r.d}</p></div></div>
+              ))}
+            </div>
+            <div className="sop-norms"><span className="sop-norm">SOP-REG-01 Importeurpflichten</span><span className="sop-norm">SOP-REG-02 Händlerpflichten</span></div>
+          </div>
+          <div className="sop-divider"/>
+          <div id="wissenstest"><div className="sop-quiz-header"><div className="sop-quiz-header-icon">★</div><div><div className="sop-quiz-header-title">Wissenstest — SOP-REG-03</div><div className="sop-quiz-header-sub">10 Fragen · Rolle und Aufgaben der PRRC</div></div></div></div>
+        </div>
+        <div className="sop-sidenav">
+          <div className="sop-sidenav-title">Inhalt</div>
+          {nav.map(({id,num,label}) => (
+            <a key={id} href={`#${id}`} className={`sop-nav-item${activeSection===id?' active':''}`}>
+              <div className="sop-nav-num">{num}</div><div className="sop-nav-label">{label}</div>
+            </a>
+          ))}
+          <div className="sop-nav-progress">
+            <div className="sop-nav-progress-label"><span>Fortschritt</span><span className="sop-nav-progress-pct">{scrollPct}%</span></div>
+            <div className="sop-nav-bar-bg"><div className="sop-nav-bar-fill" style={{width:`${scrollPct}%`}}/></div>
+          </div>
+          <a href="#wissenstest" className="sop-nav-quiz-btn">Zum Wissenstest →</a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+<SopReg03Page/>
+<SopQuiz refCode="SOP-REG-03" questions={quizData}/>

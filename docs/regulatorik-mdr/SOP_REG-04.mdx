@@ -1,42 +1,775 @@
 ---
 id: SOP_REG-04
-sidebar_label: 'EUDAMED & Registrierung'
-sidebar_position: 4
+title: Registrierung und EUDAMED
+sidebar_label: EUDAMED & Registrierung
 ---
 
-import EudamedQuiz from '@site/src/components/EudamedQuiz';
+import React, { useState, useEffect } from 'react';
+import SopQuiz from '@site/src/components/SopQuiz';
 
-# Schulung: Registrierung und EUDAMED (Art. 30/31 MDR)
+export const quizData = [
+  { id:1, question:"Wofür steht EUDAMED?", options:["European Union Database for Advanced Medical Engineering","European Database on Medical Devices — die europäische Datenbank für Medizinprodukte","European Unified Data Administration for Medical Exports","Extended Union Data Authentication for Medical Devices"], correct:1, explanation:"EUDAMED = European Database on Medical Devices. Die zentrale EU-Datenbank für Medizinprodukte, in der Wirtschaftsakteure, Produkte, UDI-Daten, Benannte Stellen und Vigilanzmeldungen registriert werden." },
+  { id:2, question:"Was ist die SRN und wozu dient sie?", options:["System Registration Number — für SAP-Systemzugang","Single Registration Number — die einmalige Registrierungsnummer für die EMIG GmbH als Wirtschaftsakteur in EUDAMED","Standard Reference Number — für Produktkataloge","Sales Registration Number — für Vertriebszulassungen"], correct:1, explanation:"SRN = Single Registration Number. Die einmalige Registrierungsnummer die EMIG nach Registrierung im EUDAMED-Actor-Modul erhält. Muss bei allen regulatorischen Korrespondenzen und auf Konformitätserklärungen angegeben werden." },
+  { id:3, question:"Welche Behörde validiert den SRN-Antrag für Deutschland?", options:["EU-Kommission direkt","BfArM (Bundesinstitut für Arzneimittel und Medizinprodukte)","TÜV Rheinland als Benannte Stelle","Europäisches Patentamt"], correct:1, explanation:"Das BfArM (Bundesinstitut für Arzneimittel und Medizinprodukte) ist die zuständige nationale Behörde in Deutschland. Sie prüft den EUDAMED-Antrag und validiert die Zuteilung der SRN." },
+  { id:4, question:"Was prüft die PRRC vor dem Import eines Produkts in Bezug auf EUDAMED?", options:["Den aktuellen Produktpreis im EUDAMED-Katalog","Ob der Hersteller die Basic UDI-DI und UDI-DI korrekt im EUDAMED-Produktmodul hinterlegt hat","Ob EMIG selbst als Händler in EUDAMED eingetragen ist","Nur ob die CE-Nummer im System vorhanden ist"], correct:1, explanation:"Die PRRC prüft, ob der Hersteller die Basic UDI-DI und UDI-DI korrekt im EUDAMED-Produktmodul hinterlegt hat. EMIG verknüpft sich dann als Importeur mit den entsprechenden Produkten des Herstellers." },
+  { id:5, question:"Innerhalb welcher Frist müssen Änderungen in EUDAMED aktualisiert werden?", options:["Sofort — innerhalb von 24 Stunden","Innerhalb einer Woche nach der Änderung","Innerhalb eines Monats","Jährlich im QM-Review reicht aus"], correct:1, explanation:"Die PRRC stellt sicher, dass EUDAMED-Einträge innerhalb von EINER WOCHE nach einer Änderung aktualisiert werden — bei Firmennamen, Adresse, neuer PRRC oder Einstellung von Produkten." },
+  { id:6, question:"Welche Änderungen müssen zeitnah in EUDAMED aktualisiert werden?", options:["Nur Preisänderungen","Änderungen am Firmennamen/Adresse, Änderung der benannten PRRC, Einstellung der Bereitstellung bestimmter Produkte","Nur neue Produktzulassungen","Ausschließlich Vigilanzmeldungen"], correct:1, explanation:"3 Arten von Änderungen erfordern zeitnahe EUDAMED-Aktualisierung: (1) Firmennamen oder Adresse, (2) benannte PRRC geändert, (3) Einstellung der Bereitstellung bestimmter Produkte. Frist: innerhalb einer Woche." },
+  { id:7, question:"Was ist das Risiko einer fehlenden oder falschen SRN?", options:["Nur eine interne Verwarnung","Importstopps beim Zoll — Produkte können nicht in die EU eingeführt werden","Nur eine Gebührenerhöhung","Verlust des ISO-13485-Zertifikats"], correct:1, explanation:"Fehlende oder falsche SRN führt zu Importstopps beim Zoll. Ohne gültige SRN dürfen keine Medizinprodukte in die EU eingeführt werden — erhebliche wirtschaftliche und regulatorische Konsequenzen." },
+  { id:8, question:"Was riskiert EMIG bei veralteten Daten in EUDAMED?", options:["Keine Konsequenzen, EUDAMED ist nur informativ","Bußgelder oder den Verlust der Marktfähigkeit von Produkten","Nur Ärger mit dem Hersteller","Ausschließlich interne Auditbefunde"], correct:1, explanation:"Veraltete Daten in EUDAMED können zu Bußgeldern oder dem Verlust der Marktfähigkeit führen. Behörden können jederzeit korrekte EUDAMED-Einträge als Voraussetzung für die Produktvermarktung verlangen." },
+  { id:9, question:"Wer trägt bei EMIG die Verantwortung für die Richtigkeit der EUDAMED-Einträge?", options:["IT-Abteilung alleine","PRRC (Richtigkeit und Durchführung) mit Unterstützung durch IT/Sales (technische Anbindung) und Gesamtverantwortung der GF (Ressourcen)","Nur der QMB","Ausschließlich die Geschäftsführung"], correct:1, explanation:"Dreiteilige Verantwortung: GF trägt Gesamtverantwortung und stellt Ressourcen bereit. PRRC ist verantwortlich für Richtigkeit der Daten und Durchführung der Registrierungsprozesse. IT/Sales unterstützt bei technischer Anbindung und Produktdaten." },
+  { id:10, question:"Welche MDR-Artikel bilden die rechtliche Grundlage für SOP-REG-04?", options:["MDR Art. 13 und 14","MDR Art. 30 & 31 — Bestimmungen zur Registrierung von Wirtschaftsakteuren und Produkten","MDR Art. 27 — UDI-System","MDR Art. 15 — PRRC-Pflicht"], correct:1, explanation:"MDR Art. 30 (Registrierung von Wirtschaftsakteuren und Geräten) und Art. 31 (Registrierung von Medizinprodukten) bilden die rechtliche Grundlage für die EUDAMED-Pflichten." }
+];
 
-[cite_start]Diese Schulung basiert auf der **SOP-REG-04** und beschreibt die Prozesse zur Registrierung der EMIG GmbH sowie unserer Medizinprodukte in der europäischen Datenbank **EUDAMED**[cite: 167].
+<style>{`
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
 
-## 1. Zweck der Registrierung
-[cite_start]Ziel ist die Gewährleistung regulatorischer Transparenz gemäß MDR[cite: 168]. Dies umfasst:
-* [cite_start]Die Zuteilung der **SRN** (Single Registration Number)[cite: 168].
-* Die korrekte Hinterlegung von Produktvorgaben[cite: 168].
+  /* ── Override Docusaurus article defaults ── */
+  .sop-page h1, .sop-page h2, .sop-page h3,
+  .sop-page p,  .sop-page ul, .sop-page li { all: revert; }
+  .sop-page h1, .sop-page h2, .sop-page h3,
+  .sop-page p,  .sop-page ul, .sop-page li { font-family: 'Outfit', sans-serif; }
 
-## 2. Der Weg zur SRN (Wirtschaftsakteur)
-Die EMIG GmbH registriert sich primär in der Rolle als **Importeur**[cite: 216]. Der Prozess umfasst[cite: 217, 218, 219]:
-1. **Antragstellung**: Die PRRC übermittelt die Unternehmensdaten an EUDAMED.
-2. **Validierung**: Das **BfArM** prüft als nationale Behörde den Antrag.
-3. **SRN-Erhalt**: Nach Bestätigung erhalten wir die SRN, die bei jeder regulatorischen Korrespondenz anzugeben ist.
+  /* ── Make the doc container full width ── */
+  .theme-doc-markdown { max-width: 100% !important; }
+  article.sop-wrap     { max-width: 100% !important; padding: 0 !important; }
 
+  /* ══════════════════════════════════════
+     OUTER WRAPPER
+  ══════════════════════════════════════ */
+  .sop-page {
+    font-family: 'Outfit', sans-serif;
+    color: #18181f;
+    width: 100%;
+    --accent: #c8983a;
+    --accent-lt: #e8d5a8;
+    --dark: #0e0e14;
+    --radius: 14px;
+  }
 
-## 3. Produktregistrierung (UDI)
-Bevor Produkte (z. B. aus der Ukraine) in der EU in Verkehr gebracht werden, prüft die PRRC[cite: 223]:
-* [cite_start]Ob der Hersteller die **Basic UDI-DI** und die **UDI-DI** korrekt hinterlegt hat[cite: 223].
-* [cite_start]Ob die Datenbankangaben mit der physischen Kennzeichnung am Produkt übereinstimmen[cite: 225].
+  /* ══════════════════════════════════════
+     HERO — light, editorial, not a dark box
+  ══════════════════════════════════════ */
+  .sop-hero {
+    background: #f8f7f3;
+    border: 1px solid #e8e4dc;
+    border-radius: 20px;
+    padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1.5rem, 4vw, 2.75rem);
+    margin-bottom: 2rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
 
-## 4. Datenpflege und Fristen
-[cite_start]Änderungen am Firmennamen, der Adresse oder bei der benannten PRRC müssen **innerhalb von einer Woche** in EUDAMED aktualisiert werden[cite: 227, 229, 230]. [cite_start]Einmal jährlich erfolgt im QM-Review eine Vollprüfung aller Einträge[cite: 232].
+  .sop-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #c8983a08 0%, transparent 60%);
+    pointer-events: none;
+  }
 
-:::danger Risiko bei Fehlern
-[cite_start]Eine fehlende oder falsche SRN kann zu **Importstopps beim Zoll** führen[cite: 244]. [cite_start]Veraltete Daten können Bußgelder nach sich ziehen[cite: 245].
-:::
+  .sop-hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.75rem;
+  }
 
----
+  .sop-hero-eyebrow-line {
+    width: 28px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 99px;
+    flex-shrink: 0;
+  }
 
-## 🎓 Wissenstest: SOP-REG-04
-Testen Sie Ihr Wissen zur Registrierungspflicht.
+  .sop-hero-eyebrow-text {
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
 
-<EudamedQuiz />
+  .sop-hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    color: #0e0e14;
+    margin: 0 0 0.6rem;
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+
+  .sop-hero-desc {
+    font-size: clamp(0.82rem, 1.4vw, 0.9rem);
+    color: #6b7280;
+    margin: 0;
+    line-height: 1.65;
+    max-width: 500px;
+  }
+
+  .sop-hero-meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1.25rem;
+  }
+
+  .sop-hero-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    color: #9ca3af;
+    font-weight: 500;
+  }
+
+  .sop-hero-meta-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* KPI block on right */
+  .sop-hero-kpis {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    align-items: flex-end;
+    flex-shrink: 0;
+  }
+
+  .sop-hero-kpi { text-align: right; }
+
+  .sop-hero-kpi-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: var(--accent);
+    line-height: 1;
+    letter-spacing: 0.04em;
+  }
+
+  .sop-hero-kpi-label {
+    font-size: 0.58rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-top: 1px;
+  }
+
+  .sop-hero-divider {
+    width: 1px;
+    height: 24px;
+    background: #e2ded8;
+    align-self: center;
+  }
+
+  /* ══════════════════════════════════════
+     TWO-COLUMN LAYOUT
+     Left: content (flexible)
+     Right: sticky nav (260px)
+  ══════════════════════════════════════ */
+  .sop-layout {
+    display: grid;
+    grid-template-columns: 1fr 240px;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .sop-content { min-width: 0; }
+
+  /* Sticky side nav */
+  .sop-sidenav {
+    position: sticky;
+    top: 80px;
+    background: #fff;
+    border: 1px solid #ece9e3;
+    border-radius: 16px;
+    padding: 1.25rem;
+    overflow: hidden;
+  }
+
+  .sop-sidenav-title {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    margin-bottom: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sop-sidenav-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #f0ede8;
+  }
+
+  .sop-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.6rem 0.75rem;
+    border-radius: 9px;
+    text-decoration: none;
+    margin-bottom: 3px;
+    transition: all 0.18s;
+    border: 1px solid transparent;
+  }
+
+  .sop-nav-item:hover {
+    background: #f8f7f3;
+    border-color: #e8e4dc;
+    color: #111;
+  }
+
+  .sop-nav-item.active {
+    background: #fff8ec;
+    border-color: rgba(200,152,58,0.25);
+    color: #92400e;
+  }
+
+  .sop-nav-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    color: #d1cec8;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 20px;
+    transition: color 0.18s;
+  }
+
+  .sop-nav-item.active .sop-nav-num { color: var(--accent); }
+
+  .sop-nav-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #374151;
+    line-height: 1.2;
+  }
+
+  .sop-nav-item.active .sop-nav-label { color: #92400e; }
+
+  /* Progress bar inside sidenav */
+  .sop-nav-progress {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f0ede8;
+  }
+
+  .sop-nav-progress-label {
+    font-size: 0.62rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .sop-nav-progress-pct {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    color: var(--accent);
+  }
+
+  .sop-nav-bar-bg {
+    height: 3px;
+    background: #f0ede8;
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .sop-nav-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-lt));
+    border-radius: 99px;
+    transition: width 0.4s ease;
+  }
+
+  /* Quiz button in sidenav */
+  .sop-nav-quiz-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 0.9rem;
+    padding: 9px 14px;
+    background: #0e0e14;
+    color: var(--accent-lt);
+    border: none;
+    border-radius: 10px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    letter-spacing: 0.04em;
+  }
+
+  .sop-nav-quiz-btn:hover {
+    background: #1a1a26;
+    color: #fff;
+  }
+
+  /* ══════════════════════════════════════
+     SECTION
+  ══════════════════════════════════════ */
+  .sop-section {
+    margin-bottom: 3rem;
+    scroll-margin-top: 100px;
+  }
+
+  .sop-section-hd {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #f0ede8;
+  }
+
+  .sop-section-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 3rem);
+    color: #ede9e2;
+    line-height: 1;
+    flex-shrink: 0;
+    letter-spacing: 0.04em;
+  }
+
+  .sop-section-title {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 3px;
+    line-height: 1.2;
+    padding-top: 0.3rem;
+  }
+
+  .sop-section-sub {
+    font-size: 0.68rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+  }
+
+  /* ══════════════════════════════════════
+     INFO BOX
+  ══════════════════════════════════════ */
+  .sop-info {
+    background: #fffbf3;
+    border: 1px solid rgba(200,152,58,0.2);
+    border-left: 3px solid var(--accent);
+    border-radius: 12px;
+    padding: 1rem 1.3rem;
+    font-size: 0.87rem;
+    color: #374151;
+    line-height: 1.72;
+    margin-bottom: 1.5rem;
+  }
+  .sop-info strong { color: #92400e; }
+
+  /* ══════════════════════════════════════
+     RULE CARDS
+  ══════════════════════════════════════ */
+  .sop-rules {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+    gap: 11px;
+    margin-bottom: 1.5rem;
+  }
+
+  .sop-rule {
+    background: #fff;
+    border: 1px solid #ece9e3;
+    border-radius: var(--radius);
+    padding: 1.2rem;
+    display: flex;
+    gap: 13px;
+    align-items: flex-start;
+    transition: border-color 0.18s, box-shadow 0.18s, transform 0.18s;
+  }
+
+  .sop-rule:hover {
+    border-color: rgba(200,152,58,0.3);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    transform: translateY(-2px);
+  }
+
+  .sop-rule-icon {
+    width: 36px; height: 36px;
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.05rem;
+    flex-shrink: 0;
+  }
+
+  .sop-rule-title {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .sop-rule-desc {
+    font-size: 0.77rem;
+    color: #6b7280;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .sop-rule-desc strong { color: #374151; }
+
+  /* ══════════════════════════════════════
+     PROCESS FLOW
+  ══════════════════════════════════════ */
+  .sop-flow { display: flex; flex-direction: column; margin-bottom: 1.5rem; }
+
+  .sop-flow-step { display: flex; gap: 14px; align-items: flex-start; }
+
+  .sop-flow-left {
+    display: flex; flex-direction: column; align-items: center; flex-shrink: 0;
+  }
+
+  .sop-flow-circle {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: #111116; color: #e8d5a8;
+    font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .sop-flow-line {
+    width: 1px; flex: 1; min-height: 20px;
+    background: linear-gradient(to bottom, #dedad4, transparent);
+    margin: 3px 0;
+  }
+
+  .sop-flow-content { padding-bottom: 1.4rem; flex: 1; }
+
+  .sop-flow-title {
+    font-size: 0.88rem; font-weight: 700; color: #111827; margin-bottom: 3px;
+  }
+
+  .sop-flow-desc {
+    font-size: 0.79rem; color: #6b7280; line-height: 1.6; margin: 0;
+  }
+
+  /* ══════════════════════════════════════
+     CHECKLIST
+  ══════════════════════════════════════ */
+  .sop-checklist { display: flex; flex-direction: column; gap: 7px; margin-bottom: 1.5rem; }
+
+  .sop-check {
+    display: flex; align-items: flex-start; gap: 11px;
+    background: #fff; border: 1px solid #ece9e3; border-radius: 12px;
+    padding: 0.9rem 1.1rem;
+    transition: all 0.18s;
+  }
+  .sop-check:hover { border-color: rgba(200,152,58,0.25); background: #fffbf5; }
+
+  .sop-check-icon {
+    width: 28px; height: 28px; border-radius: 7px;
+    background: #f5f3ee; display: flex; align-items: center;
+    justify-content: center; font-size: 0.82rem; flex-shrink: 0;
+  }
+
+  .sop-check-label { font-size: 0.84rem; font-weight: 600; color: #111827; margin-bottom: 2px; }
+  .sop-check-sub   { font-size: 0.73rem; color: #9ca3af; line-height: 1.45; }
+
+  /* ══════════════════════════════════════
+     WARNING / TIP
+  ══════════════════════════════════════ */
+  .sop-warning {
+    background: #fef2f2; border: 1px solid #fecaca; border-radius: 12px;
+    padding: 1rem 1.2rem; font-size: 0.83rem; color: #7f1d1d; line-height: 1.65;
+    margin-bottom: 1.5rem; display: flex; gap: 10px; align-items: flex-start;
+  }
+
+  .sop-tip {
+    background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px;
+    padding: 1rem 1.2rem; font-size: 0.83rem; color: #14532d; line-height: 1.65;
+    margin-bottom: 1.5rem; display: flex; gap: 10px; align-items: flex-start;
+  }
+
+  /* ══════════════════════════════════════
+     KPI ROW
+  ══════════════════════════════════════ */
+  .sop-kpis {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 140px), 1fr));
+    gap: 10px;
+    margin-bottom: 1.5rem;
+  }
+
+  .sop-kpi {
+    background: #fff; border: 1px solid #ece9e3;
+    border-radius: var(--radius); padding: 1.1rem; text-align: center;
+  }
+
+  .sop-kpi-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; line-height: 1; letter-spacing: 0.04em; margin-bottom: 3px;
+  }
+
+  .sop-kpi-label {
+    font-size: 0.64rem; color: #9ca3af; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+
+  /* ══════════════════════════════════════
+     NORM PILLS
+  ══════════════════════════════════════ */
+  .sop-norms { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1rem; }
+
+  .sop-norm {
+    background: #f5f3ee; color: #374151;
+    font-size: 0.65rem; font-weight: 600; padding: 3px 9px;
+    border-radius: 5px; font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em; border: 1px solid #e8e4dc;
+  }
+
+  /* ── Divider ── */
+  .sop-divider {
+    height: 1px;
+    background: linear-gradient(90deg, #e5e1da 0%, transparent 80%);
+    margin: 2.5rem 0;
+  }
+
+  /* ══════════════════════════════════════
+     QUIZ SECTION HEADER
+  ══════════════════════════════════════ */
+  .sop-quiz-header {
+    background: #0e0e14;
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .sop-quiz-header-icon {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    color: var(--accent);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .sop-quiz-header-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 3px;
+  }
+
+  .sop-quiz-header-sub {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.38);
+  }
+
+  /* ══════════════════════════════════════
+     RESPONSIVE
+  ══════════════════════════════════════ */
+  @media (max-width: 900px) {
+    .sop-layout { grid-template-columns: 1fr; }
+    .sop-sidenav { display: none; }
+    .sop-hero  { grid-template-columns: 1fr; }
+    .sop-hero-kpis { flex-direction: row; align-items: flex-start; justify-content: flex-start; }
+    .sop-hero-kpi { text-align: left; }
+  }
+
+  @media (max-width: 640px) {
+    .sop-rules { grid-template-columns: 1fr; }
+    .sop-kpis  { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (min-width: 1400px) {
+    .sop-layout { grid-template-columns: 1fr 260px; gap: 3rem; }
+  }
+
+  /* ── Fade in animation ── */
+  @keyframes sop-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .sop-page { animation: sop-in 0.4s ease both; }
+`}</style>
+
+export function SopReg04Page() {
+  const [activeSection, setActiveSection] = useState('zweck');
+  const [scrollPct, setScrollPct] = useState(0);
+  useEffect(() => {
+    const ids = ['zweck','srn','produktregistrierung','datenpflege','risiken','wissenstest'];
+    const onScroll = () => {
+      const el = document.querySelector('.sop-content');
+      if (el) setScrollPct(Math.min(100, Math.round((Math.max(0,-el.getBoundingClientRect().top+100)/el.scrollHeight)*100)));
+      let cur = 'zweck';
+      ids.forEach(id => { const e = document.getElementById(id); if(e && e.getBoundingClientRect().top < 130) cur = id; });
+      setActiveSection(cur);
+    };
+    window.addEventListener('scroll', onScroll, {passive:true});
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  const nav = [
+    {id:'zweck',num:'01',label:'Zweck & Geltungsbereich'},
+    {id:'srn',num:'02',label:'SRN-Registrierung'},
+    {id:'produktregistrierung',num:'03',label:'Produktregistrierung'},
+    {id:'datenpflege',num:'04',label:'Datenpflege & Fristen'},
+    {id:'risiken',num:'05',label:'Schnittstellen & Risiken'},
+    {id:'wissenstest',num:'★',label:'Wissenstest'},
+  ];
+  return (
+    <div className="sop-page">
+      <div className="sop-hero">
+        <div>
+          <div className="sop-hero-eyebrow"><div className="sop-hero-eyebrow-line"/><span className="sop-hero-eyebrow-text">SOP-REG-04 · Regulatorik & MDR</span></div>
+          <div className="sop-hero-title">Registrierung<br/>&amp; EUDAMED</div>
+          <p className="sop-hero-desc">Prozesse zur Registrierung der EMIG GmbH und der von ihr in Verkehr gebrachten Medizinprodukte in EUDAMED — SRN-Erhalt, Produktverifizierung, Datenpflege innerhalb einer Woche und jährliches QM-Review.</p>
+          <div className="sop-hero-meta">
+            <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>MDR Art. 30 & 31</div>
+            <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>Gültig ab 31.01.2026</div>
+            <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>5 Kapitel · 10 Fragen</div>
+          </div>
+        </div>
+        <div className="sop-hero-kpis">
+          <div className="sop-hero-kpi"><div className="sop-hero-kpi-val">SRN</div><div className="sop-hero-kpi-label">Registrierung</div></div>
+          <div className="sop-hero-divider"/>
+          <div className="sop-hero-kpi"><div className="sop-hero-kpi-val">1W</div><div className="sop-hero-kpi-label">Update-Frist</div></div>
+          <div className="sop-hero-divider"/>
+          <div className="sop-hero-kpi"><div className="sop-hero-kpi-val">1×J</div><div className="sop-hero-kpi-label">QM-Review</div></div>
+        </div>
+      </div>
+      <div className="sop-layout">
+        <div className="sop-content">
+          <div className="sop-section" id="zweck">
+            <div className="sop-section-hd"><div className="sop-section-num">01</div><div><div className="sop-section-title">Zweck & Geltungsbereich</div><div className="sop-section-sub">EUDAMED · SRN · Importeur & Händler-Registrierung</div></div></div>
+            <div className="sop-info">Beschreibt die Prozesse zur <strong>Registrierung der EMIG GmbH</strong> und ihrer Produkte in EUDAMED. Ziel: regulatorische Transparenz, SRN-Erhalt und korrekte Produktvorgaben. Gilt für alle Mitarbeitenden mit EUDAMED-Administration.</div>
+            <div className="sop-kpis">
+              <div className="sop-kpi"><div className="sop-kpi-val" style={{color:'#3b82f6'}}>SRN</div><div className="sop-kpi-label">Pflichtregistrierung</div></div>
+              <div className="sop-kpi"><div className="sop-kpi-val" style={{color:'#c8983a'}}>1 Woche</div><div className="sop-kpi-label">Update-Frist</div></div>
+              <div className="sop-kpi"><div className="sop-kpi-val" style={{color:'#8b5cf6'}}>BfArM</div><div className="sop-kpi-label">Validierung</div></div>
+              <div className="sop-kpi"><div className="sop-kpi-val" style={{color:'#10b981'}}>1×/J</div><div className="sop-kpi-label">QM-Review</div></div>
+            </div>
+            <div className="sop-norms"><span className="sop-norm">MDR 2017/745 Art. 30</span><span className="sop-norm">MDR Art. 31</span><span className="sop-norm">SOP-REG-01 + REG-02</span></div>
+          </div>
+          <div className="sop-divider"/>
+          <div className="sop-section" id="srn">
+            <div className="sop-section-hd"><div className="sop-section-num">02</div><div><div className="sop-section-title">SRN-Registrierung als Wirtschaftsakteur</div><div className="sop-section-sub">Actor Module · BfArM-Validierung · SRN-Verwendung</div></div></div>
+            <div className="sop-info">EMIG registriert sich im <strong>EUDAMED Actor Module</strong> als Importeur. Nach Validierung durch das BfArM erhält EMIG ihre <strong>Single Registration Number (SRN)</strong> — Pflichtangabe auf allen regulatorischen Dokumenten.</div>
+            <div className="sop-flow">
+              {[
+                {t:'Antragstellung durch PRRC',d:'Die PRRC übermittelt die Unternehmensdaten an EUDAMED über das Actor Module. Name, Adresse, Rolle (Importeur) und PRRC-Angaben müssen korrekt und vollständig sein.'},
+                {t:'Validierung durch BfArM',d:'Die zuständige nationale Behörde (BfArM) prüft den Antrag. Bei Rückfragen kontaktiert BfArM die PRRC direkt. Validierungsdauer: typischerweise wenige Wochen.'},
+                {t:'SRN-Erhalt',d:'Nach erfolgreicher Validierung erhält EMIG ihre SRN. Diese Nummer ist ab sofort bei ALLEN regulatorischen Korrespondenzen und auf Konformitätserklärungen anzugeben.'},
+                {t:'Händlerrolle registrieren',d:'Sofern EMIG nur als Händler auftritt: Registrierung gemäß nationalen Übergangsbestimmungen bis das EUDAMED-Händlermodul obligatorisch wird.'},
+              ].map((s,i,arr) => (
+                <div className="sop-flow-step" key={i}>
+                  <div className="sop-flow-left"><div className="sop-flow-circle">{i+1}</div>{i<arr.length-1&&<div className="sop-flow-line"/>}</div>
+                  <div className="sop-flow-content"><div className="sop-flow-title">{s.t}</div><p className="sop-flow-desc">{s.d}</p></div>
+                </div>
+              ))}
+            </div>
+            <div className="sop-warning"><span style={{fontSize:'1rem',flexShrink:0}}>⚠</span><div><strong>Keine SRN = kein Import:</strong> Ohne gültige SRN dürfen keine Medizinprodukte importiert werden. Der Zoll kann Lieferungen ohne SRN-Nachweis stoppen.</div></div>
+            <div className="sop-norms"><span className="sop-norm">MDR Art. 30</span><span className="sop-norm">BfArM als nationale Behörde</span></div>
+          </div>
+          <div className="sop-divider"/>
+          <div className="sop-section" id="produktregistrierung">
+            <div className="sop-section-hd"><div className="sop-section-num">03</div><div><div className="sop-section-title">Produktregistrierung & Verifizierung</div><div className="sop-section-sub">Basic UDI-DI · UDI-DI · Datenabgleich · Verknüpfung als Importeur</div></div></div>
+            <div className="sop-info">Vor dem Import prüft die PRRC, ob der Hersteller <strong>Basic UDI-DI und UDI-DI</strong> korrekt im EUDAMED-Produktmodul hinterlegt hat. EMIG verknüpft sich dann als Importeur mit den Produkten.</div>
+            <div className="sop-checklist">
+              {[
+                {icon:'🔍',t:'Basic UDI-DI korrekt hinterlegt',d:'Hersteller muss die Basic UDI-DI (Hauptkennung der Produktfamilie) im EUDAMED-Produktmodul registriert haben.'},
+                {icon:'🏷️',t:'UDI-DI im System vorhanden',d:'UDI-DI (spezifische Produktkennung) muss korrekt eingetragen sein und mit der physischen Kennzeichnung übereinstimmen.'},
+                {icon:'🔗',t:'EMIG verknüpft sich als Importeur',d:'EMIG verknüpft sich in EUDAMED mit den entsprechenden Produkten des Herstellers — dokumentiert die Importeurrolle.'},
+                {icon:'✅',t:'Datenabgleich Datenbank ↔ Produkt',d:'Angaben in EUDAMED müssen mit physischen Kennzeichnungen auf dem Produkt und der technischen Dokumentation übereinstimmen.'},
+              ].map((c,i) => (
+                <div className="sop-check" key={i}><div className="sop-check-icon">{c.icon}</div><div><div className="sop-check-label">{c.t}</div><div className="sop-check-sub">{c.d}</div></div></div>
+              ))}
+            </div>
+            <div className="sop-norms"><span className="sop-norm">MDR Art. 31</span><span className="sop-norm">SOP-LOG-02 UDI-Erfassung</span></div>
+          </div>
+          <div className="sop-divider"/>
+          <div className="sop-section" id="datenpflege">
+            <div className="sop-section-hd"><div className="sop-section-num">04</div><div><div className="sop-section-title">Datenpflege & Aktualisierungsfristen</div><div className="sop-section-sub">1 Woche · 3 Änderungstypen · Jährliches QM-Review</div></div></div>
+            <div className="sop-info">EUDAMED-Einträge müssen <strong>innerhalb einer Woche</strong> nach Änderungen aktualisiert werden. Mindestens einmal jährlich wird die Vollständigkeit aller Einträge im QM-Review geprüft.</div>
+            <div style={{background:'#0e0e14',borderRadius:'14px',padding:'1.4rem 1.75rem',marginBottom:'1.5rem'}}>
+              <div style={{fontSize:'0.68rem',fontWeight:700,color:'rgba(200,152,58,0.7)',textTransform:'uppercase',letterSpacing:'0.18em',marginBottom:'1rem'}}>Aktualisierungspflichten im Überblick</div>
+              <div style={{display:'flex',flexDirection:'column',gap:'9px'}}>
+                {[
+                  {trigger:'Firmennamen oder Adresse geändert',frist:'innerhalb 1 Woche',color:'#ef4444'},
+                  {trigger:'Benannte PRRC geändert',frist:'innerhalb 1 Woche',color:'#ef4444'},
+                  {trigger:'Einstellung der Bereitstellung eines Produkts',frist:'innerhalb 1 Woche',color:'#ef4444'},
+                  {trigger:'Vollständigkeitsprüfung aller Einträge',frist:'mindestens 1× jährlich im QM-Review',color:'#c8983a'},
+                ].map((r,i) => (
+                  <div key={i} style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'0.6rem 0.75rem',background:'rgba(255,255,255,0.04)',borderRadius:'9px',gap:'1rem',flexWrap:'wrap'}}>
+                    <div style={{fontSize:'0.78rem',color:'rgba(255,255,255,0.55)',flex:1}}>{r.trigger}</div>
+                    <div style={{fontSize:'0.75rem',fontWeight:700,color:r.color,fontFamily:'DM Mono,monospace',whiteSpace:'nowrap',flexShrink:0}}>{r.frist}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="sop-checklist">
+              {[
+                {icon:'📄',t:'SRN-Bestätigung archivieren',d:'Offizielles Dokument über die Zuteilung der SRN wird sicher archiviert — für Audits und behördliche Anfragen.'},
+                {icon:'🖨️',t:'EUDAMED-Auszüge für Audits',d:'Regelmäßige Ausdrucke/PDFs der registrierten Produkte als Nachweis — mindestens jährlich im QM-Review.'},
+                {icon:'🔐',t:'Zugangsdaten sicher verwahren',d:'Liste der autorisierten EUDAMED-Nutzer im Unternehmen sicher verwahrt. Zugang nur für PRRC und benannte Stellvertreter.'},
+              ].map((c,i) => (
+                <div className="sop-check" key={i}><div className="sop-check-icon">{c.icon}</div><div><div className="sop-check-label">{c.t}</div><div className="sop-check-sub">{c.d}</div></div></div>
+              ))}
+            </div>
+            <div className="sop-norms"><span className="sop-norm">MDR Art. 30 §4</span><span className="sop-norm">ISO 13485:2016 §4.2.4</span></div>
+          </div>
+          <div className="sop-divider"/>
+          <div className="sop-section" id="risiken">
+            <div className="sop-section-hd"><div className="sop-section-num">05</div><div><div className="sop-section-title">Schnittstellen & Risiken</div><div className="sop-section-sub">BfArM · Hersteller · Importstopp · Bußgelder</div></div></div>
+            <div className="sop-info">Zwei kritische <strong>Risiken</strong> bei der EUDAMED-Pflege, die aktiv gemanagt werden müssen.</div>
+            <div className="sop-rules">
+              {[
+                {icon:'🏛️',bg:'#eff6ff',t:'Schnittstelle BfArM',d:'Austausch mit BfArM zur Validierung der SRN und bei behördlichen Anfragen. PRRC ist primärer Ansprechpartner für alle EUDAMED-bezogenen Behördenkontakte.'},
+                {icon:'🏭',bg:'#f0fdf4',t:'Schnittstelle Hersteller',d:'Anforderung der UDI-Daten für den Importvorgang. Abstimmung bei Produktänderungen, die EUDAMED-Updates erfordern.'},
+                {icon:'🚫',bg:'#fef2f2',t:'Risiko: Fehlende/falsche SRN',d:'Fehlende oder falsche SRN führt zu Importstopps beim Zoll. Produkte können nicht in die EU eingeführt werden — erheblicher wirtschaftlicher Schaden.'},
+                {icon:'⚠️',bg:'#fef9c3',t:'Risiko: Veraltete EUDAMED-Daten',d:'Veraltete Einträge können zu Bußgeldern oder dem Verlust der Marktfähigkeit führen. PRRC überwacht aktiv alle Änderungspflichten.'},
+              ].map((r,i) => (
+                <div className="sop-rule" key={i}><div className="sop-rule-icon" style={{background:r.bg}}>{r.icon}</div><div><div className="sop-rule-title">{r.t}</div><p className="sop-rule-desc">{r.d}</p></div></div>
+              ))}
+            </div>
+            <div className="sop-norms"><span className="sop-norm">MDR Art. 30 & 31</span><span className="sop-norm">SOP-REG-01 Importeurpflichten</span><span className="sop-norm">QMH Kapitel 4.1</span></div>
+          </div>
+          <div className="sop-divider"/>
+          <div id="wissenstest"><div className="sop-quiz-header"><div className="sop-quiz-header-icon">★</div><div><div className="sop-quiz-header-title">Wissenstest — SOP-REG-04</div><div className="sop-quiz-header-sub">10 Fragen · EUDAMED-Registrierung & Datenpflege</div></div></div></div>
+        </div>
+        <div className="sop-sidenav">
+          <div className="sop-sidenav-title">Inhalt</div>
+          {nav.map(({id,num,label}) => (
+            <a key={id} href={`#${id}`} className={`sop-nav-item${activeSection===id?' active':''}`}>
+              <div className="sop-nav-num">{num}</div><div className="sop-nav-label">{label}</div>
+            </a>
+          ))}
+          <div className="sop-nav-progress">
+            <div className="sop-nav-progress-label"><span>Fortschritt</span><span className="sop-nav-progress-pct">{scrollPct}%</span></div>
+            <div className="sop-nav-bar-bg"><div className="sop-nav-bar-fill" style={{width:`${scrollPct}%`}}/></div>
+          </div>
+          <a href="#wissenstest" className="sop-nav-quiz-btn">Zum Wissenstest →</a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+<SopReg04Page/>
+<SopQuiz refCode="SOP-REG-04" questions={quizData}/>

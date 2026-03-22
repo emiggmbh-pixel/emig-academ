@@ -1,25 +1,1104 @@
 ---
 id: SOP_EINK-02
-sidebar_label: 'Beschaffungsprozess'
-sidebar_position: 2
+title: Beschaffung von Medizinprodukten
+sidebar_label: Einkaufsprozess
 ---
 
-import PurchaseQuiz from '@site/src/components/PurchaseQuiz';
+import React, { useState, useEffect } from 'react';
+import SopQuiz from '@site/src/components/SopQuiz';
 
-# Beschaffung von Medizinprodukten (SOP-EINK-02)
+export const quizData = [
+  {
+    id: 1,
+    question: "Was ist das primäre Ziel der SOP-EINK-02?",
+    options: [
+      "Reduktion der Beschaffungskosten durch günstigere Lieferanten",
+      "Sicherstellung, dass bestellte Produkte exakt den spezifizierten Anforderungen entsprechen und alle Importdokumente angefordert werden",
+      "Automatisierung des gesamten Einkaufsprozesses",
+      "Reduktion der Lieferzeiten durch Direktimport ohne Dokumentenprüfung"
+    ],
+    correct: 1,
+    explanation: "Gemäß SOP-EINK-02 §1: Sicherstellung, dass Beschaffungsvorgänge so gesteuert werden, dass die bestellten Produkte exakt den spezifizierten Anforderungen entsprechen und alle notwendigen Begleitdokumente für den Import (MDR Art. 13) angefordert werden."
+  },
+  {
+    id: 2,
+    question: "Wer ist bei der Emig GmbH befugt, Bestellungen auszulösen?",
+    options: [
+      "Jeder Mitarbeitende, der einen Bedarf erkennt",
+      "Ausschließlich die kaufmännische Leitung",
+      "Der Lagerleiter in Abstimmung mit dem Vertrieb",
+      "Die PRRC nach Qualitätsprüfung"
+    ],
+    correct: 1,
+    explanation: "Bestellungen werden ausschließlich durch die kaufmännische Leitung ausgelöst. Dies stellt sicher, dass alle Bestellungen zentral gesteuert, regulatorisch geprüft und budgetär genehmigt werden."
+  },
+  {
+    id: 3,
+    question: "Welche drei Pflichtinformationen muss jede Bestellung enthalten?",
+    options: [
+      "Lieferantenname, Zahlungsbedingungen und Lieferadresse",
+      "Eindeutige Produktbezeichnung/Artikelnummer, geforderte Konformitätsnachweise und MHD-Anforderungen",
+      "Preis, Menge und gewünschtes Lieferdatum",
+      "UDI-Code, Chargennummer und Verfallsdatum des vorherigen Bestands"
+    ],
+    correct: 1,
+    explanation: "Jede Bestellung muss enthalten: (1) eindeutige Produktbezeichnung und Artikelnummer, (2) geforderte Konformitätsnachweise (z.B. 'Chargenzertifikat erforderlich'), (3) Anforderungen an die Restlaufzeit (MHD) bei sterilen Produkten."
+  },
+  {
+    id: 4,
+    question: "Welche Rolle übernimmt die PRRC im Beschaffungsprozess?",
+    options: [
+      "Die PRRC ist nicht am Beschaffungsprozess beteiligt",
+      "Die PRRC prüft stichprobenartig vor Absenden der Bestellung, ob regulatorische Daten (z.B. EUDAMED-Registrierung) aktuell sind",
+      "Die PRRC genehmigt alle Bestellungen über 1.000 €",
+      "Die PRRC verhandelt Preise direkt mit den Lieferanten"
+    ],
+    correct: 1,
+    explanation: "Vor Absenden der Bestellung prüft die PRRC stichprobenartig, ob die regulatorischen Daten des Produkts (z.B. Registrierung in EUDAMED) noch aktuell sind — um Importverzögerungen zu vermeiden."
+  },
+  {
+    id: 5,
+    question: "Was ist EUDAMED und warum ist die Registrierung vor der Bestellung zu prüfen?",
+    options: [
+      "Ein internes Emig-Buchhaltungssystem für Einkaufsrechnungen",
+      "Die europäische Datenbank für Medizinprodukte — Produkte ohne aktuelle EUDAMED-Registrierung können beim Import blockiert werden",
+      "Ein Qualitätszertifikat für Medizinprodukte-Hersteller",
+      "Das SAP-Modul für den Einkauf"
+    ],
+    correct: 1,
+    explanation: "EUDAMED (European Database on Medical Devices) ist die europäische Datenbank für Medizinprodukte. Produkte ohne gültige EUDAMED-Registrierung können beim EU-Import zurückgehalten werden — die Prüfung vor Bestellung verhindert kostspielige Verzögerungen."
+  },
+  {
+    id: 6,
+    question: "Was passiert wenn eine Auftragsbestätigung Abweichungen zum Bestellinhalt enthält?",
+    options: [
+      "Abweichungen bis 10% werden automatisch akzeptiert",
+      "Abweichungen müssen sofort geklärt werden, da sie die Rückverfolgbarkeit beeinflussen können",
+      "Abweichungen werden erst beim Wareneingang geprüft",
+      "Die Auftragsbestätigung wird ohne Prüfung archiviert"
+    ],
+    correct: 1,
+    explanation: "Eingehende Auftragsbestätigungen werden auf Abweichungen (Preis, Menge, Liefertermin) geprüft. Differenzen müssen sofort geklärt werden — auch scheinbar kleine Abweichungen können die Rückverfolgbarkeit beeinflussen."
+  },
+  {
+    id: 7,
+    question: "Warum muss die Restlaufzeit (MHD) bereits in der Bestellung spezifiziert werden?",
+    options: [
+      "Nur für kosmetische Gründe — MHD hat keinen regulatorischen Stellenwert",
+      "Um sicherzustellen, dass gelieferte Produkte noch ausreichend lange verwendbar sind und nicht sofort gesperrt werden müssen",
+      "Das MHD wird erst beim Wareneingang geprüft — in der Bestellung ist es nicht relevant",
+      "Nur bei Produkten unter 100 € Warenwert"
+    ],
+    correct: 1,
+    explanation: "Sterile Produkte mit zu kurzer Restlaufzeit müssen bei Wareneingang gesperrt werden (SOP-LOG-03). Durch MHD-Spezifikation in der Bestellung stellt die Emig GmbH sicher, dass Lieferanten nur Ware mit ausreichender Restlaufzeit liefern."
+  },
+  {
+    id: 8,
+    question: "Was ist ein Chargenzertifikat und wann muss es angefordert werden?",
+    options: [
+      "Ein Zertifikat über den Gesamtumsatz mit einem Lieferanten — nur für die Buchhaltung",
+      "Ein herstellerseitiges Dokument das die Konformität einer spezifischen Produktionscharge bestätigt — bei kritischen Produkten Pflicht",
+      "Ein internes EMIG-Dokument das nach jeder Bestellung ausgestellt wird",
+      "Nur für sterile Einmalprodukte mit CE-Klasse I erforderlich"
+    ],
+    correct: 1,
+    explanation: "Ein Chargenzertifikat (Certificate of Conformance) ist ein herstellerseitiges Dokument, das die Qualitätsprüfung und Konformität einer spezifischen Charge bestätigt. Es muss für kritische Produkte explizit in der Bestellung angefordert werden."
+  },
+  {
+    id: 9,
+    question: "Welcher MDR-Artikel regelt die Importeurpflichten, die SOP-EINK-02 umsetzt?",
+    options: [
+      "MDR Art. 10 — Pflichten der Hersteller",
+      "MDR Art. 13 — Pflichten der Importeure",
+      "MDR Art. 27 — UDI-System",
+      "MDR Art. 83 — Vigilanzsystem"
+    ],
+    correct: 1,
+    explanation: "MDR Art. 13 regelt die Pflichten der Importeure. Als Importeur muss die Emig GmbH sicherstellen, dass Produkte CE-gekennzeichnet sind, Konformitätserklärungen vorliegen, Hersteller registriert sind und alle Begleitdokumente korrekt sind."
+  },
+  {
+    id: 10,
+    question: "Welche Konsequenz hat eine Bestellung ohne korrekte Pflichtangaben?",
+    options: [
+      "Keine — fehlende Angaben werden beim Wareneingang ergänzt",
+      "Die Bestellung darf nicht abgesendet werden — fehlende Pflichtangaben gefährden die Rückverfolgbarkeit und MDR-Konformität des Imports",
+      "Nur eine interne Verwarnung ohne weitere Folgen",
+      "Die PRRC ergänzt fehlende Angaben automatisch"
+    ],
+    correct: 1,
+    explanation: "Eine Bestellung ohne vollständige Pflichtangaben darf nicht abgesendet werden. Fehlende Konformitätsnachweise oder MHD-Anforderungen können zu nicht MDR-konformen Lieferungen führen — mit direkten Konsequenzen für die Patientensicherheit und die Importzulassung."
+  }
+];
 
-[cite_start]Dieses Modul regelt die Steuerung von Beschaffungsvorgängen, um sicherzustellen, dass Produkte exakt den Spezifikationen entsprechen[cite: 987, 989, 990].
+<style>{`
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
 
-## 1. Bestellanforderung
-[cite_start]Jede Bestellung durch die kaufmännische Leitung muss eindeutige Produktbezeichnungen, Artikelnummern und geforderte Konformitätsnachweise (z. B. Chargenzertifikate) enthalten[cite: 1003, 1004, 1005, 1006].
+  /* ── Override Docusaurus article defaults ── */
+  .sop-page h1, .sop-page h2, .sop-page h3,
+  .sop-page p,  .sop-page ul, .sop-page li { all: revert; }
+  .sop-page h1, .sop-page h2, .sop-page h3,
+  .sop-page p,  .sop-page ul, .sop-page li { font-family: 'Outfit', sans-serif; }
 
-## 2. Regulatorische Prüfung
-[cite_start]Vor dem Absenden der Bestellung prüft die PRRC stichprobenartig, ob die Produktdaten in EUDAMED noch aktuell sind, um Importverzögerungen zu vermeiden[cite: 1008, 1009].
+  /* ── Make the doc container full width ── */
+  .theme-doc-markdown { max-width: 100% !important; }
+  article.sop-wrap     { max-width: 100% !important; padding: 0 !important; }
 
-## 3. Auftragsbestätigung
-[cite_start]Eingehende Bestätigungen werden sofort auf Preis-, Mengen- oder Terminabweichungen geprüft, da diese die Rückverfolgbarkeit beeinflussen können[cite: 1010, 1011].
+  /* ══════════════════════════════════════
+     OUTER WRAPPER
+  ══════════════════════════════════════ */
+  .sop-page {
+    font-family: 'Outfit', sans-serif;
+    color: #18181f;
+    width: 100%;
+    --accent: #c8983a;
+    --accent-lt: #e8d5a8;
+    --dark: #0e0e14;
+    --radius: 14px;
+  }
 
----
+  /* ══════════════════════════════════════
+     HERO — light, editorial, not a dark box
+  ══════════════════════════════════════ */
+  .sop-hero {
+    background: #f8f7f3;
+    border: 1px solid #e8e4dc;
+    border-radius: 20px;
+    padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1.5rem, 4vw, 2.75rem);
+    margin-bottom: 2rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
 
-## 🎓 Wissenstest: SOP-EINK-02
-<PurchaseQuiz />
+  .sop-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #c8983a08 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .sop-hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.75rem;
+  }
+
+  .sop-hero-eyebrow-line {
+    width: 28px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 99px;
+    flex-shrink: 0;
+  }
+
+  .sop-hero-eyebrow-text {
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .sop-hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    color: #0e0e14;
+    margin: 0 0 0.6rem;
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+
+  .sop-hero-desc {
+    font-size: clamp(0.82rem, 1.4vw, 0.9rem);
+    color: #6b7280;
+    margin: 0;
+    line-height: 1.65;
+    max-width: 500px;
+  }
+
+  .sop-hero-meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1.25rem;
+  }
+
+  .sop-hero-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    color: #9ca3af;
+    font-weight: 500;
+  }
+
+  .sop-hero-meta-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* KPI block on right */
+  .sop-hero-kpis {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    align-items: flex-end;
+    flex-shrink: 0;
+  }
+
+  .sop-hero-kpi { text-align: right; }
+
+  .sop-hero-kpi-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: var(--accent);
+    line-height: 1;
+    letter-spacing: 0.04em;
+  }
+
+  .sop-hero-kpi-label {
+    font-size: 0.58rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-top: 1px;
+  }
+
+  .sop-hero-divider {
+    width: 1px;
+    height: 24px;
+    background: #e2ded8;
+    align-self: center;
+  }
+
+  /* ══════════════════════════════════════
+     TWO-COLUMN LAYOUT
+     Left: content (flexible)
+     Right: sticky nav (260px)
+  ══════════════════════════════════════ */
+  .sop-layout {
+    display: grid;
+    grid-template-columns: 1fr 240px;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .sop-content { min-width: 0; }
+
+  /* Sticky side nav */
+  .sop-sidenav {
+    position: sticky;
+    top: 80px;
+    background: #fff;
+    border: 1px solid #ece9e3;
+    border-radius: 16px;
+    padding: 1.25rem;
+    overflow: hidden;
+  }
+
+  .sop-sidenav-title {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    margin-bottom: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sop-sidenav-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #f0ede8;
+  }
+
+  .sop-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.6rem 0.75rem;
+    border-radius: 9px;
+    text-decoration: none;
+    margin-bottom: 3px;
+    transition: all 0.18s;
+    border: 1px solid transparent;
+  }
+
+  .sop-nav-item:hover {
+    background: #f8f7f3;
+    border-color: #e8e4dc;
+    color: #111;
+  }
+
+  .sop-nav-item.active {
+    background: #fff8ec;
+    border-color: rgba(200,152,58,0.25);
+    color: #92400e;
+  }
+
+  .sop-nav-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    color: #d1cec8;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 20px;
+    transition: color 0.18s;
+  }
+
+  .sop-nav-item.active .sop-nav-num { color: var(--accent); }
+
+  .sop-nav-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #374151;
+    line-height: 1.2;
+  }
+
+  .sop-nav-item.active .sop-nav-label { color: #92400e; }
+
+  /* Progress bar inside sidenav */
+  .sop-nav-progress {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f0ede8;
+  }
+
+  .sop-nav-progress-label {
+    font-size: 0.62rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .sop-nav-progress-pct {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    color: var(--accent);
+  }
+
+  .sop-nav-bar-bg {
+    height: 3px;
+    background: #f0ede8;
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .sop-nav-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-lt));
+    border-radius: 99px;
+    transition: width 0.4s ease;
+  }
+
+  /* Quiz button in sidenav */
+  .sop-nav-quiz-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 0.9rem;
+    padding: 9px 14px;
+    background: #0e0e14;
+    color: var(--accent-lt);
+    border: none;
+    border-radius: 10px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    letter-spacing: 0.04em;
+  }
+
+  .sop-nav-quiz-btn:hover {
+    background: #1a1a26;
+    color: #fff;
+  }
+
+  /* ══════════════════════════════════════
+     SECTION
+  ══════════════════════════════════════ */
+  .sop-section {
+    margin-bottom: 3rem;
+    scroll-margin-top: 100px;
+  }
+
+  .sop-section-hd {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #f0ede8;
+  }
+
+  .sop-section-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 3rem);
+    color: #ede9e2;
+    line-height: 1;
+    flex-shrink: 0;
+    letter-spacing: 0.04em;
+  }
+
+  .sop-section-title {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 3px;
+    line-height: 1.2;
+    padding-top: 0.3rem;
+  }
+
+  .sop-section-sub {
+    font-size: 0.68rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+  }
+
+  /* ══════════════════════════════════════
+     INFO BOX
+  ══════════════════════════════════════ */
+  .sop-info {
+    background: #fffbf3;
+    border: 1px solid rgba(200,152,58,0.2);
+    border-left: 3px solid var(--accent);
+    border-radius: 12px;
+    padding: 1rem 1.3rem;
+    font-size: 0.87rem;
+    color: #374151;
+    line-height: 1.72;
+    margin-bottom: 1.5rem;
+  }
+  .sop-info strong { color: #92400e; }
+
+  /* ══════════════════════════════════════
+     RULE CARDS
+  ══════════════════════════════════════ */
+  .sop-rules {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+    gap: 11px;
+    margin-bottom: 1.5rem;
+  }
+
+  .sop-rule {
+    background: #fff;
+    border: 1px solid #ece9e3;
+    border-radius: var(--radius);
+    padding: 1.2rem;
+    display: flex;
+    gap: 13px;
+    align-items: flex-start;
+    transition: border-color 0.18s, box-shadow 0.18s, transform 0.18s;
+  }
+
+  .sop-rule:hover {
+    border-color: rgba(200,152,58,0.3);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    transform: translateY(-2px);
+  }
+
+  .sop-rule-icon {
+    width: 36px; height: 36px;
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.05rem;
+    flex-shrink: 0;
+  }
+
+  .sop-rule-title {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .sop-rule-desc {
+    font-size: 0.77rem;
+    color: #6b7280;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .sop-rule-desc strong { color: #374151; }
+
+  /* ══════════════════════════════════════
+     PROCESS FLOW
+  ══════════════════════════════════════ */
+  .sop-flow { display: flex; flex-direction: column; margin-bottom: 1.5rem; }
+
+  .sop-flow-step { display: flex; gap: 14px; align-items: flex-start; }
+
+  .sop-flow-left {
+    display: flex; flex-direction: column; align-items: center; flex-shrink: 0;
+  }
+
+  .sop-flow-circle {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: #111116; color: #e8d5a8;
+    font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .sop-flow-line {
+    width: 1px; flex: 1; min-height: 20px;
+    background: linear-gradient(to bottom, #dedad4, transparent);
+    margin: 3px 0;
+  }
+
+  .sop-flow-content { padding-bottom: 1.4rem; flex: 1; }
+
+  .sop-flow-title {
+    font-size: 0.88rem; font-weight: 700; color: #111827; margin-bottom: 3px;
+  }
+
+  .sop-flow-desc {
+    font-size: 0.79rem; color: #6b7280; line-height: 1.6; margin: 0;
+  }
+
+  /* ══════════════════════════════════════
+     CHECKLIST
+  ══════════════════════════════════════ */
+  .sop-checklist { display: flex; flex-direction: column; gap: 7px; margin-bottom: 1.5rem; }
+
+  .sop-check {
+    display: flex; align-items: flex-start; gap: 11px;
+    background: #fff; border: 1px solid #ece9e3; border-radius: 12px;
+    padding: 0.9rem 1.1rem;
+    transition: all 0.18s;
+  }
+  .sop-check:hover { border-color: rgba(200,152,58,0.25); background: #fffbf5; }
+
+  .sop-check-icon {
+    width: 28px; height: 28px; border-radius: 7px;
+    background: #f5f3ee; display: flex; align-items: center;
+    justify-content: center; font-size: 0.82rem; flex-shrink: 0;
+  }
+
+  .sop-check-label { font-size: 0.84rem; font-weight: 600; color: #111827; margin-bottom: 2px; }
+  .sop-check-sub   { font-size: 0.73rem; color: #9ca3af; line-height: 1.45; }
+
+  /* ══════════════════════════════════════
+     WARNING / TIP
+  ══════════════════════════════════════ */
+  .sop-warning {
+    background: #fef2f2; border: 1px solid #fecaca; border-radius: 12px;
+    padding: 1rem 1.2rem; font-size: 0.83rem; color: #7f1d1d; line-height: 1.65;
+    margin-bottom: 1.5rem; display: flex; gap: 10px; align-items: flex-start;
+  }
+
+  .sop-tip {
+    background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px;
+    padding: 1rem 1.2rem; font-size: 0.83rem; color: #14532d; line-height: 1.65;
+    margin-bottom: 1.5rem; display: flex; gap: 10px; align-items: flex-start;
+  }
+
+  /* ══════════════════════════════════════
+     KPI ROW
+  ══════════════════════════════════════ */
+  .sop-kpis {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 140px), 1fr));
+    gap: 10px;
+    margin-bottom: 1.5rem;
+  }
+
+  .sop-kpi {
+    background: #fff; border: 1px solid #ece9e3;
+    border-radius: var(--radius); padding: 1.1rem; text-align: center;
+  }
+
+  .sop-kpi-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; line-height: 1; letter-spacing: 0.04em; margin-bottom: 3px;
+  }
+
+  .sop-kpi-label {
+    font-size: 0.64rem; color: #9ca3af; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+
+  /* ══════════════════════════════════════
+     NORM PILLS
+  ══════════════════════════════════════ */
+  .sop-norms { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1rem; }
+
+  .sop-norm {
+    background: #f5f3ee; color: #374151;
+    font-size: 0.65rem; font-weight: 600; padding: 3px 9px;
+    border-radius: 5px; font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em; border: 1px solid #e8e4dc;
+  }
+
+  /* ── Divider ── */
+  .sop-divider {
+    height: 1px;
+    background: linear-gradient(90deg, #e5e1da 0%, transparent 80%);
+    margin: 2.5rem 0;
+  }
+
+  /* ══════════════════════════════════════
+     QUIZ SECTION HEADER
+  ══════════════════════════════════════ */
+  .sop-quiz-header {
+    background: #0e0e14;
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .sop-quiz-header-icon {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    color: var(--accent);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .sop-quiz-header-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 3px;
+  }
+
+  .sop-quiz-header-sub {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.38);
+  }
+
+  /* ══════════════════════════════════════
+     RESPONSIVE
+  ══════════════════════════════════════ */
+  @media (max-width: 900px) {
+    .sop-layout { grid-template-columns: 1fr; }
+    .sop-sidenav { display: none; }
+    .sop-hero  { grid-template-columns: 1fr; }
+    .sop-hero-kpis { flex-direction: row; align-items: flex-start; justify-content: flex-start; }
+    .sop-hero-kpi { text-align: left; }
+  }
+
+  @media (max-width: 640px) {
+    .sop-rules { grid-template-columns: 1fr; }
+    .sop-kpis  { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (min-width: 1400px) {
+    .sop-layout { grid-template-columns: 1fr 260px; gap: 3rem; }
+  }
+
+  /* ── Fade in animation ── */
+  @keyframes sop-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .sop-page { animation: sop-in 0.4s ease both; }
+`}</style>
+
+export function SopEink02Page() {
+  const [activeSection, setActiveSection] = useState('zweck');
+  const [scrollPct, setScrollPct] = useState(0);
+
+  useEffect(() => {
+    const sections = ['zweck','bestellanforderung','pruefung','auftragsbestaetigung','wissenstest'];
+    const handleScroll = () => {
+      const el = document.querySelector('.sop-content');
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        const scrolled = Math.max(0, -rect.top + 100);
+        setScrollPct(Math.min(100, Math.round((scrolled / el.scrollHeight) * 100)));
+      }
+      let current = 'zweck';
+      sections.forEach(id => {
+        const el2 = document.getElementById(id);
+        if (el2 && el2.getBoundingClientRect().top < 130) current = id;
+      });
+      setActiveSection(current);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navItems = [
+    { id: 'zweck',                num: '01', label: 'Zweck & Geltungsbereich' },
+    { id: 'bestellanforderung',   num: '02', label: 'Bestellanforderung & Pflichtfelder' },
+    { id: 'pruefung',             num: '03', label: 'Regulatorische Prüfung (PRRC)' },
+    { id: 'auftragsbestaetigung', num: '04', label: 'Auftragsbestätigung & Abweichungen' },
+    { id: 'wissenstest',          num: '★',  label: 'Wissenstest' },
+  ];
+
+  return (
+    <div className="sop-page">
+
+      {/* ── HERO ── */}
+      <div className="sop-hero">
+        <div>
+          <div className="sop-hero-eyebrow">
+            <div className="sop-hero-eyebrow-line"/>
+            <span className="sop-hero-eyebrow-text">SOP-EINK-02 · Einkauf & Lieferanten</span>
+          </div>
+          <div className="sop-hero-title">Beschaffung von<br/>Medizinprodukten</div>
+          <p className="sop-hero-desc">
+            Steuerung von Beschaffungsvorgängen damit bestellte Produkte exakt den spezifizierten Anforderungen entsprechen — Pflichtangaben, PRRC-Prüfung und Auftragsbestätigung nach MDR Art. 13.
+          </p>
+          <div className="sop-hero-meta">
+            <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>MDR Art. 13 Importeurpflichten</div>
+            <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>Gültig ab 31.01.2026</div>
+            <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>4 Kapitel · 10 Fragen</div>
+          </div>
+        </div>
+        <div className="sop-hero-kpis">
+          <div className="sop-hero-kpi"><div className="sop-hero-kpi-val">3</div><div className="sop-hero-kpi-label">Pflichtfelder</div></div>
+          <div className="sop-hero-divider"/>
+          <div className="sop-hero-kpi"><div className="sop-hero-kpi-val">PRRC</div><div className="sop-hero-kpi-label">Prüfung</div></div>
+          <div className="sop-hero-divider"/>
+          <div className="sop-hero-kpi"><div className="sop-hero-kpi-val">MDR</div><div className="sop-hero-kpi-label">Art. 13</div></div>
+        </div>
+      </div>
+
+      {/* ── TWO-COLUMN LAYOUT ── */}
+      <div className="sop-layout">
+        <div className="sop-content">
+
+          {/* 01 ZWECK */}
+          <div className="sop-section" id="zweck">
+            <div className="sop-section-hd">
+              <div className="sop-section-num">01</div>
+              <div>
+                <div className="sop-section-title">Zweck & Geltungsbereich</div>
+                <div className="sop-section-sub">MDR-konforme Beschaffung · Importeurpflichten</div>
+              </div>
+            </div>
+            <div className="sop-info">
+              Sicherstellung, dass Beschaffungsvorgänge so gesteuert werden, dass die bestellten Produkte <strong>exakt den spezifizierten Anforderungen</strong> entsprechen und alle notwendigen Begleitdokumente für den Import nach <strong>MDR Art. 13</strong> angefordert werden.
+            </div>
+            <div className="sop-kpis">
+              <div className="sop-kpi"><div className="sop-kpi-val" style={{color:'#c8983a'}}>3</div><div className="sop-kpi-label">Pflichtangaben</div></div>
+              <div className="sop-kpi"><div className="sop-kpi-val" style={{color:'#8b5cf6'}}>PRRC</div><div className="sop-kpi-label">Regulatorik</div></div>
+              <div className="sop-kpi"><div className="sop-kpi-val" style={{color:'#3b82f6'}}>CE</div><div className="sop-kpi-label">Konformität</div></div>
+              <div className="sop-kpi"><div className="sop-kpi-val" style={{color:'#10b981'}}>MDR</div><div className="sop-kpi-label">Art. 13</div></div>
+            </div>
+
+            {/* Beschaffungsprozess Übersicht */}
+            <div style={{background:'#fff', border:'1px solid #ece9e3', borderRadius:'14px', padding:'1.4rem', marginBottom:'1.5rem'}}>
+              <div style={{fontSize:'0.72rem', fontWeight:700, color:'#9ca3af', textTransform:'uppercase', letterSpacing:'0.12em', marginBottom:'1rem'}}>Beschaffungsprozess im Überblick</div>
+              <div style={{display:'flex', gap:'0', alignItems:'center', flexWrap:'wrap'}}>
+                {[
+                  { n:'Bedarf',       s:'Vertrieb/Lager meldet', c:'#f5f3ee', t:'#374151' },
+                  { n:'Bestellung',   s:'Kfm. Leitung löst aus', c:'#fef9c3', t:'#92400e', active:true },
+                  { n:'PRRC-Check',   s:'Regulatorik geprüft',   c:'#f5f3ff', t:'#5b21b6', active:true },
+                  { n:'Bestätigung',  s:'Abweichungen prüfen',   c:'#eff6ff', t:'#1e40af' },
+                  { n:'Wareneingang', s:'UDI + MDR-Gate',        c:'#f0fdf4', t:'#14532d' },
+                ].map((n, i, arr) => (
+                  <React.Fragment key={i}>
+                    <div style={{
+                      background:n.c, borderRadius:'9px', padding:'0.7rem 0.9rem',
+                      flex:'1 1 80px', textAlign:'center', minWidth:'70px',
+                      border: n.active ? '1.5px solid rgba(200,152,58,0.35)' : '1px solid #ece9e3',
+                    }}>
+                      <div style={{fontSize:'0.78rem', fontWeight:700, color:n.t}}>{n.n}</div>
+                      <div style={{fontSize:'0.62rem', color:n.t+'99', marginTop:'1px'}}>{n.s}</div>
+                    </div>
+                    {i < arr.length-1 && <div style={{color:'#d1cec8', padding:'0 4px', fontSize:'0.9rem', flexShrink:0}}>›</div>}
+                  </React.Fragment>
+                ))}
+              </div>
+              <div style={{fontSize:'0.68rem', color:'#9ca3af', marginTop:'0.6rem', textAlign:'center'}}>
+                Goldene Schritte = Inhalt dieser SOP
+              </div>
+            </div>
+
+            <div className="sop-norms">
+              <span className="sop-norm">MDR 2017/745 Art. 13</span>
+              <span className="sop-norm">ISO 13485:2016 §7.4</span>
+              <span className="sop-norm">SOP-EINK-01 Lieferantenbewertung</span>
+            </div>
+          </div>
+
+          <div className="sop-divider"/>
+
+          {/* 02 BESTELLANFORDERUNG */}
+          <div className="sop-section" id="bestellanforderung">
+            <div className="sop-section-hd">
+              <div className="sop-section-num">02</div>
+              <div>
+                <div className="sop-section-title">Bestellanforderung & Pflichtfelder</div>
+                <div className="sop-section-sub">Kfm. Leitung · 3 Pflichtangaben · Chargenzertifikat · MHD</div>
+              </div>
+            </div>
+            <div className="sop-info">
+              Bestellungen werden durch die <strong>kaufmännische Leitung</strong> ausgelöst. Jede Bestellung muss drei Pflichtinformationen enthalten — eine unvollständige Bestellung darf nicht abgesendet werden.
+            </div>
+
+            {/* 3 Pflichtfelder */}
+            <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(min(100%,240px),1fr))', gap:'11px', marginBottom:'1.5rem'}}>
+              {[
+                {
+                  num:'01', color:'#c8983a', bg:'#fffbf3', border:'rgba(200,152,58,0.2)',
+                  title:'Eindeutige Produktbezeichnung',
+                  icon:'🏷️',
+                  desc:'Exakte Produktbezeichnung und Artikelnummer aus dem SAP-Stammdaten. Keine ungenauen Beschreibungen — die Artikelnummer muss eindeutig sein.',
+                  sub:'Verhindert Falschlieferungen und Verwechslungen im Wareneingang',
+                },
+                {
+                  num:'02', color:'#8b5cf6', bg:'#f5f3ff', border:'rgba(139,92,246,0.2)',
+                  title:'Konformitätsnachweise',
+                  icon:'📜',
+                  desc:'Explizite Anforderung der benötigten Nachweise, z.B. "Chargenzertifikat erforderlich" oder "EU-Konformitätserklärung beifügen". Wird in der Bestellung vermerkt.',
+                  sub:'Grundlage für MDR Art. 13 Importeurpflichten',
+                },
+                {
+                  num:'03', color:'#3b82f6', bg:'#eff6ff', border:'rgba(59,130,246,0.2)',
+                  title:'MHD-Anforderung (Restlaufzeit)',
+                  icon:'📅',
+                  desc:'Bei sterilen Produkten: Mindest-Restlaufzeit ab Lieferdatum angeben (z.B. "mind. 12 Monate MHD ab Lieferung"). Verhindert sofortige Sperrung bei Wareneingang.',
+                  sub:'Nur relevant für sterile und MHD-sensitive Produkte',
+                },
+              ].map((card, i) => (
+                <div key={i} style={{background:card.bg, border:`1px solid ${card.border}`, borderRadius:'14px', padding:'1.3rem'}}>
+                  <div style={{display:'flex', alignItems:'center', gap:'10px', marginBottom:'0.75rem'}}>
+                    <div style={{
+                      background:card.color, color:'#fff', borderRadius:'8px',
+                      width:'28px', height:'28px', display:'flex', alignItems:'center',
+                      justifyContent:'center', fontFamily:'Bebas Neue, sans-serif',
+                      fontSize:'0.9rem', flexShrink:0,
+                    }}>{card.num}</div>
+                    <div style={{fontSize:'0.86rem', fontWeight:700, color:'#111827'}}>{card.title}</div>
+                  </div>
+                  <p style={{fontSize:'0.77rem', color:'#6b7280', lineHeight:1.6, margin:'0 0 0.6rem'}}>{card.desc}</p>
+                  <div style={{fontSize:'0.68rem', fontWeight:600, color:card.color, background:`${card.color}12`, padding:'4px 9px', borderRadius:'6px', display:'inline-block'}}>{card.sub}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* Bestellprozess */}
+            <div className="sop-flow">
+              {[
+                { t:'Bedarfsmeldung', d:'Lager oder Vertrieb meldet Bedarf an kaufmännische Leitung. Mindestbestand unterschritten oder Kundenauftrag liegt vor.' },
+                { t:'Bestellung erstellen in SAP', d:'Kaufmännische Leitung erstellt Bestellung in SAP. Alle drei Pflichtfelder werden ausgefüllt. Lieferant muss in der Lieferantenliste (SOP-EINK-01) qualifiziert sein.' },
+                { t:'Vollständigkeit prüfen', d:'Interne Prüfung: Sind alle Pflichtfelder ausgefüllt? Sind die Konformitätsnachweise korrekt spezifiziert? Ist die MHD-Anforderung angegeben?' },
+                { t:'PRRC-Stichprobe', d:'PRRC prüft stichprobenartig die regulatorischen Daten vor dem Absenden. Bei kritischen Produkten: vollständige regulatorische Prüfung.' },
+                { t:'Bestellung absenden', d:'Bestellung wird an qualifizierten Lieferanten gesendet. Kopie in SAP archiviert. Offene Bestellposition im System für Wareneingang hinterlegt.' },
+              ].map((s,i,arr) => (
+                <div className="sop-flow-step" key={i}>
+                  <div className="sop-flow-left">
+                    <div className="sop-flow-circle">{i+1}</div>
+                    {i < arr.length-1 && <div className="sop-flow-line"/>}
+                  </div>
+                  <div className="sop-flow-content">
+                    <div className="sop-flow-title">{s.t}</div>
+                    <p className="sop-flow-desc">{s.d}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="sop-warning">
+              <span style={{fontSize:'1rem', flexShrink:0}}>⚠</span>
+              <div><strong>Nur qualifizierte Lieferanten:</strong> Bestellungen dürfen ausschließlich an Lieferanten gesendet werden, die gemäß SOP-EINK-01 qualifiziert und nicht auf der Sperrliste sind.</div>
+            </div>
+            <div className="sop-norms">
+              <span className="sop-norm">ISO 13485:2016 §7.4.2</span>
+              <span className="sop-norm">MDR Art. 13 §1</span>
+            </div>
+          </div>
+
+          <div className="sop-divider"/>
+
+          {/* 03 PRRC-PRÜFUNG */}
+          <div className="sop-section" id="pruefung">
+            <div className="sop-section-hd">
+              <div className="sop-section-num">03</div>
+              <div>
+                <div className="sop-section-title">Regulatorische Prüfung durch PRRC</div>
+                <div className="sop-section-sub">EUDAMED · CE-Status · Stichproben · Importfreigabe</div>
+              </div>
+            </div>
+            <div className="sop-info">
+              Vor Absenden der Bestellung prüft die <strong>PRRC stichprobenartig</strong>, ob die regulatorischen Daten des Produkts aktuell sind — um Importverzögerungen und MDR-Verstöße zu vermeiden.
+            </div>
+
+            {/* Was die PRRC prüft */}
+            <div className="sop-checklist">
+              {[
+                { icon:'🌐', t:'EUDAMED-Registrierung aktuell', d:'Überprüfung ob das Produkt korrekt in der europäischen Medizinproduktedatenbank EUDAMED registriert ist. Veraltete oder fehlende Einträge führen zu Importstopps.' },
+                { icon:'✅', t:'CE-Kennzeichnung gültig', d:'Ist die CE-Kennzeichnung noch gültig? Abgelaufene oder zurückgezogene CE-Zertifikate machen den Import illegal. PRRC prüft das Ablaufdatum der benannten Stelle.' },
+                { icon:'📋', t:'EU-Konformitätserklärung vorhanden', d:'Liegt eine aktuelle EU-Konformitätserklärung (DoC) des Herstellers vor? Dokument muss zur bestellten Produktversion passen — neue Versionen benötigen neue DoC.' },
+                { icon:'🏢', t:'Hersteller in EUDAMED registriert', d:'Der Hersteller selbst muss in EUDAMED als Wirtschaftsakteur registriert sein. Nicht registrierte Hersteller dürfen keine Produkte in die EU exportieren.' },
+                { icon:'⚠️', t:'Offene Vigilanzmeldungen', d:'Gibt es aktuelle Vigilanzmeldungen, Safety Notices oder Field Safety Corrective Actions (FSCAs) für das bestellte Produkt? Bei aktiven Rückrufen darf nicht bestellt werden.' },
+              ].map((c,i) => (
+                <div className="sop-check" key={i}>
+                  <div className="sop-check-icon">{c.icon}</div>
+                  <div>
+                    <div className="sop-check-label">{c.t}</div>
+                    <div className="sop-check-sub">{c.d}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div style={{background:'#0e0e14', borderRadius:'14px', padding:'1.4rem 1.75rem', marginBottom:'1.5rem'}}>
+              <div style={{fontSize:'0.68rem', fontWeight:700, color:'rgba(200,152,58,0.7)', textTransform:'uppercase', letterSpacing:'0.18em', marginBottom:'1rem'}}>Stichprobenlogik der PRRC</div>
+              <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(min(100%,200px),1fr))', gap:'10px'}}>
+                {[
+                  { label:'Klasse III / Implantate', freq:'100% — jede Bestellung', color:'#ef4444' },
+                  { label:'Klasse IIb / kritisch',   freq:'jede 2. Bestellung',     color:'#f59e0b' },
+                  { label:'Klasse IIa',               freq:'jede 5. Bestellung',     color:'#c8983a' },
+                  { label:'Klasse I',                 freq:'quartalsweise',           color:'#10b981' },
+                ].map((row,i) => (
+                  <div key={i} style={{background:'rgba(255,255,255,0.05)', borderRadius:'10px', padding:'0.85rem'}}>
+                    <div style={{fontSize:'0.75rem', fontWeight:700, color:row.color, marginBottom:'3px'}}>{row.label}</div>
+                    <div style={{fontSize:'0.72rem', color:'rgba(255,255,255,0.4)'}}>{row.freq}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="sop-tip">
+              <span style={{fontSize:'1rem', flexShrink:0}}>💡</span>
+              <div><strong>Importverzögerung vermeiden:</strong> Die PRRC-Prüfung vor der Bestellung ist schneller als ein blockierter Import am Zoll. Regulatorische Probleme, die vor der Bestellung entdeckt werden, können mit dem Lieferanten ohne Zeitdruck geklärt werden.</div>
+            </div>
+            <div className="sop-norms">
+              <span className="sop-norm">MDR Art. 13 §2</span>
+              <span className="sop-norm">EUDAMED</span>
+              <span className="sop-norm">ISO 13485:2016 §7.4.1</span>
+            </div>
+          </div>
+
+          <div className="sop-divider"/>
+
+          {/* 04 AUFTRAGSBESTÄTIGUNG */}
+          <div className="sop-section" id="auftragsbestaetigung">
+            <div className="sop-section-hd">
+              <div className="sop-section-num">04</div>
+              <div>
+                <div className="sop-section-title">Auftragsbestätigung & Abweichungen</div>
+                <div className="sop-section-sub">Abgleich · Differenzen · Rückverfolgbarkeit · Eskalation</div>
+              </div>
+            </div>
+            <div className="sop-info">
+              Eingehende Auftragsbestätigungen werden auf <strong>Abweichungen</strong> (Preis, Menge, Liefertermin) geprüft. Differenzen müssen sofort geklärt werden — auch kleine Abweichungen können die <strong>Rückverfolgbarkeit</strong> beeinflussen.
+            </div>
+
+            <div className="sop-rules">
+              {[
+                { icon:'💰', bg:'#fef9c3', t:'Preisabweichung', d:'Bestellpreis vs. bestätigter Preis abgleichen. Bei Abweichung >2%: sofortige Klärung mit Lieferant. Keine Übernahme ohne Freigabe durch kaufmännische Leitung.' },
+                { icon:'📦', bg:'#eff6ff', t:'Mengenabweichung', d:'Bestellmenge vs. bestätigte Menge. Auch Teillieferungen müssen explizit bestätigt werden. Mengenabweichungen beeinflussen die Lagerplanung und Rückverfolgbarkeit.' },
+                { icon:'📅', bg:'#f0fdf4', t:'Lieferterminsabweichung', d:'Verschobene Liefertermine können offene Kundenaufträge blockieren. Bei kritischer Verzögerung: kaufmännische Leitung und ggf. Kunden informieren.' },
+                { icon:'🔄', bg:'#fef2f2', t:'Artikel-/Chargenwechsel', d:'Ändert der Lieferant Artikelnummer oder Charge gegenüber der Bestellung: sofortige PRRC-Prüfung. Abweichende Artikel können andere regulatorische Anforderungen haben.' },
+              ].map((r,i) => (
+                <div className="sop-rule" key={i}>
+                  <div className="sop-rule-icon" style={{background:r.bg}}>{r.icon}</div>
+                  <div>
+                    <div className="sop-rule-title">{r.t}</div>
+                    <p className="sop-rule-desc">{r.d}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Abweichungs-Eskalation */}
+            <div style={{background:'#fff', border:'1px solid #ece9e3', borderRadius:'14px', padding:'1.4rem', marginBottom:'1.5rem'}}>
+              <div style={{fontSize:'0.72rem', fontWeight:700, color:'#9ca3af', textTransform:'uppercase', letterSpacing:'0.12em', marginBottom:'1rem'}}>Eskalationspfad bei Abweichungen</div>
+              <div className="sop-flow" style={{marginBottom:0}}>
+                {[
+                  { t:'Abweichung entdeckt', d:'Kaufmännische Leitung vergleicht Bestätigung mit Bestellung. Jede Abweichung — egal wie klein — wird dokumentiert.' },
+                  { t:'Sofortige Klärung mit Lieferant', d:'Telefonische/schriftliche Klärung innerhalb von 24h. Lieferant muss Korrekturbestätigung senden oder Abweichung begründen.' },
+                  { t:'PRRC bei regulatorischen Abweichungen', d:'Artikel- oder Chargenänderungen → PRRC prüft regulatorische Auswirkungen bevor die geänderte Bestellung akzeptiert wird.' },
+                  { t:'Dokumentation und Freigabe', d:'Alle geklärten Abweichungen werden schriftlich dokumentiert. Kaufmännische Leitung gibt geänderte Bestellung frei oder storniert.' },
+                ].map((s,i,arr) => (
+                  <div className="sop-flow-step" key={i}>
+                    <div className="sop-flow-left">
+                      <div className="sop-flow-circle">{i+1}</div>
+                      {i < arr.length-1 && <div className="sop-flow-line"/>}
+                    </div>
+                    <div className="sop-flow-content">
+                      <div className="sop-flow-title">{s.t}</div>
+                      <p className="sop-flow-desc">{s.d}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="sop-warning">
+              <span style={{fontSize:'1rem', flexShrink:0}}>⚠</span>
+              <div><strong>Rückverfolgbarkeit bei Abweichungen:</strong> Wenn Liefermenge oder Charge von der Bestellung abweicht und nicht korrekt in SAP dokumentiert wird, entstehen Lücken in der Rückverfolgungskette — ein kritischer MDR-Verstoß.</div>
+            </div>
+            <div className="sop-norms">
+              <span className="sop-norm">ISO 13485:2016 §7.4.3</span>
+              <span className="sop-norm">MDR Art. 13 §3</span>
+              <span className="sop-norm">SOP-LOG-02 Rückverfolgbarkeit</span>
+            </div>
+          </div>
+
+          <div className="sop-divider"/>
+
+          {/* QUIZ HEADER */}
+          <div id="wissenstest">
+            <div className="sop-quiz-header">
+              <div className="sop-quiz-header-icon">★</div>
+              <div>
+                <div className="sop-quiz-header-title">Wissenstest — SOP-EINK-02</div>
+                <div className="sop-quiz-header-sub">10 Fragen · Beantworten Sie alle Fragen um das Modul abzuschließen</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* ── STICKY SIDE NAV ── */}
+        <div className="sop-sidenav">
+          <div className="sop-sidenav-title">Inhalt</div>
+          {navItems.map(({id, num, label}) => (
+            <a key={id} href={`#${id}`}
+               className={`sop-nav-item${activeSection === id ? ' active' : ''}`}>
+              <div className="sop-nav-num">{num}</div>
+              <div className="sop-nav-label">{label}</div>
+            </a>
+          ))}
+          <div className="sop-nav-progress">
+            <div className="sop-nav-progress-label">
+              <span>Fortschritt</span>
+              <span className="sop-nav-progress-pct">{scrollPct}%</span>
+            </div>
+            <div className="sop-nav-bar-bg">
+              <div className="sop-nav-bar-fill" style={{width:`${scrollPct}%`}}/>
+            </div>
+          </div>
+          <a href="#wissenstest" className="sop-nav-quiz-btn">Zum Wissenstest →</a>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+<SopEink02Page/>
+
+<SopQuiz refCode="SOP-EINK-02" questions={quizData}/>

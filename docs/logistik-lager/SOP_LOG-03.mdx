@@ -1,26 +1,1094 @@
 ---
 id: SOP_LOG-03
-sidebar_label: 'Umgang mit Sperrware'
-sidebar_position: 3
+title: Umgang mit Sperrware
+sidebar_label: Umgang mit Sperrware
 ---
 
-import BlockedGoodsQuiz from '@site/src/components/BlockedGoodsQuiz';
+import React, { useState, useEffect } from 'react';
+import SopQuiz from '@site/src/components/SopQuiz';
 
-# Umgang mit Sperrware (SOP-LOG-03)
+export const quizData = [
+  {
+    id: 1,
+    question: "Was ist das primäre Ziel der SOP-LOG-03?",
+    options: [
+      "Reduktion von Lagerkosten durch schnellere Entsorgung",
+      "Verhinderung der unbeabsichtigten Auslieferung von Produkten, die nicht den Qualitätsanforderungen entsprechen",
+      "Optimierung der Lagerkapazität durch regelmäßige Bestandsbereinigung",
+      "Vereinfachung des Retourenprozesses"
+    ],
+    correct: 1,
+    explanation: "Gemäß SOP-LOG-03 §1: Verhinderung der unbeabsichtigten Auslieferung von Produkten, die nicht den Qualitätsanforderungen entsprechen oder deren Konformität zweifelhaft ist. Patientensicherheit hat absoluten Vorrang."
+  },
+  {
+    id: 2,
+    question: "Bei welchen drei Gründen muss ein Produkt sofort gesperrt werden?",
+    options: [
+      "Preisänderung, Lieferanteninsolvenz oder fehlende Rechnung",
+      "Beschädigte/gefährdete Verpackung/Sterilität, überschrittenes Verfallsdatum oder Verdacht auf Nichtkonformität",
+      "Fehlende Etikettierung, falsche Lagerposition oder beschädigte Palette",
+      "Kundenbeschwerde, Retoure oder Falschlieferung"
+    ],
+    correct: 1,
+    explanation: "Drei Sperrgründe laut SOP: (1) beschädigte Verpackung oder gefährdete Sterilität, (2) überschrittenes Verfallsdatum, (3) Verdacht auf Nichtkonformität. Alle drei Fälle erfordern sofortige Sperrung — ohne Wartezeit."
+  },
+  {
+    id: 3,
+    question: "Wie wird Sperrware unmittelbar nach der Identifikation gekennzeichnet?",
+    options: [
+      "Mit einem blauen Aufkleber 'RÜCKGABE'",
+      "Mit einem gelben oder roten Aufkleber 'GESPERRT / QUARANTÄNE'",
+      "Mit einem weißen Aufkleber 'IN PRÜFUNG'",
+      "Kennzeichnung ist optional — nur SAP-Buchung ist Pflicht"
+    ],
+    correct: 1,
+    explanation: "Sperrware ist sofort mit einem gelben oder roten Aufkleber 'GESPERRT / QUARANTÄNE' zu kennzeichnen. Gelb = Quarantäne/Prüfung läuft, Rot = gesperrt/nicht freigeben. Die physische Kennzeichnung muss vor der SAP-Buchung erfolgen."
+  },
+  {
+    id: 4,
+    question: "Was ist mit physischer Trennung von Sperrware gemeint?",
+    options: [
+      "Sperrware wird in einem anderen Regal des gleichen Lagers gelagert",
+      "Sperrware wird in einem deutlich markierten, physisch getrennten Bereich ('Sperrlager') gelagert",
+      "Sperrware wird direkt beim Lieferanten zurückgelagert",
+      "Sperrware darf nur in verschlossenen Behältern aufbewahrt werden"
+    ],
+    correct: 1,
+    explanation: "Physische Trennung bedeutet: Sperrware kommt in einen eigenständigen, deutlich markierten Bereich ('Sperrlager') — nicht nur ein anderes Regal im selben Lager. Die räumliche Trennung verhindert Verwechslungen mit freigegebener Ware."
+  },
+  {
+    id: 5,
+    question: "Wer darf die Freigabe oder Vernichtung von Sperrware autorisieren?",
+    options: [
+      "Jeder Lagermitarbeiter nach eigener Einschätzung",
+      "Nur der Lagerleiter nach Rücksprache mit dem Lieferanten",
+      "Ausschließlich die PRRC oder die Geschäftsführung nach dokumentierter Prüfung",
+      "Der Einkauf in Abstimmung mit dem Controlling"
+    ],
+    correct: 2,
+    explanation: "Nur die PRRC (Person Responsible for Regulatory Compliance) oder die Geschäftsführung dürfen nach dokumentierter Prüfung über Freigabe oder Vernichtung entscheiden. Kein Lagermitarbeiter hat diese Kompetenz — dies ist eine MDR-Anforderung."
+  },
+  {
+    id: 6,
+    question: "Was passiert in SAP wenn ein Produkt gesperrt wird?",
+    options: [
+      "Das Produkt wird aus dem System gelöscht",
+      "Das Produkt wird in einen gesperrten Lagerbestand ('Sperrbestand') umgebucht — keine Auslieferung möglich",
+      "Das Produkt erhält einen Hinweis, kann aber weiterhin bestellt werden",
+      "SAP-Buchung ist für Sperrware nicht erforderlich"
+    ],
+    correct: 1,
+    explanation: "In SAP wird die Ware in einen gesperrten Bestand umgebucht. Das System verhindert dann automatisch die Anlage von Lieferpositionen für gesperrte Bestände — technische Absicherung gegen versehentliche Auslieferung."
+  },
+  {
+    id: 7,
+    question: "Wie unterscheiden sich gelber und roter Sperraufkleber?",
+    options: [
+      "Es gibt keinen Unterschied — beide bedeuten dasselbe",
+      "Gelb = Quarantäne/Prüfung läuft noch, Rot = endgültig gesperrt/nicht freigeben",
+      "Gelb = MHD überschritten, Rot = Verpackung beschädigt",
+      "Gelb = interne Sperrung, Rot = behördliche Sperrung"
+    ],
+    correct: 1,
+    explanation: "Gelb signalisiert Quarantänestatus — die Prüfung läuft noch, eine Freigabe ist theoretisch noch möglich. Rot bedeutet endgültig gesperrt — kein Weg zurück in den freien Bestand, Vernichtung oder Rücksendung an Hersteller."
+  },
+  {
+    id: 8,
+    question: "Muss die Vernichtung von Sperrware dokumentiert werden?",
+    options: [
+      "Nein — Vernichtung ist eine rein operative Tätigkeit ohne Dokumentationspflicht",
+      "Ja — Vernichtungsnachweis mit Datum, Menge, Charge und Genehmigung durch PRRC/GF ist Pflicht",
+      "Nur bei Produkten über 500 € Warenwert",
+      "Nur bei Implantaten — Standardprodukte können ohne Nachweis vernichtet werden"
+    ],
+    correct: 1,
+    explanation: "Vernichtung von Sperrware erfordert: schriftliche Genehmigung durch PRRC oder GF, Vernichtungsprotokoll mit Datum, Menge, Chargennummer und Vernichtungsgrund. Diese Unterlagen gehören zur Qualitätsdokumentation und müssen aufbewahrt werden."
+  },
+  {
+    id: 9,
+    question: "Was ist zu tun wenn bei einem Wareneingang eine beschädigte Verpackung entdeckt wird?",
+    options: [
+      "Ware trotzdem einlagern und beim nächsten Audit melden",
+      "Sofort mit 'GESPERRT'-Aufkleber kennzeichnen, in SAP sperren, QMB informieren und nicht in freien Bestand buchen",
+      "Lieferanten sofort anrufen und warten bis eine Entscheidung getroffen wurde",
+      "Ware zurückschicken ohne interne Dokumentation"
+    ],
+    correct: 1,
+    explanation: "Bei beschädigter Verpackung: sofortige Kennzeichnung mit Sperraufkleber → SAP-Buchung in Sperrbestand → QMB informieren. Keine Einlagerung in freien Bestand bis zur Klärung. Diese Reihenfolge ist bindend."
+  },
+  {
+    id: 10,
+    question: "Warum ist die physische Trennung von Sperrlager und freiem Lager so wichtig?",
+    options: [
+      "Aus rein ästhetischen Gründen für einen ordentlichen Lagerraum",
+      "Um Verwechslungen zu verhindern — ein visuell gesperrtes Produkt im falschen Bereich könnte versehentlich ausgeliefert werden",
+      "Weil gesperrte Produkte andere Lagerbedingungen benötigen",
+      "Nur wegen der Versicherungsanforderungen"
+    ],
+    correct: 1,
+    explanation: "Physische Trennung verhindert die versehentliche Entnahme von Sperrware. Etiketten können übersehen werden — ein räumlich abgetrennter Bereich mit klarer Kennzeichnung ist die zuverlässigste Maßnahme gegen unbeabsichtigte Auslieferung nicht konformer Produkte."
+  }
+];
 
-[cite_start]Dieses Modul regelt den Umgang mit Produkten, die nicht den Qualitätsanforderungen entsprechen, um eine unbeabsichtigte Auslieferung zu verhindern[cite: 1256].
+<style>{`
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
 
-## 1. Gründe für eine Sperrung
-* Beschädigte Verpackung oder Gefährdung der Sterilität[cite: 1270].
-* [cite_start]Überschrittenes Verfallsdatum[cite: 1270].
-* [cite_start]Verdacht auf Nichtkonformität[cite: 1271].
+  /* ── Override Docusaurus article defaults ── */
+  .sop-page h1, .sop-page h2, .sop-page h3,
+  .sop-page p,  .sop-page ul, .sop-page li { all: revert; }
+  .sop-page h1, .sop-page h2, .sop-page h3,
+  .sop-page p,  .sop-page ul, .sop-page li { font-family: 'Outfit', sans-serif; }
 
-## 2. Prozess der Sperrung
-1. [cite_start]**Kennzeichnung**: Sofortige Markierung mit gelben/roten Aufklebern („GESPERRT“)[cite: 1272].
-2. [cite_start]**Physische Trennung**: Lagerung im markierten Sperrlagerbereich.
-3. [cite_start]**Entscheidung**: Die Freigabe oder Vernichtung darf nur durch die **PRRC** oder die Geschäftsführung erfolgen[cite: 1274].
+  /* ── Make the doc container full width ── */
+  .theme-doc-markdown { max-width: 100% !important; }
+  article.sop-wrap     { max-width: 100% !important; padding: 0 !important; }
 
----
+  /* ══════════════════════════════════════
+     OUTER WRAPPER
+  ══════════════════════════════════════ */
+  .sop-page {
+    font-family: 'Outfit', sans-serif;
+    color: #18181f;
+    width: 100%;
+    --accent: #c8983a;
+    --accent-lt: #e8d5a8;
+    --dark: #0e0e14;
+    --radius: 14px;
+  }
 
-## 🎓 Wissenstest: SOP-LOG-03
-<BlockedGoodsQuiz />
+  /* ══════════════════════════════════════
+     HERO — light, editorial, not a dark box
+  ══════════════════════════════════════ */
+  .sop-hero {
+    background: #f8f7f3;
+    border: 1px solid #e8e4dc;
+    border-radius: 20px;
+    padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1.5rem, 4vw, 2.75rem);
+    margin-bottom: 2rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sop-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #c8983a08 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .sop-hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.75rem;
+  }
+
+  .sop-hero-eyebrow-line {
+    width: 28px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 99px;
+    flex-shrink: 0;
+  }
+
+  .sop-hero-eyebrow-text {
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .sop-hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    color: #0e0e14;
+    margin: 0 0 0.6rem;
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+
+  .sop-hero-desc {
+    font-size: clamp(0.82rem, 1.4vw, 0.9rem);
+    color: #6b7280;
+    margin: 0;
+    line-height: 1.65;
+    max-width: 500px;
+  }
+
+  .sop-hero-meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1.25rem;
+  }
+
+  .sop-hero-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    color: #9ca3af;
+    font-weight: 500;
+  }
+
+  .sop-hero-meta-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* KPI block on right */
+  .sop-hero-kpis {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    align-items: flex-end;
+    flex-shrink: 0;
+  }
+
+  .sop-hero-kpi { text-align: right; }
+
+  .sop-hero-kpi-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: var(--accent);
+    line-height: 1;
+    letter-spacing: 0.04em;
+  }
+
+  .sop-hero-kpi-label {
+    font-size: 0.58rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-top: 1px;
+  }
+
+  .sop-hero-divider {
+    width: 1px;
+    height: 24px;
+    background: #e2ded8;
+    align-self: center;
+  }
+
+  /* ══════════════════════════════════════
+     TWO-COLUMN LAYOUT
+     Left: content (flexible)
+     Right: sticky nav (260px)
+  ══════════════════════════════════════ */
+  .sop-layout {
+    display: grid;
+    grid-template-columns: 1fr 240px;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .sop-content { min-width: 0; }
+
+  /* Sticky side nav */
+  .sop-sidenav {
+    position: sticky;
+    top: 80px;
+    background: #fff;
+    border: 1px solid #ece9e3;
+    border-radius: 16px;
+    padding: 1.25rem;
+    overflow: hidden;
+  }
+
+  .sop-sidenav-title {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    margin-bottom: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sop-sidenav-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #f0ede8;
+  }
+
+  .sop-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.6rem 0.75rem;
+    border-radius: 9px;
+    text-decoration: none;
+    margin-bottom: 3px;
+    transition: all 0.18s;
+    border: 1px solid transparent;
+  }
+
+  .sop-nav-item:hover {
+    background: #f8f7f3;
+    border-color: #e8e4dc;
+    color: #111;
+  }
+
+  .sop-nav-item.active {
+    background: #fff8ec;
+    border-color: rgba(200,152,58,0.25);
+    color: #92400e;
+  }
+
+  .sop-nav-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    color: #d1cec8;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 20px;
+    transition: color 0.18s;
+  }
+
+  .sop-nav-item.active .sop-nav-num { color: var(--accent); }
+
+  .sop-nav-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #374151;
+    line-height: 1.2;
+  }
+
+  .sop-nav-item.active .sop-nav-label { color: #92400e; }
+
+  /* Progress bar inside sidenav */
+  .sop-nav-progress {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f0ede8;
+  }
+
+  .sop-nav-progress-label {
+    font-size: 0.62rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .sop-nav-progress-pct {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    color: var(--accent);
+  }
+
+  .sop-nav-bar-bg {
+    height: 3px;
+    background: #f0ede8;
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .sop-nav-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-lt));
+    border-radius: 99px;
+    transition: width 0.4s ease;
+  }
+
+  /* Quiz button in sidenav */
+  .sop-nav-quiz-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 0.9rem;
+    padding: 9px 14px;
+    background: #0e0e14;
+    color: var(--accent-lt);
+    border: none;
+    border-radius: 10px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    letter-spacing: 0.04em;
+  }
+
+  .sop-nav-quiz-btn:hover {
+    background: #1a1a26;
+    color: #fff;
+  }
+
+  /* ══════════════════════════════════════
+     SECTION
+  ══════════════════════════════════════ */
+  .sop-section {
+    margin-bottom: 3rem;
+    scroll-margin-top: 100px;
+  }
+
+  .sop-section-hd {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #f0ede8;
+  }
+
+  .sop-section-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 3rem);
+    color: #ede9e2;
+    line-height: 1;
+    flex-shrink: 0;
+    letter-spacing: 0.04em;
+  }
+
+  .sop-section-title {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 3px;
+    line-height: 1.2;
+    padding-top: 0.3rem;
+  }
+
+  .sop-section-sub {
+    font-size: 0.68rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+  }
+
+  /* ══════════════════════════════════════
+     INFO BOX
+  ══════════════════════════════════════ */
+  .sop-info {
+    background: #fffbf3;
+    border: 1px solid rgba(200,152,58,0.2);
+    border-left: 3px solid var(--accent);
+    border-radius: 12px;
+    padding: 1rem 1.3rem;
+    font-size: 0.87rem;
+    color: #374151;
+    line-height: 1.72;
+    margin-bottom: 1.5rem;
+  }
+  .sop-info strong { color: #92400e; }
+
+  /* ══════════════════════════════════════
+     RULE CARDS
+  ══════════════════════════════════════ */
+  .sop-rules {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+    gap: 11px;
+    margin-bottom: 1.5rem;
+  }
+
+  .sop-rule {
+    background: #fff;
+    border: 1px solid #ece9e3;
+    border-radius: var(--radius);
+    padding: 1.2rem;
+    display: flex;
+    gap: 13px;
+    align-items: flex-start;
+    transition: border-color 0.18s, box-shadow 0.18s, transform 0.18s;
+  }
+
+  .sop-rule:hover {
+    border-color: rgba(200,152,58,0.3);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    transform: translateY(-2px);
+  }
+
+  .sop-rule-icon {
+    width: 36px; height: 36px;
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.05rem;
+    flex-shrink: 0;
+  }
+
+  .sop-rule-title {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .sop-rule-desc {
+    font-size: 0.77rem;
+    color: #6b7280;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .sop-rule-desc strong { color: #374151; }
+
+  /* ══════════════════════════════════════
+     PROCESS FLOW
+  ══════════════════════════════════════ */
+  .sop-flow { display: flex; flex-direction: column; margin-bottom: 1.5rem; }
+
+  .sop-flow-step { display: flex; gap: 14px; align-items: flex-start; }
+
+  .sop-flow-left {
+    display: flex; flex-direction: column; align-items: center; flex-shrink: 0;
+  }
+
+  .sop-flow-circle {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: #111116; color: #e8d5a8;
+    font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .sop-flow-line {
+    width: 1px; flex: 1; min-height: 20px;
+    background: linear-gradient(to bottom, #dedad4, transparent);
+    margin: 3px 0;
+  }
+
+  .sop-flow-content { padding-bottom: 1.4rem; flex: 1; }
+
+  .sop-flow-title {
+    font-size: 0.88rem; font-weight: 700; color: #111827; margin-bottom: 3px;
+  }
+
+  .sop-flow-desc {
+    font-size: 0.79rem; color: #6b7280; line-height: 1.6; margin: 0;
+  }
+
+  /* ══════════════════════════════════════
+     CHECKLIST
+  ══════════════════════════════════════ */
+  .sop-checklist { display: flex; flex-direction: column; gap: 7px; margin-bottom: 1.5rem; }
+
+  .sop-check {
+    display: flex; align-items: flex-start; gap: 11px;
+    background: #fff; border: 1px solid #ece9e3; border-radius: 12px;
+    padding: 0.9rem 1.1rem;
+    transition: all 0.18s;
+  }
+  .sop-check:hover { border-color: rgba(200,152,58,0.25); background: #fffbf5; }
+
+  .sop-check-icon {
+    width: 28px; height: 28px; border-radius: 7px;
+    background: #f5f3ee; display: flex; align-items: center;
+    justify-content: center; font-size: 0.82rem; flex-shrink: 0;
+  }
+
+  .sop-check-label { font-size: 0.84rem; font-weight: 600; color: #111827; margin-bottom: 2px; }
+  .sop-check-sub   { font-size: 0.73rem; color: #9ca3af; line-height: 1.45; }
+
+  /* ══════════════════════════════════════
+     WARNING / TIP
+  ══════════════════════════════════════ */
+  .sop-warning {
+    background: #fef2f2; border: 1px solid #fecaca; border-radius: 12px;
+    padding: 1rem 1.2rem; font-size: 0.83rem; color: #7f1d1d; line-height: 1.65;
+    margin-bottom: 1.5rem; display: flex; gap: 10px; align-items: flex-start;
+  }
+
+  .sop-tip {
+    background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px;
+    padding: 1rem 1.2rem; font-size: 0.83rem; color: #14532d; line-height: 1.65;
+    margin-bottom: 1.5rem; display: flex; gap: 10px; align-items: flex-start;
+  }
+
+  /* ══════════════════════════════════════
+     KPI ROW
+  ══════════════════════════════════════ */
+  .sop-kpis {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 140px), 1fr));
+    gap: 10px;
+    margin-bottom: 1.5rem;
+  }
+
+  .sop-kpi {
+    background: #fff; border: 1px solid #ece9e3;
+    border-radius: var(--radius); padding: 1.1rem; text-align: center;
+  }
+
+  .sop-kpi-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; line-height: 1; letter-spacing: 0.04em; margin-bottom: 3px;
+  }
+
+  .sop-kpi-label {
+    font-size: 0.64rem; color: #9ca3af; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+
+  /* ══════════════════════════════════════
+     NORM PILLS
+  ══════════════════════════════════════ */
+  .sop-norms { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1rem; }
+
+  .sop-norm {
+    background: #f5f3ee; color: #374151;
+    font-size: 0.65rem; font-weight: 600; padding: 3px 9px;
+    border-radius: 5px; font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em; border: 1px solid #e8e4dc;
+  }
+
+  /* ── Divider ── */
+  .sop-divider {
+    height: 1px;
+    background: linear-gradient(90deg, #e5e1da 0%, transparent 80%);
+    margin: 2.5rem 0;
+  }
+
+  /* ══════════════════════════════════════
+     QUIZ SECTION HEADER
+  ══════════════════════════════════════ */
+  .sop-quiz-header {
+    background: #0e0e14;
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .sop-quiz-header-icon {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    color: var(--accent);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .sop-quiz-header-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 3px;
+  }
+
+  .sop-quiz-header-sub {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.38);
+  }
+
+  /* ══════════════════════════════════════
+     RESPONSIVE
+  ══════════════════════════════════════ */
+  @media (max-width: 900px) {
+    .sop-layout { grid-template-columns: 1fr; }
+    .sop-sidenav { display: none; }
+    .sop-hero  { grid-template-columns: 1fr; }
+    .sop-hero-kpis { flex-direction: row; align-items: flex-start; justify-content: flex-start; }
+    .sop-hero-kpi { text-align: left; }
+  }
+
+  @media (max-width: 640px) {
+    .sop-rules { grid-template-columns: 1fr; }
+    .sop-kpis  { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (min-width: 1400px) {
+    .sop-layout { grid-template-columns: 1fr 260px; gap: 3rem; }
+  }
+
+  /* ── Fade in animation ── */
+  @keyframes sop-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .sop-page { animation: sop-in 0.4s ease both; }
+`}</style>
+
+export function SopLog03Page() {
+  const [activeSection, setActiveSection] = useState('zweck');
+  const [scrollPct, setScrollPct] = useState(0);
+
+  useEffect(() => {
+    const sections = ['zweck','identifikation','kennzeichnung','entscheidung','wissenstest'];
+    const handleScroll = () => {
+      const el = document.querySelector('.sop-content');
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        const scrolled = Math.max(0, -rect.top + 100);
+        setScrollPct(Math.min(100, Math.round((scrolled / el.scrollHeight) * 100)));
+      }
+      let current = 'zweck';
+      sections.forEach(id => {
+        const el2 = document.getElementById(id);
+        if (el2 && el2.getBoundingClientRect().top < 130) current = id;
+      });
+      setActiveSection(current);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navItems = [
+    { id: 'zweck',          num: '01', label: 'Zweck & Geltungsbereich' },
+    { id: 'identifikation', num: '02', label: 'Identifikation & Sperrgründe' },
+    { id: 'kennzeichnung',  num: '03', label: 'Kennzeichnung & Trennung' },
+    { id: 'entscheidung',   num: '04', label: 'Freigabe oder Vernichtung' },
+    { id: 'wissenstest',    num: '★',  label: 'Wissenstest' },
+  ];
+
+  return (
+    <div className="sop-page">
+
+      {/* ── HERO ── */}
+      <div className="sop-hero">
+        <div>
+          <div className="sop-hero-eyebrow">
+            <div className="sop-hero-eyebrow-line"/>
+            <span className="sop-hero-eyebrow-text">SOP-LOG-03 · Logistik & Lager</span>
+          </div>
+          <div className="sop-hero-title">Umgang mit<br/>Sperrware</div>
+          <p className="sop-hero-desc">
+            Verfahrensanweisung zur Verhinderung der unbeabsichtigten Auslieferung von Produkten, die nicht den Qualitätsanforderungen entsprechen — Identifikation, Kennzeichnung, Trennung und Entscheidung.
+          </p>
+          <div className="sop-hero-meta">
+            <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>ISO 13485:2016 §8.3</div>
+            <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>Gültig ab 31.01.2026</div>
+            <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>4 Kapitel · 10 Fragen</div>
+          </div>
+        </div>
+        <div className="sop-hero-kpis">
+          <div className="sop-hero-kpi">
+            <div className="sop-hero-kpi-val" style={{color:'#ef4444'}}>0×</div>
+            <div className="sop-hero-kpi-label">Auslieferung</div>
+          </div>
+          <div className="sop-hero-divider"/>
+          <div className="sop-hero-kpi">
+            <div className="sop-hero-kpi-val">PRRC</div>
+            <div className="sop-hero-kpi-label">Entscheidung</div>
+          </div>
+          <div className="sop-hero-divider"/>
+          <div className="sop-hero-kpi">
+            <div className="sop-hero-kpi-val">3</div>
+            <div className="sop-hero-kpi-label">Sperrgründe</div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── TWO-COLUMN LAYOUT ── */}
+      <div className="sop-layout">
+        <div className="sop-content">
+
+          {/* 01 ZWECK */}
+          <div className="sop-section" id="zweck">
+            <div className="sop-section-hd">
+              <div className="sop-section-num">01</div>
+              <div>
+                <div className="sop-section-title">Zweck & Geltungsbereich</div>
+                <div className="sop-section-sub">Warum Sperrware-Management Patientenleben schützt</div>
+              </div>
+            </div>
+            <div className="sop-info">
+              <strong>Verhinderung der unbeabsichtigten Auslieferung</strong> von Produkten, die nicht den Qualitätsanforderungen entsprechen oder deren Konformität zweifelhaft ist. Ein nicht konformes Medizinprodukt beim Patienten kann lebensbedrohliche Folgen haben.
+            </div>
+            <div className="sop-kpis">
+              <div className="sop-kpi"><div className="sop-kpi-val" style={{color:'#ef4444'}}>0×</div><div className="sop-kpi-label">Auslieferung Sperrware</div></div>
+              <div className="sop-kpi"><div className="sop-kpi-val" style={{color:'#f59e0b'}}>⚡</div><div className="sop-kpi-label">Sofortmaßnahme</div></div>
+              <div className="sop-kpi"><div className="sop-kpi-val" style={{color:'#8b5cf6'}}>PRRC</div><div className="sop-kpi-label">Freigabe-Autorität</div></div>
+              <div className="sop-kpi"><div className="sop-kpi-val" style={{color:'#6b7280'}}>SAP</div><div className="sop-kpi-label">Systemsperre</div></div>
+            </div>
+            <div className="sop-norms">
+              <span className="sop-norm">ISO 13485:2016 §8.3</span>
+              <span className="sop-norm">EU MDR 2017/745 Art. 14</span>
+              <span className="sop-norm">SOP-LOG-03 V1 · 31.01.2026</span>
+            </div>
+          </div>
+
+          <div className="sop-divider"/>
+
+          {/* 02 IDENTIFIKATION */}
+          <div className="sop-section" id="identifikation">
+            <div className="sop-section-hd">
+              <div className="sop-section-num">02</div>
+              <div>
+                <div className="sop-section-title">Identifikation & Sperrgründe</div>
+                <div className="sop-section-sub">Wann wird gesperrt · Drei Auslöser · Sofortpflicht</div>
+              </div>
+            </div>
+            <div className="sop-info">
+              Produkte werden gesperrt, sobald <strong>einer der drei Sperrgründe</strong> erkannt wird. Die Sperrung ist eine Sofortmaßnahme — es gibt keine Wartezeit oder Rücksprache bevor das Produkt physisch und systemisch gesperrt wird.
+            </div>
+
+            {/* 3 Sperrgründe als auffällige Karten */}
+            <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(min(100%,220px),1fr))', gap:'11px', marginBottom:'1.5rem'}}>
+              {[
+                {
+                  num: '01', color: '#ef4444', bg: '#fef2f2', border: '#fecaca',
+                  title: 'Beschädigte Verpackung', icon: '📦',
+                  desc: 'Verpackung beschädigt, geöffnet, gequetscht oder Sterilbarriere gefährdet. Auch kleinste Risse oder Löcher führen zur sofortigen Sperrung.',
+                  examples: ['Riss in Sterilverpackung', 'Feuchtigkeitsschäden', 'Druckstellen/Quetschungen', 'Siegel gebrochen'],
+                },
+                {
+                  num: '02', color: '#f59e0b', bg: '#fffbeb', border: '#fde68a',
+                  title: 'Verfallsdatum überschritten', icon: '📅',
+                  desc: 'Mindesthaltbarkeitsdatum (MHD) überschritten oder innerhalb von 30 Tagen ablaufend. Produkt ist automatisch für die Auslieferung gesperrt.',
+                  examples: ['MHD bereits abgelaufen', 'MHD < 30 Tage Restlaufzeit', 'Unlesbares MHD-Datum', 'Kein MHD vorhanden'],
+                },
+                {
+                  num: '03', color: '#8b5cf6', bg: '#f5f3ff', border: '#ddd6fe',
+                  title: 'Verdacht auf Nichtkonformität', icon: '⚠️',
+                  desc: 'Jeder begründete Verdacht, dass ein Produkt die gesetzlichen oder herstellerseitigen Anforderungen nicht erfüllt — auch ohne sichtbaren Schaden.',
+                  examples: ['Rückruf durch Hersteller', 'Fehlende CE-Kennzeichnung', 'Verdacht auf Fälschung', 'Abweichende Charge'],
+                },
+              ].map((card, i) => (
+                <div key={i} style={{background:card.bg, border:`1px solid ${card.border}`, borderRadius:'14px', padding:'1.3rem', display:'flex', flexDirection:'column', gap:'0.75rem'}}>
+                  <div style={{display:'flex', alignItems:'center', gap:'10px'}}>
+                    <div style={{
+                      background:card.color, color:'#fff', borderRadius:'8px',
+                      width:'28px', height:'28px', display:'flex', alignItems:'center',
+                      justifyContent:'center', fontFamily:'Bebas Neue, sans-serif',
+                      fontSize:'0.95rem', flexShrink:0, letterSpacing:'0.04em',
+                    }}>{card.num}</div>
+                    <div style={{fontSize:'0.86rem', fontWeight:700, color:'#111827'}}>{card.title}</div>
+                  </div>
+                  <p style={{fontSize:'0.77rem', color:'#6b7280', lineHeight:1.6, margin:0}}>{card.desc}</p>
+                  <div style={{display:'flex', flexDirection:'column', gap:'3px'}}>
+                    {card.examples.map(e => (
+                      <div key={e} style={{fontSize:'0.7rem', color:card.color, display:'flex', gap:'5px', alignItems:'center', fontWeight:600}}>
+                        <span>›</span>{e}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Sofortmaßnahmen-Flow */}
+            <div style={{fontSize:'0.72rem', fontWeight:700, color:'#9ca3af', textTransform:'uppercase', letterSpacing:'0.12em', marginBottom:'0.85rem'}}>Sofortmaßnahmen bei Entdeckung</div>
+            <div className="sop-flow">
+              {[
+                { t:'Sperrgrund erkennen', d:'Lagermitarbeiter identifiziert einen der drei Sperrgründe — bei Wareneingang, Inventur, Kommissionierung oder zufälliger Entdeckung.' },
+                { t:'Sofort stoppen', d:'Alle weiteren Aktionen mit dem betroffenen Produkt stoppen. Kein Scannen für Lieferung, keine Einlagerung in freien Bestand.' },
+                { t:'Aufkleber anbringen', d:'Gelben oder roten "GESPERRT / QUARANTÄNE"-Aufkleber sofort auf der Verpackung anbringen — sichtbar, nicht entfernbar.' },
+                { t:'SAP-Sperrung buchen', d:'Umbuchen in den gesperrten SAP-Bestand. System blockiert ab sofort jede Auslieferungsposition für diesen Artikel/Charge.' },
+                { t:'QMB benachrichtigen', d:'QMB und PRRC sofort informieren (mündlich + schriftlich). Dokumentation des Sperrgrundes mit Datum, Zeit und Name des Entdeckers.' },
+              ].map((s,i,arr) => (
+                <div className="sop-flow-step" key={i}>
+                  <div className="sop-flow-left">
+                    <div className="sop-flow-circle">{i+1}</div>
+                    {i < arr.length-1 && <div className="sop-flow-line"/>}
+                  </div>
+                  <div className="sop-flow-content">
+                    <div className="sop-flow-title">{s.t}</div>
+                    <p className="sop-flow-desc">{s.d}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="sop-warning">
+              <span style={{fontSize:'1rem', flexShrink:0}}>⚠</span>
+              <div><strong>Keine Ausnahmen:</strong> Selbst wenn ein Mitarbeiter sicher ist, dass das Produkt in Ordnung ist — bei einem der drei Sperrgründe wird immer sofort gesperrt. Die Entscheidung über die Freigabe liegt ausschließlich bei PRRC oder GF.</div>
+            </div>
+            <div className="sop-norms">
+              <span className="sop-norm">ISO 13485:2016 §8.3</span>
+              <span className="sop-norm">MDR Art. 14 §4</span>
+            </div>
+          </div>
+
+          <div className="sop-divider"/>
+
+          {/* 03 KENNZEICHNUNG & TRENNUNG */}
+          <div className="sop-section" id="kennzeichnung">
+            <div className="sop-section-hd">
+              <div className="sop-section-num">03</div>
+              <div>
+                <div className="sop-section-title">Kennzeichnung & physische Trennung</div>
+                <div className="sop-section-sub">Aufkleber · Sperrlager · Verwechslungsschutz</div>
+              </div>
+            </div>
+            <div className="sop-info">
+              Sperrware ist <strong>sofort physisch und visuell</strong> von freigegebener Ware zu trennen. Kennzeichnung und Trennung sind gleichzeitige Sofortmaßnahmen — keine Sperrung ohne beide Schritte.
+            </div>
+
+            {/* Aufkleber-System */}
+            <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(min(100%,220px),1fr))', gap:'11px', marginBottom:'1.5rem'}}>
+              <div style={{background:'#fffbeb', border:'2px solid #f59e0b', borderRadius:'14px', padding:'1.3rem', textAlign:'center'}}>
+                <div style={{
+                  background:'#f59e0b', color:'#fff', borderRadius:'10px',
+                  padding:'0.6rem 1.2rem', fontFamily:'Bebas Neue, sans-serif',
+                  fontSize:'1.1rem', letterSpacing:'0.1em', marginBottom:'0.75rem', display:'inline-block',
+                }}>QUARANTÄNE</div>
+                <div style={{fontSize:'0.82rem', fontWeight:700, color:'#92400e', marginBottom:'4px'}}>Gelber Aufkleber</div>
+                <p style={{fontSize:'0.74rem', color:'#b45309', margin:0, lineHeight:1.55}}>Prüfung läuft noch. Freigabe theoretisch möglich nach PRRC-Entscheidung.</p>
+              </div>
+              <div style={{background:'#fef2f2', border:'2px solid #ef4444', borderRadius:'14px', padding:'1.3rem', textAlign:'center'}}>
+                <div style={{
+                  background:'#ef4444', color:'#fff', borderRadius:'10px',
+                  padding:'0.6rem 1.2rem', fontFamily:'Bebas Neue, sans-serif',
+                  fontSize:'1.1rem', letterSpacing:'0.1em', marginBottom:'0.75rem', display:'inline-block',
+                }}>GESPERRT</div>
+                <div style={{fontSize:'0.82rem', fontWeight:700, color:'#7f1d1d', marginBottom:'4px'}}>Roter Aufkleber</div>
+                <p style={{fontSize:'0.74rem', color:'#991b1b', margin:0, lineHeight:1.55}}>Endgültig gesperrt. Vernichtung oder Rücksendung. Keine Freigabe mehr möglich.</p>
+              </div>
+            </div>
+
+            {/* Sperrlager Anforderungen */}
+            <div className="sop-checklist">
+              {[
+                { icon:'🏠', t:'Eigenständiger Bereich', d:'Das Sperrlager ist ein physisch abgetrennter, eigenständiger Bereich — kein Regal im gleichen Raum. Klare bauliche oder zumindest absperrbare Trennung.' },
+                { icon:'🔴', t:'Deutliche Kennzeichnung des Bereichs', d:'Sperrlager-Bereich ist mit rotem Schild "SPERRLAGER — KEINE ENTNAHME OHNE FREIGABE" gekennzeichnet. Sichtbar für alle Lagermitarbeiter.' },
+                { icon:'🔒', t:'Zugangsbeschränkung', d:'Zugang nur für autorisierte Personen. Im Idealfall separates Schloss oder Käfig. Unbefugte Entnahme aus dem Sperrlager ist ein schwerer Qualitätsverstoß.' },
+                { icon:'💻', t:'SAP-Sperrbestand = physischer Bestand', d:'SAP-Sperrbestand und physisches Sperrlager müssen immer übereinstimmen. Regelmäßiger Abgleich durch QMB — Abweichungen sofort dokumentieren.' },
+                { icon:'📸', t:'Fotodokumentation bei Wareneingang', d:'Bei beschädigter Ware beim Wareneingang: Fotos vor der Einlagerung ins Sperrlager machen. Fotodokumentation gehört zur Qualitätsakte des Vorgangs.' },
+              ].map((c,i) => (
+                <div className="sop-check" key={i}>
+                  <div className="sop-check-icon">{c.icon}</div>
+                  <div>
+                    <div className="sop-check-label">{c.t}</div>
+                    <div className="sop-check-sub">{c.d}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="sop-norms">
+              <span className="sop-norm">ISO 13485:2016 §8.3.2</span>
+              <span className="sop-norm">MDR 2017/745 Art. 14</span>
+            </div>
+          </div>
+
+          <div className="sop-divider"/>
+
+          {/* 04 ENTSCHEIDUNG */}
+          <div className="sop-section" id="entscheidung">
+            <div className="sop-section-hd">
+              <div className="sop-section-num">04</div>
+              <div>
+                <div className="sop-section-title">Freigabe oder Vernichtung</div>
+                <div className="sop-section-sub">PRRC-Entscheidung · Dokumentation · Vernichtungsnachweis</div>
+              </div>
+            </div>
+            <div className="sop-info">
+              Die Freigabe oder Vernichtung von Sperrware darf <strong>nur durch die PRRC oder die Geschäftsführung</strong> nach dokumentierter Prüfung erfolgen. Kein anderer Mitarbeiter hat diese Entscheidungskompetenz.
+            </div>
+
+            {/* Entscheidungsbaum */}
+            <div style={{background:'#fff', border:'1px solid #ece9e3', borderRadius:'14px', padding:'1.4rem', marginBottom:'1.5rem'}}>
+              <div style={{fontSize:'0.72rem', fontWeight:700, color:'#9ca3af', textTransform:'uppercase', letterSpacing:'0.12em', marginBottom:'1rem'}}>Entscheidungsbaum — PRRC/GF-Prüfung</div>
+              <div style={{display:'flex', flexDirection:'column', gap:'0.6rem'}}>
+                {/* Start */}
+                <div style={{background:'#f5f3ee', borderRadius:'9px', padding:'0.75rem 1rem', textAlign:'center', fontSize:'0.82rem', fontWeight:700, color:'#374151'}}>
+                  Sperrware liegt im Sperrlager
+                </div>
+                <div style={{textAlign:'center', color:'#9ca3af', fontSize:'0.8rem'}}>↓ PRRC/GF prüft</div>
+                {/* Decision */}
+                <div style={{background:'#eff6ff', border:'1px solid #bfdbfe', borderRadius:'9px', padding:'0.75rem 1rem', textAlign:'center', fontSize:'0.82rem', fontWeight:700, color:'#1e40af'}}>
+                  Ist der Sperrgrund behebbar / war es ein Irrtum?
+                </div>
+                {/* Two paths */}
+                <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:'10px'}}>
+                  <div>
+                    <div style={{textAlign:'center', color:'#10b981', fontSize:'0.78rem', fontWeight:600, marginBottom:'4px'}}>JA → Freigabe</div>
+                    <div style={{background:'#f0fdf4', border:'1px solid #bbf7d0', borderRadius:'9px', padding:'0.75rem', fontSize:'0.74rem', color:'#14532d', lineHeight:1.6}}>
+                      Schriftliche Freigabe durch PRRC/GF. SAP-Umbuchen in freien Bestand. Aufkleber entfernen. Dokumentation der Entscheidung mit Begründung.
+                    </div>
+                  </div>
+                  <div>
+                    <div style={{textAlign:'center', color:'#ef4444', fontSize:'0.78rem', fontWeight:600, marginBottom:'4px'}}>NEIN → Vernichtung</div>
+                    <div style={{background:'#fef2f2', border:'1px solid #fecaca', borderRadius:'9px', padding:'0.75rem', fontSize:'0.74rem', color:'#7f1d1d', lineHeight:1.6}}>
+                      Vernichtungsanordnung durch PRRC/GF. Vernichtungsprotokoll erstellen. Charge aus SAP ausbuchen. Ggf. Hersteller informieren.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="sop-rules">
+              {[
+                { icon:'📝', bg:'#f0fdf4', t:'Freigabe-Dokumentation', d:'Schriftliche Freigabe mit: Datum, Prüfer (PRRC/GF), Begründung, Unterschrift. SAP-Umbuchung in freien Bestand. Gelber Aufkleber wird entfernt.' },
+                { icon:'🗑️', bg:'#fef2f2', t:'Vernichtungsprotokoll', d:'Pflichtinhalt: Datum, Produkt, Charge, Menge, Vernichtungsgrund, Methode, Genehmigender (PRRC/GF), Vernichtungszeuge. Teil der Qualitätsdokumentation.' },
+                { icon:'📤', bg:'#eff6ff', t:'Rücksendung an Hersteller', d:'Bei Rückruf oder Herstellerdefekt: Rücksendung mit vollständiger Chargendokumentation. Hersteller stellt Rücksendeauftrag aus. EMIG dokumentiert die Rücksendung.' },
+                { icon:'📊', bg:'#f5f3ff', t:'CAPA bei Wiederholung', d:'Wenn gleiche Charge oder Artikel wiederholt gesperrt wird: CAPA (Corrective and Preventive Action) einleiten. QMB analysiert Ursache und definiert Maßnahmen.' },
+              ].map((r,i) => (
+                <div className="sop-rule" key={i}>
+                  <div className="sop-rule-icon" style={{background:r.bg}}>{r.icon}</div>
+                  <div>
+                    <div className="sop-rule-title">{r.t}</div>
+                    <p className="sop-rule-desc">{r.d}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="sop-warning">
+              <span style={{fontSize:'1rem', flexShrink:0}}>⚠</span>
+              <div><strong>Absolutes Auslieferungsverbot:</strong> Solange eine PRRC- oder GF-Freigabe nicht schriftlich vorliegt und SAP die Ware nicht als frei ausweist, darf das Produkt unter keinen Umständen ausgeliefert werden — auch nicht bei Lieferengpass oder Kundendruck.</div>
+            </div>
+            <div className="sop-norms">
+              <span className="sop-norm">ISO 13485:2016 §8.3.3</span>
+              <span className="sop-norm">MDR 2017/745 Art. 10 §9</span>
+              <span className="sop-norm">SOP-LOG-01 Lagerung</span>
+            </div>
+          </div>
+
+          <div className="sop-divider"/>
+
+          {/* QUIZ HEADER */}
+          <div id="wissenstest">
+            <div className="sop-quiz-header">
+              <div className="sop-quiz-header-icon">★</div>
+              <div>
+                <div className="sop-quiz-header-title">Wissenstest — SOP-LOG-03</div>
+                <div className="sop-quiz-header-sub">10 Fragen · Beantworten Sie alle Fragen um das Modul abzuschließen</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* ── STICKY SIDE NAV ── */}
+        <div className="sop-sidenav">
+          <div className="sop-sidenav-title">Inhalt</div>
+          {navItems.map(({id, num, label}) => (
+            <a key={id} href={`#${id}`}
+               className={`sop-nav-item${activeSection === id ? ' active' : ''}`}>
+              <div className="sop-nav-num">{num}</div>
+              <div className="sop-nav-label">{label}</div>
+            </a>
+          ))}
+          <div className="sop-nav-progress">
+            <div className="sop-nav-progress-label">
+              <span>Fortschritt</span>
+              <span className="sop-nav-progress-pct">{scrollPct}%</span>
+            </div>
+            <div className="sop-nav-bar-bg">
+              <div className="sop-nav-bar-fill" style={{width:`${scrollPct}%`}}/>
+            </div>
+          </div>
+          <a href="#wissenstest" className="sop-nav-quiz-btn">Zum Wissenstest →</a>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+<SopLog03Page/>
+
+<SopQuiz refCode="SOP-LOG-03" questions={quizData}/>

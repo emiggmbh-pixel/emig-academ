@@ -1,39 +1,760 @@
 ---
 id: SOP_REG-02
-sidebar_label: 'Händlerpflichten'
+title: Händlerpflichten gemäß MDR Art. 14
+sidebar_label: Händlerpflichten
 ---
 
-import HaendlerQuiz from '@site/src/components/HaendlerQuiz';
+import React, { useState, useEffect } from 'react';
+import SopQuiz from '@site/src/components/SopQuiz';
 
-# Schulung: Händlerpflichten gemäß MDR Artikel 14
+export const quizData = [
+  { id:1, question:"Wann gilt die EMIG GmbH als Händler (nicht Importeur)?", options:["Immer wenn sie Produkte verkauft","Wenn sie Medizinprodukte innerhalb der EU nach dem Inverkehrbringen bereitstellt oder vertreibt (nicht aus Drittländern importiert)","Nur wenn sie eigene Lager betreibt","Wenn der Umsatz unter 1 Mio. € liegt"], correct:1, explanation:"Als Händler gilt EMIG, wenn Produkte innerhalb der EU bereitgestellt werden — also nach dem bereits erfolgten Inverkehrbringen durch einen Hersteller oder Importeur. Import aus Drittländern = SOP-REG-01 Importeurpflichten." },
+  { id:2, question:"Welche 4 Grundpflichten hat EMIG als Händler?", options:["Preis, Lieferzeit, Qualität, Service","CE-Kennzeichnung gültig, Herstellerinformationen vorhanden, Lagerung/Transport konform, Rückverfolgbarkeit gewährleistet","Nur Rückverfolgbarkeit und CE-Nachweis","Lediglich korrekte Rechnungsstellung"], correct:1, explanation:"Als Händler muss EMIG sicherstellen: (1) gültige CE-Kennzeichnung, (2) erforderliche Herstellerinformationen vorhanden, (3) Lagerung und Transport beeinträchtigen Konformität nicht, (4) Rückverfolgbarkeit jederzeit gewährleistet." },
+  { id:3, question:"Was prüft die Stichprobenprüfung vor der Bereitstellung?", options:["Nur den Verkaufspreis","CE-Kennzeichnung sichtbar, EU-DoC ausgestellt, IFU in Deutsch, UDI angebracht, ggf. Importeurangaben vorhanden","Ausschließlich das MHD","Nur Verpackungsqualität und Gewicht"], correct:1, explanation:"Stichprobenprüfung vor Bereitstellung: CE deutlich sichtbar, EU-Konformitätserklärung ausgestellt, IFU in deutscher Sprache beigefügt, UDI auf Verpackung (falls zutreffend), und bei importierten Produkten Importeurangaben gemäß MDR Art. 13 Abs. 3." },
+  { id:4, question:"Wie stellt EMIG konforme Transportbedingungen sicher?", options:["Durch eigene Transporter ohne externe Partner","Durch Auswahl qualifizierter Logistikpartner und regelmäßige Sichtprüfungen im Lager","Nur durch Verpackungsverbesserungen","Transportbedingungen sind keine Händlerpflicht"], correct:1, explanation:"EMIG stellt durch Auswahl qualifizierter Logistikpartner sicher, dass Lagerbedingungen (Temperatur, Feuchtigkeit, Lichtschutz) auch während des Transports eingehalten werden. Regelmäßige Sichtprüfungen im Lager verhindern Integritätsverlust." },
+  { id:5, question:"Was passiert wenn ein Produkt als nichtkonform verdächtig wird?", options:["Sofortige Vernichtung ohne Dokumentation","Sofort ins Sperrlager, PRRC informiert Hersteller und ggf. Importeur, bei schwerwiegender Gefahr Meldung an BfArM","Weiterverkauf mit Preisreduktion","Rückgabe ohne interne Dokumentation"], correct:1, explanation:"Nichtkonformes Produkt: sofort ins Sperrlager sichern. PRRC informiert umgehend den Hersteller sowie ggf. den Importeur. Bei schwerwiegender Gefahr für Patienten: zusätzliche Meldung an die Bundesoberbehörde BfArM." },
+  { id:6, question:"Darf EMIG als Händler das Produkt modifizieren oder dessen Zweckbestimmung ändern?", options:["Ja, wenn die Änderung die Sicherheit verbessert","Ja, bei Klasse-I-Produkten immer erlaubt","Nein — EMIG nimmt keine Änderungen an Zweckbestimmung, Design oder Leistungsmerkmalen vor","Nur mit schriftlicher Genehmigung des Herstellers"], correct:2, explanation:"Nein. Als Händler nimmt die EMIG GmbH keine Änderungen an Zweckbestimmung, Design oder Leistungsmerkmalen der Produkte vor. Jede solche Änderung würde EMIG zum Hersteller machen — mit allen Herstellerpflichten nach MDR." },
+  { id:7, question:"Welche 3 Hauptrisiken nennt SOP-REG-02?", options:["Preisrisiko, Lieferrisiko, Währungsrisiko","Verlust der Rückverfolgbarkeit, Integritätsverlust durch falsche Lagerung/Transport, Fristversäumnis bei sicherheitsrelevanten Informationen","Nur Qualitätsrisiken","Ausschließlich regulatorische Bußgelder"], correct:1, explanation:"SOP-REG-02 benennt 3 Hauptrisiken: (1) Verlust der Rückverfolgbarkeit durch fehlerhafte Chargendokumentation/UDI, (2) Integritätsverlust durch falsche Lagerung oder Transport (Sterilverpackung), (3) Fristversäumnis bei sicherheitsrelevanten Infos an Hersteller." },
+  { id:8, question:"Welche Aufzeichnungen müssen 10/15 Jahre aufbewahrt werden?", options:["Nur die Einkaufsrechnungen","Wareneingangsprüfprotokolle, Lieferscheine/Rechnungen, Reklamationsliste, Sperrlager-Protokolle, Schulungsnachweise","Ausschließlich die PRRC-Freigaben","Nur Kundenkorrespondenz"], correct:1, explanation:"5 Aufzeichnungstypen: Wareneingangsprüfprotokolle (Konformitätsprüfung), Lieferscheine und Rechnungen (Rückverfolgbarkeit), Reklamationsliste, Sperrlager-Protokolle, Schulungsnachweise. Frist: 10 Jahre, bei Implantaten 15 Jahre." },
+  { id:9, question:"An welche Behörde meldet EMIG schwerwiegende Produktgefahren?", options:["An die EU-Kommission direkt","An das BfArM (Bundesinstitut für Arzneimittel und Medizinprodukte)","Nur an den Hersteller — Behördenmeldung ist nicht Händlerpflicht","An den TÜV oder die Benannte Stelle"], correct:1, explanation:"Bei schwerwiegender Gefahr durch ein Produkt erfolgt eine Meldung an das BfArM (Bundesinstitut für Arzneimittel und Medizinprodukte) als zuständige Bundesoberbehörde — zusätzlich zur Herstellerinformation." },
+  { id:10, question:"Welcher MDR-Artikel bildet die rechtliche Grundlage für SOP-REG-02?", options:["MDR Art. 13 — Importeurpflichten","MDR Art. 14 — Pflichten der Händler","MDR Art. 15 — PRRC","MDR Art. 27 — UDI-System"], correct:1, explanation:"SOP-REG-02 basiert auf MDR Art. 14, der die Pflichten der Händler regelt. Art. 13 gilt für Importeure (SOP-REG-01), Art. 15 für die PRRC (SOP-REG-03)." }
+];
 
-Willkommen zur Schulung der **SOP-REG-02**. Während die SOP-REG-01 den Import aus Drittländern regelt, fokussiert sich dieses Modul auf die Bereitstellung und den Vertrieb von Medizinprodukten innerhalb der EU.
+<style>{`
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
 
-## 1. Zweck der Händlerpflichten
-[cite_start]Ziel ist es, dass Medizinprodukte während der Lagerung und des Vertriebs durch die EMIG GmbH jederzeit konform, sicher und lückenlos rückverfolgbar bleiben[cite: 322]. [cite_start]Dies schützt die Patientensicherheit und minimiert haftungsrechtliche Risiken[cite: 323].
+  /* ── Override Docusaurus article defaults ── */
+  .sop-page h1, .sop-page h2, .sop-page h3,
+  .sop-page p,  .sop-page ul, .sop-page li { all: revert; }
+  .sop-page h1, .sop-page h2, .sop-page h3,
+  .sop-page p,  .sop-page ul, .sop-page li { font-family: 'Outfit', sans-serif; }
 
-## 2. Verantwortlichkeiten
-* [cite_start]**Geschäftsführung:** Gesamtverantwortung für die Einhaltung der Händlerpflichten[cite: 366].
-* [cite_start]**PRRC:** Prüfung der regulatorischen Konformität und Berechtigung zur Verweigerung der Distribution bei Zweifeln[cite: 366, 369].
-* [cite_start]**Logistik:** Durchführung der Stichprobenprüfungen bei Bereitstellung sowie Kontrolle der Lagerbedingungen[cite: 366, 382].
+  /* ── Make the doc container full width ── */
+  .theme-doc-markdown { max-width: 100% !important; }
+  article.sop-wrap     { max-width: 100% !important; padding: 0 !important; }
 
-## 3. Operative Anforderungen
-Bevor ein Produkt an Kliniken oder Chirurgen ausgeliefert wird, müssen folgende Punkte sichergestellt sein:
+  /* ══════════════════════════════════════
+     OUTER WRAPPER
+  ══════════════════════════════════════ */
+  .sop-page {
+    font-family: 'Outfit', sans-serif;
+    color: #18181f;
+    width: 100%;
+    --accent: #c8983a;
+    --accent-lt: #e8d5a8;
+    --dark: #0e0e14;
+    --radius: 14px;
+  }
 
-* [cite_start]**Kennzeichnung:** Eine gültige CE-Kennzeichnung muss deutlich sichtbar vorhanden sein[cite: 376, 384].
-* [cite_start]**Informationen:** Die Gebrauchsanweisung (IFU) und Kennzeichnungen müssen in **deutscher Sprache** beigefügt sein[cite: 386, 387].
-* [cite_start]**Lagerbedingungen:** Temperatur, Feuchtigkeit und Lichtschutz müssen den Herstellerspezifikationen entsprechen[cite: 391].
-* [cite_start]**Unversehrtheit:** Es dürfen keine Änderungen an Design oder Zweckbestimmung vorgenommen werden[cite: 380].
+  /* ══════════════════════════════════════
+     HERO — light, editorial, not a dark box
+  ══════════════════════════════════════ */
+  .sop-hero {
+    background: #f8f7f3;
+    border: 1px solid #e8e4dc;
+    border-radius: 20px;
+    padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1.5rem, 4vw, 2.75rem);
+    margin-bottom: 2rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
 
-## 4. Umgang mit Nichtkonformitäten
-[cite_start]Besteht der Verdacht auf ein fehlerhaftes Produkt, greift sofort das Sperrlager-Protokoll[cite: 407]. [cite_start]Die PRRC informiert umgehend den Hersteller und bei schwerwiegender Gefahr das **BfArM**[cite: 408, 409].
+  .sop-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #c8983a08 0%, transparent 60%);
+    pointer-events: none;
+  }
 
-## 5. Archivierung
-[cite_start]Aufzeichnungen wie Wareneingangsprüfprotokolle und Lieferscheine werden mindestens **10 Jahre** archiviert. [cite_start]Bei implantierbaren Produkten erhöht sich diese Frist auf **15 Jahre**.
+  .sop-hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.75rem;
+  }
 
----
+  .sop-hero-eyebrow-line {
+    width: 28px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 99px;
+    flex-shrink: 0;
+  }
 
-## 🎓 Wissenstest: SOP-REG-02
-Bitte beantworten Sie die folgenden Fragen sorgfältig. Zum Bestehen sind erneut **80%** erforderlich.
+  .sop-hero-eyebrow-text {
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
 
-<HaendlerQuiz />
+  .sop-hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    color: #0e0e14;
+    margin: 0 0 0.6rem;
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+
+  .sop-hero-desc {
+    font-size: clamp(0.82rem, 1.4vw, 0.9rem);
+    color: #6b7280;
+    margin: 0;
+    line-height: 1.65;
+    max-width: 500px;
+  }
+
+  .sop-hero-meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1.25rem;
+  }
+
+  .sop-hero-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    color: #9ca3af;
+    font-weight: 500;
+  }
+
+  .sop-hero-meta-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* KPI block on right */
+  .sop-hero-kpis {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    align-items: flex-end;
+    flex-shrink: 0;
+  }
+
+  .sop-hero-kpi { text-align: right; }
+
+  .sop-hero-kpi-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: var(--accent);
+    line-height: 1;
+    letter-spacing: 0.04em;
+  }
+
+  .sop-hero-kpi-label {
+    font-size: 0.58rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-top: 1px;
+  }
+
+  .sop-hero-divider {
+    width: 1px;
+    height: 24px;
+    background: #e2ded8;
+    align-self: center;
+  }
+
+  /* ══════════════════════════════════════
+     TWO-COLUMN LAYOUT
+     Left: content (flexible)
+     Right: sticky nav (260px)
+  ══════════════════════════════════════ */
+  .sop-layout {
+    display: grid;
+    grid-template-columns: 1fr 240px;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .sop-content { min-width: 0; }
+
+  /* Sticky side nav */
+  .sop-sidenav {
+    position: sticky;
+    top: 80px;
+    background: #fff;
+    border: 1px solid #ece9e3;
+    border-radius: 16px;
+    padding: 1.25rem;
+    overflow: hidden;
+  }
+
+  .sop-sidenav-title {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    margin-bottom: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sop-sidenav-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #f0ede8;
+  }
+
+  .sop-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.6rem 0.75rem;
+    border-radius: 9px;
+    text-decoration: none;
+    margin-bottom: 3px;
+    transition: all 0.18s;
+    border: 1px solid transparent;
+  }
+
+  .sop-nav-item:hover {
+    background: #f8f7f3;
+    border-color: #e8e4dc;
+    color: #111;
+  }
+
+  .sop-nav-item.active {
+    background: #fff8ec;
+    border-color: rgba(200,152,58,0.25);
+    color: #92400e;
+  }
+
+  .sop-nav-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    color: #d1cec8;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 20px;
+    transition: color 0.18s;
+  }
+
+  .sop-nav-item.active .sop-nav-num { color: var(--accent); }
+
+  .sop-nav-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #374151;
+    line-height: 1.2;
+  }
+
+  .sop-nav-item.active .sop-nav-label { color: #92400e; }
+
+  /* Progress bar inside sidenav */
+  .sop-nav-progress {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f0ede8;
+  }
+
+  .sop-nav-progress-label {
+    font-size: 0.62rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .sop-nav-progress-pct {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    color: var(--accent);
+  }
+
+  .sop-nav-bar-bg {
+    height: 3px;
+    background: #f0ede8;
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .sop-nav-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-lt));
+    border-radius: 99px;
+    transition: width 0.4s ease;
+  }
+
+  /* Quiz button in sidenav */
+  .sop-nav-quiz-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 0.9rem;
+    padding: 9px 14px;
+    background: #0e0e14;
+    color: var(--accent-lt);
+    border: none;
+    border-radius: 10px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    letter-spacing: 0.04em;
+  }
+
+  .sop-nav-quiz-btn:hover {
+    background: #1a1a26;
+    color: #fff;
+  }
+
+  /* ══════════════════════════════════════
+     SECTION
+  ══════════════════════════════════════ */
+  .sop-section {
+    margin-bottom: 3rem;
+    scroll-margin-top: 100px;
+  }
+
+  .sop-section-hd {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #f0ede8;
+  }
+
+  .sop-section-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 3rem);
+    color: #ede9e2;
+    line-height: 1;
+    flex-shrink: 0;
+    letter-spacing: 0.04em;
+  }
+
+  .sop-section-title {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 3px;
+    line-height: 1.2;
+    padding-top: 0.3rem;
+  }
+
+  .sop-section-sub {
+    font-size: 0.68rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+  }
+
+  /* ══════════════════════════════════════
+     INFO BOX
+  ══════════════════════════════════════ */
+  .sop-info {
+    background: #fffbf3;
+    border: 1px solid rgba(200,152,58,0.2);
+    border-left: 3px solid var(--accent);
+    border-radius: 12px;
+    padding: 1rem 1.3rem;
+    font-size: 0.87rem;
+    color: #374151;
+    line-height: 1.72;
+    margin-bottom: 1.5rem;
+  }
+  .sop-info strong { color: #92400e; }
+
+  /* ══════════════════════════════════════
+     RULE CARDS
+  ══════════════════════════════════════ */
+  .sop-rules {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+    gap: 11px;
+    margin-bottom: 1.5rem;
+  }
+
+  .sop-rule {
+    background: #fff;
+    border: 1px solid #ece9e3;
+    border-radius: var(--radius);
+    padding: 1.2rem;
+    display: flex;
+    gap: 13px;
+    align-items: flex-start;
+    transition: border-color 0.18s, box-shadow 0.18s, transform 0.18s;
+  }
+
+  .sop-rule:hover {
+    border-color: rgba(200,152,58,0.3);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    transform: translateY(-2px);
+  }
+
+  .sop-rule-icon {
+    width: 36px; height: 36px;
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.05rem;
+    flex-shrink: 0;
+  }
+
+  .sop-rule-title {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .sop-rule-desc {
+    font-size: 0.77rem;
+    color: #6b7280;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .sop-rule-desc strong { color: #374151; }
+
+  /* ══════════════════════════════════════
+     PROCESS FLOW
+  ══════════════════════════════════════ */
+  .sop-flow { display: flex; flex-direction: column; margin-bottom: 1.5rem; }
+
+  .sop-flow-step { display: flex; gap: 14px; align-items: flex-start; }
+
+  .sop-flow-left {
+    display: flex; flex-direction: column; align-items: center; flex-shrink: 0;
+  }
+
+  .sop-flow-circle {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: #111116; color: #e8d5a8;
+    font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .sop-flow-line {
+    width: 1px; flex: 1; min-height: 20px;
+    background: linear-gradient(to bottom, #dedad4, transparent);
+    margin: 3px 0;
+  }
+
+  .sop-flow-content { padding-bottom: 1.4rem; flex: 1; }
+
+  .sop-flow-title {
+    font-size: 0.88rem; font-weight: 700; color: #111827; margin-bottom: 3px;
+  }
+
+  .sop-flow-desc {
+    font-size: 0.79rem; color: #6b7280; line-height: 1.6; margin: 0;
+  }
+
+  /* ══════════════════════════════════════
+     CHECKLIST
+  ══════════════════════════════════════ */
+  .sop-checklist { display: flex; flex-direction: column; gap: 7px; margin-bottom: 1.5rem; }
+
+  .sop-check {
+    display: flex; align-items: flex-start; gap: 11px;
+    background: #fff; border: 1px solid #ece9e3; border-radius: 12px;
+    padding: 0.9rem 1.1rem;
+    transition: all 0.18s;
+  }
+  .sop-check:hover { border-color: rgba(200,152,58,0.25); background: #fffbf5; }
+
+  .sop-check-icon {
+    width: 28px; height: 28px; border-radius: 7px;
+    background: #f5f3ee; display: flex; align-items: center;
+    justify-content: center; font-size: 0.82rem; flex-shrink: 0;
+  }
+
+  .sop-check-label { font-size: 0.84rem; font-weight: 600; color: #111827; margin-bottom: 2px; }
+  .sop-check-sub   { font-size: 0.73rem; color: #9ca3af; line-height: 1.45; }
+
+  /* ══════════════════════════════════════
+     WARNING / TIP
+  ══════════════════════════════════════ */
+  .sop-warning {
+    background: #fef2f2; border: 1px solid #fecaca; border-radius: 12px;
+    padding: 1rem 1.2rem; font-size: 0.83rem; color: #7f1d1d; line-height: 1.65;
+    margin-bottom: 1.5rem; display: flex; gap: 10px; align-items: flex-start;
+  }
+
+  .sop-tip {
+    background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px;
+    padding: 1rem 1.2rem; font-size: 0.83rem; color: #14532d; line-height: 1.65;
+    margin-bottom: 1.5rem; display: flex; gap: 10px; align-items: flex-start;
+  }
+
+  /* ══════════════════════════════════════
+     KPI ROW
+  ══════════════════════════════════════ */
+  .sop-kpis {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 140px), 1fr));
+    gap: 10px;
+    margin-bottom: 1.5rem;
+  }
+
+  .sop-kpi {
+    background: #fff; border: 1px solid #ece9e3;
+    border-radius: var(--radius); padding: 1.1rem; text-align: center;
+  }
+
+  .sop-kpi-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; line-height: 1; letter-spacing: 0.04em; margin-bottom: 3px;
+  }
+
+  .sop-kpi-label {
+    font-size: 0.64rem; color: #9ca3af; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+
+  /* ══════════════════════════════════════
+     NORM PILLS
+  ══════════════════════════════════════ */
+  .sop-norms { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1rem; }
+
+  .sop-norm {
+    background: #f5f3ee; color: #374151;
+    font-size: 0.65rem; font-weight: 600; padding: 3px 9px;
+    border-radius: 5px; font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em; border: 1px solid #e8e4dc;
+  }
+
+  /* ── Divider ── */
+  .sop-divider {
+    height: 1px;
+    background: linear-gradient(90deg, #e5e1da 0%, transparent 80%);
+    margin: 2.5rem 0;
+  }
+
+  /* ══════════════════════════════════════
+     QUIZ SECTION HEADER
+  ══════════════════════════════════════ */
+  .sop-quiz-header {
+    background: #0e0e14;
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .sop-quiz-header-icon {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    color: var(--accent);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .sop-quiz-header-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 3px;
+  }
+
+  .sop-quiz-header-sub {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.38);
+  }
+
+  /* ══════════════════════════════════════
+     RESPONSIVE
+  ══════════════════════════════════════ */
+  @media (max-width: 900px) {
+    .sop-layout { grid-template-columns: 1fr; }
+    .sop-sidenav { display: none; }
+    .sop-hero  { grid-template-columns: 1fr; }
+    .sop-hero-kpis { flex-direction: row; align-items: flex-start; justify-content: flex-start; }
+    .sop-hero-kpi { text-align: left; }
+  }
+
+  @media (max-width: 640px) {
+    .sop-rules { grid-template-columns: 1fr; }
+    .sop-kpis  { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (min-width: 1400px) {
+    .sop-layout { grid-template-columns: 1fr 260px; gap: 3rem; }
+  }
+
+  /* ── Fade in animation ── */
+  @keyframes sop-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .sop-page { animation: sop-in 0.4s ease both; }
+`}</style>
+
+export function SopReg02Page() {
+  const [activeSection, setActiveSection] = useState('zweck');
+  const [scrollPct, setScrollPct] = useState(0);
+  useEffect(() => {
+    const ids = ['zweck','grundpflichten','konformitaet','lagerung','nichtkonform','wissenstest'];
+    const onScroll = () => {
+      const el = document.querySelector('.sop-content');
+      if (el) setScrollPct(Math.min(100, Math.round((Math.max(0,-el.getBoundingClientRect().top+100)/el.scrollHeight)*100)));
+      let cur = 'zweck';
+      ids.forEach(id => { const e = document.getElementById(id); if(e && e.getBoundingClientRect().top < 130) cur = id; });
+      setActiveSection(cur);
+    };
+    window.addEventListener('scroll', onScroll, {passive:true});
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  const nav = [
+    {id:'zweck',num:'01',label:'Zweck & Geltungsbereich'},
+    {id:'grundpflichten',num:'02',label:'Grundpflichten als Händler'},
+    {id:'konformitaet',num:'03',label:'Konformitätsprüfung'},
+    {id:'lagerung',num:'04',label:'Lagerung & Transport'},
+    {id:'nichtkonform',num:'05',label:'Nichtkonformität & BfArM'},
+    {id:'wissenstest',num:'★',label:'Wissenstest'},
+  ];
+  return (
+    <div className="sop-page">
+      <div className="sop-hero">
+        <div>
+          <div className="sop-hero-eyebrow"><div className="sop-hero-eyebrow-line"/><span className="sop-hero-eyebrow-text">SOP-REG-02 · Regulatorik & MDR</span></div>
+          <div className="sop-hero-title">Händlerpflichten<br/>gemäß MDR Art. 14</div>
+          <p className="sop-hero-desc">Sicherstellung dass Medizinprodukte innerhalb der EU während Lagerung, Vertrieb und After-Sales jederzeit konform, sicher und rückverfolgbar bleiben — Stichprobenprüfung, Lagerung, Nichtkonformität und BfArM-Meldung.</p>
+          <div className="sop-hero-meta">
+            <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>MDR Art. 14 Händlerpflichten</div>
+            <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>Gültig ab 01.02.2026</div>
+            <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>5 Kapitel · 10 Fragen</div>
+          </div>
+        </div>
+        <div className="sop-hero-kpis">
+          <div className="sop-hero-kpi"><div className="sop-hero-kpi-val">Art.14</div><div className="sop-hero-kpi-label">MDR-Grundlage</div></div>
+          <div className="sop-hero-divider"/>
+          <div className="sop-hero-kpi"><div className="sop-hero-kpi-val">BfArM</div><div className="sop-hero-kpi-label">Behörde</div></div>
+          <div className="sop-hero-divider"/>
+          <div className="sop-hero-kpi"><div className="sop-hero-kpi-val">10J</div><div className="sop-hero-kpi-label">Aufbewahr.</div></div>
+        </div>
+      </div>
+      <div className="sop-layout">
+        <div className="sop-content">
+          <div className="sop-section" id="zweck">
+            <div className="sop-section-hd"><div className="sop-section-num">01</div><div><div className="sop-section-title">Zweck & Geltungsbereich</div><div className="sop-section-sub">EU-Inlandsvertrieb · Alle Klassen · Kein Produkteingriff</div></div></div>
+            <div className="sop-info">Gilt für alle Tätigkeiten bei denen EMIG Medizinprodukte <strong>innerhalb der EU</strong> bereitstellt oder vertreibt (nach dem Inverkehrbringen). Nicht für Import aus Drittländern → SOP-REG-01. Alle Klassen I–III, Lagerung, Vertrieb, Auslieferung, Reklamationen.</div>
+            <div className="sop-kpis">
+              <div className="sop-kpi"><div className="sop-kpi-val" style={{color:'#3b82f6'}}>Art.14</div><div className="sop-kpi-label">MDR-Basis</div></div>
+              <div className="sop-kpi"><div className="sop-kpi-val" style={{color:'#ef4444'}}>0×</div><div className="sop-kpi-label">Produktmodifikation</div></div>
+              <div className="sop-kpi"><div className="sop-kpi-val" style={{color:'#8b5cf6'}}>BfArM</div><div className="sop-kpi-label">Behörde DE</div></div>
+              <div className="sop-kpi"><div className="sop-kpi-val" style={{color:'#10b981'}}>10J</div><div className="sop-kpi-label">Aufzeichnungen</div></div>
+            </div>
+            <div className="sop-norms"><span className="sop-norm">MDR 2017/745 Art. 14</span><span className="sop-norm">MDR Art. 14 &15</span><span className="sop-norm">SOP-REG-01 Importeurpflichten</span></div>
+          </div>
+          <div className="sop-divider"/>
+          <div className="sop-section" id="grundpflichten">
+            <div className="sop-section-hd"><div className="sop-section-num">02</div><div><div className="sop-section-title">Grundpflichten als Händler</div><div className="sop-section-sub">4 Pflichten · Kein Produkteingriff</div></div></div>
+            <div className="sop-info">EMIG stellt als Händler sicher, dass Produkte nur dann bereitgestellt werden, wenn <strong>alle 4 Grundpflichten</strong> erfüllt sind. Außerdem: keine Änderungen an Zweckbestimmung, Design oder Leistungsmerkmalen.</div>
+            <div className="sop-rules">
+              {[
+                {icon:'✅',bg:'#f0fdf4',t:'Gültige CE-Kennzeichnung',d:'Produkt ist mit einer gültigen CE-Kennzeichnung versehen. Für die Auslieferung innerhalb der EU zwingend erforderlich.'},
+                {icon:'📋',bg:'#eff6ff',t:'Herstellerinformationen vorhanden',d:'Die erforderlichen Informationen des Herstellers (IFU in Deutsch, Kennzeichnung) sind dem Produkt beigefügt und vollständig.'},
+                {icon:'🌡️',bg:'#fef9c3',t:'Lagerung & Transport konform',d:'Lagerbedingungen und Transportbedingungen entsprechen Herstellervorgaben. Qualifizierte Logistikpartner für den Transport zum Kunden.'},
+                {icon:'🔍',bg:'#f5f3ff',t:'Rückverfolgbarkeit jederzeit',d:'Chargennummern und UDI sind in SAP dokumentiert. Bidirektionale Suche in unter 5 Sekunden möglich.'},
+              ].map((r,i) => (
+                <div className="sop-rule" key={i}><div className="sop-rule-icon" style={{background:r.bg}}>{r.icon}</div><div><div className="sop-rule-title">{r.t}</div><p className="sop-rule-desc">{r.d}</p></div></div>
+              ))}
+            </div>
+            <div className="sop-warning"><span style={{fontSize:'1rem',flexShrink:0}}>⚠</span><div><strong>Kein Produkteingriff:</strong> EMIG nimmt KEINE Änderungen an Zweckbestimmung, Design oder Leistungsmerkmalen vor. Jede Änderung würde EMIG zum rechtlichen Hersteller machen.</div></div>
+          </div>
+          <div className="sop-divider"/>
+          <div className="sop-section" id="konformitaet">
+            <div className="sop-section-hd"><div className="sop-section-num">03</div><div><div className="sop-section-title">Konformitätsprüfung bei Bereitstellung</div><div className="sop-section-sub">Stichproben · CE · IFU Deutsch · UDI · Importeurangaben</div></div></div>
+            <div className="sop-info">Vor der Bereitstellung führt die Logistik in Zusammenarbeit mit der PRRC eine <strong>Stichprobenprüfung</strong> durch. Bei importierten Produkten: zusätzliche Prüfung der Importeurangaben.</div>
+            <div className="sop-checklist">
+              {[
+                {icon:'🔵',t:'CE-Kennzeichnung deutlich sichtbar',d:'CE-Zeichen muss auf Produkt oder Verpackung deutlich sichtbar angebracht sein — nicht verdeckt durch Importeurkennzeichnung.'},
+                {icon:'📋',t:'EU-Konformitätserklärung ausgestellt',d:'Eine EU-Konformitätserklärung für das betreffende Produkt wurde vom Hersteller ausgestellt und liegt vor.'},
+                {icon:'🇩🇪',t:'IFU in deutscher Sprache',d:'Die Gebrauchsanweisung und Kennzeichnung sind dem Produkt in deutscher Sprache beigefügt — Pflicht für den deutschen Markt.'},
+                {icon:'📱',t:'UDI auf Verpackung (falls vorgeschrieben)',d:'Bei kennzeichnungspflichtigen Produkten ist die UDI auf der Verpackung angebracht und im EUDAMED-System hinterlegt.'},
+                {icon:'🏢',t:'Importeurangaben bei importierten Produkten',d:'Bei importierten Produkten: Angaben zum Importeur gemäß MDR Art. 13 Abs. 3 auf Produkt oder Verpackung vorhanden.'},
+              ].map((c,i) => (
+                <div className="sop-check" key={i}><div className="sop-check-icon">{c.icon}</div><div><div className="sop-check-label">{c.t}</div><div className="sop-check-sub">{c.d}</div></div></div>
+              ))}
+            </div>
+            <div className="sop-norms"><span className="sop-norm">MDR Art. 14 §2</span><span className="sop-norm">MDR Art. 13 §3</span></div>
+          </div>
+          <div className="sop-divider"/>
+          <div className="sop-section" id="lagerung">
+            <div className="sop-section-hd"><div className="sop-section-num">04</div><div><div className="sop-section-title">Lagerung & Transport</div><div className="sop-section-sub">Herstellervorgaben · Qualifizierte Logistikpartner · Sichtprüfung</div></div></div>
+            <div className="sop-info">EMIG stellt sicher, dass Lagerbedingungen (Temperatur, Feuchtigkeit, Lichtschutz) den <strong>Herstellerspezifikationen entsprechen</strong> — auch während des Transports zum Endkunden.</div>
+            <div className="sop-rules">
+              {[
+                {icon:'🌡️',bg:'#fef9c3',t:'Herstellervorgaben für Lagerung',d:'Temperatur, Luftfeuchtigkeit und Lichtschutz gemäß Herstellerspezifikation. Abweichungen werden dokumentiert und nach SOP-CAPA-01 bewertet.'},
+                {icon:'🚚',bg:'#eff6ff',t:'Qualifizierte Logistikpartner',d:'Transport zum Endkunden oder Kliniken erfolgt durch qualifizierte Logistikpartner, die die Lagerbedingungen des Herstellers einhalten können.'},
+                {icon:'👁️',bg:'#f0fdf4',t:'Regelmäßige Sichtprüfungen',d:'Regelmäßige Sichtprüfungen im Lager schließen Beschädigungen der Sterilverpackung durch unsachgemäße Handhabung aus.'},
+              ].map((r,i) => (
+                <div className="sop-rule" key={i}><div className="sop-rule-icon" style={{background:r.bg}}>{r.icon}</div><div><div className="sop-rule-title">{r.t}</div><p className="sop-rule-desc">{r.d}</p></div></div>
+              ))}
+            </div>
+            <div className="sop-norms"><span className="sop-norm">MDR Art. 14 §3</span><span className="sop-norm">SOP-LOG-01 Lagerbedingungen</span></div>
+          </div>
+          <div className="sop-divider"/>
+          <div className="sop-section" id="nichtkonform">
+            <div className="sop-section-hd"><div className="sop-section-num">05</div><div><div className="sop-section-title">Nichtkonformität & BfArM-Meldung</div><div className="sop-section-sub">Sperrlager · Hersteller · BfArM · Aufzeichnungen 10/15 Jahre</div></div></div>
+            <div className="sop-info">Bei Verdacht auf Nichtkonformität: <strong>sofort ins Sperrlager</strong>, PRRC informiert Hersteller und Importeur. Bei schwerwiegender Gefahr: Meldung an <strong>BfArM</strong>.</div>
+            <div className="sop-flow">
+              {[
+                {t:'Nichtkonformität entdeckt',d:'Logistik oder PRRC entdeckt Anzeichen für Nichtkonformität — beschädigte Verpackung, CE-Problem, Vigilanzinformation vom Hersteller.'},
+                {t:'Sofort ins Sperrlager',d:'Betroffenes Produkt wird sofort im Sperrlager gesichert (SOP-LOG-03). Keine Auslieferung bis zur Klärung.'},
+                {t:'PRRC informiert Hersteller & Importeur',d:'PRRC informiert umgehend den Hersteller sowie ggf. den Importeur über den Verdacht. Schriftliche Dokumentation.'},
+                {t:'BfArM-Meldung bei schwerwiegender Gefahr',d:'Wenn von dem Produkt eine schwerwiegende Gefahr für Patienten ausgeht: zusätzliche Meldung an das BfArM als zuständige Bundesoberbehörde.'},
+              ].map((s,i,arr) => (
+                <div className="sop-flow-step" key={i}>
+                  <div className="sop-flow-left"><div className="sop-flow-circle">{i+1}</div>{i<arr.length-1&&<div className="sop-flow-line"/>}</div>
+                  <div className="sop-flow-content"><div className="sop-flow-title">{s.t}</div><p className="sop-flow-desc">{s.d}</p></div>
+                </div>
+              ))}
+            </div>
+            <div className="sop-tip"><span style={{fontSize:'1rem',flexShrink:0}}>📁</span><div><strong>Aufzeichnungen 10/15 Jahre:</strong> Wareneingangsprotokolle, Lieferscheine, Reklamationsliste, Sperrlager-Protokolle und Schulungsnachweise — 10 Jahre, bei Implantaten 15 Jahre.</div></div>
+            <div className="sop-norms"><span className="sop-norm">MDR Art. 14 §4</span><span className="sop-norm">BfArM Vigilanz</span><span className="sop-norm">SOP-LOG-03 Sperrware</span></div>
+          </div>
+          <div className="sop-divider"/>
+          <div id="wissenstest"><div className="sop-quiz-header"><div className="sop-quiz-header-icon">★</div><div><div className="sop-quiz-header-title">Wissenstest — SOP-REG-02</div><div className="sop-quiz-header-sub">10 Fragen · Händlerpflichten gemäß MDR Art. 14</div></div></div></div>
+        </div>
+        <div className="sop-sidenav">
+          <div className="sop-sidenav-title">Inhalt</div>
+          {nav.map(({id,num,label}) => (
+            <a key={id} href={`#${id}`} className={`sop-nav-item${activeSection===id?' active':''}`}>
+              <div className="sop-nav-num">{num}</div><div className="sop-nav-label">{label}</div>
+            </a>
+          ))}
+          <div className="sop-nav-progress">
+            <div className="sop-nav-progress-label"><span>Fortschritt</span><span className="sop-nav-progress-pct">{scrollPct}%</span></div>
+            <div className="sop-nav-bar-bg"><div className="sop-nav-bar-fill" style={{width:`${scrollPct}%`}}/></div>
+          </div>
+          <a href="#wissenstest" className="sop-nav-quiz-btn">Zum Wissenstest →</a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+<SopReg02Page/>
+<SopQuiz refCode="SOP-REG-02" questions={quizData}/>

@@ -4,6 +4,7 @@ title: Lagerung von Medizinprodukten
 sidebar_label: Lagerbedingungen
 ---
 
+import React, { useState, useEffect } from 'react';
 import SopQuiz from '@site/src/components/SopQuiz';
 
 export const quizData = [
@@ -720,10 +721,10 @@ export const quizData = [
 `}</style>
 
 export function SopLogPage() {
-  const [activeSection, setActiveSection] = React.useState('zweck');
-  const [scrollPct, setScrollPct] = React.useState(0);
+  const [activeSection, setActiveSection] = useState('zweck');
+  const [scrollPct, setScrollPct] = useState(0);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const sections = ['zweck','umgebung','fifo','zugang','wissenstest'];
     const handleScroll = () => {
       // Scroll progress

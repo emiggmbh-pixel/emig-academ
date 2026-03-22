@@ -19,19 +19,98 @@ const MFRS = [
     origin: 'Deutschland · Richard Wolf Company',
     accent: '#c0392b',
     bg: 'linear-gradient(160deg,#0f0404 0%,#1e0606 35%,#2a0808 60%,#1e0606 100%)',
+    website: 'https://www.riwospine.com',
+    location: { lat: 49.0316, lng: 8.7702, city: 'Knittlingen', country: 'Baden-Württemberg, DE' },
     description: 'RIWOspine ist ein führender Spezialist für vollendoskopische Wirbelsäulenchirurgie. Als Teil der Richard Wolf Unternehmensgruppe entwickelt RIWOspine hochpräzise Endoskopiesysteme für minimalinvasive Eingriffe an Hals-, Brust- und Lendenwirbelsäule.',
-    focus: ['Vollendoskopische Chirurgie','Minimalinvasive Eingriffe','Spine-Endoskopie','Neurochirurgie'],
+    focus: [
+      { icon: '🔬', label: 'Vollendoskopische Chirurgie', desc: 'Kamerageführte Eingriffe durch kleinste Zugänge' },
+      { icon: '🩻', label: 'Minimalinvasive Eingriffe', desc: 'Weniger Trauma, schnellere Heilung' },
+      { icon: '🧠', label: 'Neurochirurgie', desc: 'Nervenschonende Dekompression' },
+      { icon: '🦴', label: 'Spine-Endoskopie', desc: 'HWS, BWS und LWS abgedeckt' },
+      { icon: '💡', label: 'Optische Systeme', desc: 'HD-Visualisierung im OP' },
+      { icon: '⚙️', label: 'Präzisionsinstrumente', desc: 'Ergonomie & Sterilisierbarkeit' },
+    ],
     facts: [
       { label: 'Gegründet', value: '1906' },
       { label: 'Hauptsitz', value: 'Knittlingen, DE' },
       { label: 'Mitarbeiter', value: '2.000+' },
       { label: 'Länder', value: '100+' },
+      { label: 'Zertifizierung', value: 'ISO 13485 · CE' },
+      { label: 'Gruppe', value: 'Richard Wolf GmbH' },
     ],
     products: [
-      { title: 'Vertebris Stenose',         code: 'RIWO-01', link: '/docs/medizinprodukte/riwospine/stenose',     desc: 'Vollendoskopische Dekompression bei lumbaler und zervikaler Spinalstenose. Minimalinvasive Technik für kürzere Rehabilitation.' },
-      { title: 'Vertebris Lumbar',          code: 'RIWO-02', link: '/docs/medizinprodukte/riwospine/lumbar',      desc: 'Endoskopisches System für Bandscheibenchirurgie der Lendenwirbelsäule. Transforaminaler und interaktiver Zugang.' },
-      { title: 'Vertebris Cervical',        code: 'RIWO-03', link: '/docs/medizinprodukte/riwospine/cervical',    desc: 'Vollendoskopische Chirurgie der Halswirbelsäule. Anteriorer und posteriorer Zugang für zervikale Pathologien.' },
-      { title: 'Instrumentarium & Optiken', code: 'RIWO-04', link: '/docs/medizinprodukte/riwospine/instrumente', desc: 'Hochpräzisions-Endoskope, Optiken und Instrumente für alle Vertebris-Systeme. Optimale Visualisierung und Ergonomie.' },
+      {
+        title: 'Vertebris Stenose',
+        code: 'RIWO-01',
+        link: '/docs/medizinprodukte/riwospine/stenose',
+        tagline: 'Endoskopische Dekompression',
+        image: '/img/riwo-stenose.jpg',
+        imagePlaceholderColor: '#7f1d1d',
+        desc: 'Vollendoskopische Dekompression bei lumbaler und zervikaler Spinalstenose. Minimalinvasive Technik für kürzere Rehabilitation und weniger postoperative Schmerzen.',
+        specs: [
+          { icon: '📐', label: 'Zugangsweg', value: 'Interlaminar / Translaminar' },
+          { icon: '🔦', label: 'Optik', value: '6,2 mm · HD · 0°/10°' },
+          { icon: '🧩', label: 'Indikation', value: 'Lumb. / Zerv. Stenose' },
+          { icon: '⏱️', label: 'OP-Zeit', value: 'Ø 45–75 min' },
+        ],
+        highlights: ['Bilateraler Zugang durch unilateralen Schnitt', 'Kontinuierliche Spülung schützt Nervenstrukturen', 'Kompatibel mit Stryker-Navigation'],
+        badge: 'Bestseller',
+        badgeColor: '#c0392b',
+      },
+      {
+        title: 'Vertebris Lumbar',
+        code: 'RIWO-02',
+        link: '/docs/medizinprodukte/riwospine/lumbar',
+        tagline: 'Lumbale Bandscheibenchirurgie',
+        image: '/img/riwo-lumbar.jpg',
+        imagePlaceholderColor: '#7c2d12',
+        desc: 'Endoskopisches System für Bandscheibenchirurgie der Lendenwirbelsäule. Transforaminaler und interlaminarer Zugang für präzise Diskektomien mit minimalem Gewebstrauma.',
+        specs: [
+          { icon: '📐', label: 'Zugangsweg', value: 'Transforaminal / Interlaminar' },
+          { icon: '🔦', label: 'Optik', value: '7,5 mm · HD · 25°' },
+          { icon: '🧩', label: 'Indikation', value: 'Lumbaler Bandscheibenvorfall' },
+          { icon: '⏱️', label: 'OP-Zeit', value: 'Ø 30–60 min' },
+        ],
+        highlights: ['Anpassbarer Arbeitskanal 3,1–6,3 mm', 'Flexibles Spülsystem integriert', 'Lokale Anästhesie möglich'],
+        badge: 'Häufig genutzt',
+        badgeColor: '#b45309',
+      },
+      {
+        title: 'Vertebris Cervical',
+        code: 'RIWO-03',
+        link: '/docs/medizinprodukte/riwospine/cervical',
+        tagline: 'Zervikale Wirbelsäulenchirurgie',
+        image: '/img/riwo-cervical.jpg',
+        imagePlaceholderColor: '#1e3a5f',
+        desc: 'Vollendoskopische Chirurgie der Halswirbelsäule. Anteriorer und posteriorer Zugang für zervikale Pathologien — Foraminotomie, Diskektomie und Dekompression.',
+        specs: [
+          { icon: '📐', label: 'Zugangsweg', value: 'Anterior / Posterior' },
+          { icon: '🔦', label: 'Optik', value: '5,7 mm · HD · 0°' },
+          { icon: '🧩', label: 'Indikation', value: 'Zerv. Myelopathie / Radikulopathie' },
+          { icon: '⏱️', label: 'OP-Zeit', value: 'Ø 40–80 min' },
+        ],
+        highlights: ['Speziell entwickeltes HWS-Instrumentarium', 'Druckkontrollierte Irrigation', 'Kein Implantat notwendig bei Foraminotomie'],
+        badge: 'Spezialsystem',
+        badgeColor: '#1d4ed8',
+      },
+      {
+        title: 'Instrumentarium & Optiken',
+        code: 'RIWO-04',
+        link: '/docs/medizinprodukte/riwospine/instrumente',
+        tagline: 'Optiken · Instrumente · Verbrauchsmaterial',
+        image: '/img/riwo-instrumente.jpg',
+        imagePlaceholderColor: '#1a2e1a',
+        desc: 'Hochpräzisions-Endoskope, Optiken und Instrumente für alle Vertebris-Systeme. Optimale Visualisierung, maximale Ergonomie und vollständige Kompatibilität.',
+        specs: [
+          { icon: '🔭', label: 'Endoskope', value: '3 Durchmesser-Varianten' },
+          { icon: '💡', label: 'Beleuchtung', value: 'LED · Xenon · Kaltlicht' },
+          { icon: '🔧', label: 'Instrumente', value: '120+ Einzelkomponenten' },
+          { icon: '♻️', label: 'Sterilisation', value: 'Autoklavierbar 134 °C' },
+        ],
+        highlights: ['Set-Konfiguration nach Eingriffstyp', 'Kompatibel mit Vertebris I, II, III', 'Loaner-Sets auf Anfrage verfügbar'],
+        badge: 'Komplettset',
+        badgeColor: '#065f46',
+      },
     ],
   },
   {
@@ -42,15 +121,99 @@ const MFRS = [
     origin: 'Deutschland · Emmendingen',
     accent: '#1565c0',
     bg: 'linear-gradient(160deg,#020610 0%,#040c1e 35%,#071428 60%,#040c1e 100%)',
-    description: 'inomed Medizintechnik ist Weltmarktführer im Bereich intraoperatives Neuromonitoring (IOM). Die Systeme schützen das Nervensystem während neurochirurgischer, orthopädischer und gefäßchirurgischer Eingriffe.',
-    focus: ['Intraoperatives Neuromonitoring','Neurophysiologie','Hirnstimulation','Schlafdiagnostik'],
+    website: 'https://www.inomed.com',
+    location: { lat: 48.1267, lng: 7.8511, city: 'Emmendingen', country: 'Baden-Württemberg, DE' },
+    description: 'inomed Medizintechnik ist Weltmarktführer im Bereich intraoperatives Neuromonitoring (IOM). Die Systeme schützen das Nervensystem während neurochirurgischer, orthopädischer und gefäßchirurgischer Eingriffe durch präzise Echtzeit-Überwachung aller motorischen und sensorischen Bahnen.',
+    focus: [
+      { icon: '🧠', label: 'Intraoperatives Neuromonitoring', desc: 'Echtzeit-Nervenschutz im OP' },
+      { icon: '📡', label: 'Neurophysiologie', desc: 'MEP, SSEP, EMG und mehr' },
+      { icon: '⚡', label: 'Hirnstimulation', desc: 'TMS und direkte Kortexstimulation' },
+      { icon: '😴', label: 'Schlafdiagnostik', desc: 'Polysomnographie-Systeme' },
+      { icon: '🔬', label: 'Intraoperative Bildgebung', desc: 'Neurophysiologische Kartierung' },
+      { icon: '📊', label: 'Datenmanagement', desc: 'iQ-Software & Archivierung' },
+    ],
     facts: [
       { label: 'Gegründet', value: '1989' },
       { label: 'Hauptsitz', value: 'Emmendingen, DE' },
-      { label: 'Zertifizierung', value: 'ISO 13485' },
-      { label: 'Anwendung', value: 'Weltweit' },
+      { label: 'Mitarbeiter', value: '300+' },
+      { label: 'Länder', value: '50+' },
+      { label: 'Zertifizierung', value: 'ISO 13485 · CE' },
+      { label: 'Marktposition', value: 'Weltmarktführer IOM' },
     ],
-    products: [],
+    products: [
+      {
+        title: 'ISIS IOM',
+        code: 'INO-01',
+        link: '/docs/medizinprodukte/inomed/isis-iom',
+        tagline: 'Intraoperatives Neuromonitoring',
+        image: '/img/inomed-isis.jpg',
+        imagePlaceholderColor: '#0a1628',
+        desc: 'Das ISIS IOM ist das führende Multimodalitäts-Neuromonitoring-System. MEP, SSEP, EMG, D-Wave und Hirnnervenmonitoring in einem integrierten Gerät — für maximale Nervensicherheit im OP.',
+        specs: [
+          { icon: '📡', label: 'Modalitäten', value: 'MEP · SSEP · EMG · D-Wave' },
+          { icon: '🔌', label: 'Kanäle', value: 'Bis zu 64 Kanäle' },
+          { icon: '⚡', label: 'Stimulation', value: 'Kortex · Peripher · Nerv' },
+          { icon: '💻', label: 'Software', value: 'iQ-Software · DICOM-Export' },
+        ],
+        highlights: ['Simultanes Monitoring aller Modalitäten', 'Automatische Alarmfunktion bei Signaländerung', 'Kompatibel mit allen gängigen Navigationsystemen'],
+        badge: 'Kernsystem',
+        badgeColor: '#1565c0',
+      },
+      {
+        title: 'Rapid² TMS',
+        code: 'INO-02',
+        link: '/docs/medizinprodukte/inomed/tms',
+        tagline: 'Transkranielle Magnetstimulation',
+        image: '/img/inomed-tms.jpg',
+        imagePlaceholderColor: '#0d1f3c',
+        desc: 'Das Rapid² TMS-System ermöglicht präoperatives kortikales Mapping und intraoperative Hirnstimulation. Präzise Lokalisation motorischer und sprachlicher Areale vor neurochirurgischen Eingriffen.',
+        specs: [
+          { icon: '🧲', label: 'Technologie', value: 'Repetitive TMS (rTMS)' },
+          { icon: '⚡', label: 'Max. Feldstärke', value: '2,2 Tesla' },
+          { icon: '🎯', label: 'Anwendung', value: 'Kortex-Mapping · Therapie' },
+          { icon: '🔋', label: 'Frequenz', value: '0,1 – 100 Hz' },
+        ],
+        highlights: ['Neuro-Navigation Integration (BrainSight)', 'Figure-8- und H-Spule verfügbar', 'Präoperatives Sprach- und Motorfeld-Mapping'],
+        badge: 'Spezialsystem',
+        badgeColor: '#7b1fa2',
+      },
+      {
+        title: 'somno·medics PSG',
+        code: 'INO-03',
+        link: '/docs/medizinprodukte/inomed/polysomnographie',
+        tagline: 'Ambulante Polysomnographie',
+        image: '/img/inomed-somno.jpg',
+        imagePlaceholderColor: '#0a1a2e',
+        desc: 'Das somno·medics System ermöglicht vollständige ambulante Polysomnographie nach AASM-Standard. Hochauflösende EEG-, EOG-, EMG- und Atmungsaufzeichnung für präzise Schlafdiagnostik.',
+        specs: [
+          { icon: '😴', label: 'Standard', value: 'AASM-konform · Level I/II' },
+          { icon: '📡', label: 'Kanäle', value: 'Bis zu 32 EEG-Kanäle' },
+          { icon: '🏠', label: 'Anwendung', value: 'Klinik & ambulant' },
+          { icon: '⏱️', label: 'Aufzeichnung', value: 'Bis 96 Stunden' },
+        ],
+        highlights: ['Vollständig kabelloses Design (Bluetooth)', 'Automatische AASM-Schlafstadien-Auswertung', 'Somnologix-Software mit KI-gestützter Analyse'],
+        badge: 'Diagnostik',
+        badgeColor: '#00695c',
+      },
+      {
+        title: 'Elektroden & Zubehör',
+        code: 'INO-04',
+        link: '/docs/medizinprodukte/inomed/elektroden',
+        tagline: 'Elektroden · Kabel · Stimulatoren',
+        image: '/img/inomed-elektroden.jpg',
+        imagePlaceholderColor: '#111827',
+        desc: 'Vollständiges Elektroden- und Zubehörportfolio für alle inomed IOM-Systeme. Nadelelektroden, Klebepads, Korkschraubenelektroden und Stimulationssonden für jede neurochirurgische Anwendung.',
+        specs: [
+          { icon: '🔌', label: 'Elektroden-Typen', value: 'Nadel · Klebe · Korkschraube' },
+          { icon: '⚡', label: 'Stimulatoren', value: 'Kortex · Nerv · Peripher' },
+          { icon: '♻️', label: 'Ausführung', value: 'Einweg & Mehrweg' },
+          { icon: '🔗', label: 'Kompatibilität', value: 'ISIS IOM · Alle inomed Systeme' },
+        ],
+        highlights: ['Sets nach Eingriffs-Typ konfigurierbar', 'Steril einzelverpackt — lange Haltbarkeit', 'Direktimport EMIG — kurze Lieferwege'],
+        badge: 'Verbrauchsmaterial',
+        badgeColor: '#37474f',
+      },
+    ],
   },
   {
     id: 'oncosem',
@@ -61,7 +224,12 @@ const MFRS = [
     accent: '#00695c',
     bg: 'linear-gradient(160deg,#010e0b 0%,#021810 35%,#032214 60%,#021810 100%)',
     description: 'oncosem Onkologische Systeme entwickelt und vertreibt innovative Lösungen für onkologische Diagnostik und Therapie. Spezialisiert auf Sentinellymphknoten-Biopsie und nuklearmedizinische Verfahren.',
-    focus: ['Sentinellymphknoten-Biopsie','Nuklearmedizin','Onkologie','Gammaproben'],
+    focus: [
+      { icon: '🎯', label: 'Sentinellymphknoten-Biopsie', desc: 'Präzise intraoperative Detektion' },
+      { icon: '☢️', label: 'Nuklearmedizin', desc: 'Radioaktive Tracerverfahren' },
+      { icon: '🩺', label: 'Onkologie', desc: 'Tumorchirurgie-Unterstützung' },
+      { icon: '📻', label: 'Gammaproben', desc: 'Hochempfindliche Detektionssonden' },
+    ],
     facts: [
       { label: 'Spezialisierung', value: 'Onkologie' },
       { label: 'Hauptsitz', value: 'Hechingen, DE' },
@@ -78,8 +246,13 @@ const MFRS = [
     origin: 'Deutschland · Freiburg im Breisgau',
     accent: '#4a148c',
     bg: 'linear-gradient(160deg,#080210 0%,#0e0519 35%,#150822 60%,#0e0519 100%)',
-    description: 'Black Forest Medical Group spezialisiert sich auf hochwertige Implantate und Instrumente für die Transplantationsmedizin, Gefäßchirurgie und rekonstruktive Chirurgie. Präzisionsfertigung aus dem Schwarzwald.',
-    focus: ['Transplantationsmedizin','Gefäßchirurgie','Implantate','Rekonstruktive Chirurgie'],
+    description: 'Black Forest Medical Group spezialisiert sich auf hochwertige Implantate und Instrumente für die Transplantationsmedizin, Gefäßchirurgie und rekonstruktive Chirurgie.',
+    focus: [
+      { icon: '🫀', label: 'Transplantationsmedizin', desc: 'Organ- und Gewebetransplantation' },
+      { icon: '🩸', label: 'Gefäßchirurgie', desc: 'Vaskuläre Implantate & Instrumente' },
+      { icon: '🔩', label: 'Implantate', desc: 'Präzisionsfertigung Schwarzwald' },
+      { icon: '🏗️', label: 'Rekonstruktive Chirurgie', desc: 'Gewebeaufbau & Wiederherstellung' },
+    ],
     facts: [
       { label: 'Region', value: 'Schwarzwald, DE' },
       { label: 'Fokus', value: 'Transplantation' },
@@ -97,7 +270,12 @@ const MFRS = [
     accent: '#e65100',
     bg: 'linear-gradient(160deg,#0e0400 0%,#1c0900 35%,#271200 60%,#1c0900 100%)',
     description: 'Meyer-Haake Medical Innovations entwickelt und fertigt innovative Wirbelsäulen-Implantate und Fixationssysteme. Spezialisiert auf Pedikelschraubensysteme, Cages und dynamische Stabilisierung.',
-    focus: ['Pedikelschraubensysteme','Interkorporale Cages','Dynamische Stabilisierung','Minimalinvasive Implantologie'],
+    focus: [
+      { icon: '🔩', label: 'Pedikelschraubensysteme', desc: 'Modulare Wirbelsäulenfixation' },
+      { icon: '📦', label: 'Interkorporale Cages', desc: 'Fusion-Implantate TLIF/PLIF' },
+      { icon: '🌊', label: 'Dynamische Stabilisierung', desc: 'Bewegungserhaltende Implantate' },
+      { icon: '🎯', label: 'Minimalinvasive Implantologie', desc: 'MIS-Zugang Pedikelschrauben' },
+    ],
     facts: [
       { label: 'Gegründet', value: '1990' },
       { label: 'Hauptsitz', value: 'Wehrheim, DE' },
@@ -114,8 +292,13 @@ const MFRS = [
     origin: 'Deutschland · München',
     accent: '#880e4f',
     bg: 'linear-gradient(160deg,#0b0106 0%,#180410 35%,#220618 60%,#180410 100%)',
-    description: 'Brainlab ist ein globaler Technologieführer für softwaregestützte medizinische Technologie. Ihre Lösungen für Neurochirurgie, Orthopädie und Strahlentherapie werden in über 6.000 Krankenhäusern weltweit eingesetzt.',
-    focus: ['Navigationsgestützte Chirurgie','Strahlentherapie','Neurochirurgie','Digitale OR-Integration'],
+    description: 'Brainlab ist ein globaler Technologieführer für softwaregestützte medizinische Technologie. Ihre Lösungen werden in über 6.000 Krankenhäusern weltweit eingesetzt.',
+    focus: [
+      { icon: '🧭', label: 'Navigationsgestützte Chirurgie', desc: 'Echtzeit-Bildgebung im OP' },
+      { icon: '☢️', label: 'Strahlentherapie', desc: 'Präzisionsstrahlung Tumortherapie' },
+      { icon: '🧠', label: 'Neurochirurgie', desc: 'Brain Mapping & Navigation' },
+      { icon: '🖥️', label: 'Digitale OR-Integration', desc: 'Vernetzter Operationssaal' },
+    ],
     facts: [
       { label: 'Gegründet', value: '1989' },
       { label: 'Hauptsitz', value: 'München, DE' },
@@ -206,7 +389,6 @@ const SAP_TL = [
 const CSS = `
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700;800&family=Bebas+Neue&display=swap');
 
-/* ── DESIGN TOKENS ── */
 :root{
   --gold:#c8983a;--gold-lt:#e0aa4a;--gold-dim:#c8983a80;
   --cream:#f5f3ee;
@@ -222,7 +404,6 @@ const CSS = `
   --prog-bg:#1a1714;
   --prog-border:rgba(200,160,80,.18);
   --r:14px;
-  /* SAP specific */
   --sap-bg:#edeae2;
   --sap-card:#e6e2d8;
   --sap-card2:#dedad0;
@@ -234,34 +415,26 @@ const CSS = `
   --sap-nav-bg:#dedad0;
   --sap-nav-border:rgba(0,0,0,.08);
   --sap-input:#e0dcd2;
+  /* RIWO tokens */
+  --riwo-red:#c0392b;
+  --riwo-red-lt:#e84c3d;
+  --riwo-red-dim:rgba(192,57,43,.15);
+  /* INOMED tokens */
+  --ino-blue:#1565c0;
+  --ino-blue-lt:#1e88e5;
+  --ino-blue-dim:rgba(21,101,192,.15);
 }
-
-/* Dark mode overrides */
-[data-theme="dark"] {
-  --cream:#0f0e0c;
-  --card:#1c1a16;
-  --card-border:rgba(255,255,255,.07);
-  --text:#e8e4dc;
-  --text-dim:#a09880;
-  --text-faint:#6b6358;
-  --bg:#0f0e0c;
-  --bg2:#191714;
-  --section-bg:#131109;
-  --section-border:rgba(255,255,255,.06);
-  --prog-bg:#1a1714;
-  --prog-border:rgba(200,160,80,.15);
-  /* SAP in dark */
-  --sap-bg:#111009;
-  --sap-card:#1c1a14;
-  --sap-card2:#23201a;
-  --sap-border:rgba(255,255,255,.07);
-  --sap-text:#e8e4dc;
-  --sap-text-dim:#a09880;
-  --sap-text-faint:#6b6358;
+[data-theme="dark"]{
+  --cream:#0f0e0c;--card:#1c1a16;--card-border:rgba(255,255,255,.07);
+  --text:#e8e4dc;--text-dim:#a09880;--text-faint:#6b6358;
+  --bg:#0f0e0c;--bg2:#191714;--section-bg:#131109;--section-border:rgba(255,255,255,.06);
+  --prog-bg:#1a1714;--prog-border:rgba(200,160,80,.15);
+  --sap-bg:#111009;--sap-card:#1c1a14;--sap-card2:#23201a;
+  --sap-border:rgba(255,255,255,.07);--sap-text:#e8e4dc;--sap-text-dim:#a09880;--sap-text-faint:#6b6358;
   --sap-hd-bg:linear-gradient(160deg,#0d0c09 0%,#131109 50%,#0d0c09 100%);
-  --sap-nav-bg:#0d0c09;
-  --sap-nav-border:rgba(255,255,255,.06);
-  --sap-input:#191714;
+  --sap-nav-bg:#0d0c09;--sap-nav-border:rgba(255,255,255,.06);--sap-input:#191714;
+  --riwo-red-dim:rgba(192,57,43,.22);
+  --ino-blue-dim:rgba(21,101,192,.22);
 }
 
 *,*::before,*::after{box-sizing:border-box;}
@@ -269,21 +442,12 @@ body{background:var(--bg);}
 .ea{font-family:'Outfit',sans-serif;color:var(--text);}
 
 /* ── HERO ── */
-.ea-hero{
-  position:relative;width:100vw;margin-left:calc(-50vw + 50%);
-  min-height:100vh;display:flex;flex-direction:column;
-  justify-content:flex-end;overflow:hidden;background:#0a0a0c;
-}
+.ea-hero{position:relative;width:100vw;margin-left:calc(-50vw + 50%);min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:#0a0a0c;}
 .ea-hero-media{position:absolute;inset:0;z-index:0;}
 .ea-hero-video{width:100%;height:100%;object-fit:cover;display:block;}
-.ea-vignette{position:absolute;inset:0;z-index:1;
-  background:linear-gradient(to top,rgba(6,6,8,.94) 0%,rgba(6,6,8,.6) 30%,rgba(6,6,8,.22) 60%,transparent 100%),
-             linear-gradient(100deg,rgba(6,6,8,.5) 0%,transparent 55%);}
-.ea-grain{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.028;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='280' height='280' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size:200px;}
-.ea-frame-t,.ea-frame-b{position:absolute;left:0;right:0;height:1px;z-index:3;
-  background:linear-gradient(90deg,transparent,rgba(200,169,110,.3),transparent);}
+.ea-vignette{position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(6,6,8,.94) 0%,rgba(6,6,8,.6) 30%,rgba(6,6,8,.22) 60%,transparent 100%),linear-gradient(100deg,rgba(6,6,8,.5) 0%,transparent 55%);}
+.ea-grain{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.028;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='280' height='280' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px;}
+.ea-frame-t,.ea-frame-b{position:absolute;left:0;right:0;height:1px;z-index:3;background:linear-gradient(90deg,transparent,rgba(200,169,110,.3),transparent);}
 .ea-frame-t{top:0;}.ea-frame-b{bottom:0;}
 .ea-hero-inner{position:relative;z-index:4;padding:0 5% 8vh;width:100%;max-width:1600px;margin:0 auto;}
 .ea-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:1.4rem;}
@@ -291,57 +455,46 @@ body{background:var(--bg);}
 .ea-eyebrow span{font-size:.67rem;font-weight:600;letter-spacing:.26em;text-transform:uppercase;color:#c8a96e;}
 .ea-h1{margin:0;line-height:1;}
 .ea-h1-top{display:block;font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,3.5vw,3.2rem);color:rgba(255,255,255,.48);letter-spacing:.22em;}
-.ea-h1-main{display:block;font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,11vw,9.5rem);letter-spacing:.05em;line-height:.85;
-  background:linear-gradient(135deg,#fff 40%,#e8d5a8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.ea-h1-main{display:block;font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,11vw,9.5rem);letter-spacing:.05em;line-height:.85;background:linear-gradient(135deg,#fff 40%,#e8d5a8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 .ea-tagline{font-size:clamp(.82rem,1.2vw,.95rem);color:rgba(238,234,224,.38);font-weight:300;letter-spacing:.14em;text-transform:uppercase;margin:1.2rem 0 0;}
 .ea-stats{display:flex;align-items:stretch;gap:0;margin-top:2.5rem;flex-wrap:wrap;}
 .ea-stat{padding-right:2rem;margin-right:2rem;border-right:1px solid rgba(200,169,110,.16);}
 .ea-stat:last-child{border-right:none;padding-right:0;margin-right:0;}
 .ea-stat-n{font-family:'Bebas Neue',sans-serif;font-size:2.6rem;color:#fff;line-height:1;display:block;letter-spacing:.04em;}
 .ea-stat-l{font-size:.6rem;color:rgba(238,234,224,.3);text-transform:uppercase;letter-spacing:.18em;font-weight:500;display:block;margin-top:3px;}
-.ea-vidctl{position:absolute;bottom:2rem;right:3%;z-index:5;
-  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.4);
-  width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-  cursor:pointer;transition:all .2s;backdrop-filter:blur(14px);font-size:.7rem;}
+.ea-vidctl{position:absolute;bottom:2rem;right:3%;z-index:5;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.4);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;backdrop-filter:blur(14px);font-size:.7rem;}
 .ea-vidctl:hover{background:rgba(200,169,110,.15);color:#e8d5a8;border-color:#c8a96e;}
 
-/* ── MAIN WRAPPER ── */
+/* ── MAIN ── */
 .ea-main{background:var(--bg);padding:2.5rem 0 5rem;}
 .ea-wrap{width:100%;max-width:1600px;margin:0 auto;padding:0 4%;}
 
-/* ── WELCOME BAR ── */
-.ea-welcome{
-  background:var(--card);border:1px solid var(--card-border);
-  border-radius:var(--r);padding:1.2rem 1.75rem;
-  display:flex;align-items:center;justify-content:space-between;
-  gap:1rem;margin-bottom:1.75rem;flex-wrap:wrap;
-  box-shadow:0 1px 4px rgba(0,0,0,.05);
-}
+/* ── WELCOME ── */
+.ea-welcome{background:var(--card);border:1px solid var(--card-border);border-radius:var(--r);padding:1.2rem 1.75rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1.75rem;flex-wrap:wrap;box-shadow:0 1px 4px rgba(0,0,0,.05);}
 .ea-welcome-name{font-size:1.05rem;font-weight:600;color:var(--text);}
 .ea-welcome-sub{font-size:.77rem;color:var(--text-dim);margin-top:2px;}
-.ea-welcome-pill{background:rgba(200,152,58,.12);border:1px solid rgba(200,152,58,.3);color:var(--gold);
-  font-size:.77rem;font-weight:600;padding:6px 15px;border-radius:99px;white-space:nowrap;}
+.ea-welcome-pill{background:rgba(200,152,58,.12);border:1px solid rgba(200,152,58,.3);color:var(--gold);font-size:.77rem;font-weight:600;padding:6px 15px;border-radius:99px;white-space:nowrap;}
 
-/* ── MAIN TABS (QM / SAP / MED) ── */
-.ea-tabs{display:flex;background:var(--card);border-radius:var(--r);padding:4px;
-  box-shadow:0 1px 5px rgba(0,0,0,.07),0 0 0 1px var(--card-border);
-  margin-bottom:2.5rem;overflow-x:auto;gap:0;}
+/* ── TABS ── */
+.ea-tabs{display:flex;background:var(--card);border-radius:var(--r);padding:5px;box-shadow:0 1px 5px rgba(0,0,0,.07),0 0 0 1px var(--card-border);margin-bottom:2.5rem;overflow-x:auto;gap:0;position:relative;}
 .ea-tabs::-webkit-scrollbar{display:none;}
-.ea-tab{flex:1 1 120px;padding:13px 20px;border-radius:10px;border:none;background:transparent;
-  font-family:'Outfit',sans-serif;font-size:.9rem;font-weight:500;color:var(--text-dim);
-  cursor:pointer;transition:all .2s;text-align:center;white-space:nowrap;}
-.ea-tab.active{background:var(--text);color:var(--bg);font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,.18);}
-.ea-tab:hover:not(.active){background:var(--bg2);color:var(--text);}
+.ea-tab{flex:1 1 120px;padding:14px 22px;border-radius:10px;border:none;background:transparent;font-family:'Outfit',sans-serif;font-size:.9rem;font-weight:500;color:var(--text-dim);cursor:pointer;transition:color .25s,transform .18s;text-align:center;white-space:nowrap;position:relative;z-index:1;}
+.ea-tab .tab-icon{display:block;font-size:.95rem;margin-bottom:3px;transition:transform .3s cubic-bezier(.34,1.56,.64,1);}
+.ea-tab .tab-label{display:block;font-size:.78rem;font-weight:600;letter-spacing:.03em;}
+.ea-tab.active{color:var(--bg);font-weight:600;}
+.ea-tab.active .tab-icon{transform:scale(1.15);}
+.ea-tab:hover:not(.active){color:var(--text);}
+.ea-tab:hover:not(.active) .tab-icon{transform:scale(1.08);}
+.ea-tab-slider{position:absolute;top:5px;bottom:5px;border-radius:9px;background:var(--text);box-shadow:0 2px 10px rgba(0,0,0,.22);transition:left .35s cubic-bezier(.4,0,.2,1),width .35s cubic-bezier(.4,0,.2,1);pointer-events:none;z-index:0;}
 
 /* ── SECTION HEADER ── */
-.ea-sh{font-size:.82rem;font-weight:700;color:var(--text);display:flex;align-items:center;gap:12px;
-  margin:2.5rem 0 1.2rem;text-transform:uppercase;letter-spacing:.1em;}
+.ea-sh{font-size:.8rem;font-weight:700;color:var(--text);display:flex;align-items:center;gap:12px;margin:2.5rem 0 1.1rem;text-transform:uppercase;letter-spacing:.1em;}
 .ea-sh-bar{width:18px;height:2px;border-radius:99px;flex-shrink:0;}
 .ea-sh-rule{flex:1;height:1px;background:linear-gradient(90deg,var(--section-border),transparent);}
+.ea-sh-count{font-family:'DM Mono',monospace;font-size:.6rem;font-weight:600;padding:2px 8px;border-radius:99px;letter-spacing:.08em;text-transform:none;opacity:.75;border:1px solid;}
 
 /* ── PROGRESS ── */
-.ea-prog{background:var(--prog-bg);border-radius:16px;padding:1.75rem 2rem;display:flex;align-items:center;
-  gap:2rem;margin-bottom:1.75rem;border:1px solid var(--prog-border);flex-wrap:wrap;}
+.ea-prog{background:var(--prog-bg);border-radius:16px;padding:1.75rem 2rem;display:flex;align-items:center;gap:2rem;margin-bottom:1.75rem;border:1px solid var(--prog-border);flex-wrap:wrap;}
 .ea-prog-info{flex:1;min-width:160px;}
 .ea-prog-lbl{font-size:.6rem;color:var(--gold);text-transform:uppercase;letter-spacing:.22em;font-weight:600;margin-bottom:.8rem;}
 .ea-prog-track{height:4px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden;}
@@ -350,361 +503,395 @@ body{background:var(--bg);}
 .ea-prog-pct{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--gold-lt);line-height:1;min-width:84px;text-align:right;letter-spacing:.04em;}
 
 /* ── PHILOSOPHY ── */
-.ea-philo{background:var(--card);border:1px solid var(--card-border);border-radius:16px;
-  padding:1.75rem 2.25rem;margin-bottom:1.75rem;position:relative;overflow:hidden;
-  box-shadow:0 1px 4px rgba(0,0,0,.05);}
-.ea-philo::before{content:'QM';position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);
-  font-family:'Bebas Neue',sans-serif;font-size:6rem;color:rgba(200,152,58,.06);line-height:1;pointer-events:none;}
+.ea-philo{background:var(--card);border:1px solid var(--card-border);border-radius:16px;padding:1.75rem 2.25rem;margin-bottom:1.75rem;position:relative;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.05);}
+.ea-philo::before{content:'QM';position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);font-family:'Bebas Neue',sans-serif;font-size:6rem;color:rgba(200,152,58,.06);line-height:1;pointer-events:none;}
 .ea-philo-t{font-size:1.08rem;font-weight:600;color:var(--text);margin:0 0 5px;}
 .ea-philo-b{color:var(--text-dim);font-size:.85rem;margin:0 0 1rem;}
 .ea-philo-lnk{color:var(--gold);font-size:.82rem;font-weight:600;text-decoration:none;letter-spacing:.04em;transition:color .2s;}
 .ea-philo-lnk:hover{color:var(--gold-lt);}
 
 /* ── FINAL TEST ── */
-.ea-test{border-radius:16px;padding:1.4rem 1.75rem;margin-bottom:1.75rem;display:flex;
-  align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;border:1.5px solid;transition:all .3s;}
-.ea-test-btn{padding:11px 24px;border-radius:10px;border:none;font-family:'Outfit',sans-serif;
-  font-weight:600;font-size:.86rem;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.ea-test{border-radius:16px;padding:1.4rem 1.75rem;margin-bottom:1.75rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;border:1.5px solid;transition:all .3s;}
+.ea-test-btn{padding:11px 24px;border-radius:10px;border:none;font-family:'Outfit',sans-serif;font-weight:600;font-size:.86rem;cursor:pointer;transition:all .2s;white-space:nowrap;}
 
-/* ── MODULE CARD GRID ── */
-.ea-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:.5rem;}
-.ea-card{background:var(--card);border-radius:var(--r);padding:1.35rem;display:flex;flex-direction:column;
-  position:relative;overflow:hidden;transition:all .22s;
-  box-shadow:0 1px 3px rgba(0,0,0,.06),0 0 0 1px var(--card-border);}
-.ea-card:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(0,0,0,.09);}
-.ea-card-stripe{position:absolute;top:0;left:0;right:0;height:2px;}
-.ea-card-t{font-weight:600;font-size:.9rem;color:var(--text);margin:0 0 5px;line-height:1.3;}
-.ea-card-code{font-family:'DM Mono',monospace;font-size:.64rem;color:var(--text-faint);
-  background:var(--bg2);border:1px solid var(--section-border);
-  padding:2px 7px;border-radius:4px;display:inline-block;margin-bottom:.85rem;}
-.ea-card-bar{height:2px;background:var(--section-border);border-radius:99px;margin-bottom:.85rem;overflow:hidden;}
-.ea-card-bar-f{height:100%;border-radius:99px;transition:width .8s ease;}
-.ea-card-btn{display:block;text-align:center;padding:10px;border-radius:10px;font-weight:600;
-  font-size:.82rem;text-decoration:none;font-family:'Outfit',sans-serif;transition:all .2s;margin-top:auto;}
-.ea-card-btn:hover{filter:brightness(1.07);transform:translateY(-1px);}
+/* ── MODULE GRID ── */
+.ea-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-bottom:.5rem;}
 
-/* ── MANUFACTURER ── */
-/* ── MANUFACTURER LIST — full-width cards ── */
+/* ── MODULE CARD ── */
+.ea-card{background:var(--card);border-radius:var(--r);padding:1.5rem;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:transform .25s cubic-bezier(.2,.8,.3,1),box-shadow .25s ease;box-shadow:0 1px 3px rgba(0,0,0,.06),0 0 0 1px var(--card-border);cursor:pointer;}
+.ea-card:hover{transform:translateY(-5px) scale(1.01);box-shadow:0 16px 40px rgba(0,0,0,.12),0 0 0 1px var(--card-border);}
+.ea-card:active{transform:translateY(-2px) scale(.99);}
+.ea-card-stripe{position:absolute;top:0;left:0;bottom:0;width:3px;border-radius:var(--r) 0 0 var(--r);}
+.ea-card-num{position:absolute;top:.75rem;right:1rem;font-family:'Bebas Neue',sans-serif;font-size:2.4rem;color:rgba(0,0,0,.04);line-height:1;letter-spacing:.04em;pointer-events:none;user-select:none;}
+[data-theme="dark"] .ea-card-num{color:rgba(255,255,255,.04);}
+.ea-card-t{font-weight:600;font-size:.92rem;color:var(--text);margin:0 0 4px;line-height:1.3;padding-left:.25rem;}
+.ea-card-code{font-family:'DM Mono',monospace;font-size:.63rem;color:var(--text-faint);background:var(--bg2);border:1px solid var(--section-border);padding:2px 8px;border-radius:4px;display:inline-block;margin-bottom:.9rem;margin-left:.25rem;}
+.ea-card-status{display:flex;align-items:center;gap:8px;margin-bottom:.9rem;padding-left:.25rem;}
+.ea-card-chip{display:inline-flex;align-items:center;gap:5px;font-size:.65rem;font-weight:700;letter-spacing:.06em;padding:3px 9px;border-radius:99px;text-transform:uppercase;}
+.ea-card-chip-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+.ea-card-bar{height:2px;background:var(--section-border);border-radius:99px;margin:0 .25rem .9rem;overflow:hidden;}
+.ea-card-bar-f{height:100%;border-radius:99px;transition:width .8s cubic-bezier(.4,0,.2,1);}
+.ea-card-btn{display:flex;align-items:center;justify-content:center;gap:7px;padding:10px 14px;border-radius:10px;font-weight:600;font-size:.82rem;text-decoration:none;font-family:'Outfit',sans-serif;transition:all .2s;margin-top:auto;}
+.ea-card-btn:hover{filter:brightness(1.1);transform:translateY(-1px);}
+.ea-card-btn-arrow{font-size:.9rem;transition:transform .2s;}
+.ea-card-btn:hover .ea-card-btn-arrow{transform:translateX(3px);}
+.ea-card-done-glow{box-shadow:0 0 0 1.5px rgba(16,185,129,.25),0 4px 20px rgba(16,185,129,.1);}
+
+/* ── MANUFACTURER BANNERS ── */
 .med-list{display:flex;flex-direction:column;gap:0;}
-
-/* Each manufacturer = full-width banner card */
-.med-banner{
-  position:relative;width:100%;overflow:hidden;cursor:pointer;
-  border-radius:20px;margin-bottom:14px;
-  min-height:200px;display:flex;align-items:center;
-  transition:transform .35s cubic-bezier(.2,.8,.3,1), box-shadow .35s ease;
-  box-shadow:0 2px 12px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.08);
-}
-.med-banner:hover{
-  transform:translateY(-5px);
-  box-shadow:0 20px 56px rgba(0,0,0,.18), 0 6px 16px rgba(0,0,0,.1);
-}
+.med-banner{position:relative;width:100%;overflow:hidden;cursor:pointer;border-radius:20px;margin-bottom:14px;min-height:200px;display:flex;align-items:center;transition:transform .35s cubic-bezier(.2,.8,.3,1),box-shadow .35s ease;box-shadow:0 2px 12px rgba(0,0,0,.1),0 1px 3px rgba(0,0,0,.08);}
+.med-banner:hover{transform:translateY(-5px);box-shadow:0 20px 56px rgba(0,0,0,.18),0 6px 16px rgba(0,0,0,.1);}
 [data-theme="dark"] .med-banner{box-shadow:0 4px 20px rgba(0,0,0,.5);}
 [data-theme="dark"] .med-banner:hover{box-shadow:0 20px 56px rgba(0,0,0,.7);}
-
-/* Dark gradient background */
-.med-banner-bg{
-  position:absolute;inset:0;z-index:0;
-  transition:transform .6s ease;
-}
+.med-banner-bg{position:absolute;inset:0;z-index:0;transition:transform .6s ease;}
 .med-banner:hover .med-banner-bg{transform:scale(1.03);}
-
-/* Overlay for readability */
-.med-banner-overlay{
-  position:absolute;inset:0;z-index:1;
-  background:
-    linear-gradient(90deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.3) 45%, rgba(0,0,0,.08) 100%),
-    linear-gradient(to bottom, rgba(0,0,0,.15) 0%, rgba(0,0,0,.0) 100%);
-}
-
-/* Accent line on left */
-.med-banner-accent{
-  position:absolute;left:0;top:0;bottom:0;width:5px;z-index:3;
-  border-radius:20px 0 0 20px;
-  /* Subtle outward glow matching brand color */
-  box-shadow:2px 0 18px rgba(255,255,255,.08);
-}
-/* Ambient glow from accent color into the bg */
-.med-banner::before{
-  content:'';
-  position:absolute;left:0;top:0;bottom:0;width:35%;z-index:1;
-  background:linear-gradient(90deg,var(--accent-glow,rgba(200,0,0,.12)) 0%,transparent 100%);
-  pointer-events:none;
-}
-
-/* Content inside banner */
-.med-banner-content{
-  position:relative;z-index:2;padding:2.5rem 3rem;
-  display:flex;align-items:center;gap:3rem;width:100%;
-}
-.med-banner-logo-wrap{
-  flex-shrink:0;
-  width:200px;height:88px;
-  display:flex;align-items:center;justify-content:center;
-  /* White background so logos with white bg blend naturally */
-  background:#ffffff;
-  border-radius:14px;
-  padding:14px 22px;
-  /* Subtle shadow to separate from dark gradient bg */
-  box-shadow:0 4px 24px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,.15);
-  position:relative;overflow:hidden;
-}
-/* Soft glow behind logo matching brand accent */
-.med-banner-logo-wrap::after{
-  content:'';
-  position:absolute;inset:0;
-  border-radius:14px;
-  box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
-  pointer-events:none;
-}
-/* Logo: no filter — keep original colors */
-.med-banner-logo{
-  max-width:100%;max-height:100%;object-fit:contain;
-  display:block;
-  /* remove white bg bleed with mix-blend-mode */
-  mix-blend-mode:multiply;
-}
+.med-banner-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,.3) 45%,rgba(0,0,0,.08) 100%),linear-gradient(to bottom,rgba(0,0,0,.15) 0%,rgba(0,0,0,.0) 100%);}
+.med-banner-accent{position:absolute;left:0;top:0;bottom:0;width:5px;z-index:3;border-radius:20px 0 0 20px;box-shadow:2px 0 18px rgba(255,255,255,.08);}
+.med-banner::before{content:'';position:absolute;left:0;top:0;bottom:0;width:35%;z-index:1;background:linear-gradient(90deg,var(--accent-glow,rgba(200,0,0,.12)) 0%,transparent 100%);pointer-events:none;}
+.med-banner-content{position:relative;z-index:2;padding:2.5rem 3rem;display:flex;align-items:center;gap:3rem;width:100%;}
+.med-banner-logo-wrap{flex-shrink:0;width:200px;height:88px;display:flex;align-items:center;justify-content:center;background:#ffffff;border-radius:14px;padding:14px 22px;box-shadow:0 4px 24px rgba(0,0,0,.3),0 1px 0 rgba(255,255,255,.15);position:relative;overflow:hidden;}
+.med-banner-logo-wrap::after{content:'';position:absolute;inset:0;border-radius:14px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);pointer-events:none;}
+.med-banner-logo{max-width:100%;max-height:100%;object-fit:contain;display:block;mix-blend-mode:multiply;}
 [data-theme="dark"] .med-banner-logo{mix-blend-mode:normal;}
 .med-banner-text{flex:1;min-width:0;}
-.med-banner-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.6rem,3vw,2.4rem);
-  color:#fff;letter-spacing:.06em;line-height:1;margin-bottom:.4rem;}
-.med-banner-tagline{font-size:.85rem;color:rgba(255,255,255,.65);font-weight:300;
-  letter-spacing:.06em;text-transform:uppercase;margin-bottom:.8rem;}
-.med-banner-origin{display:flex;align-items:center;gap:6px;font-size:.72rem;
-  color:rgba(255,255,255,.45);font-weight:500;}
+.med-banner-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.6rem,3vw,2.4rem);color:#fff;letter-spacing:.06em;line-height:1;margin-bottom:.4rem;}
+.med-banner-tagline{font-size:.85rem;color:rgba(255,255,255,.65);font-weight:300;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.8rem;}
+.med-banner-origin{display:flex;align-items:center;gap:6px;font-size:.72rem;color:rgba(255,255,255,.45);font-weight:500;}
 .med-banner-origin::before{content:'📍';font-size:.75rem;}
-.med-banner-arrow{
-  flex-shrink:0;width:48px;height:48px;border-radius:50%;
-  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
-  display:flex;align-items:center;justify-content:center;
-  color:rgba(255,255,255,.7);font-size:1.1rem;
-  transition:all .25s;
-  backdrop-filter:blur(8px);
-}
+.med-banner-arrow{flex-shrink:0;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.7);font-size:1.1rem;transition:all .25s;backdrop-filter:blur(8px);}
 .med-banner:hover .med-banner-arrow{background:rgba(255,255,255,.2);color:#fff;transform:translateX(4px);}
-
-/* Status badge */
-.med-banner-badge{
-  position:absolute;top:1.25rem;right:1.5rem;z-index:3;
-  font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;
-  padding:4px 12px;border-radius:99px;
-  background:rgba(255,255,255,.12);color:rgba(255,255,255,.7);
-  border:1px solid rgba(255,255,255,.15);
-  backdrop-filter:blur(8px);
-}
+.med-banner-badge{position:absolute;top:1.25rem;right:1.5rem;z-index:3;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;padding:4px 12px;border-radius:99px;background:rgba(255,255,255,.12);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(8px);}
 .med-banner-badge.active{background:rgba(16,185,129,.2);color:#6ee7b7;border-color:rgba(16,185,129,.3);}
 
-/* ── MANUFACTURER DETAIL PAGE ── */
+/* ── GENERIC MFR DETAIL (non-RIWO) ── */
 .med-detail{}
-
-.med-detail-hero{
-  position:relative;overflow:hidden;border-radius:20px;
-  min-height:280px;display:flex;align-items:flex-end;
-  margin-bottom:2rem;
-  box-shadow:0 8px 40px rgba(0,0,0,.2);
-}
+.med-detail-hero{position:relative;overflow:hidden;border-radius:20px;min-height:280px;display:flex;align-items:flex-end;margin-bottom:2rem;box-shadow:0 8px 40px rgba(0,0,0,.2);}
 [data-theme="dark"] .med-detail-hero{box-shadow:0 8px 40px rgba(0,0,0,.5);}
 .med-detail-hero-bg{position:absolute;inset:0;z-index:0;}
-.med-detail-hero-overlay{
-  position:absolute;inset:0;z-index:1;
-  background:linear-gradient(to top,rgba(0,0,0,.85) 0%,rgba(0,0,0,.4) 50%,rgba(0,0,0,.1) 100%);
-}
-.med-detail-hero-content{
-  position:relative;z-index:2;padding:2.5rem 3rem;width:100%;
-  display:flex;align-items:flex-end;gap:2.5rem;flex-wrap:wrap;
-}
-.med-detail-logo-wrap{
-  width:180px;height:72px;
-  background:#ffffff;
-  border-radius:12px;
-  display:flex;align-items:center;justify-content:center;
-  padding:12px 20px;flex-shrink:0;
-  box-shadow:0 4px 20px rgba(0,0,0,.35), 0 1px 0 rgba(255,255,255,.1);
-}
-.med-detail-logo{
-  max-width:100%;max-height:100%;object-fit:contain;
-  mix-blend-mode:multiply;
-}
+.med-detail-hero-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(0,0,0,.85) 0%,rgba(0,0,0,.4) 50%,rgba(0,0,0,.1) 100%);}
+.med-detail-hero-content{position:relative;z-index:2;padding:2.5rem 3rem;width:100%;display:flex;align-items:flex-end;gap:2.5rem;flex-wrap:wrap;}
+.med-detail-logo-wrap{width:180px;height:72px;background:#ffffff;border-radius:12px;display:flex;align-items:center;justify-content:center;padding:12px 20px;flex-shrink:0;box-shadow:0 4px 20px rgba(0,0,0,.35),0 1px 0 rgba(255,255,255,.1);}
+.med-detail-logo{max-width:100%;max-height:100%;object-fit:contain;mix-blend-mode:multiply;}
 [data-theme="dark"] .med-detail-logo{mix-blend-mode:normal;}
 .med-detail-hero-text{flex:1;min-width:0;}
-.med-detail-hero-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,3.5rem);
-  color:#fff;letter-spacing:.05em;line-height:.95;margin-bottom:.5rem;}
-.med-detail-hero-tag{font-size:.82rem;color:rgba(255,255,255,.6);font-weight:300;
-  letter-spacing:.1em;text-transform:uppercase;}
-
-/* Info grid below hero */
+.med-detail-hero-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,3.5rem);color:#fff;letter-spacing:.05em;line-height:.95;margin-bottom:.5rem;}
+.med-detail-hero-tag{font-size:.82rem;color:rgba(255,255,255,.6);font-weight:300;letter-spacing:.1em;text-transform:uppercase;}
 .med-info-grid{display:grid;grid-template-columns:1fr 2fr;gap:1.5rem;margin-bottom:2rem;}
-.med-info-card{background:var(--card);border:1px solid var(--card-border);border-radius:16px;
-  padding:1.75rem;box-shadow:0 1px 4px rgba(0,0,0,.05);}
-.med-info-card-t{font-size:.75rem;font-weight:700;color:var(--text-faint);text-transform:uppercase;
-  letter-spacing:.12em;margin-bottom:1rem;}
+.med-info-card{background:var(--card);border:1px solid var(--card-border);border-radius:16px;padding:1.75rem;box-shadow:0 1px 4px rgba(0,0,0,.05);}
+.med-info-card-t{font-size:.75rem;font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:.12em;margin-bottom:1rem;}
 .med-facts{display:flex;flex-direction:column;gap:.75rem;}
-.med-fact{display:flex;align-items:center;justify-content:space-between;padding:.6rem .75rem;
-  background:var(--bg2);border-radius:8px;}
+.med-fact{display:flex;align-items:center;justify-content:space-between;padding:.6rem .75rem;background:var(--bg2);border-radius:8px;}
 .med-fact-l{font-size:.75rem;color:var(--text-dim);font-weight:500;}
 .med-fact-v{font-size:.82rem;color:var(--text);font-weight:700;}
 .med-focus-tags{display:flex;flex-wrap:wrap;gap:8px;}
-.med-focus-tag{padding:6px 14px;border-radius:99px;font-size:.75rem;font-weight:600;
-  background:var(--bg2);color:var(--text-dim);border:1px solid var(--section-border);}
-
-/* Description */
+.med-focus-tag{padding:6px 14px;border-radius:99px;font-size:.75rem;font-weight:600;background:var(--bg2);color:var(--text-dim);border:1px solid var(--section-border);}
 .med-desc{font-size:.9rem;color:var(--text-dim);line-height:1.75;margin-bottom:.75rem;}
-
-/* Back button */
-.med-back{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;
-  border:1px solid var(--section-border);background:var(--card);font-family:'Outfit',sans-serif;
-  font-weight:600;font-size:.84rem;cursor:pointer;margin-bottom:2rem;color:var(--text);transition:all .2s;
-  box-shadow:0 1px 3px rgba(0,0,0,.05);}
+.med-back{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;border:1px solid var(--section-border);background:var(--card);font-family:'Outfit',sans-serif;font-weight:600;font-size:.84rem;cursor:pointer;margin-bottom:2rem;color:var(--text);transition:all .2s;box-shadow:0 1px 3px rgba(0,0,0,.05);}
 .med-back:hover{background:var(--bg2);}
-
-/* Product cards — full width each */
 .med-prod-list{display:flex;flex-direction:column;gap:12px;}
-.med-prod-card{
-  background:var(--card);border:1px solid var(--card-border);border-radius:16px;
-  padding:1.75rem 2rem;display:flex;align-items:center;gap:2rem;
-  box-shadow:0 1px 4px rgba(0,0,0,.05);transition:all .22s;
-  text-decoration:none;color:inherit;position:relative;overflow:hidden;
-}
+.med-prod-card{background:var(--card);border:1px solid var(--card-border);border-radius:16px;padding:1.75rem 2rem;display:flex;align-items:center;gap:2rem;box-shadow:0 1px 4px rgba(0,0,0,.05);transition:all .22s;text-decoration:none;color:inherit;position:relative;overflow:hidden;}
 .med-prod-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.1);border-color:rgba(200,152,58,.3);}
 [data-theme="dark"] .med-prod-card:hover{box-shadow:0 8px 24px rgba(0,0,0,.3);}
 .med-prod-accent{position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:16px 0 0 16px;}
-.med-prod-num{
-  font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--text-faint);
-  letter-spacing:.04em;line-height:1;min-width:48px;text-align:center;flex-shrink:0;
-}
+.med-prod-num{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--text-faint);letter-spacing:.04em;line-height:1;min-width:48px;text-align:center;flex-shrink:0;}
 .med-prod-divider{width:1px;height:60px;background:var(--section-border);flex-shrink:0;}
 .med-prod-body{flex:1;min-width:0;}
-.med-prod-code{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--text-faint);
-  background:var(--bg2);border:1px solid var(--section-border);padding:2px 8px;
-  border-radius:4px;display:inline-block;margin-bottom:.5rem;}
+.med-prod-code{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--text-faint);background:var(--bg2);border:1px solid var(--section-border);padding:2px 8px;border-radius:4px;display:inline-block;margin-bottom:.5rem;}
 .med-prod-title{font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:.4rem;line-height:1.3;}
 .med-prod-desc{font-size:.82rem;color:var(--text-dim);line-height:1.6;}
-.med-prod-cta{
-  flex-shrink:0;padding:10px 20px;border-radius:10px;
-  font-family:'Outfit',sans-serif;font-weight:600;font-size:.82rem;
-  text-decoration:none;transition:all .2s;white-space:nowrap;
-  background:var(--bg2);color:var(--text-dim);border:1px solid var(--section-border);
-}
+.med-prod-cta{flex-shrink:0;padding:10px 20px;border-radius:10px;font-family:'Outfit',sans-serif;font-weight:600;font-size:.82rem;text-decoration:none;transition:all .2s;white-space:nowrap;background:var(--bg2);color:var(--text-dim);border:1px solid var(--section-border);}
 .med-prod-card:hover .med-prod-cta{background:var(--gold);color:#fff;border-color:var(--gold);}
-
-/* Draft state */
-.med-draft{
-  text-align:center;padding:5rem 2rem;background:var(--card);
-  border-radius:20px;border:2px dashed var(--section-border);
-  margin-top:1.5rem;
-}
+.med-draft{text-align:center;padding:5rem 2rem;background:var(--card);border-radius:20px;border:2px dashed var(--section-border);margin-top:1.5rem;}
 .med-draft-icon{font-size:3rem;margin-bottom:1rem;display:block;}
 .med-draft-t{font-size:1.15rem;font-weight:700;color:var(--text);margin:0 0 .5rem;}
-.med-draft-s{font-size:.86rem;color:var(--text-faint);margin:0;max-width:360px;margin:0 auto;}
-
+.med-draft-s{font-size:.86rem;color:var(--text-faint);margin:0 auto;max-width:360px;}
 .ea-draft{text-align:center;padding:4rem 2rem;background:var(--card);border-radius:16px;border:1.5px dashed var(--section-border);}
 .ea-draft-t{font-size:1.1rem;font-weight:600;color:var(--text);margin:0 0 .4rem;}
 .ea-draft-s{font-size:.86rem;color:var(--text-faint);margin:0;}
 
-/* ══════════════════════════════════════════════════════
-   SAP UNIVERSUM — full-width, SEAMLESS with page
-   Uses same background as page, no dark box
-══════════════════════════════════════════════════════ */
+/* ══ RIWOSPINE DETAIL ══ */
+.riwo-back{display:inline-flex;align-items:center;gap:9px;padding:10px 20px;border-radius:11px;border:1px solid var(--section-border);background:var(--card);font-family:'Outfit',sans-serif;font-weight:600;font-size:.84rem;cursor:pointer;margin-bottom:2rem;color:var(--text);transition:all .2s;box-shadow:0 1px 3px rgba(0,0,0,.05);}
+.riwo-back:hover{background:var(--bg2);transform:translateX(-2px);}
+.riwo-hero{position:relative;overflow:hidden;border-radius:22px;min-height:320px;display:flex;align-items:flex-end;margin-bottom:1.75rem;box-shadow:0 12px 48px rgba(0,0,0,.2),0 0 0 1px rgba(192,57,43,.15);}
+.riwo-hero-bg{position:absolute;inset:0;z-index:0;background:linear-gradient(160deg,#0f0404 0%,#1e0606 35%,#2a0808 60%,#1e0606 100%);}
+.riwo-hero-grid{position:absolute;inset:0;z-index:1;opacity:.07;background-image:linear-gradient(rgba(192,57,43,.6) 1px,transparent 1px),linear-gradient(90deg,rgba(192,57,43,.6) 1px,transparent 1px);background-size:48px 48px;}
+.riwo-hero-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.4) 50%,rgba(0,0,0,.05) 100%),linear-gradient(100deg,rgba(192,57,43,.12) 0%,transparent 60%);}
+.riwo-hero-content{position:relative;z-index:3;padding:2.5rem 3rem;width:100%;display:flex;align-items:flex-end;gap:2.5rem;flex-wrap:wrap;}
+.riwo-hero-logo-wrap{width:200px;height:80px;background:#fff;border-radius:14px;display:flex;align-items:center;justify-content:center;padding:14px 22px;flex-shrink:0;box-shadow:0 4px 24px rgba(0,0,0,.4),0 0 0 1px rgba(192,57,43,.2);}
+.riwo-hero-logo{max-width:100%;max-height:100%;object-fit:contain;mix-blend-mode:multiply;}
+[data-theme="dark"] .riwo-hero-logo{mix-blend-mode:normal;}
+.riwo-hero-text{flex:1;min-width:0;}
+.riwo-hero-eyebrow{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:#e84c3d;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:8px;}
+.riwo-hero-eyebrow::before{content:'';display:block;width:24px;height:1px;background:#e84c3d;}
+.riwo-hero-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,5vw,3.8rem);color:#fff;letter-spacing:.06em;line-height:.95;margin-bottom:.5rem;}
+.riwo-hero-tag{font-size:.82rem;color:rgba(255,255,255,.55);font-weight:300;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.2rem;}
+.riwo-hero-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+.riwo-btn-primary{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:10px;background:#c0392b;color:#fff;font-family:'Outfit',sans-serif;font-weight:700;font-size:.82rem;text-decoration:none;letter-spacing:.03em;border:none;cursor:pointer;transition:all .2s;box-shadow:0 4px 16px rgba(192,57,43,.4);}
+.riwo-btn-primary:hover{background:#e84c3d;transform:translateY(-1px);box-shadow:0 6px 20px rgba(192,57,43,.5);color:#fff;text-decoration:none;}
+.riwo-btn-ghost{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:10px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.15);font-family:'Outfit',sans-serif;font-weight:600;font-size:.82rem;text-decoration:none;cursor:pointer;transition:all .2s;backdrop-filter:blur(8px);}
+.riwo-btn-ghost:hover{background:rgba(255,255,255,.15);color:#fff;text-decoration:none;}
+.riwo-hero-stats{position:absolute;top:1.5rem;right:1.5rem;z-index:4;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;}
+.riwo-stat-pill{background:rgba(0,0,0,.35);border:1px solid rgba(192,57,43,.3);backdrop-filter:blur(10px);border-radius:99px;padding:5px 13px;display:flex;align-items:center;gap:6px;}
+.riwo-stat-pill-n{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:#e84c3d;line-height:1;}
+.riwo-stat-pill-l{font-size:.58rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em;font-weight:600;}
+.riwo-info-grid{display:grid;grid-template-columns:260px 1fr 280px;gap:14px;margin-bottom:1.75rem;}
+.riwo-card{background:var(--card);border:1px solid var(--card-border);border-radius:16px;padding:1.5rem;box-shadow:0 1px 4px rgba(0,0,0,.05);}
+.riwo-card-label{font-size:.62rem;font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:.14em;margin-bottom:1rem;display:flex;align-items:center;gap:8px;}
+.riwo-card-label::after{content:'';flex:1;height:1px;background:var(--section-border);}
+.riwo-facts{display:flex;flex-direction:column;gap:7px;}
+.riwo-fact{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;background:var(--bg2);border-radius:9px;}
+.riwo-fact-l{font-size:.72rem;color:var(--text-dim);font-weight:500;}
+.riwo-fact-v{font-size:.78rem;color:var(--text);font-weight:700;}
+.riwo-website-link{display:flex;align-items:center;gap:10px;margin-top:1rem;padding:10px 14px;border-radius:10px;background:var(--riwo-red-dim);border:1px solid rgba(192,57,43,.3);color:#e84c3d;text-decoration:none;font-family:'Outfit',sans-serif;font-weight:600;font-size:.8rem;transition:all .2s;}
+.riwo-website-link:hover{background:#c0392b;color:#fff;text-decoration:none;border-color:#c0392b;}
+.riwo-website-link-icon{font-size:1rem;}
+.riwo-website-link-arrow{margin-left:auto;font-size:.9rem;transition:transform .2s;}
+.riwo-website-link:hover .riwo-website-link-arrow{transform:translateX(3px);}
+.riwo-focus-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
+.riwo-focus-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;background:var(--bg2);border:1px solid var(--section-border);transition:all .18s;cursor:default;}
+.riwo-focus-item:hover{border-color:rgba(192,57,43,.3);background:var(--riwo-red-dim);}
+.riwo-focus-icon{width:32px;height:32px;border-radius:8px;flex-shrink:0;background:var(--riwo-red-dim);display:flex;align-items:center;justify-content:center;font-size:1rem;}
+.riwo-focus-name{font-size:.74rem;font-weight:700;color:var(--text);line-height:1.2;}
+.riwo-focus-desc{font-size:.64rem;color:var(--text-faint);margin-top:1px;}
+.riwo-map-card{background:var(--card);border:1px solid var(--card-border);border-radius:16px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.05);display:flex;flex-direction:column;}
+.riwo-map-embed{flex:1;min-height:160px;position:relative;overflow:hidden;}
+.riwo-map-embed iframe{width:100%;height:100%;border:none;display:block;min-height:185px;filter:grayscale(20%) contrast(1.05);}
+.riwo-map-info{padding:1rem 1.25rem;border-top:1px solid var(--section-border);}
+.riwo-map-pin{display:flex;align-items:flex-start;gap:9px;}
+.riwo-map-pin-icon{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+.riwo-map-city{font-size:.88rem;font-weight:700;color:var(--text);line-height:1.2;}
+.riwo-map-region{font-size:.72rem;color:var(--text-faint);margin-top:2px;}
+.riwo-map-badge{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:3px 10px;border-radius:99px;background:var(--riwo-red-dim);border:1px solid rgba(192,57,43,.25);font-size:.62rem;font-weight:700;color:#e84c3d;text-transform:uppercase;letter-spacing:.1em;}
+.riwo-sh{display:flex;align-items:center;gap:12px;margin:2.5rem 0 1.2rem;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--text);}
+.riwo-sh-bar{width:3px;height:18px;border-radius:99px;background:#c0392b;flex-shrink:0;}
+.riwo-sh-rule{flex:1;height:1px;background:linear-gradient(90deg,var(--section-border),transparent);}
+.riwo-sh-count{font-family:'DM Mono',monospace;font-size:.62rem;padding:2px 9px;border-radius:99px;background:var(--riwo-red-dim);border:1px solid rgba(192,57,43,.25);color:#e84c3d;letter-spacing:.06em;}
+.riwo-prod-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:2rem;}
+.riwo-prod-card{background:var(--card);border:1px solid var(--card-border);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 2px 8px rgba(0,0,0,.06);transition:transform .3s cubic-bezier(.2,.8,.3,1),box-shadow .3s ease,border-color .2s;text-decoration:none;color:inherit;position:relative;}
+.riwo-prod-card:hover{transform:translateY(-6px);box-shadow:0 20px 48px rgba(0,0,0,.13),0 0 0 1.5px rgba(192,57,43,.25);text-decoration:none;color:inherit;border-color:rgba(192,57,43,.2);}
+.riwo-prod-image{position:relative;height:200px;overflow:hidden;flex-shrink:0;}
+.riwo-prod-image img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;}
+.riwo-prod-card:hover .riwo-prod-image img{transform:scale(1.06);}
+.riwo-prod-image-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;position:relative;overflow:hidden;}
+.riwo-prod-image-placeholder::before{content:'';position:absolute;inset:0;opacity:.06;background-image:linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px);background-size:32px 32px;}
+.riwo-prod-ph-icon{font-size:2.8rem;position:relative;z-index:1;}
+.riwo-prod-ph-code{font-family:'DM Mono',monospace;font-size:.68rem;color:rgba(255,255,255,.3);letter-spacing:.12em;position:relative;z-index:1;text-transform:uppercase;}
+.riwo-prod-ph-text{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 100%);padding:2rem 1.25rem .8rem;font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:rgba(255,255,255,.18);letter-spacing:.1em;line-height:1;}
+.riwo-prod-badge{position:absolute;top:1rem;left:1rem;z-index:2;padding:4px 12px;border-radius:99px;font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#fff;backdrop-filter:blur(8px);box-shadow:0 2px 10px rgba(0,0,0,.3);}
+.riwo-prod-num-badge{position:absolute;top:1rem;right:1rem;z-index:2;width:32px;height:32px;border-radius:8px;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:.72rem;font-weight:700;color:rgba(255,255,255,.6);}
+.riwo-prod-top-bar{position:absolute;top:0;left:0;right:0;height:3px;background:#c0392b;z-index:1;}
+.riwo-prod-body{padding:1.5rem;flex:1;display:flex;flex-direction:column;}
+.riwo-prod-code-row{display:flex;align-items:center;gap:8px;margin-bottom:.6rem;}
+.riwo-prod-code{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--text-faint);background:var(--bg2);border:1px solid var(--section-border);padding:2px 8px;border-radius:4px;display:inline-block;}
+.riwo-prod-tagline{font-size:.68rem;color:#e84c3d;font-weight:600;text-transform:uppercase;letter-spacing:.08em;}
+.riwo-prod-title{font-size:1.2rem;font-weight:800;color:var(--text);margin-bottom:.5rem;line-height:1.2;}
+.riwo-prod-desc{font-size:.8rem;color:var(--text-dim);line-height:1.65;margin-bottom:1.2rem;}
+.riwo-prod-specs{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-bottom:1.2rem;}
+.riwo-prod-spec{background:var(--bg2);border-radius:9px;padding:8px 10px;display:flex;align-items:flex-start;gap:7px;border:1px solid var(--section-border);}
+.riwo-prod-spec-icon{font-size:.9rem;flex-shrink:0;margin-top:1px;}
+.riwo-prod-spec-label{font-size:.58rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:.09em;font-weight:600;}
+.riwo-prod-spec-val{font-size:.74rem;color:var(--text);font-weight:700;line-height:1.25;}
+.riwo-prod-highlights{display:flex;flex-direction:column;gap:5px;margin-bottom:1.25rem;}
+.riwo-prod-hl{display:flex;align-items:flex-start;gap:8px;font-size:.76rem;color:var(--text-dim);line-height:1.45;}
+.riwo-prod-hl::before{content:'›';color:#c0392b;font-weight:700;flex-shrink:0;font-size:.9rem;margin-top:-1px;}
+.riwo-prod-cta{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-radius:11px;margin-top:auto;background:var(--riwo-red-dim);border:1px solid rgba(192,57,43,.25);font-family:'Outfit',sans-serif;font-weight:700;font-size:.82rem;color:#e84c3d;text-decoration:none;transition:all .2s;}
+.riwo-prod-card:hover .riwo-prod-cta{background:#c0392b;color:#fff;border-color:#c0392b;}
+.riwo-prod-cta-arrow{font-size:1rem;transition:transform .2s;}
+.riwo-prod-card:hover .riwo-prod-cta-arrow{transform:translateX(4px);}
 
-.sap-section{
-  width:100vw;
-  margin-left:calc(-50vw + 50%);
-  background:var(--sap-bg);
-  color:var(--sap-text);
-  border-top:1px solid var(--section-border);
-  border-bottom:1px solid var(--section-border);
+/* ══ INOMED DETAIL ══ */
+.ino-back{display:inline-flex;align-items:center;gap:9px;padding:10px 20px;border-radius:11px;border:1px solid var(--section-border);background:var(--card);font-family:'Outfit',sans-serif;font-weight:600;font-size:.84rem;cursor:pointer;margin-bottom:2rem;color:var(--text);transition:all .2s;box-shadow:0 1px 3px rgba(0,0,0,.05);}
+.ino-back:hover{background:var(--bg2);transform:translateX(-2px);}
+.ino-hero{position:relative;overflow:hidden;border-radius:22px;min-height:320px;display:flex;align-items:flex-end;margin-bottom:1.75rem;box-shadow:0 12px 48px rgba(0,0,0,.2),0 0 0 1px rgba(21,101,192,.15);}
+.ino-hero-bg{position:absolute;inset:0;z-index:0;background:linear-gradient(160deg,#020610 0%,#040c1e 35%,#071428 60%,#040c1e 100%);}
+.ino-hero-grid{position:absolute;inset:0;z-index:1;opacity:.06;background-image:linear-gradient(rgba(30,136,229,.6) 1px,transparent 1px),linear-gradient(90deg,rgba(30,136,229,.6) 1px,transparent 1px);background-size:48px 48px;}
+.ino-hero-pulse{position:absolute;inset:0;z-index:1;overflow:hidden;}
+.ino-hero-pulse::after{content:'';position:absolute;top:50%;left:50%;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(21,101,192,.08) 0%,transparent 70%);transform:translate(-50%,-50%);animation:ino-pulse 4s ease-in-out infinite;}
+@keyframes ino-pulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.5}50%{transform:translate(-50%,-50%) scale(1.15);opacity:1}}
+.ino-hero-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,rgba(0,0,0,.45) 50%,rgba(0,0,0,.05) 100%),linear-gradient(100deg,rgba(21,101,192,.1) 0%,transparent 60%);}
+.ino-hero-content{position:relative;z-index:3;padding:2.5rem 3rem;width:100%;display:flex;align-items:flex-end;gap:2.5rem;flex-wrap:wrap;}
+.ino-hero-logo-wrap{width:200px;height:80px;background:#fff;border-radius:14px;display:flex;align-items:center;justify-content:center;padding:14px 22px;flex-shrink:0;box-shadow:0 4px 24px rgba(0,0,0,.4),0 0 0 1px rgba(21,101,192,.2);}
+.ino-hero-logo{max-width:100%;max-height:100%;object-fit:contain;mix-blend-mode:multiply;}
+[data-theme="dark"] .ino-hero-logo{mix-blend-mode:normal;}
+.ino-hero-text{flex:1;min-width:0;}
+.ino-hero-eyebrow{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:#1e88e5;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:8px;}
+.ino-hero-eyebrow::before{content:'';display:block;width:24px;height:1px;background:#1e88e5;}
+.ino-hero-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,5vw,3.8rem);color:#fff;letter-spacing:.06em;line-height:.95;margin-bottom:.5rem;}
+.ino-hero-tag{font-size:.82rem;color:rgba(255,255,255,.55);font-weight:300;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.2rem;}
+.ino-hero-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+.ino-hero-stats{position:absolute;top:1.5rem;right:1.5rem;z-index:4;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;}
+.ino-stat-pill{background:rgba(0,0,0,.35);border:1px solid rgba(21,101,192,.35);backdrop-filter:blur(10px);border-radius:99px;padding:5px 13px;display:flex;align-items:center;gap:6px;}
+.ino-stat-pill-n{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:#1e88e5;line-height:1;}
+.ino-stat-pill-l{font-size:.58rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em;font-weight:600;}
+.ino-btn-primary{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:10px;background:#1565c0;color:#fff;font-family:'Outfit',sans-serif;font-weight:700;font-size:.82rem;text-decoration:none;letter-spacing:.03em;border:none;cursor:pointer;transition:all .2s;box-shadow:0 4px 16px rgba(21,101,192,.4);}
+.ino-btn-primary:hover{background:#1e88e5;transform:translateY(-1px);box-shadow:0 6px 20px rgba(21,101,192,.5);color:#fff;text-decoration:none;}
+.ino-btn-ghost{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:10px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.15);font-family:'Outfit',sans-serif;font-weight:600;font-size:.82rem;text-decoration:none;cursor:pointer;transition:all .2s;backdrop-filter:blur(8px);}
+.ino-btn-ghost:hover{background:rgba(255,255,255,.15);color:#fff;text-decoration:none;}
+.ino-info-grid{display:grid;grid-template-columns:260px 1fr 280px;gap:14px;margin-bottom:1.75rem;}
+.ino-card{background:var(--card);border:1px solid var(--card-border);border-radius:16px;padding:1.5rem;box-shadow:0 1px 4px rgba(0,0,0,.05);}
+.ino-card-label{font-size:.62rem;font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:.14em;margin-bottom:1rem;display:flex;align-items:center;gap:8px;}
+.ino-card-label::after{content:'';flex:1;height:1px;background:var(--section-border);}
+.ino-facts{display:flex;flex-direction:column;gap:7px;}
+.ino-fact{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;background:var(--bg2);border-radius:9px;}
+.ino-fact-l{font-size:.72rem;color:var(--text-dim);font-weight:500;}
+.ino-fact-v{font-size:.78rem;color:var(--text);font-weight:700;}
+.ino-website-link{display:flex;align-items:center;gap:10px;margin-top:1rem;padding:10px 14px;border-radius:10px;background:var(--ino-blue-dim);border:1px solid rgba(21,101,192,.3);color:#1e88e5;text-decoration:none;font-family:'Outfit',sans-serif;font-weight:600;font-size:.8rem;transition:all .2s;}
+.ino-website-link:hover{background:#1565c0;color:#fff;text-decoration:none;border-color:#1565c0;}
+.ino-website-link-arrow{margin-left:auto;font-size:.9rem;transition:transform .2s;}
+.ino-website-link:hover .ino-website-link-arrow{transform:translateX(3px);}
+.ino-focus-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
+.ino-focus-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;background:var(--bg2);border:1px solid var(--section-border);transition:all .18s;cursor:default;}
+.ino-focus-item:hover{border-color:rgba(21,101,192,.3);background:var(--ino-blue-dim);}
+.ino-focus-icon{width:32px;height:32px;border-radius:8px;flex-shrink:0;background:var(--ino-blue-dim);display:flex;align-items:center;justify-content:center;font-size:1rem;}
+.ino-focus-name{font-size:.74rem;font-weight:700;color:var(--text);line-height:1.2;}
+.ino-focus-desc{font-size:.64rem;color:var(--text-faint);margin-top:1px;}
+.ino-map-card{background:var(--card);border:1px solid var(--card-border);border-radius:16px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.05);display:flex;flex-direction:column;}
+.ino-map-embed{flex:1;min-height:160px;position:relative;overflow:hidden;}
+.ino-map-embed iframe{width:100%;height:100%;border:none;display:block;min-height:185px;filter:grayscale(20%) contrast(1.05);}
+.ino-map-info{padding:1rem 1.25rem;border-top:1px solid var(--section-border);}
+.ino-map-pin{display:flex;align-items:flex-start;gap:9px;}
+.ino-map-pin-icon{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+.ino-map-city{font-size:.88rem;font-weight:700;color:var(--text);line-height:1.2;}
+.ino-map-region{font-size:.72rem;color:var(--text-faint);margin-top:2px;}
+.ino-map-badge{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:3px 10px;border-radius:99px;background:var(--ino-blue-dim);border:1px solid rgba(21,101,192,.25);font-size:.62rem;font-weight:700;color:#1e88e5;text-transform:uppercase;letter-spacing:.1em;}
+.ino-sh{display:flex;align-items:center;gap:12px;margin:2.5rem 0 1.2rem;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--text);}
+.ino-sh-bar{width:3px;height:18px;border-radius:99px;background:#1565c0;flex-shrink:0;}
+.ino-sh-rule{flex:1;height:1px;background:linear-gradient(90deg,var(--section-border),transparent);}
+.ino-sh-count{font-family:'DM Mono',monospace;font-size:.62rem;padding:2px 9px;border-radius:99px;background:var(--ino-blue-dim);border:1px solid rgba(21,101,192,.25);color:#1e88e5;letter-spacing:.06em;}
+.ino-prod-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:2rem;}
+.ino-prod-card{background:var(--card);border:1px solid var(--card-border);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 2px 8px rgba(0,0,0,.06);transition:transform .3s cubic-bezier(.2,.8,.3,1),box-shadow .3s ease,border-color .2s;text-decoration:none;color:inherit;position:relative;}
+.ino-prod-card:hover{transform:translateY(-6px);box-shadow:0 20px 48px rgba(0,0,0,.13),0 0 0 1.5px rgba(21,101,192,.25);text-decoration:none;color:inherit;border-color:rgba(21,101,192,.2);}
+.ino-prod-image{position:relative;height:200px;overflow:hidden;flex-shrink:0;}
+.ino-prod-image img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;}
+.ino-prod-card:hover .ino-prod-image img{transform:scale(1.06);}
+.ino-prod-image-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;position:relative;overflow:hidden;}
+.ino-prod-image-placeholder::before{content:'';position:absolute;inset:0;opacity:.06;background-image:linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px);background-size:32px 32px;}
+.ino-prod-ph-icon{font-size:2.8rem;position:relative;z-index:1;}
+.ino-prod-ph-code{font-family:'DM Mono',monospace;font-size:.68rem;color:rgba(255,255,255,.3);letter-spacing:.12em;position:relative;z-index:1;text-transform:uppercase;}
+.ino-prod-ph-text{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 100%);padding:2rem 1.25rem .8rem;font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:rgba(255,255,255,.18);letter-spacing:.1em;line-height:1;}
+.ino-prod-badge{position:absolute;top:1rem;left:1rem;z-index:2;padding:4px 12px;border-radius:99px;font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#fff;backdrop-filter:blur(8px);box-shadow:0 2px 10px rgba(0,0,0,.3);}
+.ino-prod-num-badge{position:absolute;top:1rem;right:1rem;z-index:2;width:32px;height:32px;border-radius:8px;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:.72rem;font-weight:700;color:rgba(255,255,255,.6);}
+.ino-prod-top-bar{position:absolute;top:0;left:0;right:0;height:3px;background:#1565c0;z-index:1;}
+.ino-prod-body{padding:1.5rem;flex:1;display:flex;flex-direction:column;}
+.ino-prod-code-row{display:flex;align-items:center;gap:8px;margin-bottom:.6rem;}
+.ino-prod-code{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--text-faint);background:var(--bg2);border:1px solid var(--section-border);padding:2px 8px;border-radius:4px;display:inline-block;}
+.ino-prod-tagline{font-size:.68rem;color:#1e88e5;font-weight:600;text-transform:uppercase;letter-spacing:.08em;}
+.ino-prod-title{font-size:1.2rem;font-weight:800;color:var(--text);margin-bottom:.5rem;line-height:1.2;}
+.ino-prod-desc{font-size:.8rem;color:var(--text-dim);line-height:1.65;margin-bottom:1.2rem;}
+.ino-prod-specs{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-bottom:1.2rem;}
+.ino-prod-spec{background:var(--bg2);border-radius:9px;padding:8px 10px;display:flex;align-items:flex-start;gap:7px;border:1px solid var(--section-border);}
+.ino-prod-spec-icon{font-size:.9rem;flex-shrink:0;margin-top:1px;}
+.ino-prod-spec-label{font-size:.58rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:.09em;font-weight:600;}
+.ino-prod-spec-val{font-size:.74rem;color:var(--text);font-weight:700;line-height:1.25;}
+.ino-prod-highlights{display:flex;flex-direction:column;gap:5px;margin-bottom:1.25rem;}
+.ino-prod-hl{display:flex;align-items:flex-start;gap:8px;font-size:.76rem;color:var(--text-dim);line-height:1.45;}
+.ino-prod-hl::before{content:'›';color:#1565c0;font-weight:700;flex-shrink:0;font-size:.9rem;margin-top:-1px;}
+.ino-prod-cta{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-radius:11px;margin-top:auto;background:var(--ino-blue-dim);border:1px solid rgba(21,101,192,.25);font-family:'Outfit',sans-serif;font-weight:700;font-size:.82rem;color:#1e88e5;text-decoration:none;transition:all .2s;}
+.ino-prod-card:hover .ino-prod-cta{background:#1565c0;color:#fff;border-color:#1565c0;}
+.ino-prod-cta-arrow{font-size:1rem;transition:transform .2s;}
+.ino-prod-card:hover .ino-prod-cta-arrow{transform:translateX(4px);}
+.ino-anim{animation:ea-up .35s ease both;}
+.ino-anim-1{animation:ea-up .35s .05s ease both;}
+.ino-anim-2{animation:ea-up .35s .10s ease both;}
+.ino-anim-3{animation:ea-up .35s .15s ease both;}
+.ino-prod-grid .ino-prod-card:nth-child(1){animation:ea-up .4s .08s ease both;}
+.ino-prod-grid .ino-prod-card:nth-child(2){animation:ea-up .4s .16s ease both;}
+.ino-prod-grid .ino-prod-card:nth-child(3){animation:ea-up .4s .24s ease both;}
+.ino-prod-grid .ino-prod-card:nth-child(4){animation:ea-up .4s .32s ease both;}
+@media(min-width:768px) and (max-width:1099px){
+  .ino-info-grid{grid-template-columns:240px 1fr 260px;}
+  .ino-prod-grid{grid-template-columns:1fr;}
+}
+@media(min-width:480px) and (max-width:767px){
+  .ino-info-grid{grid-template-columns:1fr 1fr;}
+  .ino-info-grid > :last-child{grid-column:1/-1;}
+  .ino-prod-grid{grid-template-columns:1fr;}
+  .ino-hero{min-height:240px;border-radius:14px;}
+  .ino-hero-content{padding:1.75rem;flex-direction:column;align-items:flex-start;}
+  .ino-hero-logo-wrap{width:150px;height:62px;}
+}
+@media(max-width:479px){
+  .ino-info-grid{grid-template-columns:1fr;}
+  .ino-prod-grid{grid-template-columns:1fr;gap:12px;}
+  .ino-hero{min-height:200px;border-radius:12px;}
+  .ino-hero-content{padding:1.25rem;flex-direction:column;align-items:flex-start;gap:1rem;}
+  .ino-hero-logo-wrap{width:130px;height:54px;}
+  .ino-hero-stats{top:.75rem;right:.75rem;gap:5px;}
+  .ino-prod-image{height:160px;}
+  .ino-focus-grid{grid-template-columns:1fr;}
+  .ino-prod-specs{grid-template-columns:1fr;}
 }
 
-/* ── SAP HEADER — warm parchment, not dark ── */
-.sap-hd{
-  background:var(--sap-hd-bg);
-  border-bottom:1px solid var(--sap-nav-border);
-  padding:4rem 5% 3rem;
-  position:relative;overflow:hidden;
-}
-.sap-hd::before{
-  content:'SAP UNIVERSUM';
-  position:absolute;right:2%;bottom:-.5rem;
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(4rem,9vw,8rem);
-  color:rgba(200,152,58,.07);
-  line-height:1;pointer-events:none;letter-spacing:.08em;white-space:nowrap;
-}
+/* ── ANIMATIONS ── */
+@keyframes ea-up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.riwo-anim{animation:ea-up .35s ease both;}
+.riwo-anim-1{animation:ea-up .35s .05s ease both;}
+.riwo-anim-2{animation:ea-up .35s .10s ease both;}
+.riwo-anim-3{animation:ea-up .35s .15s ease both;}
+.riwo-prod-grid .riwo-prod-card:nth-child(1){animation:ea-up .4s .08s ease both;}
+.riwo-prod-grid .riwo-prod-card:nth-child(2){animation:ea-up .4s .16s ease both;}
+.riwo-prod-grid .riwo-prod-card:nth-child(3){animation:ea-up .4s .24s ease both;}
+.riwo-prod-grid .riwo-prod-card:nth-child(4){animation:ea-up .4s .32s ease both;}
+@keyframes tab-slide-in-right{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes tab-slide-in-left{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes tab-slide-in-up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.tab-enter-right{animation:tab-slide-in-right .38s cubic-bezier(.25,.46,.45,.94) both;}
+.tab-enter-left{animation:tab-slide-in-left .38s cubic-bezier(.25,.46,.45,.94) both;}
+.tab-enter-up{animation:tab-slide-in-up .3s ease both;}
+.ea-grid .ea-card{animation:tab-slide-in-up .3s ease both;}
+.ea-grid .ea-card:nth-child(1){animation-delay:.04s;}
+.ea-grid .ea-card:nth-child(2){animation-delay:.08s;}
+.ea-grid .ea-card:nth-child(3){animation-delay:.12s;}
+.ea-grid .ea-card:nth-child(4){animation-delay:.16s;}
+.ea-grid .ea-card:nth-child(5){animation-delay:.20s;}
+.ea-grid .ea-card:nth-child(6){animation-delay:.24s;}
+.ea-grid .ea-card:nth-child(7){animation-delay:.28s;}
+.ea-grid .ea-card:nth-child(8){animation-delay:.32s;}
+
+/* ══ SAP ══ */
+.sap-section{width:100vw;margin-left:calc(-50vw + 50%);background:var(--sap-bg);color:var(--sap-text);border-top:1px solid var(--section-border);border-bottom:1px solid var(--section-border);}
+.sap-hd{background:var(--sap-hd-bg);border-bottom:1px solid var(--sap-nav-border);padding:4rem 5% 3rem;position:relative;overflow:hidden;}
+.sap-hd::before{content:'SAP UNIVERSUM';position:absolute;right:2%;bottom:-.5rem;font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,9vw,8rem);color:rgba(200,152,58,.07);line-height:1;pointer-events:none;letter-spacing:.08em;white-space:nowrap;}
 .sap-hd-inner{max-width:1600px;margin:0 auto;}
-.sap-eyebrow{font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);
-  font-weight:600;display:flex;align-items:center;gap:9px;margin-bottom:.7rem;}
+.sap-eyebrow{font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-weight:600;display:flex;align-items:center;gap:9px;margin-bottom:.7rem;}
 .sap-eyebrow::before{content:'';display:block;width:28px;height:1px;background:var(--gold);opacity:.6;}
-.sap-hd-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,4.2rem);
-  color:var(--sap-text);margin:0 0 .5rem;letter-spacing:.05em;line-height:.92;}
+.sap-hd-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,4.2rem);color:var(--sap-text);margin:0 0 .5rem;letter-spacing:.05em;line-height:.92;}
 .sap-hd-title span{color:var(--gold);}
 .sap-hd-sub{color:var(--sap-text-dim);font-size:.9rem;font-weight:300;line-height:1.65;max-width:640px;margin:0 0 1.5rem;}
 .sap-hd-pills{display:flex;gap:10px;flex-wrap:wrap;}
-.sap-pill{background:rgba(200,152,58,.1);border:1px solid rgba(200,152,58,.25);
-  color:var(--gold);font-size:.68rem;font-weight:600;padding:5px 13px;
-  border-radius:99px;letter-spacing:.07em;text-transform:uppercase;}
-
-/* ── STICKY NAV — matches page header ── */
-.sap-nav{
-  background:var(--sap-nav-bg);
-  border-bottom:1px solid var(--sap-nav-border);
-  position:sticky;top:0;z-index:100;
-}
+.sap-pill{background:rgba(200,152,58,.1);border:1px solid rgba(200,152,58,.25);color:var(--gold);font-size:.68rem;font-weight:600;padding:5px 13px;border-radius:99px;letter-spacing:.07em;text-transform:uppercase;}
+.sap-nav{background:var(--sap-nav-bg);border-bottom:1px solid var(--sap-nav-border);position:sticky;top:0;z-index:100;}
 .sap-nav-inner{max-width:1600px;margin:0 auto;padding:0 5%;display:flex;overflow-x:auto;}
 .sap-nav-inner::-webkit-scrollbar{display:none;}
-.sap-ntab{padding:.95rem 1.5rem;border:none;background:transparent;
-  color:var(--sap-text-faint);font-family:'Outfit',sans-serif;font-size:.86rem;font-weight:500;
-  cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .18s;flex-shrink:0;}
+.sap-ntab{padding:.95rem 1.5rem;border:none;background:transparent;color:var(--sap-text-faint);font-family:'Outfit',sans-serif;font-size:.86rem;font-weight:500;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .18s;flex-shrink:0;}
 .sap-ntab:hover{color:var(--sap-text);}
 .sap-ntab.on{color:var(--gold);border-bottom-color:var(--gold);font-weight:600;}
-
-/* ── SAP CONTENT AREA ── */
 .sap-content{max-width:1600px;margin:0 auto;padding:3rem 5% 5rem;}
-.sap-sh{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--sap-text);
-  letter-spacing:.07em;margin:0 0 .4rem;display:flex;align-items:center;gap:14px;}
+.sap-sh{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--sap-text);letter-spacing:.07em;margin:0 0 .4rem;display:flex;align-items:center;gap:14px;}
 .sap-sh-rule{flex:1;height:1px;background:linear-gradient(90deg,var(--sap-border),transparent);}
 .sap-ss{font-size:.84rem;color:var(--sap-text-faint);margin:0 0 2rem;font-weight:300;}
 @keyframes sap-up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .sap-anim{animation:sap-up .3s ease;}
-
-/* ── PROCESS FLOW CHIPS ── */
 .sap-flow{display:flex;align-items:center;overflow-x:auto;padding-bottom:1rem;margin-bottom:2rem;gap:0;}
 .sap-flow::-webkit-scrollbar{height:3px;}
 .sap-flow::-webkit-scrollbar-thumb{background:rgba(200,152,58,.2);border-radius:99px;}
-.sap-fc{
-  flex-shrink:0;background:var(--card);border:1px solid var(--sap-border);border-radius:12px;
-  padding:1rem 1.1rem;text-align:center;cursor:pointer;transition:all .2s;
-  min-width:110px;max-width:130px;
-  box-shadow:0 1px 3px rgba(0,0,0,.06);
-}
+.sap-fc{flex-shrink:0;background:var(--card);border:1px solid var(--sap-border);border-radius:12px;padding:1rem 1.1rem;text-align:center;cursor:pointer;transition:all .2s;min-width:110px;max-width:130px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
 .sap-fc:hover,.sap-fc.on{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.1);}
 .sap-fc.on{border-color:var(--fc-col,#c8983a);}
 .sap-fc-em{font-size:1.6rem;display:block;margin-bottom:5px;}
 .sap-fc-lbl{font-size:.65rem;color:var(--sap-text-dim);line-height:1.3;font-weight:500;}
 .sap-arr{color:rgba(200,152,58,.4);font-size:1.1rem;padding:0 3px;flex-shrink:0;margin-bottom:14px;}
-
-/* ── DETAIL PANEL ── */
-.sap-dp{
-  background:var(--card);border:1px solid var(--sap-border);border-radius:16px;
-  padding:2rem;margin-bottom:2rem;border-left:3px solid;
-  box-shadow:0 2px 8px rgba(0,0,0,.06);
-}
+.sap-dp{background:var(--card);border:1px solid var(--sap-border);border-radius:16px;padding:2rem;margin-bottom:2rem;border-left:3px solid;box-shadow:0 2px 8px rgba(0,0,0,.06);}
 .sap-dp-top{display:flex;align-items:center;gap:14px;margin-bottom:1.25rem;}
 .sap-dp-em{font-size:2rem;}
 .sap-dp-phase{font-size:.6rem;text-transform:uppercase;letter-spacing:.18em;font-weight:700;margin-bottom:3px;}
 .sap-dp-name{font-size:1.05rem;font-weight:700;color:var(--sap-text);}
 .sap-dp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;}
-.sap-dp-item{background:var(--sap-card);border:1px solid var(--sap-border);border-radius:10px;
-  padding:.9rem 1rem;display:flex;gap:10px;align-items:flex-start;}
+.sap-dp-item{background:var(--sap-card);border:1px solid var(--sap-border);border-radius:10px;padding:.9rem 1rem;display:flex;gap:10px;align-items:flex-start;}
 .sap-dp-ico{font-size:1rem;flex-shrink:0;margin-top:1px;}
 .sap-dp-txt{font-size:.8rem;color:var(--sap-text-dim);line-height:1.5;}
-
-/* ── PROCESS CARD GRID ── */
 .sap-pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
-.sap-pcard{
-  background:var(--card);border:1px solid var(--sap-border);border-radius:16px;
-  padding:1.5rem;cursor:pointer;transition:all .22s;position:relative;overflow:hidden;
-  box-shadow:0 1px 3px rgba(0,0,0,.06);
-}
+.sap-pcard{background:var(--card);border:1px solid var(--sap-border);border-radius:16px;padding:1.5rem;cursor:pointer;transition:all .22s;position:relative;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06);}
 .sap-pcard:hover{border-color:rgba(200,152,58,.3);transform:translateY(-3px);box-shadow:0 12px 28px rgba(0,0,0,.1);}
 .sap-pcard.on{box-shadow:0 0 0 1.5px var(--pc,#c8983a),0 8px 24px rgba(0,0,0,.1);}
 .sap-pcard-bar{position:absolute;top:0;left:0;right:0;height:2px;opacity:.8;}
@@ -715,11 +902,8 @@ body{background:var(--bg);}
 .sap-pcard-s{font-size:.7rem;color:var(--sap-text-faint);margin-top:2px;}
 .sap-pcard-list{display:flex;flex-direction:column;gap:5px;}
 .sap-pcard-li{display:flex;gap:8px;font-size:.75rem;color:var(--sap-text-dim);line-height:1.4;}
-
-/* ── MODULE CARDS ── */
 .sap-mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;}
-.sap-mc{background:var(--card);border:1px solid var(--sap-border);border-radius:16px;overflow:hidden;
-  transition:all .22s;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+.sap-mc{background:var(--card);border:1px solid var(--sap-border);border-radius:16px;overflow:hidden;transition:all .22s;box-shadow:0 1px 3px rgba(0,0,0,.06);}
 .sap-mc:hover{border-color:rgba(200,152,58,.28);transform:translateY(-3px);box-shadow:0 12px 28px rgba(0,0,0,.1);}
 .sap-mc-hd{padding:1.5rem;display:flex;align-items:flex-start;gap:14px;border-bottom:1px solid var(--sap-border);cursor:pointer;}
 .sap-mc-ico{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;}
@@ -730,112 +914,75 @@ body{background:var(--bg);}
 .sap-hl{font-size:.78rem;color:var(--sap-text-dim);display:flex;gap:8px;}
 .sap-hl::before{content:'›';color:var(--gold);font-weight:700;flex-shrink:0;}
 .sap-kpis{display:flex;gap:8px;flex-wrap:wrap;}
-.sap-kpi{background:var(--sap-card);border:1px solid var(--sap-border);border-radius:9px;
-  padding:6px 10px;text-align:center;min-width:68px;}
+.sap-kpi{background:var(--sap-card);border:1px solid var(--sap-border);border-radius:9px;padding:6px 10px;text-align:center;min-width:68px;}
 .sap-kpi-v{font-family:'Bebas Neue',sans-serif;font-size:1.05rem;line-height:1;letter-spacing:.03em;}
 .sap-kpi-l{font-size:.57rem;color:var(--sap-text-faint);text-transform:uppercase;letter-spacing:.09em;margin-top:2px;}
-.sap-mc-deep{padding:1.25rem 1.5rem;border-top:1px solid var(--sap-border);
-  font-size:.8rem;color:var(--sap-text-dim);line-height:1.75;white-space:pre-line;
-  background:var(--sap-card);}
-
-/* ── MDR CHAIN ── */
+.sap-mc-deep{padding:1.25rem 1.5rem;border-top:1px solid var(--sap-border);font-size:.8rem;color:var(--sap-text-dim);line-height:1.75;white-space:pre-line;background:var(--sap-card);}
 .sap-mdr-chain{display:flex;align-items:center;overflow-x:auto;padding:1.5rem 0 1rem;gap:0;}
 .sap-mdr-chain::-webkit-scrollbar{height:3px;}
 .sap-mdr-chain::-webkit-scrollbar-thumb{background:rgba(200,152,58,.2);border-radius:99px;}
-.sap-mdr-step{flex-shrink:0;background:var(--card);border:1px solid var(--sap-border);
-  border-radius:14px;padding:1.2rem 1rem;text-align:center;min-width:130px;max-width:155px;
-  box-shadow:0 1px 3px rgba(0,0,0,.06);}
+.sap-mdr-step{flex-shrink:0;background:var(--card);border:1px solid var(--sap-border);border-radius:14px;padding:1.2rem 1rem;text-align:center;min-width:130px;max-width:155px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
 .sap-mdr-em{font-size:1.7rem;display:block;margin-bottom:6px;}
 .sap-mdr-t{font-size:.75rem;font-weight:700;color:var(--sap-text);margin-bottom:4px;line-height:1.25;}
 .sap-mdr-s{font-size:.64rem;color:var(--sap-text-faint);line-height:1.5;white-space:pre-line;}
 .sap-mdr-arr{color:rgba(200,152,58,.4);font-size:1.3rem;padding:0 6px;flex-shrink:0;}
-
-/* ── ESCALATION ── */
-.sap-esc{border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:10px;border-left:4px solid;
-  box-shadow:0 1px 4px rgba(0,0,0,.05);}
+.sap-esc{border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:10px;border-left:4px solid;box-shadow:0 1px 4px rgba(0,0,0,.05);}
 .sap-esc-hd{display:flex;align-items:center;gap:12px;margin-bottom:1rem;flex-wrap:wrap;}
-.sap-esc-badge{font-size:.63rem;font-weight:700;text-transform:uppercase;letter-spacing:.15em;
-  padding:3px 10px;border-radius:6px;white-space:nowrap;}
+.sap-esc-badge{font-size:.63rem;font-weight:700;text-transform:uppercase;letter-spacing:.15em;padding:3px 10px;border-radius:6px;white-space:nowrap;}
 .sap-esc-title{font-size:.97rem;font-weight:700;color:var(--sap-text);margin:2px 0 2px;}
 .sap-esc-trig{font-size:.72rem;color:var(--sap-text-faint);}
 .sap-esc-acts{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;}
-.sap-esc-act{background:var(--card);border:1px solid var(--sap-border);border-radius:9px;
-  padding:.7rem .9rem;font-size:.77rem;color:var(--sap-text-dim);display:flex;gap:8px;}
-
-/* ── ROLES ── */
+.sap-esc-act{background:var(--card);border:1px solid var(--sap-border);border-radius:9px;padding:.7rem .9rem;font-size:.77rem;color:var(--sap-text-dim);display:flex;gap:8px;}
 .sap-rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;}
-.sap-rc{background:var(--card);border:1px solid var(--sap-border);border-radius:14px;padding:1.4rem;
-  box-shadow:0 1px 3px rgba(0,0,0,.05);}
-.sap-rc-ico{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;
-  justify-content:center;font-size:1.4rem;margin-bottom:.8rem;}
-.sap-rc-badge{display:inline-block;padding:2px 9px;border-radius:5px;font-family:'DM Mono',monospace;
-  font-size:.62rem;font-weight:500;letter-spacing:.07em;margin-bottom:6px;}
+.sap-rc{background:var(--card);border:1px solid var(--sap-border);border-radius:14px;padding:1.4rem;box-shadow:0 1px 3px rgba(0,0,0,.05);}
+.sap-rc-ico{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:.8rem;}
+.sap-rc-badge{display:inline-block;padding:2px 9px;border-radius:5px;font-family:'DM Mono',monospace;font-size:.62rem;font-weight:500;letter-spacing:.07em;margin-bottom:6px;}
 .sap-rc-name{font-size:.9rem;font-weight:700;color:var(--sap-text);margin-bottom:4px;}
 .sap-rc-mod{font-size:.74rem;color:var(--sap-text-faint);line-height:1.4;}
 .sap-sod-grid{display:flex;flex-direction:column;gap:9px;margin-top:1.5rem;}
-.sap-sod{background:rgba(220,38,38,.06);border:1px solid rgba(220,38,38,.15);border-radius:12px;
-  padding:1.1rem 1.3rem;display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:center;}
+.sap-sod{background:rgba(220,38,38,.06);border:1px solid rgba(220,38,38,.15);border-radius:12px;padding:1.1rem 1.3rem;display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:center;}
 [data-theme="dark"] .sap-sod{background:rgba(220,38,38,.1);border-color:rgba(220,38,38,.2);}
 .sap-sod-c{font-size:.8rem;font-weight:600;color:#b91c1c;}
 [data-theme="dark"] .sap-sod-c{color:#fca5a5;}
-.sap-sod-b{background:rgba(220,38,38,.12);color:#dc2626;padding:3px 11px;border-radius:99px;
-  font-size:.63rem;font-weight:700;text-transform:uppercase;text-align:center;white-space:nowrap;}
+.sap-sod-b{background:rgba(220,38,38,.12);color:#dc2626;padding:3px 11px;border-radius:99px;font-size:.63rem;font-weight:700;text-transform:uppercase;text-align:center;white-space:nowrap;}
 [data-theme="dark"] .sap-sod-b{background:rgba(220,38,38,.2);color:#fca5a5;}
 .sap-sod-ctrl{font-size:.75rem;color:#059669;}
 [data-theme="dark"] .sap-sod-ctrl{color:#6ee7b7;}
-
-/* ── TIMELINE ── */
 .sap-tl-wrap{display:grid;grid-template-columns:1fr 1fr;gap:2rem 4rem;position:relative;}
 .sap-tl-col{position:relative;padding-left:1.8rem;}
-.sap-tl-col::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;
-  background:linear-gradient(to bottom,var(--gold),rgba(200,152,58,.05));}
+.sap-tl-col::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--gold),rgba(200,152,58,.05));}
 .sap-tl-item{padding-bottom:1.75rem;position:relative;}
-.sap-tl-dot{position:absolute;left:-1.8rem;top:5px;width:13px;height:13px;border-radius:50%;
-  border:2px solid;transform:translateX(-50%);}
+.sap-tl-dot{position:absolute;left:-1.8rem;top:5px;width:13px;height:13px;border-radius:50%;border:2px solid;transform:translateX(-50%);}
 .sap-tl-dot.d{background:var(--gold);border-color:var(--gold);}
 .sap-tl-dot.t{background:var(--sap-bg);border-color:rgba(200,152,58,.3);}
 .sap-tl-ph{font-family:'DM Mono',monospace;font-size:.64rem;color:var(--gold);letter-spacing:.1em;margin-bottom:3px;}
-.sap-tl-name{font-size:.94rem;font-weight:700;color:var(--sap-text);margin-bottom:3px;
-  display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.sap-tl-name{font-size:.94rem;font-weight:700;color:var(--sap-text);margin-bottom:3px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
 .sap-tl-desc{font-size:.77rem;color:var(--sap-text-faint);}
 .sap-tl-badge{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:2px 7px;border-radius:4px;}
 .sap-tl-badge.d{background:rgba(5,150,105,.12);color:#059669;}
 [data-theme="dark"] .sap-tl-badge.d{background:rgba(16,185,129,.15);color:#6ee7b7;}
 .sap-tl-badge.t{background:rgba(200,152,58,.1);color:var(--gold);}
-.sap-proj-bar{background:var(--card);border:1px solid var(--sap-border);border-radius:14px;
-  padding:1.5rem 2rem;margin-bottom:2.5rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap;
-  box-shadow:0 1px 4px rgba(0,0,0,.05);}
+.sap-proj-bar{background:var(--card);border:1px solid var(--sap-border);border-radius:14px;padding:1.5rem 2rem;margin-bottom:2.5rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap;box-shadow:0 1px 4px rgba(0,0,0,.05);}
 .sap-pbar-info{flex:1;min-width:180px;}
 .sap-pbar-lbl{font-size:.6rem;color:var(--gold);text-transform:uppercase;letter-spacing:.2em;font-weight:600;margin-bottom:8px;}
 .sap-pbar-track{height:4px;background:var(--sap-card2);border-radius:99px;overflow:hidden;}
 .sap-pbar-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-lt));border-radius:99px;}
 .sap-pbar-sub{font-size:.7rem;color:var(--sap-text-faint);margin-top:6px;}
 .sap-pbar-pct{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:var(--gold);line-height:1;letter-spacing:.04em;}
-
-/* ── UAT TRACKER ── */
 .sap-uat-stats{display:flex;gap:12px;margin-bottom:1.5rem;flex-wrap:wrap;}
-.sap-uat-stat{background:var(--card);border:1px solid var(--sap-border);border-radius:12px;
-  padding:.8rem 1.2rem;display:flex;align-items:center;gap:10px;box-shadow:0 1px 3px rgba(0,0,0,.05);}
+.sap-uat-stat{background:var(--card);border:1px solid var(--sap-border);border-radius:12px;padding:.8rem 1.2rem;display:flex;align-items:center;gap:10px;box-shadow:0 1px 3px rgba(0,0,0,.05);}
 .sap-uat-n{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;line-height:1;letter-spacing:.03em;}
 .sap-uat-l{font-size:.62rem;color:var(--sap-text-faint);text-transform:uppercase;letter-spacing:.1em;font-weight:500;}
-.sap-pbar-wrap{flex:1;min-width:180px;background:var(--card);border:1px solid var(--sap-border);
-  border-radius:12px;padding:.8rem 1.2rem;display:flex;align-items:center;gap:14px;
-  box-shadow:0 1px 3px rgba(0,0,0,.05);}
+.sap-pbar-wrap{flex:1;min-width:180px;background:var(--card);border:1px solid var(--sap-border);border-radius:12px;padding:.8rem 1.2rem;display:flex;align-items:center;gap:14px;box-shadow:0 1px 3px rgba(0,0,0,.05);}
 .sap-pb-bg{flex:1;height:4px;background:var(--sap-card2);border-radius:99px;overflow:hidden;}
 .sap-pb-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,#059669,#10b981);transition:width .5s;}
 .sap-filters{display:flex;gap:7px;margin-bottom:1.25rem;flex-wrap:wrap;}
-.sap-fb{padding:6px 13px;border-radius:7px;border:1px solid var(--sap-border);
-  background:var(--card);color:var(--sap-text-dim);font-family:'Outfit',sans-serif;
-  font-size:.74rem;font-weight:500;cursor:pointer;transition:all .16s;
-  box-shadow:0 1px 2px rgba(0,0,0,.04);}
+.sap-fb{padding:6px 13px;border-radius:7px;border:1px solid var(--sap-border);background:var(--card);color:var(--sap-text-dim);font-family:'Outfit',sans-serif;font-size:.74rem;font-weight:500;cursor:pointer;transition:all .16s;box-shadow:0 1px 2px rgba(0,0,0,.04);}
 .sap-fb:hover{color:var(--sap-text);border-color:rgba(200,152,58,.4);}
 .sap-fb.on{background:rgba(200,152,58,.08);border-color:var(--gold);color:var(--gold);}
-.sap-table-wrap{background:var(--card);border:1px solid var(--sap-border);border-radius:14px;overflow:hidden;
-  box-shadow:0 1px 4px rgba(0,0,0,.05);}
+.sap-table-wrap{background:var(--card);border:1px solid var(--sap-border);border-radius:14px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.05);}
 .sap-table{width:100%;border-collapse:collapse;}
-.sap-table th{text-align:left;padding:.7rem 1rem;font-size:.61rem;text-transform:uppercase;
-  letter-spacing:.14em;color:var(--sap-text-faint);font-weight:700;
-  border-bottom:1px solid var(--sap-border);background:var(--sap-card);}
+.sap-table th{text-align:left;padding:.7rem 1rem;font-size:.61rem;text-transform:uppercase;letter-spacing:.14em;color:var(--sap-text-faint);font-weight:700;border-bottom:1px solid var(--sap-border);background:var(--sap-card);}
 .sap-table td{padding:.8rem 1rem;font-size:.8rem;border-bottom:1px solid var(--sap-border);vertical-align:middle;}
 .sap-table tr:last-child td{border-bottom:none;}
 .sap-table tr:hover td{background:var(--sap-card);}
@@ -847,9 +994,7 @@ body{background:var(--bg);}
 .sap-p2{background:rgba(200,152,58,.1);color:#9a6f20;}
 [data-theme="dark"] .sap-p2{background:rgba(251,191,36,.12);color:#fcd34d;}
 .sap-sbwrap{display:flex;gap:5px;}
-.sap-sb{width:28px;height:28px;border-radius:6px;border:1px solid var(--sap-border);
-  background:var(--sap-card);font-size:.72rem;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;transition:all .14s;}
+.sap-sb{width:28px;height:28px;border-radius:6px;border:1px solid var(--sap-border);background:var(--sap-card);font-size:.72rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .14s;}
 .sap-sb:hover{border-color:rgba(200,152,58,.4);}
 .sap-sb.pass{background:rgba(5,150,105,.1);border-color:#059669;color:#059669;}
 [data-theme="dark"] .sap-sb.pass{background:rgba(16,185,129,.18);border-color:#10b981;color:#6ee7b7;}
@@ -857,10 +1002,7 @@ body{background:var(--bg);}
 [data-theme="dark"] .sap-sb.fail{background:rgba(220,38,38,.18);border-color:#dc2626;color:#fca5a5;}
 .sap-sb.pend{background:rgba(200,152,58,.1);border-color:var(--gold);color:var(--gold);}
 
-/* ══════════════════════════════════════════════════
-   RESPONSIVE BREAKPOINTS
-══════════════════════════════════════════════════ */
-
+/* ── RESPONSIVE ── */
 @media(min-width:1400px){
   .ea-wrap{max-width:1600px;padding:0 3%;}
   .sap-content{padding:3.5rem 3% 6rem;}
@@ -872,19 +1014,19 @@ body{background:var(--bg);}
   .sap-rgrid{grid-template-columns:repeat(6,1fr);}
   .sap-dp-grid{grid-template-columns:repeat(4,1fr);}
   .sap-esc-acts{grid-template-columns:repeat(4,1fr);}
-  /* MED large desktop */
   .med-banner{min-height:220px;border-radius:24px;}
   .med-banner-content{padding:3rem 4rem;}
   .med-banner-logo-wrap{width:240px;height:100px;}
   .med-banner-name{font-size:2.8rem;}
   .med-info-grid{grid-template-columns:320px 1fr;}
+  .riwo-info-grid{grid-template-columns:280px 1fr 300px;}
 }
 @media(min-width:1100px) and (max-width:1399px){
   .ea-grid{grid-template-columns:repeat(4,1fr);}
-  .ea-mfr-grid{grid-template-columns:repeat(4,1fr);}
   .sap-pgrid{grid-template-columns:repeat(4,1fr);}
   .sap-mgrid{grid-template-columns:repeat(3,1fr);}
   .sap-rgrid{grid-template-columns:repeat(3,1fr);}
+  .riwo-info-grid{grid-template-columns:240px 1fr 260px;}
 }
 @media(min-width:768px) and (max-width:1099px){
   .ea-grid{grid-template-columns:repeat(3,1fr);gap:11px;}
@@ -896,11 +1038,13 @@ body{background:var(--bg);}
   .sap-content{padding:2.5rem 5% 4rem;}
   .sap-dp-grid{grid-template-columns:repeat(2,1fr);}
   .sap-esc-acts{grid-template-columns:repeat(2,1fr);}
-  /* MED tablet */
   .med-banner{min-height:150px;}
   .med-banner-content{padding:2rem;}
   .med-banner-logo-wrap{width:150px;height:66px;}
   .med-info-grid{grid-template-columns:1fr;}
+  .riwo-info-grid{grid-template-columns:1fr 1fr;}
+  .riwo-info-grid > :last-child{grid-column:1/-1;}
+  .riwo-prod-grid{grid-template-columns:1fr;}
 }
 @media(min-width:480px) and (max-width:767px){
   .ea-wrap{padding:0 4%;}
@@ -921,16 +1065,16 @@ body{background:var(--bg);}
   .ea-prog{gap:1.25rem;}
   .ea-test{flex-direction:column;align-items:flex-start;}
   .ea-test-btn{width:100%;}
-  /* MED small tablet */
   .med-banner{min-height:130px;border-radius:14px;}
   .med-banner-content{padding:1.5rem;gap:1.5rem;}
   .med-banner-logo-wrap{width:120px;height:54px;}
   .med-banner-name{font-size:1.6rem;}
   .med-info-grid{grid-template-columns:1fr;}
-  .med-detail-hero{min-height:200px;}
-  .med-detail-hero-content{padding:1.75rem;}
-  .med-prod-card{padding:1.25rem 1.5rem;gap:1.25rem;}
-  .med-prod-cta{display:none;}
+  .riwo-info-grid{grid-template-columns:1fr;}
+  .riwo-prod-grid{grid-template-columns:1fr;}
+  .riwo-hero{min-height:240px;border-radius:14px;}
+  .riwo-hero-content{padding:1.75rem;flex-direction:column;align-items:flex-start;}
+  .riwo-hero-logo-wrap{width:150px;height:62px;}
 }
 @media(max-width:479px){
   .ea-wrap{padding:0 16px;}
@@ -947,30 +1091,34 @@ body{background:var(--bg);}
   .ea-tab{flex:0 0 auto;padding:10px 13px;font-size:.8rem;}
   .ea-grid{grid-template-columns:1fr;gap:9px;}
   .ea-prog{padding:1.2rem;gap:1rem;}
-  /* MED mobile */
-  .med-banner{min-height:120px;border-radius:12px;margin-bottom:10px;}
-  .med-banner-content{padding:1.25rem;gap:1rem;}
-  .med-banner-logo-wrap{width:90px;height:44px;padding:8px 12px;}
-  .med-banner-name{font-size:1.4rem;}
-  .med-banner-tagline{font-size:.72rem;display:none;}
-  .med-banner-origin{font-size:.65rem;}
-  .med-banner-arrow{width:36px;height:36px;font-size:.9rem;}
-  .med-banner-badge{font-size:.58rem;padding:3px 9px;top:.9rem;right:1rem;}
-  .med-info-grid{grid-template-columns:1fr;}
-  .med-detail-hero{min-height:160px;border-radius:14px;}
-  .med-detail-hero-content{padding:1.25rem;gap:1.25rem;flex-direction:column;align-items:flex-start;}
-  .med-detail-logo-wrap{width:120px;height:50px;}
-  .med-detail-hero-name{font-size:1.8rem;}
-  .med-prod-card{padding:1.1rem 1.25rem;gap:1rem;flex-wrap:wrap;}
-  .med-prod-num{font-size:1.6rem;min-width:36px;}
-  .med-prod-divider{display:none;}
-  .med-prod-cta{display:none;}
-  .med-draft{padding:3rem 1.5rem;}
   .ea-prog-pct{font-size:2.2rem;min-width:56px;}
   .ea-philo{padding:1.35rem 1.2rem;}
   .ea-philo::before{display:none;}
   .ea-test{padding:1.2rem;flex-direction:column;gap:.9rem;}
   .ea-test-btn{width:100%;}
+  .med-banner{min-height:120px;border-radius:12px;margin-bottom:10px;}
+  .med-banner-content{padding:1.25rem;gap:1rem;}
+  .med-banner-logo-wrap{width:90px;height:44px;padding:8px 12px;}
+  .med-banner-name{font-size:1.4rem;}
+  .med-banner-tagline{display:none;}
+  .med-banner-origin{font-size:.65rem;}
+  .med-banner-arrow{width:36px;height:36px;font-size:.9rem;}
+  .med-banner-badge{font-size:.58rem;padding:3px 9px;top:.9rem;right:1rem;}
+  .med-info-grid{grid-template-columns:1fr;}
+  .med-prod-card{padding:1.1rem 1.25rem;gap:1rem;flex-wrap:wrap;}
+  .med-prod-num{font-size:1.6rem;min-width:36px;}
+  .med-prod-divider{display:none;}
+  .med-prod-cta{display:none;}
+  .riwo-info-grid{grid-template-columns:1fr;}
+  .riwo-prod-grid{grid-template-columns:1fr;gap:12px;}
+  .riwo-hero{min-height:200px;border-radius:12px;}
+  .riwo-hero-content{padding:1.25rem;flex-direction:column;align-items:flex-start;gap:1rem;}
+  .riwo-hero-logo-wrap{width:130px;height:54px;}
+  .riwo-hero-stats{top:.75rem;right:.75rem;gap:5px;}
+  .riwo-stat-pill{padding:3px 8px;}
+  .riwo-prod-image{height:160px;}
+  .riwo-prod-specs{grid-template-columns:1fr;}
+  .riwo-focus-grid{grid-template-columns:1fr;}
   .sap-hd{padding:2rem 4% 1.75rem;}
   .sap-hd::before{display:none;}
   .sap-hd-title{font-size:2.2rem;}
@@ -997,20 +1145,19 @@ body{background:var(--bg);}
   .sap-fb{flex-shrink:0;}
   .sap-table th:nth-child(2),.sap-table td:nth-child(2){display:none;}
 }
-
 `;
 
 // ─── SAP UNIVERSE ────────────────────────────────────────────────────────────
 
 function SAPUniverse() {
   const [tab, setTab]    = useState('map');
-  const [step, setStep]  = useState<string|null>(null);
-  const [mod, setMod]    = useState<string|null>(null);
+  const [step, setStep]  = useState(null);
+  const [mod, setMod]    = useState(null);
   const [uf, setUF]      = useState('all');
-  const [st, setSt]      = useState<Record<string,'open'|'pass'|'fail'>>(() =>
+  const [st, setSt]      = useState(() =>
     Object.fromEntries(SAP_UAT.map(t=>[t.id,'open'])));
 
-  const toggle = (id:string, s:'pass'|'fail'|'open') =>
+  const toggle = (id, s) =>
     setSt(p=>({...p,[id]:p[id]===s?'open':s}));
 
   const pass  = Object.values(st).filter(v=>v==='pass').length;
@@ -1018,16 +1165,14 @@ function SAPUniverse() {
   const open_ = Object.values(st).filter(v=>v==='open').length;
   const pct   = Math.round((pass/SAP_UAT.length)*100);
 
-  const MC:Record<string,string>={Vertrieb:'#818cf8',Einkauf:'#fbbf24',Lager:'#34d399',Finanzen:'#f87171',Service:'#c084fc',Intercompany:'#2dd4bf'};
-  const MB:Record<string,string>={Vertrieb:'#818cf815',Einkauf:'#fbbf2415',Lager:'#34d39915',Finanzen:'#f8717115',Service:'#c084fc15',Intercompany:'#2dd4bf15'};
+  const MC={Vertrieb:'#818cf8',Einkauf:'#fbbf24',Lager:'#34d399',Finanzen:'#f87171',Service:'#c084fc',Intercompany:'#2dd4bf'};
+  const MB={Vertrieb:'#818cf815',Einkauf:'#fbbf2415',Lager:'#34d39915',Finanzen:'#f8717115',Service:'#c084fc15',Intercompany:'#2dd4bf15'};
   const filt = uf==='all'?SAP_UAT:uf==='pass'?SAP_UAT.filter(t=>st[t.id]==='pass'):uf==='fail'?SAP_UAT.filter(t=>st[t.id]==='fail'):uf==='open'?SAP_UAT.filter(t=>st[t.id]==='open'):SAP_UAT.filter(t=>t.mod===uf);
 
   const TABS=[{id:'map',l:'Prozesslandschaft'},{id:'modules',l:'SAP Module'},{id:'mdr',l:'MDR-Compliance'},{id:'roles',l:'Rollen & Rechte'},{id:'timeline',l:'Zeitplan'},{id:'uat',l:'UAT Tracker'}];
 
   return (
     <div className="sap-section">
-
-      {/* ── HEADER ── */}
       <div className="sap-hd">
         <div className="sap-hd-inner">
           <div className="sap-eyebrow">SAP Business One Cloud · EMIG GmbH Deutschland</div>
@@ -1042,8 +1187,6 @@ function SAPUniverse() {
           </div>
         </div>
       </div>
-
-      {/* ── STICKY NAV ── */}
       <div className="sap-nav">
         <div className="sap-nav-inner">
           {TABS.map(t=>(
@@ -1051,23 +1194,15 @@ function SAPUniverse() {
           ))}
         </div>
       </div>
-
-      {/* ── CONTENT ── */}
       <div className="sap-content">
-
-        {/* MAP */}
         {tab==='map' && (
           <div className="sap-anim">
             <div className="sap-sh">Vollständige Prozesslandschaft <div className="sap-sh-rule"/></div>
             <p className="sap-ss">Klicken Sie auf eine Phase für Details — Phase 0 bis 9, vom ersten Kundenkontakt bis zur proaktiven Retention.</p>
-
-            {/* Horizontal flow */}
             <div className="sap-flow">
               {SAP_PROC.map((s,i)=>(
                 <React.Fragment key={s.id}>
-                  <div className={`sap-fc ${step===s.id?'on':''}`}
-                    style={{'--fc-col':s.col} as any}
-                    onClick={()=>setStep(step===s.id?null:s.id)}>
+                  <div className={`sap-fc ${step===s.id?'on':''}`} style={{'--fc-col':s.col}} onClick={()=>setStep(step===s.id?null:s.id)}>
                     <span className="sap-fc-em">{s.em}</span>
                     <span className="sap-fc-lbl">{s.title}</span>
                   </div>
@@ -1075,10 +1210,8 @@ function SAPUniverse() {
                 </React.Fragment>
               ))}
             </div>
-
-            {/* Detail panel */}
             {step && (()=>{
-              const s=SAP_PROC.find(x=>x.id===step)!;
+              const s=SAP_PROC.find(x=>x.id===step);
               return (
                 <div className="sap-dp" style={{borderLeftColor:s.col}}>
                   <div className="sap-dp-top">
@@ -1099,13 +1232,9 @@ function SAPUniverse() {
                 </div>
               );
             })()}
-
-            {/* Card grid */}
             <div className="sap-pgrid">
               {SAP_PROC.map(s=>(
-                <div key={s.id} className={`sap-pcard ${step===s.id?'on':''}`}
-                  style={{'--pc':s.col} as any}
-                  onClick={()=>setStep(step===s.id?null:s.id)}>
+                <div key={s.id} className={`sap-pcard ${step===s.id?'on':''}`} style={{'--pc':s.col}} onClick={()=>setStep(step===s.id?null:s.id)}>
                   <div className="sap-pcard-bar" style={{background:s.col}}/>
                   <div className="sap-pcard-top">
                     <span className="sap-pcard-em">{s.em}</span>
@@ -1125,8 +1254,6 @@ function SAPUniverse() {
             </div>
           </div>
         )}
-
-        {/* MODULES */}
         {tab==='modules' && (
           <div className="sap-anim">
             <div className="sap-sh">SAP Module & Kernfunktionen <div className="sap-sh-rule"/></div>
@@ -1140,7 +1267,7 @@ function SAPUniverse() {
                       <div className="sap-mc-ref">{m.ref}</div>
                       <div className="sap-mc-title">{m.title}</div>
                     </div>
-                    <span style={{color:'rgba(232,228,220,.25)',fontSize:'.8rem'}}>{mod===m.id?'▲':'▼'}</span>
+                    <span style={{color:'var(--sap-text-faint)',fontSize:'.8rem'}}>{mod===m.id?'▲':'▼'}</span>
                   </div>
                   <div className="sap-mc-body">
                     <div className="sap-mc-hls">{m.hl.map((h,i)=><div className="sap-hl" key={i}>{h}</div>)}</div>
@@ -1157,22 +1284,19 @@ function SAPUniverse() {
             </div>
           </div>
         )}
-
-        {/* MDR */}
         {tab==='mdr' && (
           <div className="sap-anim">
             <div className="sap-sh">MDR-Compliance Kette <div className="sap-sh-rule"/></div>
             <p className="sap-ss">EU Medical Device Regulation 2017/745 — in jeden SAP-Prozessschritt integriert.</p>
-
             <div className="sap-mdr-chain">
               {[
-                {e:'📦',t:'Wareneingang',    s:'UDI-Scan\nCE/DoC-Prüfung\nCharge + MHD'},
-                {e:'🛡️',t:'MDR-Gate',        s:'CE fehlt?\nAuto-Sperre\nKein WE mögl.'},
-                {e:'🏪',t:'Lagerung',         s:'Haupt-/Sperrlager\nMHD-Monitoring\n60-Tage-Alarm'},
-                {e:'📋',t:'Kommissionierung', s:'DoC-Prüfung\nQR-Scan Pflicht\nCharge zugeord.'},
-                {e:'🚚',t:'Versand',          s:'UDI-Etiketten\nLieferschein+MHD\nEquip. Card'},
-                {e:'🔧',t:'Service',          s:'Field Safety\nRückruf-Workflow\nBfArM'},
-                {e:'🔍',t:'Rückverfolgung',   s:'Vorwärts: Empf.\nRückwärts: Lief.\n< 5 Sek.'},
+                {e:'📦',t:'Wareneingang',s:'UDI-Scan\nCE/DoC-Prüfung\nCharge + MHD'},
+                {e:'🛡️',t:'MDR-Gate',s:'CE fehlt?\nAuto-Sperre\nKein WE mögl.'},
+                {e:'🏪',t:'Lagerung',s:'Haupt-/Sperrlager\nMHD-Monitoring\n60-Tage-Alarm'},
+                {e:'📋',t:'Kommissionierung',s:'DoC-Prüfung\nQR-Scan Pflicht\nCharge zugeord.'},
+                {e:'🚚',t:'Versand',s:'UDI-Etiketten\nLieferschein+MHD\nEquip. Card'},
+                {e:'🔧',t:'Service',s:'Field Safety\nRückruf-Workflow\nBfArM'},
+                {e:'🔍',t:'Rückverfolgung',s:'Vorwärts: Empf.\nRückwärts: Lief.\n< 5 Sek.'},
               ].map((item,i,arr)=>(
                 <React.Fragment key={i}>
                   <div className="sap-mdr-step">
@@ -1184,14 +1308,13 @@ function SAPUniverse() {
                 </React.Fragment>
               ))}
             </div>
-
             <div style={{marginTop:'2.5rem'}}>
               <div className="sap-sh" style={{fontSize:'1.5rem',marginBottom:'.4rem'}}>Eskalations-Workflow <div className="sap-sh-rule"/></div>
               <p className="sap-ss">3 Stufen mit verbindlichen SLA-Fristen</p>
               {[
-                {s:'1',e:'🔍',t:'Interne Diagnose',     sla:'4 Stunden',      trig:'Eingang Servicemeldung',                    c:'#34d399', acts:['Geräteakte (Equipment Card) geladen','Knowledge Base durchsucht','Interne Lösung angewendet','Falls keine Lösung: Eskalation Stufe 2']},
-                {s:'2',e:'📡',t:'Herstellermeldung',    sla:'24 Stunden',     trig:'Keine interne Lösung oder sicherheitsrelevant',c:'#fbbf24', acts:['Auto: Seriennummer + Fehlerprotokoll','Fotos/Anhänge am Serviceabruf','Status: Eskaliert — Hersteller informiert','SLA-Uhr für Herstellerantwort gestartet']},
-                {s:'3',e:'🚨',t:'Field Safety / Rückruf',sla:'2 Stunden (!)', trig:'Systematischer Defekt oder FSN des Herstellers',c:'#f87171', acts:['Vorwärtssuche: alle Empfänger der Charge','Rückwärtssuche: Ursprungslieferant','Status Under Recall systemweit gesetzt','BfArM-Berichte automatisch generiert']},
+                {s:'1',e:'🔍',t:'Interne Diagnose',sla:'4 Stunden',trig:'Eingang Servicemeldung',c:'#34d399',acts:['Geräteakte (Equipment Card) geladen','Knowledge Base durchsucht','Interne Lösung angewendet','Falls keine Lösung: Eskalation Stufe 2']},
+                {s:'2',e:'📡',t:'Herstellermeldung',sla:'24 Stunden',trig:'Keine interne Lösung oder sicherheitsrelevant',c:'#fbbf24',acts:['Auto: Seriennummer + Fehlerprotokoll','Fotos/Anhänge am Serviceabruf','Status: Eskaliert — Hersteller informiert','SLA-Uhr für Herstellerantwort gestartet']},
+                {s:'3',e:'🚨',t:'Field Safety / Rückruf',sla:'2 Stunden (!)',trig:'Systematischer Defekt oder FSN des Herstellers',c:'#f87171',acts:['Vorwärtssuche: alle Empfänger der Charge','Rückwärtssuche: Ursprungslieferant','Status Under Recall systemweit gesetzt','BfArM-Berichte automatisch generiert']},
               ].map(esc=>(
                 <div key={esc.s} className="sap-esc" style={{background:esc.c+'0c',borderLeftColor:esc.c}}>
                   <div className="sap-esc-hd">
@@ -1207,9 +1330,7 @@ function SAPUniverse() {
                   </div>
                   <div className="sap-esc-acts">
                     {esc.acts.map((a,i)=>(
-                      <div className="sap-esc-act" key={i}>
-                        <span style={{color:esc.c,flexShrink:0}}>›</span>{a}
-                      </div>
+                      <div className="sap-esc-act" key={i}><span style={{color:esc.c,flexShrink:0}}>›</span>{a}</div>
                     ))}
                   </div>
                 </div>
@@ -1217,20 +1338,18 @@ function SAPUniverse() {
             </div>
           </div>
         )}
-
-        {/* ROLES */}
         {tab==='roles' && (
           <div className="sap-anim">
             <div className="sap-sh">Rollen & Berechtigungen <div className="sap-sh-rule"/></div>
             <p className="sap-ss">Rollenbasiertes Konzept nach DSGVO & GoBD — Prinzip der minimalen Privilegien (Kap. 4.4)</p>
             <div className="sap-rgrid">
               {[
-                {i:'👔',t:'Geschäftsführung', c:'#e2e8f0', m:'Vollzugriff + 4-Augen-Freigabe', b:'GF'},
-                {i:'💼',t:'Vertrieb',         c:'#818cf8', m:'CRM, Angebote, Aufträge',         b:'VT'},
-                {i:'📦',t:'Lager / Logistik', c:'#34d399', m:'WE, Kommissionierung, Versand',   b:'LA'},
-                {i:'🔧',t:'Service-Techniker',c:'#c084fc', m:'Tickets, RMA, Equipment Card',    b:'ST'},
-                {i:'💶',t:'Buchhaltung',      c:'#f87171', m:'Rechnungen, DATEV, Controlling',  b:'BU'},
-                {i:'⚙️',t:'IT-Administrator', c:'#94a3b8', m:'System, Rechte, Schnittstellen',  b:'IT'},
+                {i:'👔',t:'Geschäftsführung',c:'#e2e8f0',m:'Vollzugriff + 4-Augen-Freigabe',b:'GF'},
+                {i:'💼',t:'Vertrieb',c:'#818cf8',m:'CRM, Angebote, Aufträge',b:'VT'},
+                {i:'📦',t:'Lager / Logistik',c:'#34d399',m:'WE, Kommissionierung, Versand',b:'LA'},
+                {i:'🔧',t:'Service-Techniker',c:'#c084fc',m:'Tickets, RMA, Equipment Card',b:'ST'},
+                {i:'💶',t:'Buchhaltung',c:'#f87171',m:'Rechnungen, DATEV, Controlling',b:'BU'},
+                {i:'⚙️',t:'IT-Administrator',c:'#94a3b8',m:'System, Rechte, Schnittstellen',b:'IT'},
               ].map((r,i)=>(
                 <div className="sap-rc" key={i}>
                   <div className="sap-rc-ico" style={{background:r.c+'1a'}}>{r.i}</div>
@@ -1240,17 +1359,16 @@ function SAPUniverse() {
                 </div>
               ))}
             </div>
-
             <div style={{marginTop:'2.5rem'}}>
               <div className="sap-sh" style={{fontSize:'1.5rem',marginBottom:'.4rem'}}>Segregation of Duties <div className="sap-sh-rule"/></div>
               <p className="sap-ss">Kritische Funktionskombinationen — systemseitig gesperrt (Kap. 4.4.3)</p>
               <div className="sap-sod-grid">
                 {[
-                  {a:'Angebot erstellen + Kundenauftrag freigeben',    risk:'Falschbuchung ohne Kontrolle',   ctrl:'4-Augen: GF-Freigabe zwingend'},
-                  {a:'Warenausgang buchen + Rechnung erstellen',       risk:'Fiktive Lieferungen möglich',    ctrl:'Trennung Lager und Finanzen'},
-                  {a:'Lieferantenstamm anlegen + Bestellung auslösen', risk:'Phantomlieferanten-Betrug',      ctrl:'Doppelfreigabe Einkauf + GF'},
-                  {a:'DATEV-Export + Buchungen stornieren',            risk:'Nachträgliche Manipulation',     ctrl:'Nur IT-Admin + Finanzen gemeinsam'},
-                  {a:'Zahlungssperre aufheben + Zahlung auslösen',     risk:'Unberechtigte Zahlungen',        ctrl:'GF-Freigabe zwingend'},
+                  {a:'Angebot erstellen + Kundenauftrag freigeben',risk:'Falschbuchung ohne Kontrolle',ctrl:'4-Augen: GF-Freigabe zwingend'},
+                  {a:'Warenausgang buchen + Rechnung erstellen',risk:'Fiktive Lieferungen möglich',ctrl:'Trennung Lager und Finanzen'},
+                  {a:'Lieferantenstamm anlegen + Bestellung auslösen',risk:'Phantomlieferanten-Betrug',ctrl:'Doppelfreigabe Einkauf + GF'},
+                  {a:'DATEV-Export + Buchungen stornieren',risk:'Nachträgliche Manipulation',ctrl:'Nur IT-Admin + Finanzen gemeinsam'},
+                  {a:'Zahlungssperre aufheben + Zahlung auslösen',risk:'Unberechtigte Zahlungen',ctrl:'GF-Freigabe zwingend'},
                 ].map((item,i)=>(
                   <div className="sap-sod" key={i}>
                     <div className="sap-sod-c">🚫 {item.a}</div>
@@ -1262,13 +1380,10 @@ function SAPUniverse() {
             </div>
           </div>
         )}
-
-        {/* TIMELINE */}
         {tab==='timeline' && (
           <div className="sap-anim">
             <div className="sap-sh">Projektzeitplan 2026–2027 <div className="sap-sh-rule"/></div>
             <p className="sap-ss">8 Monate bis Go-Live EMIG Deutschland · Q1/2027 MiaMed Ukraine</p>
-
             <div className="sap-proj-bar">
               <div className="sap-pbar-info">
                 <div className="sap-pbar-lbl">Projektfortschritt — März 2026</div>
@@ -1277,9 +1392,8 @@ function SAPUniverse() {
               </div>
               <div className="sap-pbar-pct">25%</div>
             </div>
-
             <div className="sap-tl-wrap">
-              {[SAP_TL.slice(0,4), SAP_TL.slice(4)].map((col,ci)=>(
+              {[SAP_TL.slice(0,4),SAP_TL.slice(4)].map((col,ci)=>(
                 <div className="sap-tl-col" key={ci}>
                   {col.map((item,i)=>(
                     <div className="sap-tl-item" key={i}>
@@ -1297,26 +1411,22 @@ function SAPUniverse() {
             </div>
           </div>
         )}
-
-        {/* UAT */}
         {tab==='uat' && (
           <div className="sap-anim">
             <div className="sap-sh">UAT Test-Tracker <div className="sap-sh-rule"/></div>
             <p className="sap-ss">Interaktiver Abnahme-Tracker — ✓ Bestanden · ✗ Fehler · ⏳ Offen klicken zum Setzen.</p>
-
             <div className="sap-uat-stats">
               <div className="sap-uat-stat"><div className="sap-uat-n" style={{color:'#6ee7b7'}}>{pass}</div><div className="sap-uat-l">Bestanden</div></div>
               <div className="sap-uat-stat"><div className="sap-uat-n" style={{color:'#fca5a5'}}>{fail_}</div><div className="sap-uat-l">Fehler</div></div>
               <div className="sap-uat-stat"><div className="sap-uat-n" style={{color:'#fcd34d'}}>{open_}</div><div className="sap-uat-l">Offen</div></div>
               <div className="sap-pbar-wrap">
                 <div style={{flex:1}}>
-                  <div style={{fontSize:'.6rem',color:'rgba(232,228,220,.28)',textTransform:'uppercase',letterSpacing:'.1em',marginBottom:8}}>Gesamtfortschritt</div>
+                  <div style={{fontSize:'.6rem',color:'var(--sap-text-faint)',textTransform:'uppercase',letterSpacing:'.1em',marginBottom:8}}>Gesamtfortschritt</div>
                   <div className="sap-pb-bg"><div className="sap-pb-fill" style={{width:`${pct}%`}}/></div>
                 </div>
                 <div style={{fontFamily:'Bebas Neue,sans-serif',fontSize:'2.2rem',color:'#34d399',lineHeight:1,letterSpacing:'.03em',minWidth:56,textAlign:'right'}}>{pct}%</div>
               </div>
             </div>
-
             <div className="sap-filters">
               {['all','open','pass','fail','Vertrieb','Einkauf','Lager','Finanzen','Service','Intercompany'].map(f=>(
                 <button key={f} className={`sap-fb ${uf===f?'on':''}`} onClick={()=>setUF(f)}>
@@ -1324,7 +1434,6 @@ function SAPUniverse() {
                 </button>
               ))}
             </div>
-
             <div className="sap-table-wrap">
               <table className="sap-table">
                 <thead>
@@ -1354,42 +1463,30 @@ function SAPUniverse() {
             </div>
           </div>
         )}
-
       </div>
     </div>
   );
 }
 
-// ─── MANUFACTURER BANNER CARD ────────────────────────────────────────────────
+// ─── MANUFACTURER BANNER ─────────────────────────────────────────────────────
 
-function MfrBanner({m, onClick}:any) {
+function MfrBanner({m, onClick}) {
   const [err, setErr] = useState(false);
   const logo = useBaseUrl(m.logo);
   const hasProducts = m.products && m.products.length > 0;
-
   return (
-    <div className="med-banner"
-      style={{'--accent-glow': m.accent + '22'} as any}
-      onClick={onClick}>
-      {/* Background gradient */}
+    <div className="med-banner" style={{'--accent-glow': m.accent + '22'}} onClick={onClick}>
       <div className="med-banner-bg" style={{background: m.bg}} />
-      {/* Overlay */}
       <div className="med-banner-overlay" />
-      {/* Accent stripe */}
       <div className="med-banner-accent" style={{background: m.accent}} />
-      {/* Status badge */}
       <div className={`med-banner-badge ${hasProducts ? 'active' : ''}`}>
         {hasProducts ? 'Module verfügbar' : 'In Vorbereitung'}
       </div>
-      {/* Content */}
       <div className="med-banner-content">
         <div className="med-banner-logo-wrap">
           {!err
-            ? <img src={logo} alt={m.name} className="med-banner-logo"
-                style={{filter: m.invertLogo ? 'none' : undefined}}
-                onError={()=>setErr(true)}/>
-            : <span style={{fontFamily:'Bebas Neue,sans-serif',fontSize:'1.1rem',
-                color:m.accent,fontWeight:700,letterSpacing:'.04em'}}>{m.name}</span>}
+            ? <img src={logo} alt={m.name} className="med-banner-logo" onError={()=>setErr(true)}/>
+            : <span style={{fontFamily:'Bebas Neue,sans-serif',fontSize:'1.1rem',color:m.accent,fontWeight:700,letterSpacing:'.04em'}}>{m.name}</span>}
         </div>
         <div className="med-banner-text">
           <div className="med-banner-name">{m.name}</div>
@@ -1402,18 +1499,18 @@ function MfrBanner({m, onClick}:any) {
   );
 }
 
-// ─── MANUFACTURER DETAIL ──────────────────────────────────────────────────────
+// ─── GENERIC MFR DETAIL ───────────────────────────────────────────────────────
 
-function MfrDetail({m, onBack}:any) {
+function MfrDetail({m, onBack}) {
   const [err, setErr] = useState(false);
   const logo = useBaseUrl(m.logo);
   const hasProducts = m.products && m.products.length > 0;
-
+  const focusTags = m.focus
+    ? m.focus.map(f => (typeof f === 'string' ? f : f.label))
+    : [];
   return (
     <div className="med-detail">
       <button className="med-back" onClick={onBack}>&#8592; Alle Hersteller</button>
-
-      {/* Hero banner */}
       <div className="med-detail-hero">
         <div className="med-detail-hero-bg" style={{background: m.bg}} />
         <div className="med-detail-hero-overlay" />
@@ -1421,8 +1518,7 @@ function MfrDetail({m, onBack}:any) {
           <div className="med-detail-logo-wrap">
             {!err
               ? <img src={logo} alt={m.name} className="med-detail-logo" onError={()=>setErr(true)}/>
-              : <span style={{fontFamily:'Bebas Neue,sans-serif',fontSize:'1.1rem',
-                  color:m.accent,fontWeight:700}}>{m.name}</span>}
+              : <span style={{fontFamily:'Bebas Neue,sans-serif',fontSize:'1.1rem',color:m.accent,fontWeight:700}}>{m.name}</span>}
           </div>
           <div className="med-detail-hero-text">
             <div className="med-detail-hero-name">{m.name}</div>
@@ -1430,14 +1526,11 @@ function MfrDetail({m, onBack}:any) {
           </div>
         </div>
       </div>
-
-      {/* Info grid */}
       <div className="med-info-grid">
-        {/* Left: facts */}
         <div className="med-info-card">
-          <div className="med-info-card-t">Unternehmens­daten</div>
+          <div className="med-info-card-t">Unternehmensdaten</div>
           <div className="med-facts">
-            {m.facts.map((f:any, i:number) => (
+            {m.facts.map((f, i) => (
               <div className="med-fact" key={i}>
                 <span className="med-fact-l">{f.label}</span>
                 <span className="med-fact-v">{f.value}</span>
@@ -1445,30 +1538,25 @@ function MfrDetail({m, onBack}:any) {
             ))}
           </div>
         </div>
-
-        {/* Right: description + focus */}
         <div className="med-info-card">
           <div className="med-info-card-t">Über {m.name}</div>
           <p className="med-desc">{m.description}</p>
           <div className="med-info-card-t" style={{marginBottom:'.75rem'}}>Schwerpunkte</div>
           <div className="med-focus-tags">
-            {m.focus.map((f:string, i:number) => (
+            {focusTags.map((f, i) => (
               <span className="med-focus-tag" key={i}>{f}</span>
             ))}
           </div>
         </div>
       </div>
-
-      {/* Products */}
       <div className="ea-sh" style={{marginTop:'2rem'}}>
         <div className="ea-sh-bar" style={{background: m.accent}}/>
         Produktmodule
         <div className="ea-sh-rule"/>
       </div>
-
       {hasProducts ? (
         <div className="med-prod-list">
-          {m.products.map((p:any, i:number) => (
+          {m.products.map((p, i) => (
             <Link key={p.code} to={p.link} className="med-prod-card">
               <div className="med-prod-accent" style={{background: m.accent}}/>
               <div className="med-prod-num">0{i+1}</div>
@@ -1493,16 +1581,351 @@ function MfrDetail({m, onBack}:any) {
   );
 }
 
-// ─── HOME ────────────────────────────────────────────────────────────────────
+// ─── RIWOSPINE DETAIL ─────────────────────────────────────────────────────────
+
+function RiwoMap({ loc }) {
+  const mapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${loc.lng - 0.08}%2C${loc.lat - 0.05}%2C${loc.lng + 0.08}%2C${loc.lat + 0.05}&layer=mapnik&marker=${loc.lat}%2C${loc.lng}`;
+  return (
+    <div className="riwo-map-card riwo-anim-3">
+      <div className="riwo-card-label" style={{padding:'1.25rem 1.5rem 0'}}>
+        <span>Standort</span>
+      </div>
+      <div className="riwo-map-embed">
+        <iframe src={mapUrl} title="RIWOspine Standort Knittlingen" allowFullScreen={false} loading="lazy" referrerPolicy="no-referrer-when-downgrade"/>
+      </div>
+      <div className="riwo-map-info">
+        <div className="riwo-map-pin">
+          <span className="riwo-map-pin-icon">📍</span>
+          <div>
+            <div className="riwo-map-city">{loc.city}</div>
+            <div className="riwo-map-region">{loc.country}</div>
+            <div className="riwo-map-badge"><span>●</span> Richard Wolf Gruppe</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function RiwoProdCard({ p, idx }) {
+  const [imgErr, setImgErr] = useState(false);
+  const imgSrc = useBaseUrl(p.image);
+  return (
+    <Link to={p.link} className="riwo-prod-card">
+      <div className="riwo-prod-top-bar"/>
+      <div className="riwo-prod-image">
+        {!imgErr ? (
+          <img src={imgSrc} alt={p.title} onError={()=>setImgErr(true)}/>
+        ) : (
+          <div className="riwo-prod-image-placeholder" style={{background:`linear-gradient(135deg,${p.imagePlaceholderColor} 0%,rgba(0,0,0,.8) 100%)`}}>
+            <span className="riwo-prod-ph-icon">🔬</span>
+            <span className="riwo-prod-ph-code">{p.code}</span>
+            <div className="riwo-prod-ph-text">{p.title}</div>
+          </div>
+        )}
+        <span className="riwo-prod-badge" style={{background:p.badgeColor+'cc'}}>{p.badge}</span>
+        <span className="riwo-prod-num-badge">0{idx+1}</span>
+      </div>
+      <div className="riwo-prod-body">
+        <div className="riwo-prod-code-row">
+          <span className="riwo-prod-code">{p.code}</span>
+          <span className="riwo-prod-tagline">{p.tagline}</span>
+        </div>
+        <div className="riwo-prod-title">{p.title}</div>
+        <div className="riwo-prod-desc">{p.desc}</div>
+        <div className="riwo-prod-specs">
+          {p.specs.map((s,i)=>(
+            <div className="riwo-prod-spec" key={i}>
+              <span className="riwo-prod-spec-icon">{s.icon}</span>
+              <div>
+                <div className="riwo-prod-spec-label">{s.label}</div>
+                <div className="riwo-prod-spec-val">{s.value}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="riwo-prod-highlights">
+          {p.highlights.map((h,i)=>(
+            <div className="riwo-prod-hl" key={i}>{h}</div>
+          ))}
+        </div>
+        <div className="riwo-prod-cta">
+          <span>Modul öffnen</span>
+          <span className="riwo-prod-cta-arrow">→</span>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+function RIWOspineDetail({ onBack }) {
+  const m = MFRS.find(x => x.id === 'riwo');
+  const [logoErr, setLogoErr] = useState(false);
+  const logoSrc = useBaseUrl(m.logo);
+  return (
+    <div>
+      <button className="riwo-back riwo-anim" onClick={onBack}>← Alle Hersteller</button>
+      <div className="riwo-hero riwo-anim">
+        <div className="riwo-hero-bg"/>
+        <div className="riwo-hero-grid"/>
+        <div className="riwo-hero-overlay"/>
+        <div className="riwo-hero-stats">
+          {[{n:'1906',l:'Gegründet'},{n:'100+',l:'Länder'},{n:'2k+',l:'Mitarbeiter'}].map((s,i)=>(
+            <div className="riwo-stat-pill" key={i}>
+              <span className="riwo-stat-pill-n">{s.n}</span>
+              <span className="riwo-stat-pill-l">{s.l}</span>
+            </div>
+          ))}
+        </div>
+        <div className="riwo-hero-content">
+          <div className="riwo-hero-logo-wrap">
+            {!logoErr
+              ? <img src={logoSrc} alt={m.name} className="riwo-hero-logo" onError={()=>setLogoErr(true)}/>
+              : <span style={{fontFamily:'Bebas Neue,sans-serif',fontSize:'1.1rem',color:'#c0392b',fontWeight:700}}>{m.name}</span>}
+          </div>
+          <div className="riwo-hero-text">
+            <div className="riwo-hero-eyebrow">Medizinprodukt · Wirbelsäulenchirurgie</div>
+            <div className="riwo-hero-name">{m.name}</div>
+            <div className="riwo-hero-tag">{m.tagline}</div>
+            <div className="riwo-hero-actions">
+              <a href={m.website} target="_blank" rel="noopener noreferrer" className="riwo-btn-primary">🌐 riwospine.com ↗</a>
+              <span className="riwo-btn-ghost">📍 {m.location.city}, DE</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="riwo-info-grid">
+        <div className="riwo-card riwo-anim-1">
+          <div className="riwo-card-label">Unternehmensdaten</div>
+          <div className="riwo-facts">
+            {m.facts.map((f,i)=>(
+              <div className="riwo-fact" key={i}>
+                <span className="riwo-fact-l">{f.label}</span>
+                <span className="riwo-fact-v">{f.value}</span>
+              </div>
+            ))}
+          </div>
+          <a href={m.website} target="_blank" rel="noopener noreferrer" className="riwo-website-link">
+            <span className="riwo-website-link-icon">🌐</span>
+            <span>www.riwospine.com</span>
+            <span className="riwo-website-link-arrow">↗</span>
+          </a>
+        </div>
+        <div className="riwo-card riwo-anim-2">
+          <div className="riwo-card-label">Über RIWOspine</div>
+          <p style={{fontSize:'.86rem',color:'var(--text-dim)',lineHeight:1.75,margin:'0 0 1.25rem'}}>{m.description}</p>
+          <div className="riwo-card-label">Schwerpunkte</div>
+          <div className="riwo-focus-grid">
+            {m.focus.map((f,i)=>(
+              <div className="riwo-focus-item" key={i}>
+                <div className="riwo-focus-icon">{f.icon}</div>
+                <div>
+                  <div className="riwo-focus-name">{f.label}</div>
+                  <div className="riwo-focus-desc">{f.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <RiwoMap loc={m.location}/>
+      </div>
+      <div className="riwo-sh">
+        <div className="riwo-sh-bar"/>
+        Produktmodule
+        <span className="riwo-sh-count">{m.products.length} Module</span>
+        <div className="riwo-sh-rule"/>
+      </div>
+      <div className="riwo-prod-grid">
+        {m.products.map((p,i)=>(
+          <RiwoProdCard key={p.code} p={p} idx={i}/>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── INOMED DETAIL ───────────────────────────────────────────────────────────
+
+function InoMap({ loc }) {
+  const mapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${loc.lng - 0.08}%2C${loc.lat - 0.05}%2C${loc.lng + 0.08}%2C${loc.lat + 0.05}&layer=mapnik&marker=${loc.lat}%2C${loc.lng}`;
+  return (
+    <div className="ino-map-card ino-anim-3">
+      <div className="ino-card-label" style={{padding:'1.25rem 1.5rem 0'}}>
+        <span>Standort</span>
+      </div>
+      <div className="ino-map-embed">
+        <iframe src={mapUrl} title="inomed Standort Emmendingen" allowFullScreen={false} loading="lazy" referrerPolicy="no-referrer-when-downgrade"/>
+      </div>
+      <div className="ino-map-info">
+        <div className="ino-map-pin">
+          <span className="ino-map-pin-icon">📍</span>
+          <div>
+            <div className="ino-map-city">{loc.city}</div>
+            <div className="ino-map-region">{loc.country}</div>
+            <div className="ino-map-badge"><span>●</span> Weltmarktführer IOM</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function InoProdCard({ p, idx }) {
+  const [imgErr, setImgErr] = useState(false);
+  const imgSrc = useBaseUrl(p.image);
+  return (
+    <Link to={p.link} className="ino-prod-card">
+      <div className="ino-prod-top-bar"/>
+      <div className="ino-prod-image">
+        {!imgErr ? (
+          <img src={imgSrc} alt={p.title} onError={()=>setImgErr(true)}/>
+        ) : (
+          <div className="ino-prod-image-placeholder" style={{background:`linear-gradient(135deg,${p.imagePlaceholderColor} 0%,rgba(0,0,0,.8) 100%)`}}>
+            <span className="ino-prod-ph-icon">🧠</span>
+            <span className="ino-prod-ph-code">{p.code}</span>
+            <div className="ino-prod-ph-text">{p.title}</div>
+          </div>
+        )}
+        <span className="ino-prod-badge" style={{background:p.badgeColor+'cc'}}>{p.badge}</span>
+        <span className="ino-prod-num-badge">0{idx+1}</span>
+      </div>
+      <div className="ino-prod-body">
+        <div className="ino-prod-code-row">
+          <span className="ino-prod-code">{p.code}</span>
+          <span className="ino-prod-tagline">{p.tagline}</span>
+        </div>
+        <div className="ino-prod-title">{p.title}</div>
+        <div className="ino-prod-desc">{p.desc}</div>
+        <div className="ino-prod-specs">
+          {p.specs.map((s,i)=>(
+            <div className="ino-prod-spec" key={i}>
+              <span className="ino-prod-spec-icon">{s.icon}</span>
+              <div>
+                <div className="ino-prod-spec-label">{s.label}</div>
+                <div className="ino-prod-spec-val">{s.value}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="ino-prod-highlights">
+          {p.highlights.map((h,i)=>(
+            <div className="ino-prod-hl" key={i}>{h}</div>
+          ))}
+        </div>
+        <div className="ino-prod-cta">
+          <span>Modul öffnen</span>
+          <span className="ino-prod-cta-arrow">→</span>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+function InomedDetail({ onBack }) {
+  const m = MFRS.find(x => x.id === 'inomed');
+  const [logoErr, setLogoErr] = useState(false);
+  const logoSrc = useBaseUrl(m.logo);
+  return (
+    <div>
+      <button className="ino-back ino-anim" onClick={onBack}>← Alle Hersteller</button>
+      <div className="ino-hero ino-anim">
+        <div className="ino-hero-bg"/>
+        <div className="ino-hero-grid"/>
+        <div className="ino-hero-pulse"/>
+        <div className="ino-hero-overlay"/>
+        <div className="ino-hero-stats">
+          {[{n:'1989',l:'Gegründet'},{n:'50+',l:'Länder'},{n:'#1',l:'IOM Welt'}].map((s,i)=>(
+            <div className="ino-stat-pill" key={i}>
+              <span className="ino-stat-pill-n">{s.n}</span>
+              <span className="ino-stat-pill-l">{s.l}</span>
+            </div>
+          ))}
+        </div>
+        <div className="ino-hero-content">
+          <div className="ino-hero-logo-wrap">
+            {!logoErr
+              ? <img src={logoSrc} alt={m.name} className="ino-hero-logo" onError={()=>setLogoErr(true)}/>
+              : <span style={{fontFamily:'Bebas Neue,sans-serif',fontSize:'1.1rem',color:'#1565c0',fontWeight:700}}>{m.name}</span>}
+          </div>
+          <div className="ino-hero-text">
+            <div className="ino-hero-eyebrow">Medizinprodukt · Intraoperatives Neuromonitoring</div>
+            <div className="ino-hero-name">{m.name}</div>
+            <div className="ino-hero-tag">{m.tagline}</div>
+            <div className="ino-hero-actions">
+              <a href={m.website} target="_blank" rel="noopener noreferrer" className="ino-btn-primary">🌐 inomed.com ↗</a>
+              <span className="ino-btn-ghost">📍 {m.location.city}, DE</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="ino-info-grid">
+        <div className="ino-card ino-anim-1">
+          <div className="ino-card-label">Unternehmensdaten</div>
+          <div className="ino-facts">
+            {m.facts.map((f,i)=>(
+              <div className="ino-fact" key={i}>
+                <span className="ino-fact-l">{f.label}</span>
+                <span className="ino-fact-v">{f.value}</span>
+              </div>
+            ))}
+          </div>
+          <a href={m.website} target="_blank" rel="noopener noreferrer" className="ino-website-link">
+            <span>🌐</span>
+            <span>www.inomed.com</span>
+            <span className="ino-website-link-arrow">↗</span>
+          </a>
+        </div>
+        <div className="ino-card ino-anim-2">
+          <div className="ino-card-label">Über inomed</div>
+          <p style={{fontSize:'.86rem',color:'var(--text-dim)',lineHeight:1.75,margin:'0 0 1.25rem'}}>{m.description}</p>
+          <div className="ino-card-label">Schwerpunkte</div>
+          <div className="ino-focus-grid">
+            {m.focus.map((f,i)=>(
+              <div className="ino-focus-item" key={i}>
+                <div className="ino-focus-icon">{f.icon}</div>
+                <div>
+                  <div className="ino-focus-name">{f.label}</div>
+                  <div className="ino-focus-desc">{f.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <InoMap loc={m.location}/>
+      </div>
+      <div className="ino-sh">
+        <div className="ino-sh-bar"/>
+        Produktmodule
+        <span className="ino-sh-count">{m.products.length} Module</span>
+        <div className="ino-sh-rule"/>
+      </div>
+      <div className="ino-prod-grid">
+        {m.products.map((p,i)=>(
+          <InoProdCard key={p.code} p={p} idx={i}/>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function Home() {
   const bgImg    = useBaseUrl('/img/emig-gebaeude.png');
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef(null);
   const [paused, setPaused] = useState(false);
-  const [tab, setTab]       = useState<'QM'|'SAP'|'MED'>('QM');
-  const [done, setDone]     = useState<string[]>([]);
-  const [mfr, setMfr]       = useState<any>(null);
+  const [tab, setTab]       = useState('QM');
+  const [tabDir, setTabDir] = useState('right');
+  const tabOrder            = ['QM','SAP','MED'];
+  const [done, setDone]     = useState([]);
+  const [mfr, setMfr]       = useState(null);
   const [greet, setGreet]   = useState('');
+
+  const switchTab = (id) => {
+    const fromIdx = tabOrder.indexOf(tab);
+    const toIdx   = tabOrder.indexOf(id);
+    setTabDir(toIdx > fromIdx ? 'right' : 'left');
+    setTab(id);
+    setMfr(null);
+  };
 
   useEffect(()=>{
     try{ const s=localStorage.getItem('emig_progress'); if(s) setDone(JSON.parse(s)); }catch(_){}
@@ -1528,34 +1951,49 @@ export default function Home() {
   const CQM   = '#92400e';
   const CMED  = '#dc2626';
 
-  function ModCard({title,code,color,link='#',draft=false}:any){
+  function ModCard({title,code,color,link='#',draft=false,num=''}){
     const isDone=done.includes(code);
+    const accentBg = draft ? '#e5e1da' : isDone ? '#10b981' : color;
     return (
-      <div className="ea-card" style={{opacity:draft?.65:1}}>
-        <div className="ea-card-stripe" style={{background:isDone?'#10b981':color}}/>
-        <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:5}}>
+      <div className={"ea-card"+(isDone?" ea-card-done-glow":"")} style={{opacity:draft?.62:1,paddingLeft:'1.1rem'}}>
+        <div className="ea-card-stripe" style={{background:accentBg}}/>
+        {num && <div className="ea-card-num">{num}</div>}
+        <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:4}}>
           <h3 className="ea-card-t">{title}</h3>
-          {isDone&&<span style={{color:'#10b981',fontSize:'.88rem',marginLeft:6,flexShrink:0}}>✓</span>}
         </div>
-        <div className="ea-card-code">{code}</div>
+        <div className="ea-card-status">
+          <div className="ea-card-code">{code}</div>
+          {isDone && (
+            <div className="ea-card-chip" style={{background:'#d1fae5',color:'#065f46'}}>
+              <div className="ea-card-chip-dot" style={{background:'#10b981'}}/>Abgeschlossen
+            </div>
+          )}
+          {draft && (
+            <div className="ea-card-chip" style={{background:'#f0ede8',color:'#9ca3af'}}>
+              <div className="ea-card-chip-dot" style={{background:'#d1cec8'}}/>In Vorbereitung
+            </div>
+          )}
+        </div>
         <div className="ea-card-bar">
           <div className="ea-card-bar-f" style={{width:isDone?'100%':'0%',background:isDone?'#10b981':color}}/>
         </div>
-        <Link className="ea-card-btn" to={draft?'#':link}
-          style={{background:draft?'#f0ede8':isDone?'#ecfdf5':color,
-            color:draft?'#9ca3af':isDone?'#059669':'#fff',
-            border:isDone?'1px solid #d1fae5':'none'}}>
-          {draft?'In Vorbereitung':isDone?'Wiederholen':'Starten'}
-        </Link>
+        {!draft && (
+          <Link className="ea-card-btn" to={link}
+            style={{background:isDone?'rgba(16,185,129,.1)':'rgba(0,0,0,.04)',color:isDone?'#059669':color,border:`1.5px solid ${isDone?'rgba(16,185,129,.3)':color+'44'}`}}>
+            <span>{isDone?'Wiederholen':'Starten'}</span>
+            <span className="ea-card-btn-arrow">{isDone?'↻':'→'}</span>
+          </Link>
+        )}
       </div>
     );
   }
 
-  function SH({children,color='#374151'}:any){
+  function SH({children,color='#374151',count=''}){
     return(
       <div className="ea-sh">
         <div className="ea-sh-bar" style={{background:color}}/>
         {children}
+        {count&&<span className="ea-sh-count" style={{background:`${color}12`,color,borderColor:`${color}30`}}>{count}</span>}
         <div className="ea-sh-rule"/>
       </div>
     );
@@ -1568,8 +2006,6 @@ export default function Home() {
         <style>{CSS}</style>
       </Head>
       <div className="ea">
-
-        {/* ── HERO ── */}
         <div style={{width:'100%',overflow:'hidden'}}>
           <div className="ea-hero">
             <div className="ea-hero-media">
@@ -1599,10 +2035,8 @@ export default function Home() {
           </div>
         </div>
 
-        {/* ── MAIN ── */}
         <main className="ea-main">
           <div className="ea-wrap">
-
             {greet&&(
               <div className="ea-welcome">
                 <div>
@@ -1613,21 +2047,34 @@ export default function Home() {
               </div>
             )}
 
-            {/* MAIN TABS */}
-            <div className="ea-tabs">
-              {([{id:'QM',l:'Quality Management'},{id:'SAP',l:'SAP Universum'},{id:'MED',l:'Medizinprodukte'}] as const).map(({id,l})=>(
-                <button key={id} className={`ea-tab ${tab===id?'active':''}`}
-                  onClick={()=>{setTab(id);setMfr(null);}}>
-                  {l}
-                </button>
-              ))}
-            </div>
+            {(()=>{
+              const TABS = [
+                {id:'QM',   icon:'◈', label:'Quality Management'},
+                {id:'SAP',  icon:'◉', label:'SAP Universum'},
+                {id:'MED',  icon:'◎', label:'Medizinprodukte'},
+              ];
+              const n = TABS.length;
+              const activeIdx = TABS.findIndex(t=>t.id===tab);
+              return (
+                <div className="ea-tabs">
+                  <div className="ea-tab-slider" style={{
+                    left:`calc(5px + ${activeIdx} * (100% - 10px) / ${n})`,
+                    width:`calc((100% - 10px) / ${n})`,
+                  }}/>
+                  {TABS.map(({id,icon,label}) => (
+                    <button key={id} className={`ea-tab${tab===id?' active':''}`} onClick={()=>switchTab(id)} style={{flex:'1 1 0'}}>
+                      <span className="tab-icon">{icon}</span>
+                      <span className="tab-label">{label}</span>
+                    </button>
+                  ))}
+                </div>
+              );
+            })()}
+          </div>
 
-          </div>{/* end ea-wrap — SAP needs full width */}
-
-          {/* ── QM TAB ── */}
+          {/* QM TAB */}
           {tab==='QM' && (
-            <div className="ea-wrap">
+            <div className={`ea-wrap tab-enter-${tabDir}`} key="qm">
               <div className="ea-prog">
                 <div className="ea-prog-info">
                   <div className="ea-prog-lbl">QM Gesamtfortschritt</div>
@@ -1637,52 +2084,19 @@ export default function Home() {
                 <div className="ea-prog-pct">{pct}%</div>
               </div>
 
-              {/* ── QM Philosophy with building image ── */}
-              <div style={{
-                position:'relative', borderRadius:'18px', overflow:'hidden',
-                marginBottom:'1.75rem', minHeight:'195px', display:'flex', alignItems:'flex-end',
-                boxShadow:'0 4px 28px rgba(0,0,0,0.14)',
-              }}>
-                <div style={{ position:'absolute', inset:0, zIndex:0 }}>
-                  <img src={bgImg} alt="Emig GmbH Standort Reutlingen"
-                    style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'center 40%', display:'block' }}
-                  />
+              <div style={{position:'relative',borderRadius:'18px',overflow:'hidden',marginBottom:'1.75rem',minHeight:'195px',display:'flex',alignItems:'flex-end',boxShadow:'0 4px 28px rgba(0,0,0,0.14)'}}>
+                <div style={{position:'absolute',inset:0,zIndex:0}}>
+                  <img src={bgImg} alt="Emig GmbH Standort Reutlingen" style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center 40%',display:'block'}}/>
                 </div>
-                <div style={{
-                  position:'absolute', inset:0, zIndex:1,
-                  background:'linear-gradient(to top, rgba(6,6,10,0.92) 0%, rgba(6,6,10,0.52) 45%, rgba(6,6,10,0.14) 100%)',
-                }} />
-                <div style={{
-                  position:'absolute', inset:0, zIndex:2, opacity:0.025, pointerEvents:'none',
-                  backgroundImage:`url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='280' height='280' filter='url(%23n)'/%3E%3C/svg%3E")`,
-                  backgroundSize:'180px',
-                }} />
-                <div style={{ position:'relative', zIndex:3, padding:'1.75rem 2.25rem', width:'100%' }}>
-                  <div style={{
-                    display:'inline-block', background:'rgba(200,152,58,0.15)', border:'1px solid rgba(200,152,58,0.28)',
-                    color:'#e8d5a8', fontSize:'0.62rem', fontWeight:700, letterSpacing:'0.18em',
-                    textTransform:'uppercase', padding:'4px 11px', borderRadius:'5px', marginBottom:'0.7rem',
-                  }}>ISO 13485:2016 · EU MDR 2017/745</div>
-                  <div style={{
-                    fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(1.5rem,3vw,2.1rem)',
-                    color:'#fff', letterSpacing:'0.06em', lineHeight:1, marginBottom:'0.45rem',
-                  }}>QM Philosophie & Strategie</div>
-                  <p style={{ color:'rgba(255,255,255,0.42)', fontSize:'0.82rem', margin:'0 0 1.1rem', fontWeight:300, lineHeight:1.55 }}>
-                    Leitbild, PDCA, Rollen, Normen und QM-KPIs — mit umfangreichem Wissenstest.
-                  </p>
-                  <div style={{ display:'flex', gap:'10px', flexWrap:'wrap', alignItems:'center' }}>
-                    <Link to="/docs/quality-management/qm-philosophie" style={{
-                      display:'inline-flex', alignItems:'center', gap:'7px',
-                      background:'#92400e', color:'#fff', padding:'9px 20px', borderRadius:'10px',
-                      fontFamily:"'Outfit',sans-serif", fontWeight:600, fontSize:'0.84rem',
-                      textDecoration:'none',
-                    }}>Modul öffnen →</Link>
-                    {['5 Kapitel','12 Fragen','~15 Min.'].map(t => (
-                      <span key={t} style={{
-                        background:'rgba(255,255,255,0.07)', border:'1px solid rgba(255,255,255,0.11)',
-                        color:'rgba(255,255,255,0.45)', fontSize:'0.66rem', fontWeight:600,
-                        padding:'3px 10px', borderRadius:'99px', letterSpacing:'0.08em',
-                      }}>{t}</span>
+                <div style={{position:'absolute',inset:0,zIndex:1,background:'linear-gradient(to top,rgba(6,6,10,0.92) 0%,rgba(6,6,10,0.52) 45%,rgba(6,6,10,0.14) 100%)'}}/>
+                <div style={{position:'relative',zIndex:3,padding:'1.75rem 2.25rem',width:'100%'}}>
+                  <div style={{display:'inline-block',background:'rgba(200,152,58,0.15)',border:'1px solid rgba(200,152,58,0.28)',color:'#e8d5a8',fontSize:'0.62rem',fontWeight:700,letterSpacing:'0.18em',textTransform:'uppercase',padding:'4px 11px',borderRadius:'5px',marginBottom:'0.7rem'}}>ISO 13485:2016 · EU MDR 2017/745</div>
+                  <div style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:'clamp(1.5rem,3vw,2.1rem)',color:'#fff',letterSpacing:'0.06em',lineHeight:1,marginBottom:'0.45rem'}}>QM Philosophie & Strategie</div>
+                  <p style={{color:'rgba(255,255,255,0.42)',fontSize:'0.82rem',margin:'0 0 1.1rem',fontWeight:300,lineHeight:1.55}}>Leitbild, PDCA, Rollen, Normen und QM-KPIs — mit umfangreichem Wissenstest.</p>
+                  <div style={{display:'flex',gap:'10px',flexWrap:'wrap',alignItems:'center'}}>
+                    <Link to="/docs/quality-management/qm-philosophie" style={{display:'inline-flex',alignItems:'center',gap:'7px',background:'#92400e',color:'#fff',padding:'9px 20px',borderRadius:'10px',fontFamily:"'Outfit',sans-serif",fontWeight:600,fontSize:'0.84rem',textDecoration:'none'}}>Modul öffnen →</Link>
+                    {['5 Kapitel','12 Fragen','~15 Min.'].map(t=>(
+                      <span key={t} style={{background:'rgba(255,255,255,0.07)',border:'1px solid rgba(255,255,255,0.11)',color:'rgba(255,255,255,0.45)',fontSize:'0.66rem',fontWeight:600,padding:'3px 10px',borderRadius:'99px',letterSpacing:'0.08em'}}>{t}</span>
                     ))}
                   </div>
                 </div>
@@ -1690,50 +2104,40 @@ export default function Home() {
 
               <div className="ea-test" style={{background:ready?'#f0fdf4':'#f8f7f3',borderColor:ready?'#bbf7d0':'#dedad4'}}>
                 <div>
-                  <div style={{fontWeight:600,fontSize:'1rem',color:ready?'#065f46':'#9ca3af'}}>
-                    {ready?'Finaler Test & Zertifikat':'Finaler Test — gesperrt'}
-                  </div>
-                  <div style={{fontSize:'.77rem',color:'#9ca3af',marginTop:4}}>
-                    {ready?'Alle Module abgeschlossen. Jetzt testen.':
-                      `Noch ${ALL_QM.length-done.length} Module bis zur Freischaltung.`}
-                  </div>
+                  <div style={{fontWeight:600,fontSize:'1rem',color:ready?'#065f46':'#9ca3af'}}>{ready?'Finaler Test & Zertifikat':'Finaler Test — gesperrt'}</div>
+                  <div style={{fontSize:'.77rem',color:'#9ca3af',marginTop:4}}>{ready?'Alle Module abgeschlossen. Jetzt testen.':`Noch ${ALL_QM.length-done.length} Module bis zur Freischaltung.`}</div>
                 </div>
-                <button disabled={!ready} className="ea-test-btn"
-                  style={{background:ready?'#059669':'#e5e1da',color:ready?'#fff':'#9ca3af',cursor:ready?'pointer':'not-allowed'}}>
-                  Prüfung starten
-                </button>
+                <button disabled={!ready} className="ea-test-btn" style={{background:ready?'#059669':'#e5e1da',color:ready?'#fff':'#9ca3af',cursor:ready?'pointer':'not-allowed'}}>Prüfung starten</button>
               </div>
 
-              <SH color={CQM}>Logistik & Lager</SH>
+              <SH color={CQM} count="4 Module">Logistik & Lager</SH>
               <div className="ea-grid">
-                <ModCard title="Lagerbedingungen"    code="SOP-LOG-01" color={CQM} link="/docs/logistik-lager/SOP_LOG-01"/>
-                <ModCard title="Rückverfolgbarkeit"  code="SOP-LOG-02" color={CQM} link="/docs/logistik-lager/SOP_LOG-02"/>
-                <ModCard title="Sperrware"            code="SOP-LOG-03" color={CQM} link="/docs/logistik-lager/SOP_LOG-03"/>
-                <ModCard title="Inventur"             code="SOP-LOG-04" color={CQM} draft/>
+                <ModCard title="Lagerbedingungen"    code="SOP-LOG-01" num="01" color={CQM} link="/docs/logistik-lager/SOP_LOG-01"/>
+                <ModCard title="Rückverfolgbarkeit"  code="SOP-LOG-02" num="02" color={CQM} link="/docs/logistik-lager/SOP_LOG-02"/>
+                <ModCard title="Sperrware"            code="SOP-LOG-03" num="03" color={CQM} link="/docs/logistik-lager/SOP_LOG-03"/>
+                <ModCard title="Inventur"             code="SOP-LOG-04" num="04" color={CQM} draft/>
               </div>
-
-              <SH color={CQM}>Einkauf & Lieferanten</SH>
+              <SH color={CQM} count="2 Module">Einkauf & Lieferanten</SH>
               <div className="ea-grid">
-                <ModCard title="Lieferantenbewertung" code="SOP-EINK-01" color={CQM} link="/docs/einkauf-lieferanten/SOP_EINK-01"/>
-                <ModCard title="Einkaufsprozess"      code="SOP-EINK-02" color={CQM} link="/docs/einkauf-lieferanten/SOP_EINK-02"/>
+                <ModCard title="Lieferantenbewertung" code="SOP-EINK-01" num="05" color={CQM} link="/docs/einkauf-lieferanten/SOP_EINK-01"/>
+                <ModCard title="Einkaufsprozess"      code="SOP-EINK-02" num="06" color={CQM} link="/docs/einkauf-lieferanten/SOP_EINK-02"/>
               </div>
-
-              <SH color={CQM}>Regulatorik & MDR</SH>
+              <SH color={CQM} count="4 Module">Regulatorik & MDR</SH>
               <div className="ea-grid">
-                <ModCard title="Importeurpflichten" code="SOP-REG-01" color={CQM} link="/docs/regulatorik-mdr/SOP_REG-01"/>
-                <ModCard title="Händlerpflichten"   code="SOP-REG-02" color={CQM} link="/docs/regulatorik-mdr/SOP_REG-02"/>
-                <ModCard title="PRRC"               code="SOP-REG-03" color={CQM} link="/docs/regulatorik-mdr/SOP_REG-03"/>
-                <ModCard title="Audits"             code="SOP-REG-05" color={CQM} link="/docs/regulatorik-mdr/SOP_REG-05"/>
+                <ModCard title="Importeurpflichten" code="SOP-REG-01" num="07" color={CQM} link="/docs/regulatorik-mdr/SOP_REG-01"/>
+                <ModCard title="Händlerpflichten"   code="SOP-REG-02" num="08" color={CQM} link="/docs/regulatorik-mdr/SOP_REG-02"/>
+                <ModCard title="PRRC"               code="SOP-REG-03" num="09" color={CQM} link="/docs/regulatorik-mdr/SOP_REG-03"/>
+                <ModCard title="Audits"             code="SOP-REG-05" num="10" color={CQM} link="/docs/regulatorik-mdr/SOP_REG-05"/>
               </div>
             </div>
           )}
 
-          {/* ── SAP TAB — full width, no wrap ── */}
-          {tab==='SAP' && <SAPUniverse/>}
+          {/* SAP TAB */}
+          {tab==='SAP' && <div className={`tab-enter-${tabDir}`} key="sap"><SAPUniverse/></div>}
 
-          {/* ── MED TAB — full-width, no wrap ── */}
+          {/* MED TAB */}
           {tab==='MED' && (
-            <div className="ea-wrap">
+            <div className={`ea-wrap tab-enter-${tabDir}`} key="med">
               {!mfr ? (
                 <>
                   <SH color={CMED}>Hersteller & Produktschulungen</SH>
@@ -1743,12 +2147,15 @@ export default function Home() {
                     ))}
                   </div>
                 </>
+              ) : mfr.id === 'riwo' ? (
+                <RIWOspineDetail onBack={() => setMfr(null)} />
+              ) : mfr.id === 'inomed' ? (
+                <InomedDetail onBack={() => setMfr(null)} />
               ) : (
                 <MfrDetail m={mfr} onBack={() => setMfr(null)} />
               )}
             </div>
           )}
-
         </main>
       </div>
     </Layout>
