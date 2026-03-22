@@ -2,11 +2,11 @@ import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
 
 const sidebars: SidebarsConfig = {
   tutorialSidebar: [
-    {
+        {
       type: 'category',
       label: 'Quality Management',
       collapsed: false,
-      items: ['quality-management/SOP-MAN-01-Management'],
+      items: ['quality-management/SOP-MAN-01-Management'], // RICHTIG
     },
     {
       type: 'category',
