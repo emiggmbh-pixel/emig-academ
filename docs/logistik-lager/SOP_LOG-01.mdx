@@ -1,26 +1,997 @@
 ---
 id: SOP_LOG-01
-sidebar_label: 'Lagerbedingungen'
-sidebar_position: 1
+title: Lagerung von Medizinprodukten
+sidebar_label: Lagerbedingungen
 ---
 
-import StorageQuiz from '@site/src/components/StorageQuiz';
+import SopQuiz from '@site/src/components/SopQuiz';
 
-# Lagerung von Medizinprodukten (SOP-LOG-01)
+export const quizData = [
+  {
+    id: 1,
+    question: "Was ist das primäre Ziel der SOP-LOG-01?",
+    options: [
+      "Die Maximierung der Lagerkapazität",
+      "Die Sicherheit, Funktionalität und sterile Integrität von Medizinprodukten bis zur Auslieferung zu gewährleisten",
+      "Die Minimierung von Lagerhaltungskosten",
+      "Die Automatisierung des Bestandsmanagements"
+    ],
+    correct: 1,
+    explanation: "Gemäß SOP-LOG-01 §1 legt die Verfahrensanweisung die Bedingungen für die Lagerung von Medizinprodukten fest, um deren Sicherheit, Funktionalität und sterile Integrität bis zur Auslieferung zu gewährleisten — nicht Kostenoptimierung."
+  },
+  {
+    id: 2,
+    question: "Wie müssen Medizinprodukte grundsätzlich gelagert werden?",
+    options: [
+      "Direkt auf dem Boden, um Platz zu sparen",
+      "In sauberen, trockenen und gut belüfteten Räumen in Regalen oder auf Paletten",
+      "In verschlossenen Metallcontainern ohne Temperaturkontrolle",
+      "Nur in klimatisierten Kühlräumen unter 5°C"
+    ],
+    correct: 1,
+    explanation: "Die SOP schreibt vor: saubere, trockene und gut belüftete Räume. Bodenlagerung ist ausdrücklich UNTERSAGT — die Ware muss in Regalen oder auf Paletten gelagert werden."
+  },
+  {
+    id: 3,
+    question: "Was bedeutet das FIFO-Prinzip in der Lagerhaltung?",
+    options: [
+      "First Invoice First Out — älteste Rechnungen zuerst bezahlen",
+      "First In First Out — zuerst eingelagerte Ware wird zuerst ausgeliefert",
+      "Fast Items First Out — schnelldrehende Artikel bevorzugt ausliefern",
+      "Fixed Items First Out — fixierte Bestände zuerst entnehmen"
+    ],
+    correct: 1,
+    explanation: "FIFO (First-In-First-Out) bedeutet: Produkte, die zuerst eingelagert wurden, werden auch zuerst ausgeliefert. Bei Medizinprodukten immer unter Berücksichtigung des Verfallsdatums — Produkte mit kürzerer Restlaufzeit haben Priorität."
+  },
+  {
+    id: 4,
+    question: "Wann sind spezifische Temperaturbereiche bei der Lagerung einzuhalten?",
+    options: [
+      "Immer bei allen Medizinprodukten, unabhängig vom Hersteller",
+      "Nie — Raumtemperatur ist für alle Medizinprodukte ausreichend",
+      "Wenn vom Hersteller spezifische Temperaturbereiche vorgegeben sind (z.B. onkologische Spezialprodukte)",
+      "Nur bei Produkten über 1.000 € Einkaufswert"
+    ],
+    correct: 2,
+    explanation: "Sofern vom Hersteller spezifische Temperaturbereiche vorgegeben sind (z.B. für onkologische Spezialprodukte), werden diese mittels kalibrierter Datenlogger überwacht und dokumentiert."
+  },
+  {
+    id: 5,
+    question: "Welches Gerät wird zur Überwachung und Dokumentation der Lagertemperatur eingesetzt?",
+    options: [
+      "Einfaches Quecksilberthermometer ohne Aufzeichnung",
+      "Kalibrierte Datenlogger",
+      "Smartphone-App des Lagermitarbeiters",
+      "Manuelle Temperaturliste täglich einmal ausgefüllt"
+    ],
+    correct: 1,
+    explanation: "Kalibrierte Datenlogger werden zur Überwachung und Dokumentation eingesetzt. 'Kalibriert' ist entscheidend — nur kalibrierte Messgeräte liefern rechtlich verwertbare Aufzeichnungen für Audits."
+  },
+  {
+    id: 6,
+    question: "Warum ist Bodenlagerung von Medizinprodukten verboten?",
+    options: [
+      "Weil es ästhetisch unschön ist",
+      "Weil die Produkte beschädigt werden und die Rückverfolgbarkeit verloren gehen kann",
+      "Aus rein ergonomischen Gründen für die Mitarbeiter",
+      "Weil der Boden immer feucht ist"
+    ],
+    correct: 1,
+    explanation: "Bodenlagerung ist untersagt, da Produkte vor mechanischer Beschädigung, Feuchtigkeit und Kontamination geschützt werden müssen. Außerdem kann durch unkontrollierte Bodenlagerung die Rückverfolgbarkeit (Chargentrennung) verloren gehen."
+  },
+  {
+    id: 7,
+    question: "Was schützt das Zugangskontrollen-Konzept beim Lager?",
+    options: [
+      "Nur vor Diebstahl durch externe Personen",
+      "Vor unbefugtem Zugriff, der zu Manipulationen oder dem Verlust der Rückverfolgbarkeit führen könnte",
+      "Ausschließlich vor Feuer und Wasserschäden",
+      "Vor zu häufigen Lagerentnahmen durch eigene Mitarbeiter"
+    ],
+    correct: 1,
+    explanation: "Das Lager ist vor unbefugtem Zugriff geschützt, um Manipulationen oder den Verlust der Rückverfolgbarkeit zu verhindern. Rückverfolgbarkeit ist eine zentrale MDR-Anforderung — jede unautorisierte Bewegung von Medizinprodukten gefährdet diese."
+  },
+  {
+    id: 8,
+    question: "Welche Umgebungseinflüsse müssen Medizinprodukte bei der Lagerung schützen?",
+    options: [
+      "Nur vor Diebstahl",
+      "Vor direkter Sonneneinstrahlung, Feuchtigkeit und mechanischer Beschädigung",
+      "Ausschließlich vor Temperaturschwankungen",
+      "Nur vor Staub"
+    ],
+    correct: 1,
+    explanation: "Produkte werden so gelagert, dass sie vor direkter Sonneneinstrahlung (UV-Degradierung), Feuchtigkeit (Korrosion, Kontamination) und mechanischer Beschädigung (Sterilbarriereverletzung) geschützt sind."
+  },
+  {
+    id: 9,
+    question: "Wie wird das FIFO-Prinzip bei Produkten mit unterschiedlichen Verfallsdaten angewendet?",
+    options: [
+      "Immer streng nach Einlagerungsdatum, Verfallsdatum ist irrelevant",
+      "Produkte mit kürzerer Restlaufzeit werden vorrangig ausgeliefert, auch wenn sie später eingelagert wurden",
+      "Das Verfallsdatum wird nicht berücksichtigt — nur die Einlagerungsreihenfolge zählt",
+      "Produkte werden zufällig entnommen"
+    ],
+    correct: 1,
+    explanation: "Das FIFO-Prinzip gilt unter Berücksichtigung des Verfallsdatums. Produkte mit kürzerer Restlaufzeit werden vorrangig ausgeliefert — selbst wenn ein neueres Produkt zuerst ins Lager kam. Patientensicherheit geht vor strenger Reihenfolge."
+  },
+  {
+    id: 10,
+    question: "Welche ISO-Norm ist die primäre Grundlage für die Lagerbedingungen bei Emig?",
+    options: [
+      "ISO 9001:2015",
+      "ISO 13485:2016 §7.5.1 (Steuerung der Produktion und Dienstleistungserbringung)",
+      "ISO 14001:2015",
+      "ISO 45001:2018"
+    ],
+    correct: 1,
+    explanation: "Die ISO 13485:2016, insbesondere §7.5.1 zur Steuerung der Produktion und Dienstleistungserbringung, ist die normative Grundlage. Sie fordert kontrollierte Bedingungen für alle produktrelevanten Prozesse einschließlich Lagerung."
+  }
+];
 
-[cite_start]Dieses Modul beschreibt die Anforderungen an die Lagerumgebung, um die Sicherheit und Funktionalität unserer Produkte bis zur Auslieferung zu gewährleisten[cite: 1079].
+<style>{`
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
 
-## 1. Umgebungsbedingungen
-[cite_start]Produkte müssen in sauberen, trockenen und gut belüfteten Räumen gelagert werden[cite: 1091].
-* [cite_start]**Temperaturüberwachung**: Spezialprodukte (z. B. Onkologie) werden mittels kalibrierter Datenlogger überwacht[cite: 1092].
-* **Schutz**: Ware ist vor direkter Sonneneinstrahlung und Feuchtigkeit zu schützen[cite: 1093].
+  /* ── Override Docusaurus article defaults ── */
+  .sop-page h1, .sop-page h2, .sop-page h3,
+  .sop-page p,  .sop-page ul, .sop-page li { all: revert; }
+  .sop-page h1, .sop-page h2, .sop-page h3,
+  .sop-page p,  .sop-page ul, .sop-page li { font-family: 'Outfit', sans-serif; }
 
-## 2. Lagerordnung & Sicherheit
-* [cite_start]**Keine Bodenlagerung**: Alle Waren müssen zwingend in Regalen oder auf Paletten lagern.
-* [cite_start]**FIFO-Prinzip**: Es gilt "First-In-First-Out" unter strikter Beachtung des Verfallsdatums[cite: 1095].
-* **Zugang**: Nur autorisiertes Personal hat Zutritt zum Lagerbereich[cite: 1096].
+  /* ── Make the doc container full width ── */
+  .theme-doc-markdown { max-width: 100% !important; }
+  article.sop-wrap     { max-width: 100% !important; padding: 0 !important; }
 
----
+  /* ══════════════════════════════════════
+     OUTER WRAPPER
+  ══════════════════════════════════════ */
+  .sop-page {
+    font-family: 'Outfit', sans-serif;
+    color: #18181f;
+    width: 100%;
+    --accent: #c8983a;
+    --accent-lt: #e8d5a8;
+    --dark: #0e0e14;
+    --radius: 14px;
+  }
 
-## 🎓 Wissenstest: SOP-LOG-01
-<StorageQuiz />
+  /* ══════════════════════════════════════
+     HERO — light, editorial, not a dark box
+  ══════════════════════════════════════ */
+  .sop-hero {
+    background: #f8f7f3;
+    border: 1px solid #e8e4dc;
+    border-radius: 20px;
+    padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1.5rem, 4vw, 2.75rem);
+    margin-bottom: 2rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sop-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #c8983a08 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .sop-hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.75rem;
+  }
+
+  .sop-hero-eyebrow-line {
+    width: 28px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 99px;
+    flex-shrink: 0;
+  }
+
+  .sop-hero-eyebrow-text {
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .sop-hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    color: #0e0e14;
+    margin: 0 0 0.6rem;
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+
+  .sop-hero-desc {
+    font-size: clamp(0.82rem, 1.4vw, 0.9rem);
+    color: #6b7280;
+    margin: 0;
+    line-height: 1.65;
+    max-width: 500px;
+  }
+
+  .sop-hero-meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1.25rem;
+  }
+
+  .sop-hero-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    color: #9ca3af;
+    font-weight: 500;
+  }
+
+  .sop-hero-meta-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* KPI block on right */
+  .sop-hero-kpis {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    align-items: flex-end;
+    flex-shrink: 0;
+  }
+
+  .sop-hero-kpi { text-align: right; }
+
+  .sop-hero-kpi-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: var(--accent);
+    line-height: 1;
+    letter-spacing: 0.04em;
+  }
+
+  .sop-hero-kpi-label {
+    font-size: 0.58rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-top: 1px;
+  }
+
+  .sop-hero-divider {
+    width: 1px;
+    height: 24px;
+    background: #e2ded8;
+    align-self: center;
+  }
+
+  /* ══════════════════════════════════════
+     TWO-COLUMN LAYOUT
+     Left: content (flexible)
+     Right: sticky nav (260px)
+  ══════════════════════════════════════ */
+  .sop-layout {
+    display: grid;
+    grid-template-columns: 1fr 240px;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .sop-content { min-width: 0; }
+
+  /* Sticky side nav */
+  .sop-sidenav {
+    position: sticky;
+    top: 80px;
+    background: #fff;
+    border: 1px solid #ece9e3;
+    border-radius: 16px;
+    padding: 1.25rem;
+    overflow: hidden;
+  }
+
+  .sop-sidenav-title {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    margin-bottom: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sop-sidenav-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #f0ede8;
+  }
+
+  .sop-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.6rem 0.75rem;
+    border-radius: 9px;
+    text-decoration: none;
+    margin-bottom: 3px;
+    transition: all 0.18s;
+    border: 1px solid transparent;
+  }
+
+  .sop-nav-item:hover {
+    background: #f8f7f3;
+    border-color: #e8e4dc;
+    color: #111;
+  }
+
+  .sop-nav-item.active {
+    background: #fff8ec;
+    border-color: rgba(200,152,58,0.25);
+    color: #92400e;
+  }
+
+  .sop-nav-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    color: #d1cec8;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 20px;
+    transition: color 0.18s;
+  }
+
+  .sop-nav-item.active .sop-nav-num { color: var(--accent); }
+
+  .sop-nav-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #374151;
+    line-height: 1.2;
+  }
+
+  .sop-nav-item.active .sop-nav-label { color: #92400e; }
+
+  /* Progress bar inside sidenav */
+  .sop-nav-progress {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f0ede8;
+  }
+
+  .sop-nav-progress-label {
+    font-size: 0.62rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .sop-nav-progress-pct {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    color: var(--accent);
+  }
+
+  .sop-nav-bar-bg {
+    height: 3px;
+    background: #f0ede8;
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .sop-nav-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-lt));
+    border-radius: 99px;
+    transition: width 0.4s ease;
+  }
+
+  /* Quiz button in sidenav */
+  .sop-nav-quiz-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 0.9rem;
+    padding: 9px 14px;
+    background: #0e0e14;
+    color: var(--accent-lt);
+    border: none;
+    border-radius: 10px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    letter-spacing: 0.04em;
+  }
+
+  .sop-nav-quiz-btn:hover {
+    background: #1a1a26;
+    color: #fff;
+  }
+
+  /* ══════════════════════════════════════
+     SECTION
+  ══════════════════════════════════════ */
+  .sop-section {
+    margin-bottom: 3rem;
+    scroll-margin-top: 100px;
+  }
+
+  .sop-section-hd {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #f0ede8;
+  }
+
+  .sop-section-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 3rem);
+    color: #ede9e2;
+    line-height: 1;
+    flex-shrink: 0;
+    letter-spacing: 0.04em;
+  }
+
+  .sop-section-title {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 3px;
+    line-height: 1.2;
+    padding-top: 0.3rem;
+  }
+
+  .sop-section-sub {
+    font-size: 0.68rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+  }
+
+  /* ══════════════════════════════════════
+     INFO BOX
+  ══════════════════════════════════════ */
+  .sop-info {
+    background: #fffbf3;
+    border: 1px solid rgba(200,152,58,0.2);
+    border-left: 3px solid var(--accent);
+    border-radius: 12px;
+    padding: 1rem 1.3rem;
+    font-size: 0.87rem;
+    color: #374151;
+    line-height: 1.72;
+    margin-bottom: 1.5rem;
+  }
+  .sop-info strong { color: #92400e; }
+
+  /* ══════════════════════════════════════
+     RULE CARDS
+  ══════════════════════════════════════ */
+  .sop-rules {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+    gap: 11px;
+    margin-bottom: 1.5rem;
+  }
+
+  .sop-rule {
+    background: #fff;
+    border: 1px solid #ece9e3;
+    border-radius: var(--radius);
+    padding: 1.2rem;
+    display: flex;
+    gap: 13px;
+    align-items: flex-start;
+    transition: border-color 0.18s, box-shadow 0.18s, transform 0.18s;
+  }
+
+  .sop-rule:hover {
+    border-color: rgba(200,152,58,0.3);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    transform: translateY(-2px);
+  }
+
+  .sop-rule-icon {
+    width: 36px; height: 36px;
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.05rem;
+    flex-shrink: 0;
+  }
+
+  .sop-rule-title {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .sop-rule-desc {
+    font-size: 0.77rem;
+    color: #6b7280;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .sop-rule-desc strong { color: #374151; }
+
+  /* ══════════════════════════════════════
+     PROCESS FLOW
+  ══════════════════════════════════════ */
+  .sop-flow { display: flex; flex-direction: column; margin-bottom: 1.5rem; }
+
+  .sop-flow-step { display: flex; gap: 14px; align-items: flex-start; }
+
+  .sop-flow-left {
+    display: flex; flex-direction: column; align-items: center; flex-shrink: 0;
+  }
+
+  .sop-flow-circle {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: #111116; color: #e8d5a8;
+    font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .sop-flow-line {
+    width: 1px; flex: 1; min-height: 20px;
+    background: linear-gradient(to bottom, #dedad4, transparent);
+    margin: 3px 0;
+  }
+
+  .sop-flow-content { padding-bottom: 1.4rem; flex: 1; }
+
+  .sop-flow-title {
+    font-size: 0.88rem; font-weight: 700; color: #111827; margin-bottom: 3px;
+  }
+
+  .sop-flow-desc {
+    font-size: 0.79rem; color: #6b7280; line-height: 1.6; margin: 0;
+  }
+
+  /* ══════════════════════════════════════
+     CHECKLIST
+  ══════════════════════════════════════ */
+  .sop-checklist { display: flex; flex-direction: column; gap: 7px; margin-bottom: 1.5rem; }
+
+  .sop-check {
+    display: flex; align-items: flex-start; gap: 11px;
+    background: #fff; border: 1px solid #ece9e3; border-radius: 12px;
+    padding: 0.9rem 1.1rem;
+    transition: all 0.18s;
+  }
+  .sop-check:hover { border-color: rgba(200,152,58,0.25); background: #fffbf5; }
+
+  .sop-check-icon {
+    width: 28px; height: 28px; border-radius: 7px;
+    background: #f5f3ee; display: flex; align-items: center;
+    justify-content: center; font-size: 0.82rem; flex-shrink: 0;
+  }
+
+  .sop-check-label { font-size: 0.84rem; font-weight: 600; color: #111827; margin-bottom: 2px; }
+  .sop-check-sub   { font-size: 0.73rem; color: #9ca3af; line-height: 1.45; }
+
+  /* ══════════════════════════════════════
+     WARNING / TIP
+  ══════════════════════════════════════ */
+  .sop-warning {
+    background: #fef2f2; border: 1px solid #fecaca; border-radius: 12px;
+    padding: 1rem 1.2rem; font-size: 0.83rem; color: #7f1d1d; line-height: 1.65;
+    margin-bottom: 1.5rem; display: flex; gap: 10px; align-items: flex-start;
+  }
+
+  .sop-tip {
+    background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px;
+    padding: 1rem 1.2rem; font-size: 0.83rem; color: #14532d; line-height: 1.65;
+    margin-bottom: 1.5rem; display: flex; gap: 10px; align-items: flex-start;
+  }
+
+  /* ══════════════════════════════════════
+     KPI ROW
+  ══════════════════════════════════════ */
+  .sop-kpis {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 140px), 1fr));
+    gap: 10px;
+    margin-bottom: 1.5rem;
+  }
+
+  .sop-kpi {
+    background: #fff; border: 1px solid #ece9e3;
+    border-radius: var(--radius); padding: 1.1rem; text-align: center;
+  }
+
+  .sop-kpi-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; line-height: 1; letter-spacing: 0.04em; margin-bottom: 3px;
+  }
+
+  .sop-kpi-label {
+    font-size: 0.64rem; color: #9ca3af; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+
+  /* ══════════════════════════════════════
+     NORM PILLS
+  ══════════════════════════════════════ */
+  .sop-norms { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1rem; }
+
+  .sop-norm {
+    background: #f5f3ee; color: #374151;
+    font-size: 0.65rem; font-weight: 600; padding: 3px 9px;
+    border-radius: 5px; font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em; border: 1px solid #e8e4dc;
+  }
+
+  /* ── Divider ── */
+  .sop-divider {
+    height: 1px;
+    background: linear-gradient(90deg, #e5e1da 0%, transparent 80%);
+    margin: 2.5rem 0;
+  }
+
+  /* ══════════════════════════════════════
+     QUIZ SECTION HEADER
+  ══════════════════════════════════════ */
+  .sop-quiz-header {
+    background: #0e0e14;
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .sop-quiz-header-icon {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    color: var(--accent);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .sop-quiz-header-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 3px;
+  }
+
+  .sop-quiz-header-sub {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.38);
+  }
+
+  /* ══════════════════════════════════════
+     RESPONSIVE
+  ══════════════════════════════════════ */
+  @media (max-width: 900px) {
+    .sop-layout { grid-template-columns: 1fr; }
+    .sop-sidenav { display: none; }
+    .sop-hero  { grid-template-columns: 1fr; }
+    .sop-hero-kpis { flex-direction: row; align-items: flex-start; justify-content: flex-start; }
+    .sop-hero-kpi { text-align: left; }
+  }
+
+  @media (max-width: 640px) {
+    .sop-rules { grid-template-columns: 1fr; }
+    .sop-kpis  { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (min-width: 1400px) {
+    .sop-layout { grid-template-columns: 1fr 260px; gap: 3rem; }
+  }
+
+  /* ── Fade in animation ── */
+  @keyframes sop-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .sop-page { animation: sop-in 0.4s ease both; }
+`}</style>
+
+export function SopLogPage() {
+  const [activeSection, setActiveSection] = React.useState('zweck');
+  const [scrollPct, setScrollPct] = React.useState(0);
+
+  React.useEffect(() => {
+    const sections = ['zweck','umgebung','fifo','zugang','wissenstest'];
+    const handleScroll = () => {
+      // Scroll progress
+      const el = document.querySelector('.sop-content');
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        const total = el.scrollHeight;
+        const scrolled = Math.max(0, -rect.top + 100);
+        setScrollPct(Math.min(100, Math.round((scrolled / total) * 100)));
+      }
+      // Active section
+      let current = 'zweck';
+      sections.forEach(id => {
+        const el2 = document.getElementById(id);
+        if (el2) {
+          const top = el2.getBoundingClientRect().top;
+          if (top < 130) current = id;
+        }
+      });
+      setActiveSection(current);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navItems = [
+    { id: 'zweck',      num: '01', label: 'Zweck & Geltungsbereich' },
+    { id: 'umgebung',   num: '02', label: 'Umgebungsbedingungen' },
+    { id: 'fifo',       num: '03', label: 'Bestandsführung FIFO' },
+    { id: 'zugang',     num: '04', label: 'Zugangskontrolle' },
+    { id: 'wissenstest',num: '★',  label: 'Wissenstest' },
+  ];
+
+  return (
+    <div className="sop-page">
+
+      {/* ── HERO ── */}
+      <div className="sop-hero">
+        <div>
+          <div className="sop-hero-eyebrow">
+            <div className="sop-hero-eyebrow-line"/>
+            <span className="sop-hero-eyebrow-text">SOP-LOG-01 · Logistik & Lager</span>
+          </div>
+          <div className="sop-hero-title">Lagerung von<br/>Medizinprodukten</div>
+          <p className="sop-hero-desc">
+            Verfahrensanweisung für die sachgerechte Lagerung aller Medizinprodukte — von der Einlagerung bis zur Auslieferung, konform mit ISO 13485 und EU-MDR 2017/745.
+          </p>
+          <div className="sop-hero-meta">
+            <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>ISO 13485:2016 §7.5.1</div>
+            <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>Gültig ab 31.01.2026</div>
+            <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>4 Kapitel · 10 Fragen</div>
+          </div>
+        </div>
+        <div className="sop-hero-kpis">
+          <div className="sop-hero-kpi"><div className="sop-hero-kpi-val">FIFO</div><div className="sop-hero-kpi-label">Lager-Prinzip</div></div>
+          <div className="sop-hero-divider"/>
+          <div className="sop-hero-kpi"><div className="sop-hero-kpi-val">24/7</div><div className="sop-hero-kpi-label">Überwachung</div></div>
+          <div className="sop-hero-divider"/>
+          <div className="sop-hero-kpi"><div className="sop-hero-kpi-val">V1</div><div className="sop-hero-kpi-label">Version</div></div>
+        </div>
+      </div>
+
+      {/* ── TWO-COLUMN LAYOUT ── */}
+      <div className="sop-layout">
+
+        {/* ── MAIN CONTENT ── */}
+        <div className="sop-content">
+
+          {/* 01 ZWECK */}
+          <div className="sop-section" id="zweck">
+            <div className="sop-section-hd">
+              <div className="sop-section-num">01</div>
+              <div>
+                <div className="sop-section-title">Zweck & Geltungsbereich</div>
+                <div className="sop-section-sub">Warum diese SOP existiert</div>
+              </div>
+            </div>
+            <div className="sop-info">
+              Diese Verfahrensanweisung legt die Bedingungen für die Lagerung von Medizinprodukten fest, um deren <strong>Sicherheit, Funktionalität und sterile Integrität</strong> bis zur Auslieferung zu gewährleisten. Sie gilt für alle Mitarbeitenden mit Lagerzugang.
+            </div>
+            <div className="sop-kpis">
+              <div className="sop-kpi"><div className="sop-kpi-val" style={{color:'#10b981'}}>100%</div><div className="sop-kpi-label">Produktintegrität</div></div>
+              <div className="sop-kpi"><div className="sop-kpi-val" style={{color:'#c8983a'}}>FIFO</div><div className="sop-kpi-label">Lagerprinzip</div></div>
+              <div className="sop-kpi"><div className="sop-kpi-val" style={{color:'#ef4444'}}>0×</div><div className="sop-kpi-label">Bodenlagerung</div></div>
+              <div className="sop-kpi"><div className="sop-kpi-val" style={{color:'#8b5cf6'}}>MDR</div><div className="sop-kpi-label">Konformität</div></div>
+            </div>
+            <div className="sop-norms">
+              <span className="sop-norm">ISO 13485:2016 §7.5.1</span>
+              <span className="sop-norm">EU MDR 2017/745</span>
+              <span className="sop-norm">SOP-LOG-01 V1 · 31.01.2026</span>
+            </div>
+          </div>
+
+          <div className="sop-divider"/>
+
+          {/* 02 UMGEBUNGSBEDINGUNGEN */}
+          <div className="sop-section" id="umgebung">
+            <div className="sop-section-hd">
+              <div className="sop-section-num">02</div>
+              <div>
+                <div className="sop-section-title">Umgebungsbedingungen</div>
+                <div className="sop-section-sub">Temperatur · Feuchtigkeit · Sauberkeit · Schutz</div>
+              </div>
+            </div>
+            <div className="sop-info">
+              Die Lagerung erfolgt in <strong>sauberen, trockenen und gut belüfteten Räumen</strong>. Produkte werden so gelagert, dass sie vor direkter Sonneneinstrahlung, Feuchtigkeit und mechanischer Beschädigung geschützt sind.
+            </div>
+            <div className="sop-rules">
+              {[
+                { icon:'🌡️', bg:'#fef3c7', t:'Temperaturüberwachung', d:'Sofern vom Hersteller spezifische Temperaturbereiche vorgegeben sind (z.B. onkologische Spezialprodukte), werden diese mittels <strong>kalibrierter Datenlogger</strong> überwacht und dokumentiert.' },
+                { icon:'💧', bg:'#dbeafe', t:'Feuchtigkeitsschutz',   d:'Keine direkte Feuchtigkeit, kein Wasserkontakt. Trockene Lagerbedingungen verhindern Korrosion, Verpackungsschäden und mikrobiologische Kontamination.' },
+                { icon:'☀️', bg:'#fce7f3', t:'UV-Schutz',             d:'Schutz vor direkter Sonneneinstrahlung. UV-Strahlung kann Materialien degradieren, Sterilbarrieren schädigen und Kunststoffe verspröden.' },
+                { icon:'🚫', bg:'#fee2e2', t:'Keine Bodenlagerung',   d:'Bodenlagerung ist <strong>ausdrücklich untersagt</strong>. Ware muss in Regalen oder auf Paletten gelagert werden — Schutz vor Feuchtigkeit und Kontamination.' },
+                { icon:'🌬️', bg:'#f0fdf4', t:'Belüftung',             d:'Gut belüftete Räume verhindern Feuchtigkeitsstau und Schimmelbildung. Regelmäßige Luftzirkulation ist Pflicht, besonders bei temperaturkritischen Produkten.' },
+                { icon:'📊', bg:'#f5f3ff', t:'Dokumentationspflicht', d:'Temperaturdaten kalibrierter Datenlogger werden regelmäßig ausgelesen und für Audits archiviert. Bei Abweichungen sofort den QMB informieren.' },
+              ].map((r,i) => (
+                <div className="sop-rule" key={i}>
+                  <div className="sop-rule-icon" style={{background:r.bg}}>{r.icon}</div>
+                  <div>
+                    <div className="sop-rule-title">{r.t}</div>
+                    <p className="sop-rule-desc" dangerouslySetInnerHTML={{__html:r.d}}/>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="sop-warning">
+              <span style={{fontSize:'1rem',flexShrink:0}}>⚠</span>
+              <div><strong>Temperaturalarm:</strong> Bei Überschreitung von Herstellervorgaben sind betroffene Produkte sofort ins Sperrlager zu überführen und der QMB zu benachrichtigen. Keine Auslieferung ohne schriftliche Freigabe.</div>
+            </div>
+            <div className="sop-norms">
+              <span className="sop-norm">ISO 13485:2016 §7.5.1</span>
+              <span className="sop-norm">Herstellervorgaben beachten</span>
+            </div>
+          </div>
+
+          <div className="sop-divider"/>
+
+          {/* 03 FIFO */}
+          <div className="sop-section" id="fifo">
+            <div className="sop-section-hd">
+              <div className="sop-section-num">03</div>
+              <div>
+                <div className="sop-section-title">Bestandsführung & FIFO-Prinzip</div>
+                <div className="sop-section-sub">First In · First Out · Verfallsdatum · Sperrlager</div>
+              </div>
+            </div>
+            <div className="sop-info">
+              Es gilt das <strong>„First-In-First-Out"-Prinzip</strong> unter Berücksichtigung des Verfallsdatums. Produkte mit kürzerer Restlaufzeit werden vorrangig ausgeliefert — auch wenn ein neueres Produkt früher eingelagert wurde.
+            </div>
+            <div className="sop-flow">
+              {[
+                { t:'Wareneingang & Einlagerung', d:'Produkt wird mit Charge, MHD und UDI erfasst. SAP bucht automatisch in den freien Bestand. Einlagerung in Regal/Palette — nie auf dem Boden.' },
+                { t:'FIFO-Prüfung bei Entnahme', d:'Lagerist wählt immer das Produkt mit dem frühesten Einlagerungsdatum ODER kürzesten MHD. SAP-Pickliste gibt die Entnahmereihenfolge automatisch vor.' },
+                { t:'MHD-Überwachung', d:'Regelmäßige Prüfung aller Bestände auf Mindesthaltbarkeitsdatum. Produkte, die innerhalb von 3 Monaten ablaufen, werden markiert und priorisiert ausgeliefert.' },
+                { t:'Sperrlager bei Auffälligkeiten', d:'Beschädigte Verpackung, abgelaufenes MHD, fehlende Dokumente oder Temperaturabweichung → sofortige Überführung ins Sperrlager. Keine Auslieferung bis zur Freigabe.' },
+                { t:'Freigabe oder Vernichtung', d:'QMB prüft gesperrte Ware. Freigabe nach Klärung oder geordnete Vernichtung mit Dokumentation. Kein gesperrtes Produkt darf ausgeliefert werden.' },
+              ].map((s,i,arr) => (
+                <div className="sop-flow-step" key={i}>
+                  <div className="sop-flow-left">
+                    <div className="sop-flow-circle">{i+1}</div>
+                    {i < arr.length-1 && <div className="sop-flow-line"/>}
+                  </div>
+                  <div className="sop-flow-content">
+                    <div className="sop-flow-title">{s.t}</div>
+                    <p className="sop-flow-desc">{s.d}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="sop-tip">
+              <span style={{fontSize:'1rem',flexShrink:0}}>💡</span>
+              <div><strong>SAP-Unterstützung:</strong> Die Pickliste wird automatisch in FIFO-Reihenfolge mit MHD-Berücksichtigung generiert. Der Lagerist muss die vorgegebene Reihenfolge einhalten.</div>
+            </div>
+            <div className="sop-norms">
+              <span className="sop-norm">ISO 13485:2016 §7.5.1</span>
+              <span className="sop-norm">MDR Art. 25 Rückverfolgbarkeit</span>
+            </div>
+          </div>
+
+          <div className="sop-divider"/>
+
+          {/* 04 ZUGANGSKONTROLLE */}
+          <div className="sop-section" id="zugang">
+            <div className="sop-section-hd">
+              <div className="sop-section-num">04</div>
+              <div>
+                <div className="sop-section-title">Zugangskontrolle & Sicherheit</div>
+                <div className="sop-section-sub">Unbefugter Zugriff · Rückverfolgbarkeit · Manipulation</div>
+              </div>
+            </div>
+            <div className="sop-info">
+              Das Lager ist vor <strong>unbefugtem Zugriff</strong> geschützt, um Manipulationen oder den Verlust der Rückverfolgbarkeit zu verhindern. Jede Warenbewegung muss im SAP-System nachvollziehbar sein.
+            </div>
+            <div className="sop-checklist">
+              {[
+                { icon:'🔑', t:'Physische Zugangsbeschränkung', d:'Nur autorisiertes Lagerpersonal hat Zugang. Schlüssel- oder Kartenregelung. Besucher nur in Begleitung eines Mitarbeitenden.' },
+                { icon:'💻', t:'SAP-Buchungspflicht',           d:'Jede Warenbewegung (Ein-/Ausgang, Umlagerung, Sperrung) wird sofort in SAP gebucht. Keine manuelle Entnahme ohne Systembuchung.' },
+                { icon:'🏷️', t:'Kennzeichnung & Chargenidentifikation', d:'Alle Produkte müssen klar mit Charge, MHD und Artikelnummer gekennzeichnet sein. Unbeschriftete Ware wird sofort gesperrt.' },
+                { icon:'📋', t:'Inventur & Bestandsabgleich',   d:'Regelmäßiger Abgleich zwischen physischem Bestand und SAP-System. Abweichungen sofort dem QMB melden und dokumentieren.' },
+                { icon:'🚨', t:'Meldepflicht bei Unregelmäßigkeiten', d:'Jeder Mitarbeitende ist verpflichtet, Unregelmäßigkeiten (fehlende Ware, Beschädigungen, unbefugte Zugriffe) sofort dem Lagerleiter und QMB zu melden.' },
+              ].map((c,i) => (
+                <div className="sop-check" key={i}>
+                  <div className="sop-check-icon">{c.icon}</div>
+                  <div>
+                    <div className="sop-check-label">{c.t}</div>
+                    <div className="sop-check-sub">{c.d}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="sop-warning">
+              <span style={{fontSize:'1rem',flexShrink:0}}>⚠</span>
+              <div><strong>MDR-Pflicht:</strong> Fehlende Rückverfolgbarkeit ist ein kritischer MDR-Verstoß. Im Falle eines Rückrufs müssen betroffene Chargen innerhalb von Minuten identifiziert werden können.</div>
+            </div>
+            <div className="sop-norms">
+              <span className="sop-norm">MDR 2017/745 Art. 25</span>
+              <span className="sop-norm">ISO 13485:2016 §8.3</span>
+              <span className="sop-norm">SOP-LOG-02 Rückverfolgbarkeit</span>
+            </div>
+          </div>
+
+          <div className="sop-divider"/>
+
+          {/* QUIZ HEADER */}
+          <div id="wissenstest">
+            <div className="sop-quiz-header">
+              <div className="sop-quiz-header-icon">★</div>
+              <div>
+                <div className="sop-quiz-header-title">Wissenstest — SOP-LOG-01</div>
+                <div className="sop-quiz-header-sub">10 Fragen · Beantworten Sie alle Fragen um das Modul abzuschließen</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* ── STICKY SIDE NAVIGATION ── */}
+        <div className="sop-sidenav">
+          <div className="sop-sidenav-title">Inhalt</div>
+          {navItems.map(({id, num, label}) => (
+            <a
+              key={id}
+              href={`#${id}`}
+              className={`sop-nav-item${activeSection === id ? ' active' : ''}`}
+            >
+              <div className="sop-nav-num">{num}</div>
+              <div className="sop-nav-label">{label}</div>
+            </a>
+          ))}
+          <div className="sop-nav-progress">
+            <div className="sop-nav-progress-label">
+              <span>Fortschritt</span>
+              <span className="sop-nav-progress-pct">{scrollPct}%</span>
+            </div>
+            <div className="sop-nav-bar-bg">
+              <div className="sop-nav-bar-fill" style={{width:`${scrollPct}%`}}/>
+            </div>
+          </div>
+          <a href="#wissenstest" className="sop-nav-quiz-btn">
+            Zum Wissenstest →
+          </a>
+        </div>
+
+      </div>{/* end sop-layout */}
+    </div>
+  );
+}
+
+<SopLogPage/>
+
+<SopQuiz refCode="SOP-LOG-01" questions={quizData}/>
