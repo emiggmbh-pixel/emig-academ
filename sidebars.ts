@@ -6,7 +6,7 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'Quality Management',
       collapsed: false,
-      items: ['quality-management/qm-philosophie'],
+      items: ['quality-management/SOP-MAN-01-Management'],
     },
     {
       type: 'category',
