@@ -1,22 +1,1074 @@
 ---
 id: SOP_LOG-02
-sidebar_label: 'Rückverfolgbarkeit & UDI'
-sidebar_position: 2
+title: Rückverfolgbarkeit & UDI
+sidebar_label: Rückverfolgbarkeit & UDI
 ---
 
-import TraceabilityQuiz from '@site/src/components/TraceabilityQuiz';
+import React, { useState, useEffect } from 'react';
+import SopQuiz from '@site/src/components/SopQuiz';
 
-# Rückverfolgbarkeit & UDI (SOP-LOG-02)
+export const quizData = [
+  {
+    id: 1,
+    question: "Was ist das primäre Ziel der SOP-LOG-02?",
+    options: [
+      "Die Reduktion von Lagerkosten durch bessere Bestandskontrolle",
+      "Sicherstellung der lückenlosen Rückverfolgbarkeit jedes Medizinprodukts vom Hersteller bis zum Endkunden",
+      "Die Automatisierung des Einkaufsprozesses",
+      "Die Optimierung der Lieferzeiten"
+    ],
+    correct: 1,
+    explanation: "Gemäß SOP-LOG-02 §1 ist das Ziel die lückenlose Rückverfolgbarkeit jedes Medizinprodukts über die gesamte Lieferkette — vom Hersteller über die EMIG GmbH bis zum Endkunden (Klinik/Arzt)."
+  },
+  {
+    id: 2,
+    question: "Was bedeutet UDI und wofür steht die Abkürzung?",
+    options: [
+      "Universal Distribution Identifier — zur Optimierung der Lieferkette",
+      "Unique Device Identification — eindeutige Kennzeichnung von Medizinprodukten gemäß MDR",
+      "Unified Data Integration — für ERP-Systemanbindung",
+      "Unit Distribution Index — für Bestandsmanagement"
+    ],
+    correct: 1,
+    explanation: "UDI steht für Unique Device Identification — die eindeutige Gerätekennzeichnung. Sie ist eine Pflichtanforderung der EU-MDR 2017/745 und ermöglicht die eindeutige Identifikation und Rückverfolgbarkeit von Medizinprodukten."
+  },
+  {
+    id: 3,
+    question: "Was ist der Unterschied zwischen UDI-DI und UDI-PI?",
+    options: [
+      "UDI-DI ist für Klasse-I-Produkte, UDI-PI für Klasse-III-Produkte",
+      "UDI-DI identifiziert das Produktmodell (Device Identifier), UDI-PI die spezifische Einheit mit Charge und Seriennummer (Production Identifier)",
+      "UDI-DI ist der Barcode, UDI-PI ist der QR-Code",
+      "Es gibt keinen Unterschied — beide Begriffe bezeichnen dasselbe"
+    ],
+    correct: 1,
+    explanation: "UDI-DI (Device Identifier) ist die statische Produktkennung für das Modell/Artikel. UDI-PI (Production Identifier) ist die dynamische Kennung für die spezifische Produktionseinheit — enthält Charge, Seriennummer und Verfallsdatum."
+  },
+  {
+    id: 4,
+    question: "Wann wird der UDI-Code bei der Emig GmbH gescannt?",
+    options: [
+      "Erst bei der Auslieferung an den Kunden",
+      "Nur bei der jährlichen Inventur",
+      "Bei Wareneingang — jedes Produkt wird beim Eingang gescannt und mit der Bestellung verknüpft",
+      "Ausschließlich bei Produkten über 500 € Warenwert"
+    ],
+    correct: 2,
+    explanation: "Gemäß SOP-LOG-02 wird der UDI-Code bei Wareneingang gescannt. Die Daten (UDI-DI für das Produkt und UDI-PI für die Charge/Seriennummer) werden im EDV-System mit der entsprechenden Bestellung verknüpft."
+  },
+  {
+    id: 5,
+    question: "Wo wird die Chargennummer bei einer Auslieferung dokumentiert?",
+    options: [
+      "Nur intern im Lagerbuch — nicht auf Kundendokumenten",
+      "Auf dem Lieferschein und in der digitalen Kundenakte",
+      "Ausschließlich in der Buchhaltung",
+      "Nur bei Produkten mit Seriennummer"
+    ],
+    correct: 1,
+    explanation: "Bei jeder Auslieferung wird die spezifische Chargennummer sowohl auf dem Lieferschein als auch in der digitalen Kundenakte vermerkt. Dies ermöglicht die bidirektionale Rückverfolgung — vorwärts zum Patienten und rückwärts zum Hersteller."
+  },
+  {
+    id: 6,
+    question: "Wie lange müssen Rückverfolgbarkeitsdaten für Standard-Medizinprodukte aufbewahrt werden?",
+    options: [
+      "3 Jahre",
+      "5 Jahre",
+      "Mindestens 10 Jahre",
+      "Unbegrenzt"
+    ],
+    correct: 2,
+    explanation: "Rückverfolgbarkeitsdaten werden für mindestens 10 Jahre revisionssicher gespeichert. Dies entspricht der Anforderung der EU-MDR 2017/745, die eine dauerhafte Rückrufmöglichkeit auch nach Jahren sicherstellen soll."
+  },
+  {
+    id: 7,
+    question: "Für wie lange müssen Rückverfolgbarkeitsdaten bei Implantaten in der Neurochirurgie aufbewahrt werden?",
+    options: [
+      "10 Jahre — gleich wie alle anderen Produkte",
+      "15 Jahre",
+      "20 Jahre",
+      "Bis zum Tod des Patienten"
+    ],
+    correct: 1,
+    explanation: "Bei Implantaten der Neurochirurgie beträgt die Aufbewahrungsfrist 15 Jahre (statt 10 Jahre für Standard-Medizinprodukte). Implantate bleiben dauerhaft im Patienten und erfordern daher eine längere Rückverfolgbarkeitspflicht."
+  },
+  {
+    id: 8,
+    question: "Was bedeutet 'revisionssichere Speicherung' von Rückverfolgbarkeitsdaten?",
+    options: [
+      "Die Daten werden regelmäßig gelöscht und neu erfasst",
+      "Die Daten können nachträglich nicht verändert, gelöscht oder verfälscht werden und sind jederzeit für Audits abrufbar",
+      "Die Daten werden nur in Papierform archiviert",
+      "Die Daten sind nur für die Geschäftsführung zugänglich"
+    ],
+    correct: 1,
+    explanation: "Revisionssichere Speicherung bedeutet: Daten können nachträglich nicht geändert oder gelöscht werden, sind mit Zeitstempel versehen und jederzeit für behördliche Audits, Rückrufaktionen oder Gerichtsverfahren abrufbar."
+  },
+  {
+    id: 9,
+    question: "Welche MDR-Anforderung macht UDI-Erfassung bei Wareneingang verpflichtend?",
+    options: [
+      "MDR Art. 10 — Pflichten der Hersteller",
+      "MDR Art. 27 — Unique Device Identification System",
+      "MDR Art. 14 — Pflichten der Händler",
+      "MDR Annex I — Grundlegende Sicherheitsanforderungen"
+    ],
+    correct: 1,
+    explanation: "MDR Art. 27 etabliert das UDI-System als verbindliche Anforderung für alle Wirtschaftsakteure. Es verpflichtet Händler und Importeure zur UDI-Erfassung, -Dokumentation und zur Weitergabe der UDI-Informationen in der Lieferkette."
+  },
+  {
+    id: 10,
+    question: "Was ermöglicht eine lückenlose Rückverfolgbarkeit im Rückruffall?",
+    options: [
+      "Nur die Benachrichtigung des Herstellers",
+      "Die gezielte Identifikation und sofortige Kontaktaufnahme mit betroffenen Kliniken/Ärzten, ohne nicht betroffene Produkte zu sperren",
+      "Die automatische Vernichtung aller Chargen des Produkts",
+      "Die Erstattung der Kaufpreise an alle Kunden"
+    ],
+    correct: 1,
+    explanation: "Lückenlose Rückverfolgbarkeit ermöglicht bei einem Rückruf die präzise Identifikation: welche Charge, bei welchem Kunden, in welcher Menge. So können gezielt nur die betroffenen Einheiten zurückgerufen werden — ohne pauschale Sperrung aller Bestände."
+  }
+];
 
-Ziel ist die lückenlose Rückverfolgbarkeit jedes Medizinprodukts vom Hersteller über die EMIG GmbH bis zum Endkunden.
+<style>{`
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
 
-## 1. UDI-Erfassung
-Bei Wareneingang wird der UDI-Code (Unique Device Identification) gescannt. Dies umfasst die UDI-DI zur Produktidentifikation und die UDI-PI zur Identifikation der Charge oder Seriennummer.
+  /* ── Override Docusaurus article defaults ── */
+  .sop-page h1, .sop-page h2, .sop-page h3,
+  .sop-page p,  .sop-page ul, .sop-page li { all: revert; }
+  .sop-page h1, .sop-page h2, .sop-page h3,
+  .sop-page p,  .sop-page ul, .sop-page li { font-family: 'Outfit', sans-serif; }
 
-## 2. Dokumentation & Archivierung
-Jede Auslieferung wird mit der spezifischen Chargennummer verknüpft. Die Daten werden für mindestens 10 Jahre, bei implantierbaren Produkten für 15 Jahre revisionssicher gespeichert.
+  /* ── Make the doc container full width ── */
+  .theme-doc-markdown { max-width: 100% !important; }
+  article.sop-wrap     { max-width: 100% !important; padding: 0 !important; }
 
----
+  /* ══════════════════════════════════════
+     OUTER WRAPPER
+  ══════════════════════════════════════ */
+  .sop-page {
+    font-family: 'Outfit', sans-serif;
+    color: #18181f;
+    width: 100%;
+    --accent: #c8983a;
+    --accent-lt: #e8d5a8;
+    --dark: #0e0e14;
+    --radius: 14px;
+  }
 
-## 🎓 Wissenstest: SOP-LOG-02
-<TraceabilityQuiz />
+  /* ══════════════════════════════════════
+     HERO — light, editorial, not a dark box
+  ══════════════════════════════════════ */
+  .sop-hero {
+    background: #f8f7f3;
+    border: 1px solid #e8e4dc;
+    border-radius: 20px;
+    padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1.5rem, 4vw, 2.75rem);
+    margin-bottom: 2rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sop-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #c8983a08 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .sop-hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.75rem;
+  }
+
+  .sop-hero-eyebrow-line {
+    width: 28px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 99px;
+    flex-shrink: 0;
+  }
+
+  .sop-hero-eyebrow-text {
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .sop-hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    color: #0e0e14;
+    margin: 0 0 0.6rem;
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+
+  .sop-hero-desc {
+    font-size: clamp(0.82rem, 1.4vw, 0.9rem);
+    color: #6b7280;
+    margin: 0;
+    line-height: 1.65;
+    max-width: 500px;
+  }
+
+  .sop-hero-meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1.25rem;
+  }
+
+  .sop-hero-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    color: #9ca3af;
+    font-weight: 500;
+  }
+
+  .sop-hero-meta-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* KPI block on right */
+  .sop-hero-kpis {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    align-items: flex-end;
+    flex-shrink: 0;
+  }
+
+  .sop-hero-kpi { text-align: right; }
+
+  .sop-hero-kpi-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: var(--accent);
+    line-height: 1;
+    letter-spacing: 0.04em;
+  }
+
+  .sop-hero-kpi-label {
+    font-size: 0.58rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-top: 1px;
+  }
+
+  .sop-hero-divider {
+    width: 1px;
+    height: 24px;
+    background: #e2ded8;
+    align-self: center;
+  }
+
+  /* ══════════════════════════════════════
+     TWO-COLUMN LAYOUT
+     Left: content (flexible)
+     Right: sticky nav (260px)
+  ══════════════════════════════════════ */
+  .sop-layout {
+    display: grid;
+    grid-template-columns: 1fr 240px;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .sop-content { min-width: 0; }
+
+  /* Sticky side nav */
+  .sop-sidenav {
+    position: sticky;
+    top: 80px;
+    background: #fff;
+    border: 1px solid #ece9e3;
+    border-radius: 16px;
+    padding: 1.25rem;
+    overflow: hidden;
+  }
+
+  .sop-sidenav-title {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    margin-bottom: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sop-sidenav-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #f0ede8;
+  }
+
+  .sop-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.6rem 0.75rem;
+    border-radius: 9px;
+    text-decoration: none;
+    margin-bottom: 3px;
+    transition: all 0.18s;
+    border: 1px solid transparent;
+  }
+
+  .sop-nav-item:hover {
+    background: #f8f7f3;
+    border-color: #e8e4dc;
+    color: #111;
+  }
+
+  .sop-nav-item.active {
+    background: #fff8ec;
+    border-color: rgba(200,152,58,0.25);
+    color: #92400e;
+  }
+
+  .sop-nav-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    color: #d1cec8;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 20px;
+    transition: color 0.18s;
+  }
+
+  .sop-nav-item.active .sop-nav-num { color: var(--accent); }
+
+  .sop-nav-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #374151;
+    line-height: 1.2;
+  }
+
+  .sop-nav-item.active .sop-nav-label { color: #92400e; }
+
+  /* Progress bar inside sidenav */
+  .sop-nav-progress {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f0ede8;
+  }
+
+  .sop-nav-progress-label {
+    font-size: 0.62rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .sop-nav-progress-pct {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    color: var(--accent);
+  }
+
+  .sop-nav-bar-bg {
+    height: 3px;
+    background: #f0ede8;
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .sop-nav-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-lt));
+    border-radius: 99px;
+    transition: width 0.4s ease;
+  }
+
+  /* Quiz button in sidenav */
+  .sop-nav-quiz-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 0.9rem;
+    padding: 9px 14px;
+    background: #0e0e14;
+    color: var(--accent-lt);
+    border: none;
+    border-radius: 10px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    letter-spacing: 0.04em;
+  }
+
+  .sop-nav-quiz-btn:hover {
+    background: #1a1a26;
+    color: #fff;
+  }
+
+  /* ══════════════════════════════════════
+     SECTION
+  ══════════════════════════════════════ */
+  .sop-section {
+    margin-bottom: 3rem;
+    scroll-margin-top: 100px;
+  }
+
+  .sop-section-hd {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #f0ede8;
+  }
+
+  .sop-section-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 3rem);
+    color: #ede9e2;
+    line-height: 1;
+    flex-shrink: 0;
+    letter-spacing: 0.04em;
+  }
+
+  .sop-section-title {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 3px;
+    line-height: 1.2;
+    padding-top: 0.3rem;
+  }
+
+  .sop-section-sub {
+    font-size: 0.68rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+  }
+
+  /* ══════════════════════════════════════
+     INFO BOX
+  ══════════════════════════════════════ */
+  .sop-info {
+    background: #fffbf3;
+    border: 1px solid rgba(200,152,58,0.2);
+    border-left: 3px solid var(--accent);
+    border-radius: 12px;
+    padding: 1rem 1.3rem;
+    font-size: 0.87rem;
+    color: #374151;
+    line-height: 1.72;
+    margin-bottom: 1.5rem;
+  }
+  .sop-info strong { color: #92400e; }
+
+  /* ══════════════════════════════════════
+     RULE CARDS
+  ══════════════════════════════════════ */
+  .sop-rules {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+    gap: 11px;
+    margin-bottom: 1.5rem;
+  }
+
+  .sop-rule {
+    background: #fff;
+    border: 1px solid #ece9e3;
+    border-radius: var(--radius);
+    padding: 1.2rem;
+    display: flex;
+    gap: 13px;
+    align-items: flex-start;
+    transition: border-color 0.18s, box-shadow 0.18s, transform 0.18s;
+  }
+
+  .sop-rule:hover {
+    border-color: rgba(200,152,58,0.3);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    transform: translateY(-2px);
+  }
+
+  .sop-rule-icon {
+    width: 36px; height: 36px;
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.05rem;
+    flex-shrink: 0;
+  }
+
+  .sop-rule-title {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .sop-rule-desc {
+    font-size: 0.77rem;
+    color: #6b7280;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .sop-rule-desc strong { color: #374151; }
+
+  /* ══════════════════════════════════════
+     PROCESS FLOW
+  ══════════════════════════════════════ */
+  .sop-flow { display: flex; flex-direction: column; margin-bottom: 1.5rem; }
+
+  .sop-flow-step { display: flex; gap: 14px; align-items: flex-start; }
+
+  .sop-flow-left {
+    display: flex; flex-direction: column; align-items: center; flex-shrink: 0;
+  }
+
+  .sop-flow-circle {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: #111116; color: #e8d5a8;
+    font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .sop-flow-line {
+    width: 1px; flex: 1; min-height: 20px;
+    background: linear-gradient(to bottom, #dedad4, transparent);
+    margin: 3px 0;
+  }
+
+  .sop-flow-content { padding-bottom: 1.4rem; flex: 1; }
+
+  .sop-flow-title {
+    font-size: 0.88rem; font-weight: 700; color: #111827; margin-bottom: 3px;
+  }
+
+  .sop-flow-desc {
+    font-size: 0.79rem; color: #6b7280; line-height: 1.6; margin: 0;
+  }
+
+  /* ══════════════════════════════════════
+     CHECKLIST
+  ══════════════════════════════════════ */
+  .sop-checklist { display: flex; flex-direction: column; gap: 7px; margin-bottom: 1.5rem; }
+
+  .sop-check {
+    display: flex; align-items: flex-start; gap: 11px;
+    background: #fff; border: 1px solid #ece9e3; border-radius: 12px;
+    padding: 0.9rem 1.1rem;
+    transition: all 0.18s;
+  }
+  .sop-check:hover { border-color: rgba(200,152,58,0.25); background: #fffbf5; }
+
+  .sop-check-icon {
+    width: 28px; height: 28px; border-radius: 7px;
+    background: #f5f3ee; display: flex; align-items: center;
+    justify-content: center; font-size: 0.82rem; flex-shrink: 0;
+  }
+
+  .sop-check-label { font-size: 0.84rem; font-weight: 600; color: #111827; margin-bottom: 2px; }
+  .sop-check-sub   { font-size: 0.73rem; color: #9ca3af; line-height: 1.45; }
+
+  /* ══════════════════════════════════════
+     WARNING / TIP
+  ══════════════════════════════════════ */
+  .sop-warning {
+    background: #fef2f2; border: 1px solid #fecaca; border-radius: 12px;
+    padding: 1rem 1.2rem; font-size: 0.83rem; color: #7f1d1d; line-height: 1.65;
+    margin-bottom: 1.5rem; display: flex; gap: 10px; align-items: flex-start;
+  }
+
+  .sop-tip {
+    background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px;
+    padding: 1rem 1.2rem; font-size: 0.83rem; color: #14532d; line-height: 1.65;
+    margin-bottom: 1.5rem; display: flex; gap: 10px; align-items: flex-start;
+  }
+
+  /* ══════════════════════════════════════
+     KPI ROW
+  ══════════════════════════════════════ */
+  .sop-kpis {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 140px), 1fr));
+    gap: 10px;
+    margin-bottom: 1.5rem;
+  }
+
+  .sop-kpi {
+    background: #fff; border: 1px solid #ece9e3;
+    border-radius: var(--radius); padding: 1.1rem; text-align: center;
+  }
+
+  .sop-kpi-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; line-height: 1; letter-spacing: 0.04em; margin-bottom: 3px;
+  }
+
+  .sop-kpi-label {
+    font-size: 0.64rem; color: #9ca3af; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+
+  /* ══════════════════════════════════════
+     NORM PILLS
+  ══════════════════════════════════════ */
+  .sop-norms { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1rem; }
+
+  .sop-norm {
+    background: #f5f3ee; color: #374151;
+    font-size: 0.65rem; font-weight: 600; padding: 3px 9px;
+    border-radius: 5px; font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em; border: 1px solid #e8e4dc;
+  }
+
+  /* ── Divider ── */
+  .sop-divider {
+    height: 1px;
+    background: linear-gradient(90deg, #e5e1da 0%, transparent 80%);
+    margin: 2.5rem 0;
+  }
+
+  /* ══════════════════════════════════════
+     QUIZ SECTION HEADER
+  ══════════════════════════════════════ */
+  .sop-quiz-header {
+    background: #0e0e14;
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .sop-quiz-header-icon {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    color: var(--accent);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .sop-quiz-header-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 3px;
+  }
+
+  .sop-quiz-header-sub {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.38);
+  }
+
+  /* ══════════════════════════════════════
+     RESPONSIVE
+  ══════════════════════════════════════ */
+  @media (max-width: 900px) {
+    .sop-layout { grid-template-columns: 1fr; }
+    .sop-sidenav { display: none; }
+    .sop-hero  { grid-template-columns: 1fr; }
+    .sop-hero-kpis { flex-direction: row; align-items: flex-start; justify-content: flex-start; }
+    .sop-hero-kpi { text-align: left; }
+  }
+
+  @media (max-width: 640px) {
+    .sop-rules { grid-template-columns: 1fr; }
+    .sop-kpis  { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (min-width: 1400px) {
+    .sop-layout { grid-template-columns: 1fr 260px; gap: 3rem; }
+  }
+
+  /* ── Fade in animation ── */
+  @keyframes sop-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .sop-page { animation: sop-in 0.4s ease both; }
+`}</style>
+
+export function SopLog02Page() {
+  const [activeSection, setActiveSection] = useState('zweck');
+  const [scrollPct, setScrollPct] = useState(0);
+
+  useEffect(() => {
+    const sections = ['zweck','udi','lieferkette','fristen','wissenstest'];
+    const handleScroll = () => {
+      const el = document.querySelector('.sop-content');
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        const scrolled = Math.max(0, -rect.top + 100);
+        setScrollPct(Math.min(100, Math.round((scrolled / el.scrollHeight) * 100)));
+      }
+      let current = 'zweck';
+      sections.forEach(id => {
+        const el2 = document.getElementById(id);
+        if (el2 && el2.getBoundingClientRect().top < 130) current = id;
+      });
+      setActiveSection(current);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navItems = [
+    { id: 'zweck',       num: '01', label: 'Zweck & Geltungsbereich' },
+    { id: 'udi',         num: '02', label: 'UDI-Erfassung & Scan' },
+    { id: 'lieferkette', num: '03', label: 'Lieferkettendokumentation' },
+    { id: 'fristen',     num: '04', label: 'Aufbewahrungsfristen' },
+    { id: 'wissenstest', num: '★',  label: 'Wissenstest' },
+  ];
+
+  return (
+    <div className="sop-page">
+
+      {/* ── HERO ── */}
+      <div className="sop-hero">
+        <div>
+          <div className="sop-hero-eyebrow">
+            <div className="sop-hero-eyebrow-line"/>
+            <span className="sop-hero-eyebrow-text">SOP-LOG-02 · Logistik & Lager</span>
+          </div>
+          <div className="sop-hero-title">Rückverfolgbarkeit<br/>&amp; UDI</div>
+          <p className="sop-hero-desc">
+            Lückenlose Rückverfolgbarkeit jedes Medizinprodukts vom Hersteller bis zum Endkunden — UDI-Erfassung, Chargendokumentation und gesetzliche Aufbewahrungsfristen nach EU-MDR 2017/745.
+          </p>
+          <div className="sop-hero-meta">
+            <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>MDR Art. 27 UDI-System</div>
+            <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>Gültig ab 31.01.2026</div>
+            <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>4 Kapitel · 10 Fragen</div>
+          </div>
+        </div>
+        <div className="sop-hero-kpis">
+          <div className="sop-hero-kpi"><div className="sop-hero-kpi-val">UDI</div><div className="sop-hero-kpi-label">Scan bei WE</div></div>
+          <div className="sop-hero-divider"/>
+          <div className="sop-hero-kpi"><div className="sop-hero-kpi-val">10J</div><div className="sop-hero-kpi-label">Aufbewahrung</div></div>
+          <div className="sop-hero-divider"/>
+          <div className="sop-hero-kpi"><div className="sop-hero-kpi-val">15J</div><div className="sop-hero-kpi-label">Implantate</div></div>
+        </div>
+      </div>
+
+      {/* ── TWO-COLUMN LAYOUT ── */}
+      <div className="sop-layout">
+
+        {/* ── MAIN CONTENT ── */}
+        <div className="sop-content">
+
+          {/* 01 ZWECK */}
+          <div className="sop-section" id="zweck">
+            <div className="sop-section-hd">
+              <div className="sop-section-num">01</div>
+              <div>
+                <div className="sop-section-title">Zweck & Geltungsbereich</div>
+                <div className="sop-section-sub">Warum lückenlose Rückverfolgbarkeit Pflicht ist</div>
+              </div>
+            </div>
+            <div className="sop-info">
+              Sicherstellung, dass jedes Medizinprodukt über die gesamte Lieferkette — vom Hersteller über die EMIG GmbH bis zum <strong>Endkunden (Klinik/Arzt)</strong> — lückenlos rückverfolgt werden kann. Diese SOP gilt für alle Produkte im Sortiment.
+            </div>
+            <div className="sop-kpis">
+              <div className="sop-kpi"><div className="sop-kpi-val" style={{color:'#3b82f6'}}>UDI</div><div className="sop-kpi-label">Pflichterfassung</div></div>
+              <div className="sop-kpi"><div className="sop-kpi-val" style={{color:'#c8983a'}}>100%</div><div className="sop-kpi-label">Chargendeckung</div></div>
+              <div className="sop-kpi"><div className="sop-kpi-val" style={{color:'#10b981'}}>10J</div><div className="sop-kpi-label">Aufbewahrung</div></div>
+              <div className="sop-kpi"><div className="sop-kpi-val" style={{color:'#8b5cf6'}}>15J</div><div className="sop-kpi-label">Implantate</div></div>
+            </div>
+
+            {/* Bidirectional traceability explainer */}
+            <div style={{background:'#fff', border:'1px solid #ece9e3', borderRadius:'14px', padding:'1.4rem', marginBottom:'1.5rem'}}>
+              <div style={{fontSize:'0.75rem', fontWeight:700, color:'#9ca3af', textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:'1rem'}}>Bidirektionale Rückverfolgbarkeit</div>
+              <div style={{display:'flex', alignItems:'center', gap:'0', flexWrap:'wrap'}}>
+                {[
+                  { label:'Hersteller', sub:'Produktion + Charge', color:'#dbeafe', text:'#1e40af' },
+                  { label:'EMIG GmbH', sub:'Import + Lagerung', color:'#fef9c3', text:'#92400e', active:true },
+                  { label:'Klinik / Arzt', sub:'Auslieferung + Anwendung', color:'#dcfce7', text:'#14532d' },
+                ].map((n, i, arr) => (
+                  <React.Fragment key={i}>
+                    <div style={{
+                      background: n.color, borderRadius:'10px', padding:'0.85rem 1rem',
+                      flex:'1 1 120px', textAlign:'center',
+                      border: n.active ? '2px solid rgba(200,152,58,0.4)' : '1px solid transparent',
+                      boxShadow: n.active ? '0 2px 12px rgba(200,152,58,0.15)' : 'none',
+                    }}>
+                      <div style={{fontSize:'0.82rem', fontWeight:700, color:n.text}}>{n.label}</div>
+                      <div style={{fontSize:'0.67rem', color: n.text + 'aa', marginTop:'2px'}}>{n.sub}</div>
+                    </div>
+                    {i < arr.length-1 && (
+                      <div style={{padding:'0 0.5rem', color:'#9ca3af', fontSize:'1.2rem', flexShrink:0}}>⟷</div>
+                    )}
+                  </React.Fragment>
+                ))}
+              </div>
+              <div style={{fontSize:'0.72rem', color:'#9ca3af', marginTop:'0.75rem', textAlign:'center'}}>
+                Vorwärts: Charge → Patient · Rückwärts: Patient → Hersteller
+              </div>
+            </div>
+
+            <div className="sop-norms">
+              <span className="sop-norm">MDR 2017/745 Art. 27</span>
+              <span className="sop-norm">ISO 13485:2016 §8.3</span>
+              <span className="sop-norm">SOP-LOG-02 V1 · 31.01.2026</span>
+            </div>
+          </div>
+
+          <div className="sop-divider"/>
+
+          {/* 02 UDI-ERFASSUNG */}
+          <div className="sop-section" id="udi">
+            <div className="sop-section-hd">
+              <div className="sop-section-num">02</div>
+              <div>
+                <div className="sop-section-title">UDI-Erfassung beim Wareneingang</div>
+                <div className="sop-section-sub">Unique Device Identification · UDI-DI · UDI-PI · SAP-Verknüpfung</div>
+              </div>
+            </div>
+            <div className="sop-info">
+              Bei Wareneingang wird der <strong>UDI-Code</strong> (Unique Device Identification) jedes Produkts gescannt. Die Daten werden im SAP-System mit der entsprechenden Bestellung verknüpft und bilden die Basis für die gesamte Rückverfolgungskette.
+            </div>
+
+            {/* UDI-DI vs UDI-PI explainer */}
+            <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(min(100%,240px),1fr))', gap:'11px', marginBottom:'1.5rem'}}>
+              <div style={{background:'#eff6ff', border:'1px solid #bfdbfe', borderRadius:'14px', padding:'1.4rem'}}>
+                <div style={{display:'flex', alignItems:'center', gap:'10px', marginBottom:'0.75rem'}}>
+                  <div style={{background:'#3b82f6', borderRadius:'8px', width:'32px', height:'32px', display:'flex', alignItems:'center', justifyContent:'center', color:'#fff', fontSize:'0.75rem', fontWeight:700, flexShrink:0}}>DI</div>
+                  <div style={{fontSize:'0.86rem', fontWeight:700, color:'#1e40af'}}>UDI-DI</div>
+                </div>
+                <div style={{fontSize:'0.78rem', fontWeight:700, color:'#1e3a8a', marginBottom:'4px'}}>Device Identifier</div>
+                <p style={{fontSize:'0.76rem', color:'#3b82f6', margin:'0 0 0.75rem', lineHeight:1.6}}>Statische Produktkennung — identifiziert das Modell/den Artikel</p>
+                <div style={{display:'flex', flexDirection:'column', gap:'4px'}}>
+                  {['Artikelnummer', 'Produktmodell', 'Hersteller', 'Risikoklasse'].map(t => (
+                    <div key={t} style={{fontSize:'0.72rem', color:'#1e40af', display:'flex', gap:'6px', alignItems:'center'}}>
+                      <span style={{color:'#3b82f6'}}>›</span>{t}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div style={{background:'#f0fdf4', border:'1px solid #bbf7d0', borderRadius:'14px', padding:'1.4rem'}}>
+                <div style={{display:'flex', alignItems:'center', gap:'10px', marginBottom:'0.75rem'}}>
+                  <div style={{background:'#10b981', borderRadius:'8px', width:'32px', height:'32px', display:'flex', alignItems:'center', justifyContent:'center', color:'#fff', fontSize:'0.75rem', fontWeight:700, flexShrink:0}}>PI</div>
+                  <div style={{fontSize:'0.86rem', fontWeight:700, color:'#14532d'}}>UDI-PI</div>
+                </div>
+                <div style={{fontSize:'0.78rem', fontWeight:700, color:'#14532d', marginBottom:'4px'}}>Production Identifier</div>
+                <p style={{fontSize:'0.76rem', color:'#10b981', margin:'0 0 0.75rem', lineHeight:1.6}}>Dynamische Einheitenkennung — identifiziert die spezifische Einheit</p>
+                <div style={{display:'flex', flexDirection:'column', gap:'4px'}}>
+                  {['Chargennummer / Lot', 'Seriennummer', 'Verfallsdatum (MHD)', 'Herstellungsdatum'].map(t => (
+                    <div key={t} style={{fontSize:'0.72rem', color:'#14532d', display:'flex', gap:'6px', alignItems:'center'}}>
+                      <span style={{color:'#10b981'}}>›</span>{t}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Scan Prozess */}
+            <div style={{fontSize:'0.75rem', fontWeight:700, color:'#9ca3af', textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:'0.9rem'}}>Scan-Prozess beim Wareneingang</div>
+            <div className="sop-flow">
+              {[
+                { t:'Lieferung trifft ein', d:'LKW liefert Ware. Lieferschein wird gegen Bestellung geprüft. Verpackungsintegrität wird visuell kontrolliert.' },
+                { t:'UDI-Code scannen', d:'Lagerist scannt den UDI-Barcode / QR-Code jedes Artikels mit dem Handscanner. Das SAP-System erkennt UDI-DI und UDI-PI automatisch.' },
+                { t:'Verknüpfung mit Bestellung', d:'SAP verknüpft die gescannte UDI mit der offenen Bestellposition. Charge, MHD und Seriennummer werden automatisch erfasst und gespeichert.' },
+                { t:'Einbuchung in Bestand', d:'Nach erfolgreicher UDI-Verknüpfung wird die Ware in den freien Bestand gebucht. Bei fehlender oder unleserlicher UDI → sofortiger Stop und QMB informieren.' },
+              ].map((s,i,arr) => (
+                <div className="sop-flow-step" key={i}>
+                  <div className="sop-flow-left">
+                    <div className="sop-flow-circle">{i+1}</div>
+                    {i < arr.length-1 && <div className="sop-flow-line"/>}
+                  </div>
+                  <div className="sop-flow-content">
+                    <div className="sop-flow-title">{s.t}</div>
+                    <p className="sop-flow-desc">{s.d}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="sop-warning">
+              <span style={{fontSize:'1rem',flexShrink:0}}>⚠</span>
+              <div><strong>Keine UDI — kein Eingang:</strong> Produkte ohne lesbare UDI-Kennzeichnung dürfen nicht in den freien Bestand gebucht werden. Sie sind ins Sperrlager zu überführen und der QMB ist sofort zu informieren.</div>
+            </div>
+            <div className="sop-norms">
+              <span className="sop-norm">MDR 2017/745 Art. 27</span>
+              <span className="sop-norm">EUDAMED Datenbank</span>
+              <span className="sop-norm">ISO 15223-1 Symbole</span>
+            </div>
+          </div>
+
+          <div className="sop-divider"/>
+
+          {/* 03 LIEFERKETTENDOKUMENTATION */}
+          <div className="sop-section" id="lieferkette">
+            <div className="sop-section-hd">
+              <div className="sop-section-num">03</div>
+              <div>
+                <div className="sop-section-title">Lieferkettendokumentation</div>
+                <div className="sop-section-sub">Chargennummer · Lieferschein · Digitale Kundenakte</div>
+              </div>
+            </div>
+            <div className="sop-info">
+              Bei <strong>jeder Auslieferung</strong> wird die spezifische Chargennummer auf dem Lieferschein und in der digitalen Kundenakte vermerkt. Dies schließt die Rückverfolgungskette vom Hersteller bis zum Patienten lückenlos.
+            </div>
+            <div className="sop-checklist">
+              {[
+                { icon:'📦', t:'Chargennummer auf Lieferschein', d:'Jeder Lieferschein enthält die exakte Chargennummer des gelieferten Produkts. Kein Lieferschein ohne Chargenangabe — System blockiert die Freigabe.' },
+                { icon:'💾', t:'Digitale Kundenakte (SAP)', d:'Parallele Erfassung in der digitalen Kundenakte im SAP-System. Automatische Verknüpfung mit Kundenauftrag, Artikel und Lieferdatum.' },
+                { icon:'🔄', t:'Bidirektionale Suche <5 Sekunden', d:'Das SAP-System ermöglicht die Suche in beide Richtungen: von der Charge zum Kunden (Wohin wurde geliefert?) und vom Kunden zur Charge (Welche Charge?).' },
+                { icon:'📄', t:'Lieferpapiere vollständig', d:'Neben Chargennummer: Produktbezeichnung, Artikelnummer, Menge, MHD, Lieferdatum und Kundendaten. Alle Felder sind Pflicht.' },
+                { icon:'✅', t:'4-Augen-Prinzip bei Hochrisikoprodukten', d:'Bei Implantaten und Klasse-III-Produkten ist eine zweite Person zur Kontrolle der Chargendokumentation verpflichtet bevor der Versand freigegeben wird.' },
+              ].map((c,i) => (
+                <div className="sop-check" key={i}>
+                  <div className="sop-check-icon">{c.icon}</div>
+                  <div>
+                    <div className="sop-check-label">{c.t}</div>
+                    <div className="sop-check-sub">{c.d}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="sop-tip">
+              <span style={{fontSize:'1rem',flexShrink:0}}>💡</span>
+              <div><strong>Rückruf-Szenario:</strong> Stellt ein Hersteller fest, dass eine bestimmte Charge fehlerhaft ist, kann EMIG innerhalb von Minuten über die SAP-Kundenakte alle Empfänger dieser Charge identifizieren und kontaktieren.</div>
+            </div>
+            <div className="sop-norms">
+              <span className="sop-norm">MDR 2017/745 Art. 10 §9</span>
+              <span className="sop-norm">ISO 13485:2016 §7.5.9</span>
+            </div>
+          </div>
+
+          <div className="sop-divider"/>
+
+          {/* 04 AUFBEWAHRUNGSFRISTEN */}
+          <div className="sop-section" id="fristen">
+            <div className="sop-section-hd">
+              <div className="sop-section-num">04</div>
+              <div>
+                <div className="sop-section-title">Aufbewahrungsfristen</div>
+                <div className="sop-section-sub">10 Jahre Standard · 15 Jahre Implantate · Revisionssicher</div>
+              </div>
+            </div>
+            <div className="sop-info">
+              Rückverfolgbarkeitsdaten werden <strong>revisionssicher</strong> gespeichert — mindestens 10 Jahre für Standardprodukte, 15 Jahre für Implantate der Neurochirurgie. Revisionssicher bedeutet: keine nachträgliche Änderung, jederzeit auditierbar.
+            </div>
+            <div className="sop-rules">
+              {[
+                { icon:'📋', bg:'#f0fdf4', t:'Standardprodukte — 10 Jahre',       d:'Alle Medizinprodukte ohne Implantatstatus. Rückverfolgbarkeitsdaten, Lieferscheine und Chargenbelege werden 10 Jahre revisionssicher aufbewahrt.' },
+                { icon:'🦴', bg:'#eff6ff', t:'Implantate Neurochirurgie — 15 Jahre', d:'Neurochirurgische Implantate (z.B. RIWOspine Vertebris-Systeme) bleiben dauerhaft im Patienten — daher 15 Jahre Aufbewahrungspflicht für vollständige Rückverfolgbarkeit.' },
+                { icon:'🔒', bg:'#fef9c3', t:'Revisionssichere Speicherung',         d:'Daten können nach der Erfassung nicht geändert oder gelöscht werden. Jeder Zugriff wird mit Zeitstempel protokolliert. Anforderung MDR Art. 10 §8.' },
+                { icon:'🏛️', bg:'#fdf2f8', t:'Behördliche Abrufbarkeit',             d:'Im Falle einer Behördenanfrage oder eines Gerichtsverfahrens müssen alle Daten innerhalb kurzer Frist vollständig und unveränderlich vorgelegt werden können.' },
+              ].map((r,i) => (
+                <div className="sop-rule" key={i}>
+                  <div className="sop-rule-icon" style={{background:r.bg}}>{r.icon}</div>
+                  <div>
+                    <div className="sop-rule-title">{r.t}</div>
+                    <p className="sop-rule-desc">{r.d}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Fristenübersicht */}
+            <div style={{background:'#0e0e14', borderRadius:'14px', padding:'1.4rem 1.75rem', marginBottom:'1.5rem'}}>
+              <div style={{fontSize:'0.68rem', fontWeight:700, color:'rgba(200,152,58,0.7)', textTransform:'uppercase', letterSpacing:'0.18em', marginBottom:'1rem'}}>Aufbewahrungsfristen im Überblick</div>
+              <div style={{display:'flex', flexDirection:'column', gap:'10px'}}>
+                {[
+                  { cat:'Standardprodukte (Klasse I–IIb)', frist:'10 Jahre', color:'#c8983a' },
+                  { cat:'Implantate (Klasse III Neurochirurgie)', frist:'15 Jahre', color:'#6ea8c8' },
+                  { cat:'UDI-Scan-Protokolle', frist:'10 / 15 Jahre je Produkt', color:'#10b981' },
+                  { cat:'Lieferscheine mit Chargendoku', frist:'10 / 15 Jahre je Produkt', color:'#10b981' },
+                  { cat:'Kundenakten digital (SAP)', frist:'10 / 15 Jahre je Produkt', color:'#10b981' },
+                ].map((row, i) => (
+                  <div key={i} style={{display:'flex', justifyContent:'space-between', alignItems:'center', padding:'0.6rem 0.75rem', background:'rgba(255,255,255,0.04)', borderRadius:'9px', gap:'1rem'}}>
+                    <div style={{fontSize:'0.78rem', color:'rgba(255,255,255,0.55)', flex:1}}>{row.cat}</div>
+                    <div style={{fontSize:'0.78rem', fontWeight:700, color:row.color, fontFamily:'DM Mono, monospace', whiteSpace:'nowrap', flexShrink:0}}>{row.frist}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="sop-warning">
+              <span style={{fontSize:'1rem',flexShrink:0}}>⚠</span>
+              <div><strong>Löschverbot:</strong> Rückverfolgbarkeitsdaten dürfen unter keinen Umständen vorzeitig gelöscht werden — auch nicht bei Systemwechsel, Personalwechsel oder Betriebsaufgabe. Datenmigration muss revisionssicher erfolgen.</div>
+            </div>
+            <div className="sop-norms">
+              <span className="sop-norm">MDR 2017/745 Art. 10 §8</span>
+              <span className="sop-norm">ISO 13485:2016 §4.2.4</span>
+              <span className="sop-norm">Implantatpass-Verordnung</span>
+            </div>
+          </div>
+
+          <div className="sop-divider"/>
+
+          {/* QUIZ HEADER */}
+          <div id="wissenstest">
+            <div className="sop-quiz-header">
+              <div className="sop-quiz-header-icon">★</div>
+              <div>
+                <div className="sop-quiz-header-title">Wissenstest — SOP-LOG-02</div>
+                <div className="sop-quiz-header-sub">10 Fragen · Beantworten Sie alle Fragen um das Modul abzuschließen</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* ── STICKY SIDE NAV ── */}
+        <div className="sop-sidenav">
+          <div className="sop-sidenav-title">Inhalt</div>
+          {navItems.map(({id, num, label}) => (
+            <a key={id} href={`#${id}`}
+               className={`sop-nav-item${activeSection === id ? ' active' : ''}`}>
+              <div className="sop-nav-num">{num}</div>
+              <div className="sop-nav-label">{label}</div>
+            </a>
+          ))}
+          <div className="sop-nav-progress">
+            <div className="sop-nav-progress-label">
+              <span>Fortschritt</span>
+              <span className="sop-nav-progress-pct">{scrollPct}%</span>
+            </div>
+            <div className="sop-nav-bar-bg">
+              <div className="sop-nav-bar-fill" style={{width:`${scrollPct}%`}}/>
+            </div>
+          </div>
+          <a href="#wissenstest" className="sop-nav-quiz-btn">Zum Wissenstest →</a>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+<SopLog02Page/>
+
+<SopQuiz refCode="SOP-LOG-02" questions={quizData}/>
