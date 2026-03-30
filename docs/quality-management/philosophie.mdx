@@ -163,34 +163,46 @@ export const quizData = [
     max-width: 900px;
   }
 
-  /* ── Building Hero ── */
-  .qm-building-hero {
+  /* ── Hero ── */
+  .qm-hero {
     position: relative;
     width: 100%;
-    height: 340px;
+    height: 320px;
     border-radius: 20px;
     overflow: hidden;
-    margin-bottom: 2.5rem;
-    box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+    margin-bottom: 2rem;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.16);
+    background: #0a0a0e;
   }
 
-  .qm-building-img {
+  .qm-hero-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center 35%;
     display: block;
+    opacity: 0.6;
+    transition: opacity 0.4s;
   }
 
-  .qm-building-overlay {
+  .qm-hero-overlay {
     position: absolute;
     inset: 0;
     background:
-      linear-gradient(to top, rgba(10,10,14,0.88) 0%, rgba(10,10,14,0.45) 45%, rgba(10,10,14,0.1) 100%),
-      linear-gradient(to right, rgba(10,10,14,0.4) 0%, transparent 60%);
+      linear-gradient(to top, rgba(10,10,14,0.96) 0%, rgba(10,10,14,0.5) 50%, rgba(10,10,14,0.15) 100%),
+      linear-gradient(to right, rgba(10,10,14,0.5) 0%, transparent 65%);
   }
 
-  .qm-building-content {
+  .qm-hero-grain {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='280' height='280' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 180px;
+  }
+
+  .qm-hero-content {
     position: absolute;
     bottom: 2rem;
     left: 2.5rem;
@@ -198,132 +210,133 @@ export const quizData = [
     z-index: 2;
   }
 
-  .qm-building-badge {
+  .qm-hero-badge {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(200,152,58,0.15);
-    border: 1px solid rgba(200,152,58,0.3);
+    background: rgba(200,152,58,0.18);
+    border: 1px solid rgba(200,152,58,0.35);
     color: #e8d5a8;
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     font-weight: 700;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    padding: 5px 12px;
+    padding: 5px 13px;
     border-radius: 6px;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.8rem;
   }
 
-  .qm-building-title {
+  .qm-hero-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-size: clamp(2rem, 5vw, 3.4rem);
     color: #fff;
     letter-spacing: 0.06em;
     line-height: 1;
-    margin: 0 0 0.4rem;
+    margin: 0 0 0.5rem;
   }
 
-  .qm-building-sub {
-    font-size: 0.84rem;
-    color: rgba(255,255,255,0.5);
-    font-weight: 300;
-    letter-spacing: 0.08em;
+  .qm-hero-sub {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.45);
+    font-weight: 400;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
   }
 
-  .qm-building-grain {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-    opacity: 0.025;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='280' height='280' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size: 180px;
-  }
-
-  /* ── Meta bar ── */
+  /* ── Meta pills ── */
   .qm-meta {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     flex-wrap: wrap;
     margin-bottom: 2.5rem;
   }
 
-  .qm-meta-pill {
+  .qm-pill {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    background: #f0ede8;
-    color: #374151;
-    font-size: 0.72rem;
+    gap: 5px;
+    background: #f4f1ec;
+    color: #4b5563;
+    font-size: 0.68rem;
     font-weight: 600;
     padding: 5px 12px;
     border-radius: 99px;
     font-family: 'DM Mono', 'Fira Code', monospace;
     letter-spacing: 0.04em;
+    border: 1px solid #e9e5de;
   }
 
-  .qm-meta-pill-gold {
-    background: rgba(200,152,58,0.1);
-    border: 1px solid rgba(200,152,58,0.25);
+  .qm-pill-gold {
+    background: rgba(200,152,58,0.08);
+    border: 1px solid rgba(200,152,58,0.28);
     color: #92400e;
   }
 
   /* ── TOC ── */
   .qm-toc {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
+    gap: 9px;
     margin-bottom: 3rem;
   }
 
-  .qm-toc-card {
+  .qm-toc-item {
     background: #fff;
-    border: 1px solid #ece9e3;
+    border: 1px solid #eae6df;
     border-radius: 14px;
-    padding: 1rem 1.2rem;
+    padding: 1rem 1.15rem;
     text-decoration: none;
     display: flex;
     align-items: center;
     gap: 12px;
-    transition: all 0.2s;
+    transition: all 0.18s ease;
     color: #374151;
   }
 
-  .qm-toc-card:hover {
+  .qm-toc-item:hover {
     border-color: #c8983a;
-    background: #fffbf3;
+    background: #fffcf5;
     transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+    box-shadow: 0 6px 20px rgba(200,152,58,0.1);
+    text-decoration: none;
     color: #111;
   }
 
   .qm-toc-num {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.5rem;
-    color: #dedad4;
+    font-size: 1.6rem;
+    color: #e0dbd2;
     line-height: 1;
     flex-shrink: 0;
-    transition: color 0.2s;
+    transition: color 0.18s;
+    min-width: 28px;
   }
 
-  .qm-toc-card:hover .qm-toc-num { color: #c8983a; }
+  .qm-toc-item:hover .qm-toc-num { color: #c8983a; }
 
   .qm-toc-label {
-    font-size: 0.82rem;
-    font-weight: 600;
+    font-size: 0.8rem;
+    font-weight: 700;
     line-height: 1.3;
     margin-bottom: 2px;
   }
 
   .qm-toc-sub {
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     color: #9ca3af;
+    font-weight: 400;
+  }
+
+  /* ── Divider ── */
+  .qm-divider {
+    height: 1px;
+    background: linear-gradient(90deg, #e9e4db, transparent);
+    margin: 3rem 0;
   }
 
   /* ── Section ── */
   .qm-section {
-    margin-bottom: 3.5rem;
+    margin-bottom: 0;
     scroll-margin-top: 80px;
   }
 
@@ -333,94 +346,146 @@ export const quizData = [
     gap: 16px;
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid #f0ede8;
+    border-bottom: 1px solid #f0ede6;
   }
 
   .qm-section-num {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.8rem;
-    color: #e8e4dc;
+    font-size: 3rem;
+    color: #ebe7df;
     line-height: 1;
     letter-spacing: 0.04em;
     flex-shrink: 0;
   }
 
   .qm-section-title {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: #111827;
     margin: 0;
-    line-height: 1.2;
+    line-height: 1.25;
   }
 
   .qm-section-sub {
-    font-size: 0.74rem;
+    font-size: 0.7rem;
     color: #9ca3af;
     font-weight: 500;
     margin-top: 3px;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
   }
 
   /* ── Info box ── */
   .qm-info {
-    background: #f8f7f3;
-    border-radius: 14px;
-    padding: 1.25rem 1.5rem;
-    font-size: 0.9rem;
+    background: #f9f7f3;
+    border-radius: 12px;
+    padding: 1.15rem 1.4rem;
+    font-size: 0.875rem;
     color: #374151;
-    line-height: 1.7;
+    line-height: 1.75;
     margin-bottom: 1.5rem;
     border-left: 3px solid #c8983a;
   }
 
   .qm-info strong { color: #92400e; }
 
-  /* ── Principle cards (PDCA etc.) ── */
-  .qm-principle-grid {
+  /* ── Cards — Prinzipien (PDCA, MVW) ── */
+  .qm-card-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
+    gap: 10px;
     margin-bottom: 1.5rem;
   }
 
-  .qm-principle-card {
+  .qm-card {
     background: #fff;
-    border: 1px solid #ece9e3;
+    border: 1px solid #eae6df;
     border-radius: 14px;
-    padding: 1.4rem;
+    padding: 1.35rem;
     text-align: center;
     position: relative;
     overflow: hidden;
+    transition: box-shadow 0.18s, transform 0.18s;
   }
 
-  .qm-principle-letter {
+  .qm-card:hover {
+    box-shadow: 0 6px 20px rgba(0,0,0,0.07);
+    transform: translateY(-2px);
+  }
+
+  .qm-card-letter {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 3rem;
+    font-size: 3.2rem;
     line-height: 1;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.35rem;
     letter-spacing: 0.04em;
   }
 
-  .qm-principle-name {
-    font-size: 0.88rem;
+  .qm-card-name {
+    font-size: 0.85rem;
     font-weight: 700;
     color: #111827;
     margin-bottom: 6px;
   }
 
-  .qm-principle-desc {
-    font-size: 0.76rem;
+  .qm-card-desc {
+    font-size: 0.74rem;
     color: #6b7280;
-    line-height: 1.5;
+    line-height: 1.55;
     margin: 0;
+  }
+
+  /* ── Dark dual panel (ISO/MDR) ── */
+  .qm-dual {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (max-width: 600px) {
+    .qm-dual { grid-template-columns: 1fr; }
+  }
+
+  .qm-dark-panel {
+    background: #111116;
+    border-radius: 14px;
+    padding: 1.4rem;
+    color: #fff;
+  }
+
+  .qm-dark-panel-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.55rem;
+  }
+
+  .qm-dark-panel-text {
+    font-size: 0.76rem;
+    color: rgba(255,255,255,0.48);
+    line-height: 1.65;
+    margin-bottom: 1rem;
+  }
+
+  .qm-tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .qm-tag {
+    font-size: 0.61rem;
+    padding: 3px 8px;
+    border-radius: 5px;
+    font-family: monospace;
+    letter-spacing: 0.03em;
   }
 
   /* ── Process flow ── */
   .qm-flow {
     display: flex;
     flex-direction: column;
-    gap: 0;
     margin-bottom: 1.5rem;
   }
 
@@ -430,144 +495,172 @@ export const quizData = [
     align-items: flex-start;
   }
 
-  .qm-flow-left {
+  .qm-flow-spine {
     display: flex;
     flex-direction: column;
     align-items: center;
     flex-shrink: 0;
   }
 
-  .qm-flow-circle {
-    width: 36px;
-    height: 36px;
+  .qm-flow-dot {
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     background: #111116;
     color: #e8d5a8;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1rem;
+    font-size: 0.95rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    letter-spacing: 0.04em;
     flex-shrink: 0;
   }
 
-  .qm-flow-line {
+  .qm-flow-connector {
     width: 1px;
     flex: 1;
-    background: linear-gradient(to bottom, #dedad4, transparent);
-    min-height: 24px;
+    min-height: 22px;
     margin: 3px 0;
+    background: linear-gradient(to bottom, #dedad4 0%, transparent 100%);
   }
 
-  .qm-flow-content {
+  .qm-flow-body {
     padding-bottom: 1.5rem;
     flex: 1;
   }
 
   .qm-flow-title {
-    font-size: 0.94rem;
+    font-size: 0.9rem;
     font-weight: 700;
     color: #111827;
-    margin-bottom: 4px;
+    margin-bottom: 3px;
   }
 
   .qm-flow-desc {
-    font-size: 0.82rem;
+    font-size: 0.79rem;
     color: #6b7280;
     line-height: 1.6;
     margin: 0;
   }
 
   /* ── Responsibility matrix ── */
-  .qm-matrix {
+  .qm-table-wrap {
     background: #fff;
-    border: 1px solid #ece9e3;
+    border: 1px solid #eae6df;
     border-radius: 14px;
     overflow: hidden;
     margin-bottom: 1.5rem;
   }
 
-  .qm-matrix-table {
+  .qm-table {
     width: 100%;
     border-collapse: collapse;
   }
 
-  .qm-matrix-table th {
-    background: #f8f7f3;
+  .qm-table th {
+    background: #f8f6f2;
     text-align: left;
-    padding: 0.75rem 1rem;
-    font-size: 0.65rem;
+    padding: 0.7rem 1rem;
+    font-size: 0.62rem;
     text-transform: uppercase;
     letter-spacing: 0.14em;
     color: #9ca3af;
     font-weight: 700;
-    border-bottom: 1px solid #ece9e3;
+    border-bottom: 1px solid #eae6df;
   }
 
-  .qm-matrix-table td {
-    padding: 0.85rem 1rem;
-    font-size: 0.82rem;
-    border-bottom: 1px solid #f3f3f0;
+  .qm-table td {
+    padding: 0.82rem 1rem;
+    font-size: 0.8rem;
+    border-bottom: 1px solid #f3f2ee;
     vertical-align: middle;
+    color: #374151;
+    line-height: 1.5;
   }
 
-  .qm-matrix-table tr:last-child td { border-bottom: none; }
-  .qm-matrix-table tr:hover td { background: #faf9f6; }
+  .qm-table tr:last-child td { border-bottom: none; }
+  .qm-table tr:hover td { background: #faf8f5; }
 
-  .qm-role-badge {
+  .qm-badge {
     display: inline-block;
-    font-size: 0.68rem;
+    font-size: 0.67rem;
     font-weight: 700;
     padding: 3px 10px;
     border-radius: 5px;
     white-space: nowrap;
   }
 
-  /* ── Key figures ── */
+  /* ── KPI grid ── */
   .qm-kpi-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 9px;
     margin-bottom: 1.5rem;
   }
 
   .qm-kpi {
     background: #fff;
-    border: 1px solid #ece9e3;
+    border: 1px solid #eae6df;
     border-radius: 14px;
-    padding: 1.25rem;
+    padding: 1.2rem 1rem;
     text-align: center;
+    transition: box-shadow 0.18s;
   }
+
+  .qm-kpi:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
 
   .qm-kpi-val {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.4rem;
+    font-size: 2.2rem;
     line-height: 1;
     letter-spacing: 0.04em;
-    margin-bottom: 4px;
+    margin-bottom: 5px;
   }
 
   .qm-kpi-label {
-    font-size: 0.7rem;
+    font-size: 0.67rem;
     color: #9ca3af;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
+    line-height: 1.3;
   }
 
-  /* ── Warning / note ── */
+  /* ── Managementbewertung list ── */
+  .qm-review-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
+    gap: 7px;
+  }
+
+  .qm-review-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 0.78rem;
+    color: #374151;
+    line-height: 1.45;
+  }
+
+  .qm-review-arrow {
+    color: #10b981;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── Warning / Tip ── */
   .qm-warning {
     background: #fef2f2;
     border: 1px solid #fecaca;
     border-radius: 12px;
-    padding: 1rem 1.25rem;
-    font-size: 0.86rem;
+    padding: 1rem 1.2rem;
+    font-size: 0.84rem;
     color: #7f1d1d;
-    line-height: 1.6;
+    line-height: 1.65;
     margin-bottom: 1.5rem;
     display: flex;
-    gap: 12px;
+    gap: 11px;
     align-items: flex-start;
   }
 
@@ -575,137 +668,99 @@ export const quizData = [
     background: #f0fdf4;
     border: 1px solid #bbf7d0;
     border-radius: 12px;
-    padding: 1rem 1.25rem;
-    font-size: 0.86rem;
+    padding: 1rem 1.2rem;
+    font-size: 0.84rem;
     color: #14532d;
-    line-height: 1.6;
+    line-height: 1.65;
     margin-bottom: 1.5rem;
   }
 
-  /* ── Norm references ── */
+  /* ── Norm refs ── */
   .qm-norm-refs {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 7px;
     margin-top: 1rem;
   }
 
   .qm-norm-pill {
-    background: #f0ede8;
+    background: #f3f0eb;
     color: #374151;
-    font-size: 0.7rem;
+    font-size: 0.67rem;
     font-weight: 600;
-    padding: 4px 11px;
+    padding: 4px 10px;
     border-radius: 6px;
     font-family: 'DM Mono', 'Fira Code', monospace;
     letter-spacing: 0.04em;
+    border: 1px solid #e9e5de;
   }
 
-  /* ── Divider ── */
-  .qm-divider {
-    height: 1px;
-    background: linear-gradient(90deg, #e5e1da, transparent);
-    margin: 2.5rem 0;
-  }
-
-  /* ── Animation ── */
-  @keyframes qm-fade {
-    from { opacity: 0; transform: translateY(6px); }
+  /* ── Animations ── */
+  @keyframes qm-rise {
+    from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
   .qm-page > * {
-    animation: qm-fade 0.4s ease both;
+    animation: qm-rise 0.35s ease both;
   }
+
+  .qm-page > *:nth-child(2) { animation-delay: 0.05s; }
+  .qm-page > *:nth-child(3) { animation-delay: 0.1s; }
+  .qm-page > *:nth-child(4) { animation-delay: 0.15s; }
 `}</style>
 
 <div className="qm-page">
 
-{/* ══════════════════════════════════════════════════
-    HERO — Gebäudebild Emig GmbH Reutlingen
-══════════════════════════════════════════════════ */}
-
-<div className="qm-building-container">
-  <img 
+{/* ══════════════ HERO ══════════════ */}
+<div className="qm-hero">
+  <img
     src="/img/emig-gebaeude.png"
     alt="Emig GmbH Standort Reutlingen"
-    className="qm-building-img"
-    onError={(e) => { 
-      e.currentTarget.style.background = '#0a0a0e'; 
-      e.currentTarget.style.opacity = '0'; 
-    }}
+    className="qm-hero-img"
+    onError={(e) => { e.currentTarget.style.display = 'none'; }}
   />
-  <div className="qm-building-grain" />
-  <div className="qm-building-overlay" />
-  <div className="qm-building-content">
-    <div className="qm-building-badge">ISO 13485:2016 · EU MDR 2017/745</div>
-    <div className="qm-building-title">QM Philosophie<br />& Strategie</div>
-    <div className="qm-building-sub">Emig GmbH · Standort Reutlingen</div>
+  <div className="qm-hero-grain" />
+  <div className="qm-hero-overlay" />
+  <div className="qm-hero-content">
+    <div className="qm-hero-badge">ISO 13485:2016 · EU MDR 2017/745</div>
+    <div className="qm-hero-title">QM-Philosophie<br />& Strategie</div>
+    <div className="qm-hero-sub">Emig GmbH · Standort Reutlingen · Medizinprodukte</div>
   </div>
 </div>
 
-{/* Meta */}
+{/* ══════════════ META ══════════════ */}
 <div className="qm-meta">
-  <span className="qm-meta-pill qm-meta-pill-gold">ISO 13485:2016</span>
-  <span className="qm-meta-pill qm-meta-pill-gold">EU MDR 2017/745</span>
-  <span className="qm-meta-pill">5 Kapitel</span>
-  <span className="qm-meta-pill">12 Quiz-Fragen</span>
-  <span className="qm-meta-pill">~15 Min. Lesezeit</span>
+  <span className="qm-pill qm-pill-gold">ISO 13485:2016</span>
+  <span className="qm-pill qm-pill-gold">EU MDR 2017/745</span>
+  <span className="qm-pill">5 Kapitel</span>
+  <span className="qm-pill">12 Quiz-Fragen</span>
+  <span className="qm-pill">~15 Min. Lesezeit</span>
 </div>
 
-{/* ══════════════════════════════════════════════════
-    TABLE OF CONTENTS
-══════════════════════════════════════════════════ */}
-
+{/* ══════════════ TOC ══════════════ */}
 <div className="qm-toc">
-  <a href="#leitbild" className="qm-toc-card">
-    <div className="qm-toc-num">01</div>
-    <div>
-      <div className="qm-toc-label">Unternehmensleitbild</div>
-      <div className="qm-toc-sub">Mission · Vision · Werte</div>
-    </div>
-  </a>
-  <a href="#normen" className="qm-toc-card">
-    <div className="qm-toc-num">02</div>
-    <div>
-      <div className="qm-toc-label">Normative Grundlagen</div>
-      <div className="qm-toc-sub">ISO 13485 · MDR</div>
-    </div>
-  </a>
-  <a href="#pdca" className="qm-toc-card">
-    <div className="qm-toc-num">03</div>
-    <div>
-      <div className="qm-toc-label">PDCA & Kernprozesse</div>
-      <div className="qm-toc-sub">Kontinuierliche Verbesserung</div>
-    </div>
-  </a>
-  <a href="#verantwortung" className="qm-toc-card">
-    <div className="qm-toc-num">04</div>
-    <div>
-      <div className="qm-toc-label">Verantwortung & Rollen</div>
-      <div className="qm-toc-sub">QMB · PRRC · GF</div>
-    </div>
-  </a>
-  <a href="#kpis" className="qm-toc-card">
-    <div className="qm-toc-num">05</div>
-    <div>
-      <div className="qm-toc-label">QM-Kennzahlen</div>
-      <div className="qm-toc-sub">KPIs · Ziele</div>
-    </div>
-  </a>
-  <a href="#wissenstest" className="qm-toc-card">
-    <div className="qm-toc-num">★</div>
-    <div>
-      <div className="qm-toc-label">Wissenstest</div>
-      <div className="qm-toc-sub">12 Fragen · Quiz</div>
-    </div>
-  </a>
+  {[
+    { num: '01', label: 'Unternehmensleitbild', sub: 'Mission · Vision · Werte', href: '#leitbild' },
+    { num: '02', label: 'Normative Grundlagen',  sub: 'ISO 13485 · MDR',          href: '#normen' },
+    { num: '03', label: 'PDCA & Kernprozesse',   sub: 'Kontinuierliche Verbesserung', href: '#pdca' },
+    { num: '04', label: 'Verantwortung & Rollen',sub: 'QMB · PRRC · GF',         href: '#verantwortung' },
+    { num: '05', label: 'QM-Kennzahlen',         sub: 'KPIs · Ziele',             href: '#kpis' },
+    { num: '★',  label: 'Wissenstest',           sub: '12 Fragen · Quiz',         href: '#wissenstest' },
+  ].map(({ num, label, sub, href }) => (
+    <a key={href} href={href} className="qm-toc-item">
+      <div className="qm-toc-num">{num}</div>
+      <div>
+        <div className="qm-toc-label">{label}</div>
+        <div className="qm-toc-sub">{sub}</div>
+      </div>
+    </a>
+  ))}
 </div>
 
 {/* ══════════════════════════════════════════════════
-    01 UNTERNEHMENSLEITBILD
+    01  UNTERNEHMENSLEITBILD
 ══════════════════════════════════════════════════ */}
-
 <div className="qm-section" id="leitbild">
   <div className="qm-section-hd">
     <div className="qm-section-num">01</div>
@@ -716,24 +771,24 @@ export const quizData = [
   </div>
 
   <div className="qm-info">
-    Die Emig GmbH mit Hauptsitz in <strong>Reutlingen, Baden-Württemberg</strong> ist ein spezialisierter Händler und Importeur von Medizinprodukten im Bereich Neurochirurgie, Wirbelsäulenchirurgie und verwandten Fachgebieten. Als regulierter Händler gemäß EU-MDR 2017/745 trägt Emig volle Verantwortung für die gesamte Lieferkette vom Hersteller bis zur klinischen Anwendung.
+    Die Emig GmbH mit Hauptsitz in <strong>Reutlingen, Baden-Württemberg</strong> ist ein spezialisierter Händler und Importeur von Medizinprodukten im Bereich Neurochirurgie, Wirbelsäulenchirurgie und verwandten Fachgebieten. Als regulierter Händler gemäß EU-MDR 2017/745 trägt Emig volle Verantwortung für die gesamte Lieferkette — vom Hersteller bis zur klinischen Anwendung.
   </div>
 
-  <div className="qm-principle-grid">
-    <div className="qm-principle-card" style={{ borderTop: '3px solid #c8983a' }}>
-      <div className="qm-principle-letter" style={{ color: '#c8983a' }}>M</div>
-      <div className="qm-principle-name">Mission</div>
-      <p className="qm-principle-desc">Sichere und wirksame Medizinprodukte zuverlässig zur richtigen Zeit am richtigen Ort bereitzustellen — MDR-konform, rückverfolgbar, patientenzentriert.</p>
+  <div className="qm-card-grid">
+    <div className="qm-card" style={{ borderTop: '3px solid #c8983a' }}>
+      <div className="qm-card-letter" style={{ color: '#c8983a' }}>M</div>
+      <div className="qm-card-name">Mission</div>
+      <p className="qm-card-desc">Sichere und wirksame Medizinprodukte zuverlässig zur richtigen Zeit am richtigen Ort bereitzustellen — MDR-konform, rückverfolgbar, patientenzentriert.</p>
     </div>
-    <div className="qm-principle-card" style={{ borderTop: '3px solid #6ea8c8' }}>
-      <div className="qm-principle-letter" style={{ color: '#6ea8c8' }}>V</div>
-      <div className="qm-principle-name">Vision</div>
-      <p className="qm-principle-desc">Führender Spezialhändler für Neurochirurgie-Produkte im deutschsprachigen Raum mit vorbildlicher Compliance und höchster Kundenzufriedenheit.</p>
+    <div className="qm-card" style={{ borderTop: '3px solid #6ea8c8' }}>
+      <div className="qm-card-letter" style={{ color: '#6ea8c8' }}>V</div>
+      <div className="qm-card-name">Vision</div>
+      <p className="qm-card-desc">Führender Spezialhändler für Neurochirurgie-Produkte im deutschsprachigen Raum mit vorbildlicher Compliance und höchster Kundenzufriedenheit.</p>
     </div>
-    <div className="qm-principle-card" style={{ borderTop: '3px solid #6ec8a0' }}>
-      <div className="qm-principle-letter" style={{ color: '#6ec8a0' }}>W</div>
-      <div className="qm-principle-name">Werte</div>
-      <p className="qm-principle-desc">Patientensicherheit, Compliance-Exzellenz, Verlässlichkeit gegenüber Partnern, kontinuierliche Verbesserung als Grundhaltung.</p>
+    <div className="qm-card" style={{ borderTop: '3px solid #6ec8a0' }}>
+      <div className="qm-card-letter" style={{ color: '#6ec8a0' }}>W</div>
+      <div className="qm-card-name">Werte</div>
+      <p className="qm-card-desc">Patientensicherheit, Compliance-Exzellenz, Verlässlichkeit gegenüber Partnern, kontinuierliche Verbesserung als gelebte Grundhaltung.</p>
     </div>
   </div>
 
@@ -746,9 +801,8 @@ export const quizData = [
 <div className="qm-divider" />
 
 {/* ══════════════════════════════════════════════════
-    02 NORMATIVE GRUNDLAGEN
+    02  NORMATIVE GRUNDLAGEN
 ══════════════════════════════════════════════════ */}
-
 <div className="qm-section" id="normen">
   <div className="qm-section-hd">
     <div className="qm-section-num">02</div>
@@ -759,38 +813,38 @@ export const quizData = [
   </div>
 
   <div className="qm-info">
-    Das QMS der Emig GmbH basiert auf zwei zentralen regulatorischen Säulen: der <strong>ISO 13485:2016</strong> als internationale QM-Norm für Medizinprodukte sowie der <strong>EU MDR 2017/745</strong> (Medical Device Regulation) als verbindliches EU-Recht. Beide ergänzen sich und müssen vollständig erfüllt werden.
+    Das QMS der Emig GmbH basiert auf zwei zentralen regulatorischen Säulen: der <strong>ISO 13485:2016</strong> als internationale QM-Norm für Medizinprodukte sowie der <strong>EU MDR 2017/745</strong> als verbindliches EU-Recht. Beide Regelwerke ergänzen sich und müssen vollständig erfüllt werden.
   </div>
 
-  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '1.5rem' }}>
-    <div style={{ background: '#111116', borderRadius: '14px', padding: '1.5rem', color: '#fff' }}>
-      <div style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: '1.1rem', color: '#c8a96e', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>ISO 13485:2016</div>
-      <div style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.5)', lineHeight: 1.6 }}>
-        Internationale QM-Norm spezifisch für Medizinprodukte. Regelt Entwicklung, Produktion, Lagerung, Distribution und Service. Voraussetzung für CE-Kennzeichnung.
+  <div className="qm-dual">
+    <div className="qm-dark-panel">
+      <div className="qm-dark-panel-title" style={{ color: '#c8a96e' }}>ISO 13485:2016</div>
+      <div className="qm-dark-panel-text">
+        Internationale QM-Norm spezifisch für Medizinprodukte. Regelt Entwicklung, Produktion, Lagerung, Distribution und Service über den gesamten Produktlebenszyklus. Voraussetzung für die CE-Kennzeichnung.
       </div>
-      <div style={{ marginTop: '1rem', display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+      <div className="qm-tag-row">
         {['§4 QMS', '§5 Führung', '§6 Ressourcen', '§7 Realisierung', '§8 Messung'].map(s => (
-          <span key={s} style={{ background: 'rgba(200,169,110,0.12)', border: '1px solid rgba(200,169,110,0.2)', color: '#e8d5a8', fontSize: '0.63rem', padding: '3px 8px', borderRadius: '5px', fontFamily: 'monospace' }}>{s}</span>
+          <span key={s} className="qm-tag" style={{ background: 'rgba(200,169,110,0.12)', border: '1px solid rgba(200,169,110,0.2)', color: '#e8d5a8' }}>{s}</span>
         ))}
       </div>
     </div>
-    <div style={{ background: '#111116', borderRadius: '14px', padding: '1.5rem', color: '#fff' }}>
-      <div style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: '1.1rem', color: '#6ea8c8', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>EU MDR 2017/745</div>
-      <div style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.5)', lineHeight: 1.6 }}>
-        EU-Verordnung mit Gültigkeit ab Mai 2021. Schärfere Anforderungen an Konformitätsbewertung, UDI, Vigilanz und Marktüberwachung gegenüber der Vorgänger-MDD.
+    <div className="qm-dark-panel">
+      <div className="qm-dark-panel-title" style={{ color: '#6ea8c8' }}>EU MDR 2017/745</div>
+      <div className="qm-dark-panel-text">
+        EU-Verordnung gültig ab Mai 2021. Schärfere Anforderungen an Konformitätsbewertung, UDI-Kennzeichnung, Vigilanz und Marktüberwachung gegenüber der abgelösten MDD.
       </div>
-      <div style={{ marginTop: '1rem', display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+      <div className="qm-tag-row">
         {['Art. 13 Importeur', 'Art. 14 Händler', 'UDI', 'EUDAMED', 'Vigilanz'].map(s => (
-          <span key={s} style={{ background: 'rgba(110,168,200,0.12)', border: '1px solid rgba(110,168,200,0.2)', color: '#6ea8c8', fontSize: '0.63rem', padding: '3px 8px', borderRadius: '5px', fontFamily: 'monospace' }}>{s}</span>
+          <span key={s} className="qm-tag" style={{ background: 'rgba(110,168,200,0.12)', border: '1px solid rgba(110,168,200,0.2)', color: '#6ea8c8' }}>{s}</span>
         ))}
       </div>
     </div>
   </div>
 
   <div className="qm-warning">
-    <div style={{ fontSize: '1rem', flexShrink: 0 }}>⚠</div>
+    <div style={{ fontSize: '1rem', flexShrink: 0, marginTop: '1px' }}>⚠</div>
     <div>
-      <strong>Wichtig:</strong> Die MDR gilt als EU-Verordnung unmittelbar und bedarf keiner nationalen Umsetzung. Bei Widersprüchen zwischen ISO 13485 und MDR hat die MDR Vorrang. Alle Mitarbeitenden sind verpflichtet, Änderungen der Normen und Verordnungen über das interne QM-System zu verfolgen.
+      <strong>Vorrang der MDR:</strong> Die MDR gilt als EU-Verordnung unmittelbar und bedarf keiner nationalen Umsetzung. Bei Widersprüchen zwischen ISO 13485 und MDR hat die MDR Vorrang. Alle Mitarbeitenden sind verpflichtet, Normenänderungen über das interne QM-System zu verfolgen.
     </div>
   </div>
 
@@ -804,9 +858,8 @@ export const quizData = [
 <div className="qm-divider" />
 
 {/* ══════════════════════════════════════════════════
-    03 PDCA & KERNPROZESSE
+    03  PDCA & KERNPROZESSE
 ══════════════════════════════════════════════════ */}
-
 <div className="qm-section" id="pdca">
   <div className="qm-section-hd">
     <div className="qm-section-num">03</div>
@@ -820,52 +873,45 @@ export const quizData = [
     Der <strong>PDCA-Zyklus (Plan–Do–Check–Act)</strong> ist das Herzstück der kontinuierlichen Verbesserung bei Emig. Er ist in alle Kernprozesse eingebettet und stellt sicher, dass Fehler systematisch erkannt, korrigiert und dauerhaft vermieden werden.
   </div>
 
-  <div className="qm-principle-grid">
-    <div className="qm-principle-card" style={{ borderTop: '3px solid #3b82f6' }}>
-      <div className="qm-principle-letter" style={{ color: '#3b82f6' }}>P</div>
-      <div className="qm-principle-name">Plan — Planen</div>
-      <p className="qm-principle-desc">Ziele definieren, Risiken analysieren, Maßnahmen planen. Jährliche QM-Planung, Lieferantenbewertung, Auditplan.</p>
-    </div>
-    <div className="qm-principle-card" style={{ borderTop: '3px solid #10b981' }}>
-      <div className="qm-principle-letter" style={{ color: '#10b981' }}>D</div>
-      <div className="qm-principle-name">Do — Durchführen</div>
-      <p className="qm-principle-desc">Prozesse ausführen, SOPs einhalten, Dokumente pflegen. Tagesgeschäft: Wareneingang, Lager, Versand, Service.</p>
-    </div>
-    <div className="qm-principle-card" style={{ borderTop: '3px solid #f59e0b' }}>
-      <div className="qm-principle-letter" style={{ color: '#f59e0b' }}>C</div>
-      <div className="qm-principle-name">Check — Prüfen</div>
-      <p className="qm-principle-desc">Ergebnisse überwachen, KPIs messen, interne Audits durchführen, Kundenreklamationen analysieren.</p>
-    </div>
-    <div className="qm-principle-card" style={{ borderTop: '3px solid #ef4444' }}>
-      <div className="qm-principle-letter" style={{ color: '#ef4444' }}>A</div>
-      <div className="qm-principle-name">Act — Handeln</div>
-      <p className="qm-principle-desc">CAPA einleiten, Prozesse anpassen, Managementbewertung, nächsten PDCA-Zyklus planen.</p>
-    </div>
+  <div className="qm-card-grid">
+    {[
+      { l: 'P', c: '#3b82f6', name: 'Plan — Planen',      desc: 'Ziele definieren, Risiken analysieren, Maßnahmen planen. Jährliche QM-Planung, Lieferantenbewertung, Auditplan.' },
+      { l: 'D', c: '#10b981', name: 'Do — Durchführen',   desc: 'Prozesse ausführen, SOPs einhalten, Dokumente pflegen. Wareneingang, Lagerung, Versand, Service.' },
+      { l: 'C', c: '#f59e0b', name: 'Check — Prüfen',     desc: 'Ergebnisse überwachen, KPIs messen, interne Audits durchführen, Kundenreklamationen analysieren.' },
+      { l: 'A', c: '#ef4444', name: 'Act — Handeln',      desc: 'CAPA einleiten, Prozesse anpassen, Managementbewertung, nächsten PDCA-Zyklus planen.' },
+    ].map(({ l, c, name, desc }) => (
+      <div key={l} className="qm-card" style={{ borderTop: `3px solid ${c}` }}>
+        <div className="qm-card-letter" style={{ color: c }}>{l}</div>
+        <div className="qm-card-name">{name}</div>
+        <p className="qm-card-desc">{desc}</p>
+      </div>
+    ))}
   </div>
 
-  <div style={{ marginBottom: '1.5rem' }}>
-    <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#374151', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Kernprozesse bei Emig</div>
-    <div className="qm-flow">
-      {[
-        { t: 'Beschaffung & Lieferantenmanagement', d: 'Qualifizierung, Bestellung, Wareneingang mit UDI-Scan und MDR-Prüfung (CE, DoC).' },
-        { t: 'Lagerung & Bestandsmanagement', d: 'Sachgerechte Lagerung nach Herstellervorgaben, Chargentrennung, Sperrlagerverwaltung, MHD-Überwachung.' },
-        { t: 'Vertrieb & Auftragsabwicklung', d: 'Angebot, Auftragsannahme, Freigabe, Auslieferung mit MDR-konformen Lieferpapieren.' },
-        { t: 'Service & Rücksendungen (RMA)', d: 'Serviceauftrag, Reparatur, Rückgabe, Equipment-Update — lückenlos in SAP dokumentiert.' },
-        { t: 'Qualitätssicherung & CAPA', d: 'Reklamationsbearbeitung, Fehleranalyse, Korrektur- und Vorbeugemaßnahmen, Wirksamkeitsprüfung.' },
-        { t: 'Managementbewertung & Auditierung', d: 'Jährliche interne Audits, Managementbewertung durch GF, externe Zertifizierungsaudits.' },
-      ].map((s, i, arr) => (
-        <div className="qm-flow-step" key={i}>
-          <div className="qm-flow-left">
-            <div className="qm-flow-circle">{i + 1}</div>
-            {i < arr.length - 1 && <div className="qm-flow-line" />}
-          </div>
-          <div className="qm-flow-content">
-            <div className="qm-flow-title">{s.t}</div>
-            <p className="qm-flow-desc">{s.d}</p>
-          </div>
+  <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#374151', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.09em' }}>
+    Kernprozesse bei Emig
+  </div>
+
+  <div className="qm-flow">
+    {[
+      { t: 'Beschaffung & Lieferantenmanagement',   d: 'Qualifizierung, Bestellung, Wareneingang mit UDI-Scan und MDR-Prüfung (CE, DoC).' },
+      { t: 'Lagerung & Bestandsmanagement',          d: 'Sachgerechte Lagerung nach Herstellervorgaben, Chargentrennung, Sperrlagerverwaltung, MHD-Überwachung.' },
+      { t: 'Vertrieb & Auftragsabwicklung',           d: 'Angebot, Auftragsannahme, Freigabe, Auslieferung mit MDR-konformen Lieferpapieren.' },
+      { t: 'Service & Rücksendungen (RMA)',           d: 'Serviceauftrag, Reparatur, Rückgabe, Equipment-Update — lückenlos in SAP dokumentiert.' },
+      { t: 'Qualitätssicherung & CAPA',              d: 'Reklamationsbearbeitung, Fehleranalyse, Korrektur- und Vorbeugemaßnahmen, Wirksamkeitsprüfung.' },
+      { t: 'Managementbewertung & Auditierung',      d: 'Jährliche interne Audits, Managementbewertung durch GF, externe Zertifizierungsaudits.' },
+    ].map(({ t, d }, i, arr) => (
+      <div className="qm-flow-step" key={i}>
+        <div className="qm-flow-spine">
+          <div className="qm-flow-dot">{i + 1}</div>
+          {i < arr.length - 1 && <div className="qm-flow-connector" />}
         </div>
-      ))}
-    </div>
+        <div className="qm-flow-body">
+          <div className="qm-flow-title">{t}</div>
+          <p className="qm-flow-desc">{d}</p>
+        </div>
+      </div>
+    ))}
   </div>
 
   <div className="qm-norm-refs">
@@ -877,9 +923,8 @@ export const quizData = [
 <div className="qm-divider" />
 
 {/* ══════════════════════════════════════════════════
-    04 VERANTWORTUNG & ROLLEN
+    04  VERANTWORTUNG & ROLLEN
 ══════════════════════════════════════════════════ */}
-
 <div className="qm-section" id="verantwortung">
   <div className="qm-section-hd">
     <div className="qm-section-num">04</div>
@@ -890,45 +935,57 @@ export const quizData = [
   </div>
 
   <div className="qm-info">
-    Die ISO 13485 und die MDR verlangen klare Verantwortlichkeiten. Die Emig GmbH hat folgende Schlüsselrollen definiert:
+    ISO 13485 und MDR verlangen klar definierte Verantwortlichkeiten. Die Emig GmbH hat folgende Schlüsselrollen verbindlich festgelegt:
   </div>
 
-  <div className="qm-matrix">
-    <table className="qm-matrix-table">
+  <div className="qm-table-wrap">
+    <table className="qm-table">
       <thead>
         <tr>
           <th>Rolle</th>
           <th>Kernverantwortung</th>
-          <th>MDR-Referenz</th>
+          <th>Referenz</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td><span className="qm-role-badge" style={{ background: '#fef3c7', color: '#92400e' }}>Geschäftsführung</span></td>
-          <td style={{ fontSize: '0.8rem', color: '#374151' }}>Oberste QM-Verantwortung, Managementbewertung, Ressourcenbereitstellung, Compliance-Kultur</td>
-          <td><span className="qm-norm-pill">ISO §5.1</span></td>
-        </tr>
-        <tr>
-          <td><span className="qm-role-badge" style={{ background: '#dbeafe', color: '#1e40af' }}>QMB</span></td>
-          <td style={{ fontSize: '0.8rem', color: '#374151' }}>QM-Beauftragter: Pflegt QMS, koordiniert Audits, überwacht SOPs, CAPA-Management, Ansprechpartner für Behörden</td>
-          <td><span className="qm-norm-pill">ISO §5.5.2</span></td>
-        </tr>
-        <tr>
-          <td><span className="qm-role-badge" style={{ background: '#dcfce7', color: '#14532d' }}>PRRC</span></td>
-          <td style={{ fontSize: '0.8rem', color: '#374151' }}>Person verantwortlich für Regulierungskonformität: überwacht MDR-Pflichten, Vigilanz, EUDAMED-Meldungen, Produktregistrierung</td>
-          <td><span className="qm-norm-pill">MDR Art. 15</span></td>
-        </tr>
-        <tr>
-          <td><span className="qm-role-badge" style={{ background: '#f3f4f6', color: '#374151' }}>Alle Mitarbeitenden</span></td>
-          <td style={{ fontSize: '0.8rem', color: '#374151' }}>SOPs einhalten, Abweichungen melden, Schulungen absolvieren, Qualitätsbewusstsein aktiv leben</td>
-          <td><span className="qm-norm-pill">ISO §6.2</span></td>
-        </tr>
+        {[
+          {
+            badge: 'Geschäftsführung',
+            style: { background: '#fef3c7', color: '#92400e' },
+            desc: 'Oberste QM-Verantwortung, Managementbewertung, Ressourcenbereitstellung, Compliance-Kultur',
+            ref: 'ISO §5.1',
+          },
+          {
+            badge: 'QMB',
+            style: { background: '#dbeafe', color: '#1e40af' },
+            desc: 'QM-Beauftragter: Pflegt QMS, koordiniert Audits, überwacht SOPs, CAPA-Management, Behördenansprechpartner',
+            ref: 'ISO §5.5.2',
+          },
+          {
+            badge: 'PRRC',
+            style: { background: '#dcfce7', color: '#14532d' },
+            desc: 'Person verantwortlich für Regulierungskonformität: MDR-Pflichten, Vigilanz, EUDAMED-Meldungen, Produktregistrierung',
+            ref: 'MDR Art. 15',
+          },
+          {
+            badge: 'Alle Mitarbeitenden',
+            style: { background: '#f3f4f6', color: '#374151' },
+            desc: 'SOPs einhalten, Abweichungen melden, Schulungen absolvieren, Qualitätsbewusstsein aktiv leben',
+            ref: 'ISO §6.2',
+          },
+        ].map(({ badge, style, desc, ref }) => (
+          <tr key={badge}>
+            <td><span className="qm-badge" style={style}>{badge}</span></td>
+            <td>{desc}</td>
+            <td><span className="qm-norm-pill">{ref}</span></td>
+          </tr>
+        ))}
       </tbody>
     </table>
   </div>
 
   <div className="qm-tip">
-    <strong>Praxishinweis:</strong> Jede/r Mitarbeitende hat das Recht und die Pflicht, Qualitätsabweichungen zu melden — ohne Konsequenzen fürchten zu müssen. Eine starke Fehlermeldekultur ist ein Merkmal exzellenter QM-Systeme und wird bei Audits positiv bewertet.
+    <strong>Praxishinweis:</strong> Jede/r Mitarbeitende hat das Recht und die Pflicht, Qualitätsabweichungen zu melden — ohne negative Konsequenzen fürchten zu müssen. Eine offene Fehlermeldekultur ist ein Kennzeichen exzellenter QM-Systeme und wird bei Audits aktiv positiv bewertet.
   </div>
 
   <div className="qm-norm-refs">
@@ -941,9 +998,8 @@ export const quizData = [
 <div className="qm-divider" />
 
 {/* ══════════════════════════════════════════════════
-    05 QM-KENNZAHLEN
+    05  QM-KENNZAHLEN
 ══════════════════════════════════════════════════ */}
-
 <div className="qm-section" id="kpis">
   <div className="qm-section-hd">
     <div className="qm-section-num">05</div>
@@ -954,51 +1010,42 @@ export const quizData = [
   </div>
 
   <div className="qm-info">
-    Die Wirksamkeit des QMS wird anhand konkreter Kennzahlen gemessen. Diese werden monatlich im SAP-System erfasst und jährlich in der <strong>Managementbewertung</strong> durch die Geschäftsführung bewertet.
+    Die Wirksamkeit des QMS wird anhand konkreter Kennzahlen gemessen. Diese werden monatlich im SAP-System erfasst und jährlich in der <strong>Managementbewertung</strong> durch die Geschäftsführung bewertet und kommentiert.
   </div>
 
   <div className="qm-kpi-grid">
-    <div className="qm-kpi">
-      <div className="qm-kpi-val" style={{ color: '#10b981' }}>≥95%</div>
-      <div className="qm-kpi-label">Lieferqualität</div>
-    </div>
-    <div className="qm-kpi">
-      <div className="qm-kpi-val" style={{ color: '#c8983a' }}>≥90%</div>
-      <div className="qm-kpi-label">Liefertreue</div>
-    </div>
-    <div className="qm-kpi">
-      <div className="qm-kpi-val" style={{ color: '#6ea8c8' }}>≤48h</div>
-      <div className="qm-kpi-label">Reaktionszeit</div>
-    </div>
-    <div className="qm-kpi">
-      <div className="qm-kpi-val" style={{ color: '#ef4444' }}>&lt;5 s</div>
-      <div className="qm-kpi-label">Chargensuche</div>
-    </div>
-    <div className="qm-kpi">
-      <div className="qm-kpi-val" style={{ color: '#8b5cf6' }}>100%</div>
-      <div className="qm-kpi-label">MDR-Gate</div>
-    </div>
-    <div className="qm-kpi">
-      <div className="qm-kpi-val" style={{ color: '#374151' }}>1×</div>
-      <div className="qm-kpi-label">Audit/Jahr</div>
-    </div>
+    {[
+      { val: '≥95%',  color: '#10b981', label: 'Lieferqualität' },
+      { val: '≥90%',  color: '#c8983a', label: 'Liefertreue' },
+      { val: '≤48h',  color: '#6ea8c8', label: 'Reaktionszeit Reklamation' },
+      { val: '<5 s',  color: '#ef4444', label: 'Chargensuche SAP' },
+      { val: '100%',  color: '#8b5cf6', label: 'MDR-Gate Wareneingang' },
+      { val: '1×',    color: '#374151', label: 'Internes Audit / Jahr' },
+    ].map(({ val, color, label }) => (
+      <div key={label} className="qm-kpi">
+        <div className="qm-kpi-val" style={{ color }}>{val}</div>
+        <div className="qm-kpi-label">{label}</div>
+      </div>
+    ))}
   </div>
 
-  <div style={{ background: '#fff', border: '1px solid #ece9e3', borderRadius: '14px', padding: '1.5rem', marginBottom: '1.5rem' }}>
-    <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#374151', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Was wird in der Managementbewertung bewertet?</div>
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '8px' }}>
+  <div style={{ background: '#fff', border: '1px solid #eae6df', borderRadius: '14px', padding: '1.4rem', marginBottom: '1.5rem' }}>
+    <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#374151', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.09em' }}>
+      Themen der jährlichen Managementbewertung
+    </div>
+    <div className="qm-review-grid">
       {[
         'Ergebnisse interner Audits',
         'Kundenfeedback & Reklamationen',
         'Prozessleistung & Produktkonformität',
-        'Status Korrektur- & Vorbeugemaßnahmen',
-        'Folgemaßnahmen aus Vorjahr',
+        'Status CAPA-Maßnahmen',
+        'Folgemaßnahmen aus dem Vorjahr',
         'Regulatorische Änderungen',
-        'Ergebnisse der Lieferantenbewertung',
-        'Ressourcenbedarf für kommende Periode',
+        'Ergebnisse Lieferantenbewertung',
+        'Ressourcenbedarf für die Folgeperiode',
       ].map((item, i) => (
-        <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '0.78rem', color: '#374151' }}>
-          <span style={{ color: '#10b981', flexShrink: 0, fontWeight: 700 }}>›</span>
+        <div key={i} className="qm-review-item">
+          <span className="qm-review-arrow">›</span>
           {item}
         </div>
       ))}
