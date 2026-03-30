@@ -3,6 +3,7 @@ import Link from '@docusaurus/Link';
 import Layout from '@theme/Layout';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import Head from '@docusaurus/Head';
+import { LANGS, T, getT } from './i18n';
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
@@ -265,24 +266,103 @@ const MFRS = [
     id: 'meyer',
     name: 'Meyer-Haake',
     logo: '/img/logo-meyer.png',
-    tagline: 'Wirbelsäulen-Implantate & Fixationssysteme',
-    origin: 'Deutschland · Wehrheim',
+    tagline: 'Radiochirurgie · Wundversorgung · Rauchabsaugung',
+    origin: 'Deutschland · Ober-Mörlen',
     accent: '#e65100',
     bg: 'linear-gradient(160deg,#0e0400 0%,#1c0900 35%,#271200 60%,#1c0900 100%)',
-    description: 'Meyer-Haake Medical Innovations entwickelt und fertigt innovative Wirbelsäulen-Implantate und Fixationssysteme. Spezialisiert auf Pedikelschraubensysteme, Cages und dynamische Stabilisierung.',
+    website: 'https://www.meyer-haake.com',
+    location: { lat: 50.3610, lng: 8.6880, city: 'Ober-Mörlen', country: 'Hessen, DE' },
+    description: 'Meyer-Haake GmbH Medical Innovations entwickelt und fertigt seit 1981 innovative Medizinprodukte für Ärzte und Kosmetikinstitute. Das Portfolio umfasst Radiochirurgiegeräte, Gewebekleber, Rauchgasabsaugung und Elektroden — alles Made in Germany, ISO 13485-zertifiziert.',
     focus: [
-      { icon: '🔩', label: 'Pedikelschraubensysteme', desc: 'Modulare Wirbelsäulenfixation' },
-      { icon: '📦', label: 'Interkorporale Cages', desc: 'Fusion-Implantate TLIF/PLIF' },
-      { icon: '🌊', label: 'Dynamische Stabilisierung', desc: 'Bewegungserhaltende Implantate' },
-      { icon: '🎯', label: 'Minimalinvasive Implantologie', desc: 'MIS-Zugang Pedikelschrauben' },
+      { icon: '⚡', label: 'Radiochirurgie', desc: 'Drucklose, kalte Schnitte ohne Nekrosen' },
+      { icon: '🩹', label: 'Wundversorgung', desc: 'Kleben statt Nähen — EPIGLU®' },
+      { icon: '💨', label: 'Rauchgasabsaugung', desc: 'Schutz vor chirurgischem Rauch' },
+      { icon: '🔬', label: 'Elektroden', desc: 'Für alle Fachrichtungen und Anwendungen' },
+      { icon: '✨', label: 'RF-ReFacing', desc: 'Anti-Aging mit Radiowellen' },
+      { icon: '🏭', label: 'Made in Germany', desc: 'Eigenproduktion Ober-Mörlen seit 1981' },
     ],
     facts: [
-      { label: 'Gegründet', value: '1990' },
-      { label: 'Hauptsitz', value: 'Wehrheim, DE' },
-      { label: 'Fokus', value: 'Spine Implantate' },
-      { label: 'Zertifizierung', value: 'ISO 13485' },
+      { label: 'Gegründet', value: '1981' },
+      { label: 'Hauptsitz', value: 'Ober-Mörlen, DE' },
+      { label: 'Produktion', value: 'Made in Germany' },
+      { label: 'Zertifizierung', value: 'ISO 13485 · CE' },
+      { label: 'Kernprodukte', value: 'radioSURG® · EPIGLU® · smokeSTAR' },
+      { label: 'Anwendung', value: 'Ärzte & Kosmetikinstitute' },
     ],
-    products: [],
+    products: [
+      {
+        title: 'radioSURG® 2200',
+        code: 'MH-01',
+        link: '/docs/medizinprodukte/meyer-haake/radiosurg',
+        tagline: 'Radiochirurgiegerät',
+        image: '/img/meyer-radiosurg.jpg',
+        imagePlaceholderColor: '#1a0800',
+        desc: 'Das radioSURG® 2200 ist ein Hochfrequenz-Radiochirurgiegerät für drucklose, kalte Schnitte ohne Verfärbungen oder Nekrosen. Einsetzbar in allen chirurgischen Fachrichtungen — von der Hautchirurgie bis zur HNO.',
+        specs: [
+          { icon: '⚡', label: 'Technologie', value: 'Hochfrequenz / Radiochirurgie' },
+          { icon: '🔢', label: 'Modelle', value: '6 Modelle verfügbar' },
+          { icon: '🎛️', label: 'Koagulation', value: 'Einstellbar Grad 1–9' },
+          { icon: '🏥', label: 'Anwendung', value: 'Medical · Dental · Veterinär' },
+        ],
+        highlights: ['Drucklose kalte Schnitte — keine Nekrosen, keine Verfärbungen', 'Exzidat histologisch bis in die Schnittränder beurteilbar', 'Mono- und bipolare Koagulation — Touchscreen-Steuerung'],
+        badge: 'Kernsystem',
+        badgeColor: '#e65100',
+      },
+      {
+        title: 'EPIGLU®',
+        code: 'MH-02',
+        link: '/docs/medizinprodukte/meyer-haake/epiglu',
+        tagline: 'Gewebekleber — Kleben statt Nähen',
+        image: '/img/meyer-epiglu.jpg',
+        imagePlaceholderColor: '#1a1000',
+        desc: 'EPIGLU® ist ein Ethyl-2-Cyanoacrylat-Gewebekleber der ersten Stunde — sicher, schnell und wirtschaftlicher als Nadel und Faden. Zugelassen für Medical, Dental und Veterinär in über 50 Ländern.',
+        specs: [
+          { icon: '🧪', label: 'Wirkstoff', value: 'Ethyl-2-Cyanoacrylat' },
+          { icon: '🌍', label: 'Zulassung', value: '50+ Länder weltweit' },
+          { icon: '⏱️', label: 'Aushärtezeit', value: 'Sekunden' },
+          { icon: '🏥', label: 'Anwendung', value: 'Medical · Dental · Veterinär' },
+        ],
+        highlights: ['Erste Ethyl-2-Cyanoacrylat-Tube auf dem Markt', 'Günstigere Alternative zu Nadel und Faden', 'Erhältlich als Phiole, Single Dose und Tube'],
+        badge: 'Bestseller',
+        badgeColor: '#b45309',
+      },
+      {
+        title: 'smokeSTAR',
+        code: 'MH-03',
+        link: '/docs/medizinprodukte/meyer-haake/smokestar',
+        tagline: 'Chirurgische Rauchgasabsaugung',
+        image: '/img/meyer-smokestar.jpg',
+        imagePlaceholderColor: '#0f0f0f',
+        desc: 'smokeSTAR ist eine professionelle Rauchgasabsaugung für alle HF-, RF-, Ultraschall- und Laserchirurgischen Eingriffe. Schützt Chirurgen und OP-Team vor toxischen Reaktionen und Viren im chirurgischen Rauch.',
+        specs: [
+          { icon: '💨', label: 'Technologie', value: 'HEPA + Aktivkohlefilter' },
+          { icon: '🦠', label: 'Schutz', value: 'Viren · Toxine · Partikel' },
+          { icon: '🔇', label: 'Betrieb', value: 'Geräuscharm' },
+          { icon: '🔌', label: 'Kompatibilität', value: 'Alle HF/RF/Laser-Systeme' },
+        ],
+        highlights: ['RKI-Empfehlung seit 2007 für chirurgische Rauchentsorgung', 'Lokale Absaugung direkt am Schnittpunkt', 'Kompatibel mit radioSURG® und allen HF-Systemen'],
+        badge: 'Sicherheit',
+        badgeColor: '#37474f',
+      },
+      {
+        title: 'Elektroden & BIO-CONE',
+        code: 'MH-04',
+        link: '/docs/medizinprodukte/meyer-haake/elektroden',
+        tagline: 'Zubehör & Elektroden für radioSURG®',
+        image: '/img/meyer-elektroden.jpg',
+        imagePlaceholderColor: '#1a0a00',
+        desc: 'Umfangreiches Elektroden-Portfolio für alle Anwendungsfälle des radioSURG® 2200. Inklusive BIO-CONE für Konusbiopsien, Bipolarpinzetten, neue Elektroden für Blepharoplastiken (EELDRA91) und autoklavierbares Mehrwegzubehör.',
+        specs: [
+          { icon: '🔌', label: 'Elektroden', value: 'Alle Fachrichtungen' },
+          { icon: '♻️', label: 'Ausführung', value: 'Einweg steril & autoklavierbar' },
+          { icon: '🔬', label: 'BIO-CONE', value: 'Konusbiopsie an der Portio' },
+          { icon: '✨', label: 'Neu', value: 'EELDRA91 für Blepharoplastiken' },
+        ],
+        highlights: ['BIO-CONE: drehbar mit Stabilisierungsdornen zur Zervix-Fixierung', 'EELDRA91: neue Elektrode speziell für Blepharoplastiken', 'Sortiment autoklavierbar oder steril Einweg'],
+        badge: 'Verbrauchsmaterial',
+        badgeColor: '#4e342e',
+      },
+    ],
   },
   {
     id: 'brainlab',
@@ -423,6 +503,10 @@ const CSS = `
   --ino-blue:#1565c0;
   --ino-blue-lt:#1e88e5;
   --ino-blue-dim:rgba(21,101,192,.15);
+  /* MEYER-HAAKE tokens */
+  --mh-orange:#e65100;
+  --mh-orange-lt:#ff6d00;
+  --mh-orange-dim:rgba(230,81,0,.15);
 }
 [data-theme="dark"]{
   --cream:#0f0e0c;--card:#1c1a16;--card-border:rgba(255,255,255,.07);
@@ -435,6 +519,7 @@ const CSS = `
   --sap-nav-bg:#0d0c09;--sap-nav-border:rgba(255,255,255,.06);--sap-input:#191714;
   --riwo-red-dim:rgba(192,57,43,.22);
   --ino-blue-dim:rgba(21,101,192,.22);
+  --mh-orange-dim:rgba(230,81,0,.22);
 }
 
 *,*::before,*::after{box-sizing:border-box;}
@@ -486,6 +571,13 @@ body{background:var(--bg);}
 .ea-tab:hover:not(.active){color:var(--text);}
 .ea-tab:hover:not(.active) .tab-icon{transform:scale(1.08);}
 .ea-tab-slider{position:absolute;top:5px;bottom:5px;border-radius:9px;background:var(--text);box-shadow:0 2px 10px rgba(0,0,0,.22);transition:left .35s cubic-bezier(.4,0,.2,1),width .35s cubic-bezier(.4,0,.2,1);pointer-events:none;z-index:0;}
+
+/* ── LANGUAGE SWITCHER ── */
+.ea-lang{display:flex;align-items:center;gap:4px;background:var(--card);border:1px solid var(--card-border);border-radius:99px;padding:4px;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.ea-lang-btn{display:flex;align-items:center;gap:5px;padding:5px 12px;border-radius:99px;border:none;background:transparent;font-family:'Outfit',sans-serif;font-size:.72rem;font-weight:600;cursor:pointer;color:var(--text-dim);transition:all .18s;white-space:nowrap;}
+.ea-lang-btn:hover{color:var(--text);background:var(--bg2);}
+.ea-lang-btn.active{background:var(--text);color:var(--bg);box-shadow:0 1px 4px rgba(0,0,0,.15);}
+.ea-lang-flag{font-size:.9rem;line-height:1;}
 
 /* ── SECTION HEADER ── */
 .ea-sh{font-size:.8rem;font-weight:700;color:var(--text);display:flex;align-items:center;gap:12px;margin:2.5rem 0 1.1rem;text-transform:uppercase;letter-spacing:.1em;}
@@ -1147,9 +1239,25 @@ body{background:var(--bg);}
 }
 `;
 
+// ─── LANGUAGE SWITCHER ───────────────────────────────────────────────────────
+
+function LanguageSwitcher({ lang, setLang }) {
+  return (
+    <div className="ea-lang">
+      {LANGS.map(l => (
+        <button key={l.code} className={`ea-lang-btn${lang===l.code?' active':''}`} onClick={()=>setLang(l.code)}>
+          <span className="ea-lang-flag">{l.flag}</span>
+          <span>{l.label}</span>
+        </button>
+      ))}
+    </div>
+  );
+}
+
 // ─── SAP UNIVERSE ────────────────────────────────────────────────────────────
 
-function SAPUniverse() {
+function SAPUniverse({ lang }) {
+  const t = getT(lang);
   const [tab, setTab]    = useState('map');
   const [step, setStep]  = useState(null);
   const [mod, setMod]    = useState(null);
@@ -1169,15 +1277,15 @@ function SAPUniverse() {
   const MB={Vertrieb:'#818cf815',Einkauf:'#fbbf2415',Lager:'#34d39915',Finanzen:'#f8717115',Service:'#c084fc15',Intercompany:'#2dd4bf15'};
   const filt = uf==='all'?SAP_UAT:uf==='pass'?SAP_UAT.filter(t=>st[t.id]==='pass'):uf==='fail'?SAP_UAT.filter(t=>st[t.id]==='fail'):uf==='open'?SAP_UAT.filter(t=>st[t.id]==='open'):SAP_UAT.filter(t=>t.mod===uf);
 
-  const TABS=[{id:'map',l:'Prozesslandschaft'},{id:'modules',l:'SAP Module'},{id:'mdr',l:'MDR-Compliance'},{id:'roles',l:'Rollen & Rechte'},{id:'timeline',l:'Zeitplan'},{id:'uat',l:'UAT Tracker'}];
+  const TABS=[{id:'map',l:t('sapNavTabs')[0]},{id:'modules',l:t('sapNavTabs')[1]},{id:'mdr',l:t('sapNavTabs')[2]},{id:'roles',l:t('sapNavTabs')[3]},{id:'timeline',l:t('sapNavTabs')[4]},{id:'uat',l:t('sapNavTabs')[5]}];
 
   return (
     <div className="sap-section">
       <div className="sap-hd">
         <div className="sap-hd-inner">
-          <div className="sap-eyebrow">SAP Business One Cloud · EMIG GmbH Deutschland</div>
-          <h2 className="sap-hd-title">SAP <span>Universum</span></h2>
-          <p className="sap-hd-sub">Interaktive Prozesslandschaft, Module und UAT-Tracker für die vollständige SAP B1 Cloud Implementierung der EMIG GmbH.</p>
+          <div className="sap-eyebrow">{t('sapEyebrow')}</div>
+          <h2 className="sap-hd-title">SAP <span>{t('sapTitleHighlight')}</span></h2>
+          <p className="sap-hd-sub">{t('sapSubtitle')}</p>
           <div className="sap-hd-pills">
             <span className="sap-pill">Go-Live Nov 2026</span>
             <span className="sap-pill">MDR 2017/745</span>
@@ -1197,8 +1305,8 @@ function SAPUniverse() {
       <div className="sap-content">
         {tab==='map' && (
           <div className="sap-anim">
-            <div className="sap-sh">Vollständige Prozesslandschaft <div className="sap-sh-rule"/></div>
-            <p className="sap-ss">Klicken Sie auf eine Phase für Details — Phase 0 bis 9, vom ersten Kundenkontakt bis zur proaktiven Retention.</p>
+            <div className="sap-sh">{t('sapMapTitle')} <div className="sap-sh-rule"/></div>
+            <p className="sap-ss">{t('sapMapSub')}</p>
             <div className="sap-flow">
               {SAP_PROC.map((s,i)=>(
                 <React.Fragment key={s.id}>
@@ -1256,8 +1364,8 @@ function SAPUniverse() {
         )}
         {tab==='modules' && (
           <div className="sap-anim">
-            <div className="sap-sh">SAP Module & Kernfunktionen <div className="sap-sh-rule"/></div>
-            <p className="sap-ss">Alle {SAP_MODS.length} Kernmodule — Header klicken für die ausführliche Beschreibung.</p>
+            <div className="sap-sh">{t('sapModTitle')} <div className="sap-sh-rule"/></div>
+            <p className="sap-ss">{t('sapModSub',SAP_MODS.length)}</p>
             <div className="sap-mgrid">
               {SAP_MODS.map(m=>(
                 <div key={m.id} className="sap-mc">
@@ -1286,8 +1394,8 @@ function SAPUniverse() {
         )}
         {tab==='mdr' && (
           <div className="sap-anim">
-            <div className="sap-sh">MDR-Compliance Kette <div className="sap-sh-rule"/></div>
-            <p className="sap-ss">EU Medical Device Regulation 2017/745 — in jeden SAP-Prozessschritt integriert.</p>
+            <div className="sap-sh">{t('sapMdrTitle')} <div className="sap-sh-rule"/></div>
+            <p className="sap-ss">{t('sapMdrSub')}</p>
             <div className="sap-mdr-chain">
               {[
                 {e:'📦',t:'Wareneingang',s:'UDI-Scan\nCE/DoC-Prüfung\nCharge + MHD'},
@@ -1309,8 +1417,8 @@ function SAPUniverse() {
               ))}
             </div>
             <div style={{marginTop:'2.5rem'}}>
-              <div className="sap-sh" style={{fontSize:'1.5rem',marginBottom:'.4rem'}}>Eskalations-Workflow <div className="sap-sh-rule"/></div>
-              <p className="sap-ss">3 Stufen mit verbindlichen SLA-Fristen</p>
+              <div className="sap-sh" style={{fontSize:'1.5rem',marginBottom:'.4rem'}}>{t('sapEscTitle')} <div className="sap-sh-rule"/></div>
+              <p className="sap-ss">{t('sapEscSub')}</p>
               {[
                 {s:'1',e:'🔍',t:'Interne Diagnose',sla:'4 Stunden',trig:'Eingang Servicemeldung',c:'#34d399',acts:['Geräteakte (Equipment Card) geladen','Knowledge Base durchsucht','Interne Lösung angewendet','Falls keine Lösung: Eskalation Stufe 2']},
                 {s:'2',e:'📡',t:'Herstellermeldung',sla:'24 Stunden',trig:'Keine interne Lösung oder sicherheitsrelevant',c:'#fbbf24',acts:['Auto: Seriennummer + Fehlerprotokoll','Fotos/Anhänge am Serviceabruf','Status: Eskaliert — Hersteller informiert','SLA-Uhr für Herstellerantwort gestartet']},
@@ -1340,8 +1448,8 @@ function SAPUniverse() {
         )}
         {tab==='roles' && (
           <div className="sap-anim">
-            <div className="sap-sh">Rollen & Berechtigungen <div className="sap-sh-rule"/></div>
-            <p className="sap-ss">Rollenbasiertes Konzept nach DSGVO & GoBD — Prinzip der minimalen Privilegien (Kap. 4.4)</p>
+            <div className="sap-sh">{t('sapRolesTitle')} <div className="sap-sh-rule"/></div>
+            <p className="sap-ss">{t('sapRolesSub')}</p>
             <div className="sap-rgrid">
               {[
                 {i:'👔',t:'Geschäftsführung',c:'#e2e8f0',m:'Vollzugriff + 4-Augen-Freigabe',b:'GF'},
@@ -1360,8 +1468,8 @@ function SAPUniverse() {
               ))}
             </div>
             <div style={{marginTop:'2.5rem'}}>
-              <div className="sap-sh" style={{fontSize:'1.5rem',marginBottom:'.4rem'}}>Segregation of Duties <div className="sap-sh-rule"/></div>
-              <p className="sap-ss">Kritische Funktionskombinationen — systemseitig gesperrt (Kap. 4.4.3)</p>
+              <div className="sap-sh" style={{fontSize:'1.5rem',marginBottom:'.4rem'}}>{t('sapSodTitle')} <div className="sap-sh-rule"/></div>
+              <p className="sap-ss">{t('sapSodSub')}</p>
               <div className="sap-sod-grid">
                 {[
                   {a:'Angebot erstellen + Kundenauftrag freigeben',risk:'Falschbuchung ohne Kontrolle',ctrl:'4-Augen: GF-Freigabe zwingend'},
@@ -1908,6 +2016,193 @@ function InomedDetail({ onBack }) {
   );
 }
 
+// ─── MEYER-HAAKE DETAIL ──────────────────────────────────────────────────────
+
+function MhMap({ loc }) {
+  const mapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${loc.lng - 0.08}%2C${loc.lat - 0.05}%2C${loc.lng + 0.08}%2C${loc.lat + 0.05}&layer=mapnik&marker=${loc.lat}%2C${loc.lng}`;
+  return (
+    <div style={{background:'var(--card)',border:'1px solid var(--card-border)',borderRadius:16,overflow:'hidden',boxShadow:'0 1px 4px rgba(0,0,0,.05)',display:'flex',flexDirection:'column'}}>
+      <div style={{fontSize:'.62rem',fontWeight:700,color:'var(--text-faint)',textTransform:'uppercase',letterSpacing:'.14em',padding:'1.25rem 1.5rem .75rem',display:'flex',alignItems:'center',gap:8}}>
+        <span>Standort</span><div style={{flex:1,height:1,background:'var(--section-border)'}}/>
+      </div>
+      <div style={{flex:1,minHeight:160,overflow:'hidden'}}>
+        <iframe src={mapUrl} title="Meyer-Haake Standort Wehrheim" style={{width:'100%',height:185,border:'none',display:'block',filter:'grayscale(20%) contrast(1.05)'}} allowFullScreen={false} loading="lazy" referrerPolicy="no-referrer-when-downgrade"/>
+      </div>
+      <div style={{padding:'1rem 1.25rem',borderTop:'1px solid var(--section-border)'}}>
+        <div style={{display:'flex',alignItems:'flex-start',gap:9}}>
+          <span style={{fontSize:'1.1rem',flexShrink:0,marginTop:1}}>📍</span>
+          <div>
+            <div style={{fontSize:'.88rem',fontWeight:700,color:'var(--text)',lineHeight:1.2}}>{loc.city}</div>
+            <div style={{fontSize:'.72rem',color:'var(--text-faint)',marginTop:2}}>{loc.country}</div>
+            <div style={{display:'inline-flex',alignItems:'center',gap:5,marginTop:8,padding:'3px 10px',borderRadius:99,background:'var(--mh-orange-dim)',border:'1px solid rgba(230,81,0,.25)',fontSize:'.62rem',fontWeight:700,color:'#ff6d00',textTransform:'uppercase',letterSpacing:'.1em'}}>
+              <span>●</span> Made in Germany
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MhProdCard({ p, idx }) {
+  const [imgErr, setImgErr] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const imgSrc = useBaseUrl(p.image);
+  return (
+    <Link to={p.link}
+      style={{background:'var(--card)',border:`1px solid ${hovered?'rgba(230,81,0,.2)':'var(--card-border)'}`,borderRadius:20,overflow:'hidden',display:'flex',flexDirection:'column',boxShadow:hovered?'0 20px 48px rgba(0,0,0,.13),0 0 0 1.5px rgba(230,81,0,.25)':'0 2px 8px rgba(0,0,0,.06)',transform:hovered?'translateY(-6px)':'none',transition:'transform .3s cubic-bezier(.2,.8,.3,1),box-shadow .3s ease,border-color .2s',textDecoration:'none',color:'inherit',position:'relative'}}
+      onMouseEnter={()=>setHovered(true)} onMouseLeave={()=>setHovered(false)}>
+      <div style={{position:'absolute',top:0,left:0,right:0,height:3,background:'#e65100',zIndex:1}}/>
+      <div style={{position:'relative',height:200,overflow:'hidden',flexShrink:0}}>
+        {!imgErr ? (
+          <img src={imgSrc} alt={p.title} onError={()=>setImgErr(true)} style={{width:'100%',height:'100%',objectFit:'cover',display:'block',transform:hovered?'scale(1.06)':'scale(1)',transition:'transform .5s ease'}}/>
+        ) : (
+          <div style={{width:'100%',height:'100%',background:`linear-gradient(135deg,${p.imagePlaceholderColor} 0%,rgba(0,0,0,.8) 100%)`,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',gap:10,position:'relative',overflow:'hidden'}}>
+            <div style={{position:'absolute',inset:0,opacity:.06,backgroundImage:'linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px)',backgroundSize:'32px 32px'}}/>
+            <span style={{fontSize:'2.8rem',position:'relative',zIndex:1}}>🔩</span>
+            <span style={{fontFamily:'DM Mono,monospace',fontSize:'.68rem',color:'rgba(255,255,255,.3)',letterSpacing:'.12em',position:'relative',zIndex:1,textTransform:'uppercase'}}>{p.code}</span>
+            <div style={{position:'absolute',bottom:0,left:0,right:0,background:'linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 100%)',padding:'2rem 1.25rem .8rem',fontFamily:'Bebas Neue,sans-serif',fontSize:'1.4rem',color:'rgba(255,255,255,.18)',letterSpacing:'.1em',lineHeight:1}}>{p.title}</div>
+          </div>
+        )}
+        <span style={{position:'absolute',top:'1rem',left:'1rem',zIndex:2,padding:'4px 12px',borderRadius:99,fontSize:'.62rem',fontWeight:800,textTransform:'uppercase',letterSpacing:'.1em',color:'#fff',background:p.badgeColor+'cc',backdropFilter:'blur(8px)',boxShadow:'0 2px 10px rgba(0,0,0,.3)'}}>{p.badge}</span>
+        <span style={{position:'absolute',top:'1rem',right:'1rem',zIndex:2,width:32,height:32,borderRadius:8,background:'rgba(0,0,0,.45)',backdropFilter:'blur(8px)',border:'1px solid rgba(255,255,255,.15)',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:'DM Mono,monospace',fontSize:'.72rem',fontWeight:700,color:'rgba(255,255,255,.6)'}}>0{idx+1}</span>
+      </div>
+      <div style={{padding:'1.5rem',flex:1,display:'flex',flexDirection:'column'}}>
+        <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:'.6rem'}}>
+          <span style={{fontFamily:'DM Mono,monospace',fontSize:'.62rem',color:'var(--text-faint)',background:'var(--bg2)',border:'1px solid var(--section-border)',padding:'2px 8px',borderRadius:4}}>{p.code}</span>
+          <span style={{fontSize:'.68rem',color:'#ff6d00',fontWeight:600,textTransform:'uppercase',letterSpacing:'.08em'}}>{p.tagline}</span>
+        </div>
+        <div style={{fontSize:'1.2rem',fontWeight:800,color:'var(--text)',marginBottom:'.5rem',lineHeight:1.2}}>{p.title}</div>
+        <div style={{fontSize:'.8rem',color:'var(--text-dim)',lineHeight:1.65,marginBottom:'1.2rem'}}>{p.desc}</div>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:7,marginBottom:'1.2rem'}}>
+          {p.specs.map((s,i)=>(
+            <div key={i} style={{background:'var(--bg2)',borderRadius:9,padding:'8px 10px',display:'flex',alignItems:'flex-start',gap:7,border:'1px solid var(--section-border)'}}>
+              <span style={{fontSize:'.9rem',flexShrink:0,marginTop:1}}>{s.icon}</span>
+              <div>
+                <div style={{fontSize:'.58rem',color:'var(--text-faint)',textTransform:'uppercase',letterSpacing:'.09em',fontWeight:600}}>{s.label}</div>
+                <div style={{fontSize:'.74rem',color:'var(--text)',fontWeight:700,lineHeight:1.25}}>{s.value}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div style={{display:'flex',flexDirection:'column',gap:5,marginBottom:'1.25rem'}}>
+          {p.highlights.map((h,i)=>(
+            <div key={i} style={{display:'flex',alignItems:'flex-start',gap:8,fontSize:'.76rem',color:'var(--text-dim)',lineHeight:1.45}}>
+              <span style={{color:'#e65100',fontWeight:700,flexShrink:0,fontSize:'.9rem',marginTop:-1}}>›</span>{h}
+            </div>
+          ))}
+        </div>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'11px 16px',borderRadius:11,marginTop:'auto',background:hovered?'#e65100':'var(--mh-orange-dim)',border:'1px solid rgba(230,81,0,.25)',fontFamily:'Outfit,sans-serif',fontWeight:700,fontSize:'.82rem',color:hovered?'#fff':'#ff6d00',transition:'all .2s'}}>
+          <span>Modul öffnen</span><span style={{transform:hovered?'translateX(4px)':'none',transition:'transform .2s'}}>→</span>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+function MeyerHaakeDetail({ onBack }) {
+  const m = MFRS.find(x => x.id === 'meyer');
+  const [logoErr, setLogoErr] = useState(false);
+  const logoSrc = useBaseUrl(m.logo);
+  const cardStyle = {background:'var(--card)',border:'1px solid var(--card-border)',borderRadius:16,padding:'1.5rem',boxShadow:'0 1px 4px rgba(0,0,0,.05)'};
+  const labelStyle = {fontSize:'.62rem',fontWeight:700,color:'var(--text-faint)',textTransform:'uppercase',letterSpacing:'.14em',marginBottom:'1rem',display:'flex',alignItems:'center',gap:8};
+  return (
+    <div>
+      <button style={{display:'inline-flex',alignItems:'center',gap:9,padding:'10px 20px',borderRadius:11,border:'1px solid var(--section-border)',background:'var(--card)',fontFamily:'Outfit,sans-serif',fontWeight:600,fontSize:'.84rem',cursor:'pointer',marginBottom:'2rem',color:'var(--text)',boxShadow:'0 1px 3px rgba(0,0,0,.05)'}}
+        onClick={onBack}>← Alle Hersteller
+      </button>
+
+      {/* HERO */}
+      <div style={{position:'relative',overflow:'hidden',borderRadius:22,minHeight:320,display:'flex',alignItems:'flex-end',marginBottom:'1.75rem',boxShadow:'0 12px 48px rgba(0,0,0,.2),0 0 0 1px rgba(230,81,0,.15)'}}>
+        <div style={{position:'absolute',inset:0,zIndex:0,background:'linear-gradient(160deg,#0e0400 0%,#1c0900 35%,#271200 60%,#1c0900 100%)'}}/>
+        <div style={{position:'absolute',inset:0,zIndex:1,opacity:.06,backgroundImage:'linear-gradient(rgba(230,81,0,.6) 1px,transparent 1px),linear-gradient(90deg,rgba(230,81,0,.6) 1px,transparent 1px)',backgroundSize:'48px 48px'}}/>
+        <div style={{position:'absolute',top:-100,right:-100,width:400,height:400,borderRadius:'50%',background:'radial-gradient(circle,rgba(230,81,0,.08) 0%,transparent 70%)',zIndex:1,pointerEvents:'none'}}/>
+        <div style={{position:'absolute',inset:0,zIndex:2,background:'linear-gradient(to top,rgba(0,0,0,.9) 0%,rgba(0,0,0,.45) 50%,rgba(0,0,0,.05) 100%),linear-gradient(100deg,rgba(230,81,0,.1) 0%,transparent 60%)'}}/>
+        <div style={{position:'absolute',top:'1.5rem',right:'1.5rem',zIndex:4,display:'flex',gap:8,flexWrap:'wrap',justifyContent:'flex-end'}}>
+          {[{n:'1981',l:'Gegründet'},{n:'MiG',l:'Produktion'},{n:'50+',l:'Länder'}].map((s,i)=>(
+            <div key={i} style={{background:'rgba(0,0,0,.35)',border:'1px solid rgba(230,81,0,.3)',backdropFilter:'blur(10px)',borderRadius:99,padding:'5px 13px',display:'flex',alignItems:'center',gap:6}}>
+              <span style={{fontFamily:'Bebas Neue,sans-serif',fontSize:'1.1rem',color:'#ff6d00',lineHeight:1}}>{s.n}</span>
+              <span style={{fontSize:'.58rem',color:'rgba(255,255,255,.4)',textTransform:'uppercase',letterSpacing:'.1em',fontWeight:600}}>{s.l}</span>
+            </div>
+          ))}
+        </div>
+        <div style={{position:'relative',zIndex:3,padding:'2.5rem 3rem',width:'100%',display:'flex',alignItems:'flex-end',gap:'2.5rem',flexWrap:'wrap'}}>
+          <div style={{width:200,height:80,background:'#fff',borderRadius:14,display:'flex',alignItems:'center',justifyContent:'center',padding:'14px 22px',flexShrink:0,boxShadow:'0 4px 24px rgba(0,0,0,.4),0 0 0 1px rgba(230,81,0,.2)'}}>
+            {!logoErr
+              ? <img src={logoSrc} alt={m.name} style={{maxWidth:'100%',maxHeight:'100%',objectFit:'contain',mixBlendMode:'multiply'}} onError={()=>setLogoErr(true)}/>
+              : <span style={{fontFamily:'Bebas Neue,sans-serif',fontSize:'1rem',color:'#e65100',fontWeight:700}}>{m.name}</span>}
+          </div>
+          <div style={{flex:1,minWidth:0}}>
+            <div style={{fontSize:'.6rem',letterSpacing:'.22em',textTransform:'uppercase',color:'#ff6d00',fontWeight:700,marginBottom:'.5rem',display:'flex',alignItems:'center',gap:8}}>
+              <span style={{display:'block',width:24,height:1,background:'#ff6d00'}}/>Medizinprodukt · Radiochirurgie & Wundversorgung
+            </div>
+            <div style={{fontFamily:'Bebas Neue,sans-serif',fontSize:'clamp(2.2rem,5vw,3.8rem)',color:'#fff',letterSpacing:'.06em',lineHeight:.95,marginBottom:'.5rem'}}>{m.name}</div>
+            <div style={{fontSize:'.82rem',color:'rgba(255,255,255,.55)',fontWeight:300,letterSpacing:'.1em',textTransform:'uppercase',marginBottom:'1.2rem'}}>{m.tagline}</div>
+            <div style={{display:'flex',gap:10,flexWrap:'wrap',alignItems:'center'}}>
+              <a href={m.website} target="_blank" rel="noopener noreferrer"
+                style={{display:'inline-flex',alignItems:'center',gap:8,padding:'10px 20px',borderRadius:10,background:'#e65100',color:'#fff',fontFamily:'Outfit,sans-serif',fontWeight:700,fontSize:'.82rem',textDecoration:'none',boxShadow:'0 4px 16px rgba(230,81,0,.4)'}}>
+                🌐 meyer-haake.com ↗
+              </a>
+              <span style={{display:'inline-flex',alignItems:'center',gap:8,padding:'9px 18px',borderRadius:10,background:'rgba(255,255,255,.08)',color:'rgba(255,255,255,.7)',border:'1px solid rgba(255,255,255,.15)',fontFamily:'Outfit,sans-serif',fontWeight:600,fontSize:'.82rem',backdropFilter:'blur(8px)'}}>
+                📍 {m.location.city}, DE
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* INFO GRID */}
+      <div style={{display:'grid',gridTemplateColumns:'260px 1fr 280px',gap:14,marginBottom:'1.75rem'}}>
+        <div style={cardStyle}>
+          <div style={labelStyle}><span>Unternehmensdaten</span><div style={{flex:1,height:1,background:'var(--section-border)'}}/></div>
+          <div style={{display:'flex',flexDirection:'column',gap:7}}>
+            {m.facts.map((f,i)=>(
+              <div key={i} style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'7px 10px',background:'var(--bg2)',borderRadius:9}}>
+                <span style={{fontSize:'.72rem',color:'var(--text-dim)',fontWeight:500}}>{f.label}</span>
+                <span style={{fontSize:'.78rem',color:'var(--text)',fontWeight:700}}>{f.value}</span>
+              </div>
+            ))}
+          </div>
+          <a href={m.website} target="_blank" rel="noopener noreferrer"
+            style={{display:'flex',alignItems:'center',gap:10,marginTop:'1rem',padding:'10px 14px',borderRadius:10,background:'var(--mh-orange-dim)',border:'1px solid rgba(230,81,0,.3)',color:'#ff6d00',textDecoration:'none',fontFamily:'Outfit,sans-serif',fontWeight:600,fontSize:'.8rem'}}>
+            <span>🌐</span><span>www.meyer-haake.com</span><span style={{marginLeft:'auto'}}>↗</span>
+          </a>
+        </div>
+        <div style={cardStyle}>
+          <div style={labelStyle}><span>Über Meyer-Haake</span><div style={{flex:1,height:1,background:'var(--section-border)'}}/></div>
+          <p style={{fontSize:'.86rem',color:'var(--text-dim)',lineHeight:1.75,margin:'0 0 1.25rem'}}>{m.description}</p>
+          <div style={labelStyle}><span>Schwerpunkte</span><div style={{flex:1,height:1,background:'var(--section-border)'}}/></div>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:8}}>
+            {m.focus.map((f,i)=>(
+              <div key={i} style={{display:'flex',alignItems:'center',gap:10,padding:'9px 12px',borderRadius:10,background:'var(--bg2)',border:'1px solid var(--section-border)'}}>
+                <div style={{width:32,height:32,borderRadius:8,flexShrink:0,background:'var(--mh-orange-dim)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'1rem'}}>{f.icon}</div>
+                <div>
+                  <div style={{fontSize:'.74rem',fontWeight:700,color:'var(--text)',lineHeight:1.2}}>{f.label}</div>
+                  <div style={{fontSize:'.64rem',color:'var(--text-faint)',marginTop:1}}>{f.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <MhMap loc={m.location}/>
+      </div>
+
+      {/* PRODUCTS HEADER */}
+      <div style={{display:'flex',alignItems:'center',gap:12,margin:'2.5rem 0 1.2rem',fontSize:'.75rem',fontWeight:700,textTransform:'uppercase',letterSpacing:'.14em',color:'var(--text)'}}>
+        <div style={{width:3,height:18,borderRadius:99,background:'#e65100',flexShrink:0}}/>
+        Produktmodule
+        <span style={{fontFamily:'DM Mono,monospace',fontSize:'.62rem',padding:'2px 9px',borderRadius:99,background:'var(--mh-orange-dim)',border:'1px solid rgba(230,81,0,.25)',color:'#ff6d00',letterSpacing:'.06em'}}>{m.products.length} Module</span>
+        <div style={{flex:1,height:1,background:'linear-gradient(90deg,var(--section-border),transparent)'}}/>
+      </div>
+      <div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:16,marginBottom:'2rem'}}>
+        {m.products.map((p,i)=>(
+          <MhProdCard key={p.code} p={p} idx={i}/>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const bgImg    = useBaseUrl('/img/emig-gebaeude.png');
   const videoRef = useRef(null);
@@ -2151,6 +2446,8 @@ export default function Home() {
                 <RIWOspineDetail onBack={() => setMfr(null)} />
               ) : mfr.id === 'inomed' ? (
                 <InomedDetail onBack={() => setMfr(null)} />
+              ) : mfr.id === 'meyer' ? (
+                <MeyerHaakeDetail onBack={() => setMfr(null)} />
               ) : (
                 <MfrDetail m={mfr} onBack={() => setMfr(null)} />
               )}
