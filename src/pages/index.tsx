@@ -3,7 +3,6 @@ import Link from '@docusaurus/Link';
 import Layout from '@theme/Layout';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import Head from '@docusaurus/Head';
-import { LANGS, T, getT } from './i18n';
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
