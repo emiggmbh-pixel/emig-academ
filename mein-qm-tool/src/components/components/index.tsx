@@ -1,7 +1,9 @@
 import React from 'react';
 import Link from '@docusaurus/Link';
-import Layout from '@theme/Layout';
+import LayoutBase from '@theme/Layout';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+
+const Layout = LayoutBase as React.ComponentType<{title?: string; description?: string; children: React.ReactNode}>;
 
 export default function Home() {
   const bgImageUrl = useBaseUrl('/img/emig-gebaeude.png');

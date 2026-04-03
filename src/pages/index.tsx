@@ -1238,25 +1238,32 @@ body{background:var(--bg);}
 }
 `;
 
-// ─── LANGUAGE SWITCHER ───────────────────────────────────────────────────────
-
-function LanguageSwitcher({ lang, setLang }) {
-  return (
-    <div className="ea-lang">
-      {LANGS.map(l => (
-        <button key={l.code} className={`ea-lang-btn${lang===l.code?' active':''}`} onClick={()=>setLang(l.code)}>
-          <span className="ea-lang-flag">{l.flag}</span>
-          <span>{l.label}</span>
-        </button>
-      ))}
-    </div>
-  );
-}
-
 // ─── SAP UNIVERSE ────────────────────────────────────────────────────────────
 
-function SAPUniverse({ lang }) {
-  const t = getT(lang);
+const SAP_DE: Record<string, any> = {
+  sapNavTabs: ['Prozesslandkarte', 'Module', 'MDR & Rückverfolgung', 'Rollen & SoD', 'Projektzeitplan', 'UAT Tracker'],
+  sapEyebrow: 'SAP Business One',
+  sapTitleHighlight: 'Business One',
+  sapSubtitle: 'Systemeinführung 2026 — Prozesse, Module und Rollen für EMIG & MiaMed',
+  sapMapTitle: 'SAP Prozesslandkarte',
+  sapMapSub: 'Alle SAP-Prozessschritte im Überblick — klicken zum Aufklappen',
+  sapModTitle: 'SAP Module',
+  sapModSub: (n: number) => `${n} Module im Überblick`,
+  sapMdrTitle: 'MDR-Rückverfolgung',
+  sapMdrSub: 'UDI-konformer Warenfluss von Eingang bis Rückruf',
+  sapEscTitle: 'Eskalationsmatrix',
+  sapEscSub: '3-stufiger Prozess von interner Diagnose bis BfArM-Meldung',
+  sapRolesTitle: 'Rollen & Berechtigungen',
+  sapRolesSub: 'Rollenkonzept SAP Business One — EMIG Medizintechnik',
+  sapSodTitle: 'Segregation of Duties',
+  sapSodSub: 'Unvereinbare Tätigkeiten — Vier-Augen-Prinzip im SAP-System',
+};
+
+function SAPUniverse() {
+  const t = (key: string, ...args: any[]): any => {
+    const val = SAP_DE[key];
+    return typeof val === 'function' ? val(...args) : val;
+  };
   const [tab, setTab]    = useState('map');
   const [step, setStep]  = useState(null);
   const [mod, setMod]    = useState(null);
@@ -1309,7 +1316,7 @@ function SAPUniverse({ lang }) {
             <div className="sap-flow">
               {SAP_PROC.map((s,i)=>(
                 <React.Fragment key={s.id}>
-                  <div className={`sap-fc ${step===s.id?'on':''}`} style={{'--fc-col':s.col}} onClick={()=>setStep(step===s.id?null:s.id)}>
+                  <div className={`sap-fc ${step===s.id?'on':''}`} style={{'--fc-col':s.col} as React.CSSProperties} onClick={()=>setStep(step===s.id?null:s.id)}>
                     <span className="sap-fc-em">{s.em}</span>
                     <span className="sap-fc-lbl">{s.title}</span>
                   </div>
@@ -1341,7 +1348,7 @@ function SAPUniverse({ lang }) {
             })()}
             <div className="sap-pgrid">
               {SAP_PROC.map(s=>(
-                <div key={s.id} className={`sap-pcard ${step===s.id?'on':''}`} style={{'--pc':s.col}} onClick={()=>setStep(step===s.id?null:s.id)}>
+                <div key={s.id} className={`sap-pcard ${step===s.id?'on':''}`} style={{'--pc':s.col} as React.CSSProperties} onClick={()=>setStep(step===s.id?null:s.id)}>
                   <div className="sap-pcard-bar" style={{background:s.col}}/>
                   <div className="sap-pcard-top">
                     <span className="sap-pcard-em">{s.em}</span>
@@ -1582,7 +1589,7 @@ function MfrBanner({m, onClick}) {
   const logo = useBaseUrl(m.logo);
   const hasProducts = m.products && m.products.length > 0;
   return (
-    <div className="med-banner" style={{'--accent-glow': m.accent + '22'}} onClick={onClick}>
+    <div className="med-banner" style={{'--accent-glow': m.accent + '22'} as React.CSSProperties} onClick={onClick}>
       <div className="med-banner-bg" style={{background: m.bg}} />
       <div className="med-banner-overlay" />
       <div className="med-banner-accent" style={{background: m.accent}} />
@@ -2427,7 +2434,7 @@ export default function Home() {
           )}
 
           {/* SAP TAB */}
-          {tab==='SAP' && <div className={`tab-enter-${tabDir}`} key="sap"><SAPUniverse/></div>}
+          {tab==='SAP' && <div className={`tab-enter-${tabDir}`} key="sap"><SAPUniverse /></div>}
 
           {/* MED TAB */}
           {tab==='MED' && (
