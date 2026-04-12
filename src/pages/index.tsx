@@ -294,7 +294,7 @@ const MFRS = [
         code: 'MH-01',
         link: '/docs/medizinprodukte/meyer-haake/radiosurg',
         tagline: 'Radiochirurgiegerät',
-        image: '/img/meyer-radiosurg.jpg',
+        image: '/img/medizinprodukte/meyer-haake/MH-01.png',
         imagePlaceholderColor: '#1a0800',
         desc: 'Das radioSURG® 2200 ist ein Hochfrequenz-Radiochirurgiegerät für drucklose, kalte Schnitte ohne Verfärbungen oder Nekrosen. Einsetzbar in allen chirurgischen Fachrichtungen — von der Hautchirurgie bis zur HNO.',
         specs: [
@@ -312,7 +312,7 @@ const MFRS = [
         code: 'MH-02',
         link: '/docs/medizinprodukte/meyer-haake/epiglu',
         tagline: 'Gewebekleber — Kleben statt Nähen',
-        image: '/img/meyer-epiglu.jpg',
+        image: '/img/medizinprodukte/meyer-haake/MH-02.jpg',
         imagePlaceholderColor: '#1a1000',
         desc: 'EPIGLU® ist ein Ethyl-2-Cyanoacrylat-Gewebekleber der ersten Stunde — sicher, schnell und wirtschaftlicher als Nadel und Faden. Zugelassen für Medical, Dental und Veterinär in über 50 Ländern.',
         specs: [
@@ -330,7 +330,7 @@ const MFRS = [
         code: 'MH-03',
         link: '/docs/medizinprodukte/meyer-haake/smokestar',
         tagline: 'Chirurgische Rauchgasabsaugung',
-        image: '/img/meyer-smokestar.jpg',
+        image: '/img/medizinprodukte/meyer-haake/MH-03.png',
         imagePlaceholderColor: '#0f0f0f',
         desc: 'smokeSTAR ist eine professionelle Rauchgasabsaugung für alle HF-, RF-, Ultraschall- und Laserchirurgischen Eingriffe. Schützt Chirurgen und OP-Team vor toxischen Reaktionen und Viren im chirurgischen Rauch.',
         specs: [
@@ -348,7 +348,7 @@ const MFRS = [
         code: 'MH-04',
         link: '/docs/medizinprodukte/meyer-haake/elektroden',
         tagline: 'Zubehör & Elektroden für radioSURG®',
-        image: '/img/meyer-elektroden.jpg',
+        image: '/img/medizinprodukte/meyer-haake/MH-04.webp',
         imagePlaceholderColor: '#1a0a00',
         desc: 'Umfangreiches Elektroden-Portfolio für alle Anwendungsfälle des radioSURG® 2200. Inklusive BIO-CONE für Konusbiopsien, Bipolarpinzetten, neue Elektroden für Blepharoplastiken (EELDRA91) und autoklavierbares Mehrwegzubehör.',
         specs: [
@@ -466,81 +466,100 @@ const SAP_TL = [
 // ─── CSS ────────────────────────────────────────────────────────────────────
 
 const CSS = `
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700;800&family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700;800;900&family=Bebas+Neue&display=swap');
 
 :root{
-  --gold:#c8983a;--gold-lt:#e0aa4a;--gold-dim:#c8983a80;
-  --cream:#f5f3ee;
+  --gold:#d4a340;--gold-lt:#f0be55;--gold-dim:rgba(212,163,64,.75);
+  --cream:#f6f4ef;
   --card:#ffffff;
-  --card-border:rgba(0,0,0,.07);
-  --text:#18181f;
-  --text-dim:#6b7280;
-  --text-faint:#9ca3af;
-  --bg:#f5f3ee;
-  --bg2:#eeebe4;
-  --section-bg:#f0ede6;
-  --section-border:#e5e0d8;
-  --prog-bg:#1a1714;
-  --prog-border:rgba(200,160,80,.18);
-  --r:14px;
-  --sap-bg:#edeae2;
-  --sap-card:#e6e2d8;
-  --sap-card2:#dedad0;
-  --sap-border:rgba(0,0,0,.09);
-  --sap-text:#1a1814;
-  --sap-text-dim:#5a5548;
-  --sap-text-faint:#8a8070;
-  --sap-hd-bg:linear-gradient(160deg,#e8e4dc 0%,#dedad0 50%,#e8e4dc 100%);
-  --sap-nav-bg:#dedad0;
-  --sap-nav-border:rgba(0,0,0,.08);
-  --sap-input:#e0dcd2;
-  /* RIWO tokens */
-  --riwo-red:#c0392b;
-  --riwo-red-lt:#e84c3d;
-  --riwo-red-dim:rgba(192,57,43,.15);
-  /* INOMED tokens */
-  --ino-blue:#1565c0;
-  --ino-blue-lt:#1e88e5;
-  --ino-blue-dim:rgba(21,101,192,.15);
-  /* MEYER-HAAKE tokens */
-  --mh-orange:#e65100;
-  --mh-orange-lt:#ff6d00;
-  --mh-orange-dim:rgba(230,81,0,.15);
+  --card-border:rgba(0,0,0,.08);
+  --text:#111118;
+  --text-dim:#52596b;
+  --text-faint:#8c94a4;
+  --bg:#f1eeea;
+  --bg2:#e8e4de;
+  --section-bg:#edeae4;
+  --section-border:#ddd9d0;
+  --prog-bg:#0e0d12;
+  --prog-border:rgba(212,163,64,.22);
+  --r:18px;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.08),0 0 0 1px rgba(0,0,0,.04);
+  --shadow-md:0 4px 16px rgba(0,0,0,.1),0 1px 4px rgba(0,0,0,.06);
+  --shadow-lg:0 16px 48px rgba(0,0,0,.14),0 4px 12px rgba(0,0,0,.08);
+  --shadow-xl:0 32px 80px rgba(0,0,0,.18),0 8px 24px rgba(0,0,0,.1);
+  --sap-bg:#edebe5;
+  --sap-card:#e5e2da;
+  --sap-card2:#dbd8ce;
+  --sap-border:rgba(0,0,0,.08);
+  --sap-text:#141218;
+  --sap-text-dim:#524e48;
+  --sap-text-faint:#867f75;
+  --sap-hd-bg:linear-gradient(160deg,#e8e5dd 0%,#dedad2 50%,#e8e5dd 100%);
+  --sap-nav-bg:#dedad2;
+  --sap-nav-border:rgba(0,0,0,.07);
+  --sap-input:#dedad2;
+  --riwo-red:#c0392b;--riwo-red-lt:#e84c3d;--riwo-red-dim:rgba(192,57,43,.14);
+  --ino-blue:#1565c0;--ino-blue-lt:#1e88e5;--ino-blue-dim:rgba(21,101,192,.14);
+  --mh-orange:#e65100;--mh-orange-lt:#ff6d00;--mh-orange-dim:rgba(230,81,0,.14);
 }
 [data-theme="dark"]{
-  --cream:#0f0e0c;--card:#1c1a16;--card-border:rgba(255,255,255,.07);
-  --text:#e8e4dc;--text-dim:#a09880;--text-faint:#6b6358;
-  --bg:#0f0e0c;--bg2:#191714;--section-bg:#131109;--section-border:rgba(255,255,255,.06);
-  --prog-bg:#1a1714;--prog-border:rgba(200,160,80,.15);
-  --sap-bg:#111009;--sap-card:#1c1a14;--sap-card2:#23201a;
-  --sap-border:rgba(255,255,255,.07);--sap-text:#e8e4dc;--sap-text-dim:#a09880;--sap-text-faint:#6b6358;
-  --sap-hd-bg:linear-gradient(160deg,#0d0c09 0%,#131109 50%,#0d0c09 100%);
-  --sap-nav-bg:#0d0c09;--sap-nav-border:rgba(255,255,255,.06);--sap-input:#191714;
-  --riwo-red-dim:rgba(192,57,43,.22);
-  --ino-blue-dim:rgba(21,101,192,.22);
-  --mh-orange-dim:rgba(230,81,0,.22);
+  --cream:#07060c;
+  --card:rgba(20,18,28,.97);
+  --card-border:rgba(255,255,255,.065);
+  --text:#ede9f7;
+  --text-dim:#7e7890;
+  --text-faint:#4a4555;
+  --bg:#07060c;
+  --bg2:#0d0c14;
+  --section-bg:#0b0a11;
+  --section-border:rgba(255,255,255,.055);
+  --prog-bg:#0d0c14;
+  --prog-border:rgba(212,163,64,.18);
+  --shadow-sm:0 1px 4px rgba(0,0,0,.4),0 0 0 1px rgba(255,255,255,.04);
+  --shadow-md:0 4px 20px rgba(0,0,0,.5),0 1px 6px rgba(0,0,0,.3);
+  --shadow-lg:0 16px 56px rgba(0,0,0,.6),0 4px 16px rgba(0,0,0,.4);
+  --shadow-xl:0 32px 96px rgba(0,0,0,.7),0 8px 32px rgba(0,0,0,.5);
+  --sap-bg:#0a0910;--sap-card:#131120;--sap-card2:#1a1826;
+  --sap-border:rgba(255,255,255,.07);--sap-text:#ede9f7;--sap-text-dim:#8a8498;--sap-text-faint:#504a5e;
+  --sap-hd-bg:linear-gradient(160deg,#0a0910 0%,#0e0d16 50%,#0a0910 100%);
+  --sap-nav-bg:#090810;--sap-nav-border:rgba(255,255,255,.06);--sap-input:#111020;
+  --riwo-red-dim:rgba(192,57,43,.25);
+  --ino-blue-dim:rgba(21,101,192,.25);
+  --mh-orange-dim:rgba(230,81,0,.25);
 }
 
 *,*::before,*::after{box-sizing:border-box;}
+html{font-size:17px;}
 body{background:var(--bg);}
-.ea{font-family:'Outfit',sans-serif;color:var(--text);}
+.ea{font-family:'Outfit',sans-serif;color:var(--text);font-size:1rem;line-height:1.6;}
 
 /* ── HERO ── */
-.ea-hero{position:relative;width:100vw;margin-left:calc(-50vw + 50%);min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:#0a0a0c;}
+.ea-hero{position:relative;width:100vw;margin-left:calc(-50vw + 50%);min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:#05040a;}
 .ea-hero-media{position:absolute;inset:0;z-index:0;}
-.ea-hero-video{width:100%;height:100%;object-fit:cover;display:block;}
-.ea-vignette{position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(6,6,8,.94) 0%,rgba(6,6,8,.6) 30%,rgba(6,6,8,.22) 60%,transparent 100%),linear-gradient(100deg,rgba(6,6,8,.5) 0%,transparent 55%);}
+.ea-hero-video{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(1.1) contrast(1.05);}
+.ea-vignette{position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(5,4,10,.97) 0%,rgba(5,4,10,.72) 30%,rgba(5,4,10,.28) 65%,transparent 100%),linear-gradient(105deg,rgba(5,4,10,.65) 0%,transparent 55%);}
 .ea-grain{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.028;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='280' height='280' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px;}
 .ea-frame-t,.ea-frame-b{position:absolute;left:0;right:0;height:1px;z-index:3;background:linear-gradient(90deg,transparent,rgba(200,169,110,.3),transparent);}
 .ea-frame-t{top:0;}.ea-frame-b{bottom:0;}
 .ea-hero-inner{position:relative;z-index:4;padding:0 5% 8vh;width:100%;max-width:1600px;margin:0 auto;}
-.ea-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:1.4rem;}
-.ea-eyebrow::before{content:'';display:block;width:36px;height:1px;background:#c8a96e;opacity:.7;}
-.ea-eyebrow span{font-size:.67rem;font-weight:600;letter-spacing:.26em;text-transform:uppercase;color:#c8a96e;}
+/* ── HERO TITLE ── */
+@keyframes title-shimmer{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@keyframes eyebrow-glow{
+  0%,100%{opacity:.7}
+  50%{opacity:1}
+}
+.ea-eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:1.6rem;}
+.ea-eyebrow::before{content:'';display:block;width:40px;height:1px;background:linear-gradient(90deg,transparent,#c8a96e);opacity:.8;}
+.ea-eyebrow span{font-size:.65rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:rgba(200,169,110,.75);animation:eyebrow-glow 4s ease-in-out infinite;}
 .ea-h1{margin:0;line-height:1;}
-.ea-h1-top{display:block;font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,3.5vw,3.2rem);color:rgba(255,255,255,.48);letter-spacing:.22em;}
-.ea-h1-main{display:block;font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,11vw,9.5rem);letter-spacing:.05em;line-height:.85;background:linear-gradient(135deg,#fff 40%,#e8d5a8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.ea-tagline{font-size:clamp(.82rem,1.2vw,.95rem);color:rgba(238,234,224,.38);font-weight:300;letter-spacing:.14em;text-transform:uppercase;margin:1.2rem 0 0;}
+.ea-h1-sub{display:block;font-family:'Outfit',sans-serif;font-size:clamp(.9rem,1.4vw,1.1rem);font-weight:300;color:rgba(255,255,255,.38);letter-spacing:.55em;text-transform:uppercase;margin-bottom:.6rem;}
+.ea-h1-main{display:block;font-family:'Bebas Neue',sans-serif;font-size:clamp(6rem,13vw,12rem);letter-spacing:.02em;line-height:.85;background:linear-gradient(110deg,#fff 0%,#ffe8b0 20%,#ffb347 38%,#ff6b35 52%,#e8368e 65%,#a855f7 78%,#60a5fa 90%,#fff 100%);background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:title-shimmer 8s ease infinite;filter:drop-shadow(0 0 60px rgba(255,107,53,.15));}
+.ea-h1-brand{display:block;font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,4.5vw,4rem);letter-spacing:.35em;color:rgba(255,255,255,.22);line-height:1;margin-bottom:-.4rem;}
+.ea-tagline{font-size:clamp(.85rem,1.1vw,.95rem);color:rgba(238,234,224,.32);font-weight:300;letter-spacing:.22em;text-transform:uppercase;margin:1.5rem 0 0;}
 .ea-stats{display:flex;align-items:stretch;gap:0;margin-top:2.5rem;flex-wrap:wrap;}
 .ea-stat{padding-right:2rem;margin-right:2rem;border-right:1px solid rgba(200,169,110,.16);}
 .ea-stat:last-child{border-right:none;padding-right:0;margin-right:0;}
@@ -554,44 +573,66 @@ body{background:var(--bg);}
 .ea-wrap{width:100%;max-width:1600px;margin:0 auto;padding:0 4%;}
 
 /* ── WELCOME ── */
-.ea-welcome{background:var(--card);border:1px solid var(--card-border);border-radius:var(--r);padding:1.2rem 1.75rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1.75rem;flex-wrap:wrap;box-shadow:0 1px 4px rgba(0,0,0,.05);}
-.ea-welcome-name{font-size:1.05rem;font-weight:600;color:var(--text);}
+.ea-welcome{background:var(--card);border:1px solid var(--card-border);border-radius:var(--r);padding:1.25rem 1.75rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:2rem;flex-wrap:wrap;box-shadow:var(--shadow-sm);}
+.ea-welcome-name{font-size:1.08rem;font-weight:700;color:var(--text);}
 .ea-welcome-sub{font-size:.77rem;color:var(--text-dim);margin-top:2px;}
-.ea-welcome-pill{background:rgba(200,152,58,.12);border:1px solid rgba(200,152,58,.3);color:var(--gold);font-size:.77rem;font-weight:600;padding:6px 15px;border-radius:99px;white-space:nowrap;}
+.ea-welcome-pill{background:rgba(212,163,64,.13);border:1px solid rgba(212,163,64,.32);color:var(--gold);font-size:.77rem;font-weight:700;padding:7px 16px;border-radius:99px;white-space:nowrap;letter-spacing:.04em;}
 
 /* ── TABS ── */
-.ea-tabs{display:flex;background:var(--card);border-radius:var(--r);padding:5px;box-shadow:0 1px 5px rgba(0,0,0,.07),0 0 0 1px var(--card-border);margin-bottom:2.5rem;overflow-x:auto;gap:0;position:relative;}
+.ea-tabs{display:flex;background:var(--card);border-radius:var(--r);padding:5px;box-shadow:var(--shadow-md);margin-bottom:2.5rem;overflow-x:auto;gap:0;position:relative;border:1px solid var(--card-border);}
 .ea-tabs::-webkit-scrollbar{display:none;}
-.ea-tab{flex:1 1 120px;padding:14px 22px;border-radius:10px;border:none;background:transparent;font-family:'Outfit',sans-serif;font-size:.9rem;font-weight:500;color:var(--text-dim);cursor:pointer;transition:color .25s,transform .18s;text-align:center;white-space:nowrap;position:relative;z-index:1;}
-.ea-tab .tab-icon{display:block;font-size:.95rem;margin-bottom:3px;transition:transform .3s cubic-bezier(.34,1.56,.64,1);}
-.ea-tab .tab-label{display:block;font-size:.78rem;font-weight:600;letter-spacing:.03em;}
-.ea-tab.active{color:var(--bg);font-weight:600;}
-.ea-tab.active .tab-icon{transform:scale(1.15);}
+.ea-tab{flex:1 1 120px;padding:15px 24px;border-radius:12px;border:none;background:transparent;font-family:'Outfit',sans-serif;font-size:.9rem;font-weight:500;color:var(--text-dim);cursor:pointer;transition:color .25s,transform .18s;text-align:center;white-space:nowrap;position:relative;z-index:1;}
+.ea-tab .tab-icon{display:block;font-size:1rem;margin-bottom:4px;transition:transform .35s cubic-bezier(.34,1.56,.64,1);}
+.ea-tab .tab-label{display:block;font-size:.8rem;font-weight:600;letter-spacing:.04em;}
+.ea-tab.active{color:#fff;font-weight:700;}
+.ea-tab.active .tab-icon{transform:scale(1.2);}
 .ea-tab:hover:not(.active){color:var(--text);}
-.ea-tab:hover:not(.active) .tab-icon{transform:scale(1.08);}
-.ea-tab-slider{position:absolute;top:5px;bottom:5px;border-radius:9px;background:var(--text);box-shadow:0 2px 10px rgba(0,0,0,.22);transition:left .35s cubic-bezier(.4,0,.2,1),width .35s cubic-bezier(.4,0,.2,1);pointer-events:none;z-index:0;}
+.ea-tab:hover:not(.active) .tab-icon{transform:scale(1.1);}
+.ea-tab-slider{position:absolute;top:5px;bottom:5px;border-radius:11px;background:linear-gradient(135deg,#1a1820 0%,#0e0d14 100%);box-shadow:0 4px 20px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.08);transition:left .35s cubic-bezier(.4,0,.2,1),width .35s cubic-bezier(.4,0,.2,1);pointer-events:none;z-index:0;}
+[data-theme="dark"] .ea-tab-slider{background:linear-gradient(135deg,#22203a 0%,#16142a 100%);box-shadow:0 4px 20px rgba(0,0,0,.5),0 0 0 1px rgba(212,163,64,.12),inset 0 1px 0 rgba(255,255,255,.06);}
+.ea-tab.active .tab-label{background:linear-gradient(135deg,#fff 0%,rgba(212,163,64,.9) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+[data-theme="dark"] .ea-tab.active .tab-label{background:linear-gradient(135deg,#fff 20%,var(--gold-lt) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 
 /* ── LANGUAGE SWITCHER ── */
-.ea-lang{display:flex;align-items:center;gap:4px;background:var(--card);border:1px solid var(--card-border);border-radius:99px;padding:4px;box-shadow:0 1px 4px rgba(0,0,0,.07);}
-.ea-lang-btn{display:flex;align-items:center;gap:5px;padding:5px 12px;border-radius:99px;border:none;background:transparent;font-family:'Outfit',sans-serif;font-size:.72rem;font-weight:600;cursor:pointer;color:var(--text-dim);transition:all .18s;white-space:nowrap;}
-.ea-lang-btn:hover{color:var(--text);background:var(--bg2);}
-.ea-lang-btn.active{background:var(--text);color:var(--bg);box-shadow:0 1px 4px rgba(0,0,0,.15);}
-.ea-lang-flag{font-size:.9rem;line-height:1;}
+.ea-lang{display:flex;align-items:center;gap:3px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.12);border-radius:99px;padding:4px;backdrop-filter:blur(16px);}
+.ea-lang-btn{display:flex;align-items:center;gap:5px;padding:6px 13px;border-radius:99px;border:none;background:transparent;font-family:'Outfit',sans-serif;font-size:.72rem;font-weight:700;cursor:pointer;color:rgba(255,255,255,.5);transition:all .2s;white-space:nowrap;letter-spacing:.05em;}
+.ea-lang-btn:hover{color:rgba(255,255,255,.85);}
+.ea-lang-btn.active{background:rgba(255,255,255,.14);color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.3);}
+.ea-lang-flag{font-size:.85rem;line-height:1;}
+/* ── LANG SWITCHER in main (light bg) ── */
+.ea-lang-light{background:var(--card);border:1px solid var(--card-border);box-shadow:var(--shadow-sm);}
+.ea-lang-light .ea-lang-btn{color:var(--text-dim);}
+.ea-lang-light .ea-lang-btn:hover{color:var(--text);background:var(--bg2);}
+.ea-lang-light .ea-lang-btn.active{background:var(--text);color:var(--bg);}
 
 /* ── SECTION HEADER ── */
-.ea-sh{font-size:.8rem;font-weight:700;color:var(--text);display:flex;align-items:center;gap:12px;margin:2.5rem 0 1.1rem;text-transform:uppercase;letter-spacing:.1em;}
-.ea-sh-bar{width:18px;height:2px;border-radius:99px;flex-shrink:0;}
+.ea-sh{font-size:.78rem;font-weight:800;color:var(--text);display:flex;align-items:center;gap:12px;margin:2.75rem 0 1.25rem;text-transform:uppercase;letter-spacing:.13em;}
+.ea-sh-bar{width:20px;height:3px;border-radius:99px;flex-shrink:0;}
 .ea-sh-rule{flex:1;height:1px;background:linear-gradient(90deg,var(--section-border),transparent);}
-.ea-sh-count{font-family:'DM Mono',monospace;font-size:.6rem;font-weight:600;padding:2px 8px;border-radius:99px;letter-spacing:.08em;text-transform:none;opacity:.75;border:1px solid;}
+.ea-sh-count{font-family:'DM Mono',monospace;font-size:.6rem;font-weight:700;padding:3px 10px;border-radius:99px;letter-spacing:.08em;text-transform:none;opacity:.8;border:1px solid;}
 
-/* ── PROGRESS ── */
-.ea-prog{background:var(--prog-bg);border-radius:16px;padding:1.75rem 2rem;display:flex;align-items:center;gap:2rem;margin-bottom:1.75rem;border:1px solid var(--prog-border);flex-wrap:wrap;}
-.ea-prog-info{flex:1;min-width:160px;}
-.ea-prog-lbl{font-size:.6rem;color:var(--gold);text-transform:uppercase;letter-spacing:.22em;font-weight:600;margin-bottom:.8rem;}
-.ea-prog-track{height:4px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden;}
-.ea-prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-lt));border-radius:99px;transition:width 1.5s cubic-bezier(.4,0,.2,1);}
-.ea-prog-sub{font-size:.7rem;color:rgba(255,255,255,.22);margin-top:7px;}
-.ea-prog-pct{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--gold-lt);line-height:1;min-width:84px;text-align:right;letter-spacing:.04em;}
+/* ── PROGRESS (NEUE VERSION) ── */
+.ea-prog-wrap{margin-bottom:2rem;}
+.ea-prog-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;gap:1rem;flex-wrap:wrap;}
+.ea-prog-title{font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.22em;color:var(--gold);display:flex;align-items:center;gap:9px;}
+.ea-prog-title::before{content:'';display:block;width:20px;height:2px;background:var(--gold);border-radius:99px;}
+.ea-prog-count{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--text);letter-spacing:.04em;line-height:1;}
+.ea-prog-count span{color:var(--gold-lt);text-shadow:0 0 20px rgba(212,163,64,.3);}
+.ea-prog-track{height:6px;background:var(--section-border);border-radius:99px;overflow:hidden;position:relative;}
+[data-theme="dark"] .ea-prog-track{background:rgba(255,255,255,.06);}
+.ea-prog-fill{height:100%;background:linear-gradient(90deg,#f59e0b,#f0c040,#fff8d0);border-radius:99px;transition:width 1.6s cubic-bezier(.4,0,.2,1);box-shadow:0 0 14px rgba(245,158,11,.4),0 0 4px rgba(245,158,11,.6);}
+.ea-prog-tiles{display:grid;grid-template-columns:repeat(10,1fr);gap:5px;margin-top:.75rem;}
+.ea-prog-tile{height:6px;border-radius:3px;transition:all .4s ease;}
+.ea-prog-tile.done{background:linear-gradient(90deg,#f59e0b,#fcd34d);}
+.ea-prog-tile.open{background:var(--section-border);}
+[data-theme="dark"] .ea-prog-tile.open{background:rgba(255,255,255,.06);}
+/* Legacy - keep for ref */
+.ea-prog{background:var(--prog-bg);border-radius:22px;padding:2rem 2.25rem;display:flex;align-items:center;gap:2rem;margin-bottom:2rem;border:1px solid var(--prog-border);flex-wrap:wrap;position:relative;overflow:hidden;}
+.ea-prog::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(212,163,64,.06) 0%,transparent 70%);pointer-events:none;}
+.ea-prog-info{flex:1;min-width:160px;position:relative;z-index:1;}
+.ea-prog-lbl{font-size:.58rem;color:var(--gold);text-transform:uppercase;letter-spacing:.26em;font-weight:700;margin-bottom:.9rem;}
+.ea-prog-sub{font-size:.7rem;color:rgba(255,255,255,.2);margin-top:8px;}
+.ea-prog-pct{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--gold-lt);line-height:1;min-width:88px;text-align:right;letter-spacing:.04em;text-shadow:0 0 32px rgba(212,163,64,.35);position:relative;z-index:1;}
 
 /* ── PHILOSOPHY ── */
 .ea-philo{background:var(--card);border:1px solid var(--card-border);border-radius:16px;padding:1.75rem 2.25rem;margin-bottom:1.75rem;position:relative;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.05);}
@@ -609,50 +650,51 @@ body{background:var(--bg);}
 .ea-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-bottom:.5rem;}
 
 /* ── MODULE CARD ── */
-.ea-card{background:var(--card);border-radius:var(--r);padding:1.5rem;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:transform .25s cubic-bezier(.2,.8,.3,1),box-shadow .25s ease;box-shadow:0 1px 3px rgba(0,0,0,.06),0 0 0 1px var(--card-border);cursor:pointer;}
-.ea-card:hover{transform:translateY(-5px) scale(1.01);box-shadow:0 16px 40px rgba(0,0,0,.12),0 0 0 1px var(--card-border);}
+.ea-card{background:var(--card);border-radius:var(--r);padding:1.5rem;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:transform .3s cubic-bezier(.2,.8,.3,1),box-shadow .3s ease,border-color .2s;box-shadow:var(--shadow-sm);border:1px solid var(--card-border);cursor:pointer;}
+.ea-card:hover{transform:translateY(-6px) scale(1.01);box-shadow:var(--shadow-lg);}
 .ea-card:active{transform:translateY(-2px) scale(.99);}
-.ea-card-stripe{position:absolute;top:0;left:0;bottom:0;width:3px;border-radius:var(--r) 0 0 var(--r);}
-.ea-card-num{position:absolute;top:.75rem;right:1rem;font-family:'Bebas Neue',sans-serif;font-size:2.4rem;color:rgba(0,0,0,.04);line-height:1;letter-spacing:.04em;pointer-events:none;user-select:none;}
+.ea-card-stripe{position:absolute;top:0;left:0;bottom:0;width:4px;border-radius:var(--r) 0 0 var(--r);}
+.ea-card-num{position:absolute;top:.75rem;right:1rem;font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:rgba(0,0,0,.035);line-height:1;letter-spacing:.04em;pointer-events:none;user-select:none;}
 [data-theme="dark"] .ea-card-num{color:rgba(255,255,255,.04);}
-.ea-card-t{font-weight:600;font-size:.92rem;color:var(--text);margin:0 0 4px;line-height:1.3;padding-left:.25rem;}
-.ea-card-code{font-family:'DM Mono',monospace;font-size:.63rem;color:var(--text-faint);background:var(--bg2);border:1px solid var(--section-border);padding:2px 8px;border-radius:4px;display:inline-block;margin-bottom:.9rem;margin-left:.25rem;}
+.ea-card-t{font-weight:700;font-size:.95rem;color:var(--text);margin:0 0 4px;line-height:1.3;padding-left:.25rem;}
+.ea-card-code{font-family:'DM Mono',monospace;font-size:.63rem;color:var(--text-faint);background:var(--bg2);border:1px solid var(--section-border);padding:2px 8px;border-radius:5px;display:inline-block;margin-bottom:.9rem;margin-left:.25rem;letter-spacing:.06em;}
 .ea-card-status{display:flex;align-items:center;gap:8px;margin-bottom:.9rem;padding-left:.25rem;}
-.ea-card-chip{display:inline-flex;align-items:center;gap:5px;font-size:.65rem;font-weight:700;letter-spacing:.06em;padding:3px 9px;border-radius:99px;text-transform:uppercase;}
+.ea-card-chip{display:inline-flex;align-items:center;gap:5px;font-size:.65rem;font-weight:700;letter-spacing:.07em;padding:3px 10px;border-radius:99px;text-transform:uppercase;}
 .ea-card-chip-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
-.ea-card-bar{height:2px;background:var(--section-border);border-radius:99px;margin:0 .25rem .9rem;overflow:hidden;}
-.ea-card-bar-f{height:100%;border-radius:99px;transition:width .8s cubic-bezier(.4,0,.2,1);}
-.ea-card-btn{display:flex;align-items:center;justify-content:center;gap:7px;padding:10px 14px;border-radius:10px;font-weight:600;font-size:.82rem;text-decoration:none;font-family:'Outfit',sans-serif;transition:all .2s;margin-top:auto;}
-.ea-card-btn:hover{filter:brightness(1.1);transform:translateY(-1px);}
-.ea-card-btn-arrow{font-size:.9rem;transition:transform .2s;}
-.ea-card-btn:hover .ea-card-btn-arrow{transform:translateX(3px);}
-.ea-card-done-glow{box-shadow:0 0 0 1.5px rgba(16,185,129,.25),0 4px 20px rgba(16,185,129,.1);}
+.ea-card-bar{height:3px;background:var(--section-border);border-radius:99px;margin:0 .25rem .9rem;overflow:hidden;}
+.ea-card-bar-f{height:100%;border-radius:99px;transition:width .9s cubic-bezier(.4,0,.2,1);}
+.ea-card-btn{display:flex;align-items:center;justify-content:center;gap:7px;padding:10px 14px;border-radius:11px;font-weight:700;font-size:.82rem;text-decoration:none;font-family:'Outfit',sans-serif;transition:all .22s;margin-top:auto;}
+.ea-card-btn:hover{filter:brightness(1.12);transform:translateY(-1px);}
+.ea-card-btn-arrow{font-size:.9rem;transition:transform .22s;}
+.ea-card-btn:hover .ea-card-btn-arrow{transform:translateX(4px);}
+.ea-card-done-glow{box-shadow:0 0 0 1.5px rgba(16,185,129,.3),0 4px 20px rgba(16,185,129,.12);}
 
 /* ── MANUFACTURER BANNERS ── */
 .med-list{display:flex;flex-direction:column;gap:0;}
-.med-banner{position:relative;width:100%;overflow:hidden;cursor:pointer;border-radius:20px;margin-bottom:14px;min-height:200px;display:flex;align-items:center;transition:transform .35s cubic-bezier(.2,.8,.3,1),box-shadow .35s ease;box-shadow:0 2px 12px rgba(0,0,0,.1),0 1px 3px rgba(0,0,0,.08);}
-.med-banner:hover{transform:translateY(-5px);box-shadow:0 20px 56px rgba(0,0,0,.18),0 6px 16px rgba(0,0,0,.1);}
-[data-theme="dark"] .med-banner{box-shadow:0 4px 20px rgba(0,0,0,.5);}
-[data-theme="dark"] .med-banner:hover{box-shadow:0 20px 56px rgba(0,0,0,.7);}
-.med-banner-bg{position:absolute;inset:0;z-index:0;transition:transform .6s ease;}
-.med-banner:hover .med-banner-bg{transform:scale(1.03);}
-.med-banner-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,.3) 45%,rgba(0,0,0,.08) 100%),linear-gradient(to bottom,rgba(0,0,0,.15) 0%,rgba(0,0,0,.0) 100%);}
-.med-banner-accent{position:absolute;left:0;top:0;bottom:0;width:5px;z-index:3;border-radius:20px 0 0 20px;box-shadow:2px 0 18px rgba(255,255,255,.08);}
-.med-banner::before{content:'';position:absolute;left:0;top:0;bottom:0;width:35%;z-index:1;background:linear-gradient(90deg,var(--accent-glow,rgba(200,0,0,.12)) 0%,transparent 100%);pointer-events:none;}
-.med-banner-content{position:relative;z-index:2;padding:2.5rem 3rem;display:flex;align-items:center;gap:3rem;width:100%;}
-.med-banner-logo-wrap{flex-shrink:0;width:200px;height:88px;display:flex;align-items:center;justify-content:center;background:#ffffff;border-radius:14px;padding:14px 22px;box-shadow:0 4px 24px rgba(0,0,0,.3),0 1px 0 rgba(255,255,255,.15);position:relative;overflow:hidden;}
-.med-banner-logo-wrap::after{content:'';position:absolute;inset:0;border-radius:14px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);pointer-events:none;}
+.med-banner{position:relative;width:100%;overflow:hidden;cursor:pointer;border-radius:24px;margin-bottom:16px;min-height:240px;display:flex;align-items:center;transition:transform .4s cubic-bezier(.2,.8,.3,1),box-shadow .4s ease;box-shadow:var(--shadow-md);border:1px solid rgba(255,255,255,.05);}
+.med-banner:hover{transform:translateY(-7px) scale(1.005);box-shadow:var(--shadow-xl);}
+[data-theme="dark"] .med-banner{box-shadow:0 8px 32px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.04);}
+[data-theme="dark"] .med-banner:hover{box-shadow:0 28px 72px rgba(0,0,0,.85),0 0 60px var(--accent-glow,rgba(200,100,0,.08)),0 0 0 1px rgba(255,255,255,.07);}
+.med-banner-bg{position:absolute;inset:0;z-index:0;transition:transform .7s cubic-bezier(.25,.46,.45,.94);}
+.med-banner:hover .med-banner-bg{transform:scale(1.05);}
+.med-banner-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(100deg,rgba(0,0,0,.75) 0%,rgba(0,0,0,.45) 40%,rgba(0,0,0,.12) 70%,rgba(0,0,0,.05) 100%),linear-gradient(to bottom,rgba(0,0,0,.2) 0%,rgba(0,0,0,.0) 100%);}
+.med-banner-accent{position:absolute;left:0;top:0;bottom:0;width:6px;z-index:3;border-radius:24px 0 0 24px;box-shadow:4px 0 28px rgba(255,255,255,.06);}
+.med-banner::before{content:'';position:absolute;left:0;top:0;bottom:0;width:45%;z-index:1;background:linear-gradient(90deg,var(--accent-glow,rgba(200,100,0,.18)) 0%,transparent 100%);pointer-events:none;}
+.med-banner::after{content:'';position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse at 15% 50%,var(--accent-glow,rgba(200,100,0,.1)) 0%,transparent 60%);pointer-events:none;}
+.med-banner-content{position:relative;z-index:2;padding:2.75rem 3.5rem;display:flex;align-items:center;gap:3rem;width:100%;}
+.med-banner-logo-wrap{flex-shrink:0;width:210px;height:92px;display:flex;align-items:center;justify-content:center;background:#ffffff;border-radius:16px;padding:14px 22px;box-shadow:0 8px 32px rgba(0,0,0,.4),0 0 0 1px rgba(255,255,255,.1),inset 0 1px 0 rgba(255,255,255,.8);position:relative;overflow:hidden;transition:transform .3s ease,box-shadow .3s ease;}
+.med-banner:hover .med-banner-logo-wrap{transform:scale(1.03) translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.15);}
 .med-banner-logo{max-width:100%;max-height:100%;object-fit:contain;display:block;mix-blend-mode:multiply;}
 [data-theme="dark"] .med-banner-logo{mix-blend-mode:normal;}
 .med-banner-text{flex:1;min-width:0;}
-.med-banner-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.6rem,3vw,2.4rem);color:#fff;letter-spacing:.06em;line-height:1;margin-bottom:.4rem;}
-.med-banner-tagline{font-size:.85rem;color:rgba(255,255,255,.65);font-weight:300;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.8rem;}
-.med-banner-origin{display:flex;align-items:center;gap:6px;font-size:.72rem;color:rgba(255,255,255,.45);font-weight:500;}
+.med-banner-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,3.5vw,3rem);color:#fff;letter-spacing:.06em;line-height:.95;margin-bottom:.5rem;text-shadow:0 2px 16px rgba(0,0,0,.5);}
+.med-banner-tagline{font-size:.88rem;color:rgba(255,255,255,.7);font-weight:300;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.9rem;}
+.med-banner-origin{display:flex;align-items:center;gap:7px;font-size:.73rem;color:rgba(255,255,255,.5);font-weight:500;}
 .med-banner-origin::before{content:'📍';font-size:.75rem;}
-.med-banner-arrow{flex-shrink:0;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.7);font-size:1.1rem;transition:all .25s;backdrop-filter:blur(8px);}
-.med-banner:hover .med-banner-arrow{background:rgba(255,255,255,.2);color:#fff;transform:translateX(4px);}
-.med-banner-badge{position:absolute;top:1.25rem;right:1.5rem;z-index:3;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;padding:4px 12px;border-radius:99px;background:rgba(255,255,255,.12);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(8px);}
-.med-banner-badge.active{background:rgba(16,185,129,.2);color:#6ee7b7;border-color:rgba(16,185,129,.3);}
+.med-banner-arrow{flex-shrink:0;width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.75);font-size:1.2rem;transition:all .28s cubic-bezier(.2,.8,.3,1);backdrop-filter:blur(12px);}
+.med-banner:hover .med-banner-arrow{background:rgba(255,255,255,.25);color:#fff;transform:translateX(5px) scale(1.08);box-shadow:0 4px 20px rgba(0,0,0,.3);}
+.med-banner-badge{position:absolute;top:1.4rem;right:1.75rem;z-index:3;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;padding:5px 14px;border-radius:99px;background:rgba(0,0,0,.35);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(12px);}
+.med-banner-badge.active{background:rgba(16,185,129,.25);color:#86efac;border-color:rgba(16,185,129,.4);box-shadow:0 0 16px rgba(16,185,129,.15);}
 
 /* ── GENERIC MFR DETAIL (non-RIWO) ── */
 .med-detail{}
@@ -703,7 +745,7 @@ body{background:var(--bg);}
 /* ══ RIWOSPINE DETAIL ══ */
 .riwo-back{display:inline-flex;align-items:center;gap:9px;padding:10px 20px;border-radius:11px;border:1px solid var(--section-border);background:var(--card);font-family:'Outfit',sans-serif;font-weight:600;font-size:.84rem;cursor:pointer;margin-bottom:2rem;color:var(--text);transition:all .2s;box-shadow:0 1px 3px rgba(0,0,0,.05);}
 .riwo-back:hover{background:var(--bg2);transform:translateX(-2px);}
-.riwo-hero{position:relative;overflow:hidden;border-radius:22px;min-height:320px;display:flex;align-items:flex-end;margin-bottom:1.75rem;box-shadow:0 12px 48px rgba(0,0,0,.2),0 0 0 1px rgba(192,57,43,.15);}
+.riwo-hero{position:relative;overflow:hidden;border-radius:28px;min-height:360px;display:flex;align-items:flex-end;margin-bottom:2rem;box-shadow:0 24px 72px rgba(0,0,0,.3),0 0 0 1px rgba(192,57,43,.18);}
 .riwo-hero-bg{position:absolute;inset:0;z-index:0;background:linear-gradient(160deg,#0f0404 0%,#1e0606 35%,#2a0808 60%,#1e0606 100%);}
 .riwo-hero-grid{position:absolute;inset:0;z-index:1;opacity:.07;background-image:linear-gradient(rgba(192,57,43,.6) 1px,transparent 1px),linear-gradient(90deg,rgba(192,57,43,.6) 1px,transparent 1px);background-size:48px 48px;}
 .riwo-hero-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.4) 50%,rgba(0,0,0,.05) 100%),linear-gradient(100deg,rgba(192,57,43,.12) 0%,transparent 60%);}
@@ -757,10 +799,10 @@ body{background:var(--bg);}
 .riwo-sh-bar{width:3px;height:18px;border-radius:99px;background:#c0392b;flex-shrink:0;}
 .riwo-sh-rule{flex:1;height:1px;background:linear-gradient(90deg,var(--section-border),transparent);}
 .riwo-sh-count{font-family:'DM Mono',monospace;font-size:.62rem;padding:2px 9px;border-radius:99px;background:var(--riwo-red-dim);border:1px solid rgba(192,57,43,.25);color:#e84c3d;letter-spacing:.06em;}
-.riwo-prod-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:2rem;}
-.riwo-prod-card{background:var(--card);border:1px solid var(--card-border);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 2px 8px rgba(0,0,0,.06);transition:transform .3s cubic-bezier(.2,.8,.3,1),box-shadow .3s ease,border-color .2s;text-decoration:none;color:inherit;position:relative;}
-.riwo-prod-card:hover{transform:translateY(-6px);box-shadow:0 20px 48px rgba(0,0,0,.13),0 0 0 1.5px rgba(192,57,43,.25);text-decoration:none;color:inherit;border-color:rgba(192,57,43,.2);}
-.riwo-prod-image{position:relative;height:200px;overflow:hidden;flex-shrink:0;}
+.riwo-prod-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:2rem;}
+.riwo-prod-card{background:var(--card);border:1px solid var(--card-border);border-radius:24px;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow-md);transition:transform .4s cubic-bezier(.2,.8,.3,1),box-shadow .4s ease,border-color .25s;text-decoration:none;color:inherit;position:relative;}
+.riwo-prod-card:hover{transform:translateY(-10px);box-shadow:0 28px 64px rgba(0,0,0,.22),0 0 0 1.5px rgba(192,57,43,.3),0 0 48px rgba(192,57,43,.07);text-decoration:none;color:inherit;border-color:rgba(192,57,43,.28);}
+.riwo-prod-image{position:relative;height:240px;overflow:hidden;flex-shrink:0;}
 .riwo-prod-image img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;}
 .riwo-prod-card:hover .riwo-prod-image img{transform:scale(1.06);}
 .riwo-prod-image-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;position:relative;overflow:hidden;}
@@ -793,7 +835,7 @@ body{background:var(--bg);}
 /* ══ INOMED DETAIL ══ */
 .ino-back{display:inline-flex;align-items:center;gap:9px;padding:10px 20px;border-radius:11px;border:1px solid var(--section-border);background:var(--card);font-family:'Outfit',sans-serif;font-weight:600;font-size:.84rem;cursor:pointer;margin-bottom:2rem;color:var(--text);transition:all .2s;box-shadow:0 1px 3px rgba(0,0,0,.05);}
 .ino-back:hover{background:var(--bg2);transform:translateX(-2px);}
-.ino-hero{position:relative;overflow:hidden;border-radius:22px;min-height:320px;display:flex;align-items:flex-end;margin-bottom:1.75rem;box-shadow:0 12px 48px rgba(0,0,0,.2),0 0 0 1px rgba(21,101,192,.15);}
+.ino-hero{position:relative;overflow:hidden;border-radius:28px;min-height:360px;display:flex;align-items:flex-end;margin-bottom:2rem;box-shadow:0 24px 72px rgba(0,0,0,.3),0 0 0 1px rgba(21,101,192,.18);}
 .ino-hero-bg{position:absolute;inset:0;z-index:0;background:linear-gradient(160deg,#020610 0%,#040c1e 35%,#071428 60%,#040c1e 100%);}
 .ino-hero-grid{position:absolute;inset:0;z-index:1;opacity:.06;background-image:linear-gradient(rgba(30,136,229,.6) 1px,transparent 1px),linear-gradient(90deg,rgba(30,136,229,.6) 1px,transparent 1px);background-size:48px 48px;}
 .ino-hero-pulse{position:absolute;inset:0;z-index:1;overflow:hidden;}
@@ -849,10 +891,10 @@ body{background:var(--bg);}
 .ino-sh-bar{width:3px;height:18px;border-radius:99px;background:#1565c0;flex-shrink:0;}
 .ino-sh-rule{flex:1;height:1px;background:linear-gradient(90deg,var(--section-border),transparent);}
 .ino-sh-count{font-family:'DM Mono',monospace;font-size:.62rem;padding:2px 9px;border-radius:99px;background:var(--ino-blue-dim);border:1px solid rgba(21,101,192,.25);color:#1e88e5;letter-spacing:.06em;}
-.ino-prod-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:2rem;}
-.ino-prod-card{background:var(--card);border:1px solid var(--card-border);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 2px 8px rgba(0,0,0,.06);transition:transform .3s cubic-bezier(.2,.8,.3,1),box-shadow .3s ease,border-color .2s;text-decoration:none;color:inherit;position:relative;}
-.ino-prod-card:hover{transform:translateY(-6px);box-shadow:0 20px 48px rgba(0,0,0,.13),0 0 0 1.5px rgba(21,101,192,.25);text-decoration:none;color:inherit;border-color:rgba(21,101,192,.2);}
-.ino-prod-image{position:relative;height:200px;overflow:hidden;flex-shrink:0;}
+.ino-prod-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:2rem;}
+.ino-prod-card{background:var(--card);border:1px solid var(--card-border);border-radius:24px;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow-md);transition:transform .4s cubic-bezier(.2,.8,.3,1),box-shadow .4s ease,border-color .25s;text-decoration:none;color:inherit;position:relative;}
+.ino-prod-card:hover{transform:translateY(-10px);box-shadow:0 28px 64px rgba(0,0,0,.22),0 0 0 1.5px rgba(21,101,192,.3),0 0 48px rgba(21,101,192,.07);text-decoration:none;color:inherit;border-color:rgba(21,101,192,.28);}
+.ino-prod-image{position:relative;height:240px;overflow:hidden;flex-shrink:0;}
 .ino-prod-image img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;}
 .ino-prod-card:hover .ino-prod-image img{transform:scale(1.06);}
 .ino-prod-image-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;position:relative;overflow:hidden;}
@@ -1238,9 +1280,233 @@ body{background:var(--bg);}
 }
 `;
 
+// ─── I18N ────────────────────────────────────────────────────────────────────
+
+const LANGS = [
+  { code: 'de', flag: '🇩🇪', label: 'DE' },
+  { code: 'en', flag: '🇬🇧', label: 'EN' },
+  { code: 'ru', flag: '🇷🇺', label: 'RU' },
+];
+
+const TRANSLATIONS: Record<string, Record<string, any>> = {
+  de: {
+    // ── HERO ──
+    heroEyebrow:      'Emig GmbH · Interne Lernplattform · Reutlingen',
+    heroTagline:      'Qualität · Wissen · Exzellenz',
+    statQM:           'QM Module',
+    statMfr:          'Hersteller',
+    statSAP:          'SAP Phasen',
+    // ── GREET ──
+    greetMorning:     'Guten Morgen',
+    greetDay:         'Guten Tag',
+    greetEvening:     'Guten Abend',
+    welcomeBack:      'willkommen zurück.',
+    progressDone:     (d:number,t:number) => `${d} von ${t} QM-Modulen abgeschlossen`,
+    progressStart:    'Starten Sie Ihr erstes Lernmodul.',
+    progressPill:     (p:number) => `${p}% abgeschlossen`,
+    // ── TABS ──
+    tabQM:            'Quality Management',
+    tabSAP:           'SAP Universum',
+    tabMED:           'Medizinprodukte',
+    // ── QM ──
+    qmProgressLabel:  'Lernfortschritt',
+    qmModulesOf:      (d:number,t:number) => `${d} / ${t} Module`,
+    qmPhiloTitle:     'QM Philosophie & Strategie',
+    qmPhiloSub:       'Leitbild, PDCA, Rollen, Normen und QM-KPIs — mit umfangreichem Wissenstest.',
+    qmPhiloMeta:      ['5 Kapitel','12 Fragen','~15 Min.'],
+    qmOpenModule:     'Modul öffnen',
+    qmIsoTag:         'ISO 13485:2016 · EU MDR 2017/745',
+    finalTestReady:   'Finaler Test & Zertifikat',
+    finalTestLocked:  'Finaler Test — gesperrt',
+    finalTestReadySub:'Alle Module abgeschlossen. Jetzt testen.',
+    finalTestLockedSub:(n:number) => `Noch ${n} Module bis zur Freischaltung.`,
+    finalTestBtn:     'Prüfung starten',
+    // ── SH LABELS ──
+    shLogistik:       'Logistik & Lager',
+    shEinkauf:        'Einkauf & Lieferanten',
+    shRegulatorik:    'Regulatorik & MDR',
+    // ── MODULE NAMES ──
+    modLager1:        'Lagerbedingungen',
+    modLager2:        'Rückverfolgbarkeit',
+    modLager3:        'Sperrware',
+    modLager4:        'Inventur',
+    modEink1:         'Lieferantenbewertung',
+    modEink2:         'Einkaufsprozess',
+    modReg1:          'Importeurpflichten',
+    modReg2:          'Händlerpflichten',
+    modReg3:          'PRRC',
+    modReg4:          'Audits',
+    // ── CARD ──
+    cardDone:         'Abgeschlossen',
+    cardDraft:        'In Vorbereitung',
+    cardRepeat:       'Wiederholen',
+    cardStart:        'Starten',
+    // ── MED ──
+    medHeading:       'Hersteller & Produktschulungen',
+    medBack:          '← Alle Hersteller',
+    medOpenModule:    'Modul öffnen',
+    // ── SAP ──
+    sapEyebrow:        'SAP Business One · Emig GmbH',
+    sapTitleHighlight: 'Business One',
+    sapSubtitle:       'End-to-End-Digitalisierung aller Geschäftsprozesse — MDR-konform & auditierbar.',
+    sapNavTabs:        ['Prozesskarte','Module','MDR-Compliance','Rollen & SoD','Projektzeitplan','UAT-Protokoll'],
+    sapMapTitle:       'Prozesskarte',
+    sapMapSub:         'Alle Kernprozesse auf einen Blick — von Wareneingang bis Rechnung.',
+    sapModTitle:       'SAP-Module',
+    sapModSub:         (n:number) => `${n} Module im Einsatz — von Vertrieb bis Service.`,
+    sapMdrTitle:       'MDR-Compliance',
+    sapMdrSub:         'MDR-Prozesskette von Wareneingang bis Rückverfolgung.',
+    sapEscTitle:       'Eskalationsprotokoll',
+    sapEscSub:         '3-stufiger Eskalationsprozess bei Servicemeldungen und Field Safety Notices.',
+    sapRolesTitle:     'Rollen & Berechtigungen',
+    sapRolesSub:       'Rollenbasierte Zugriffssteuerung — kein User erhält mehr Rechte als nötig.',
+    sapSodTitle:       'Segregation of Duties',
+    sapSodSub:         'Kritische Funktionskombinationen, die systemseitig getrennt sind.',
+  },
+  en: {
+    heroEyebrow:      'Emig GmbH · Internal Learning Platform · Reutlingen',
+    heroTagline:      'Quality · Knowledge · Excellence',
+    statQM:           'QM Modules',
+    statMfr:          'Manufacturers',
+    statSAP:          'SAP Phases',
+    greetMorning:     'Good Morning',
+    greetDay:         'Good Day',
+    greetEvening:     'Good Evening',
+    welcomeBack:      'welcome back.',
+    progressDone:     (d:number,t:number) => `${d} of ${t} QM modules completed`,
+    progressStart:    'Start your first learning module.',
+    progressPill:     (p:number) => `${p}% complete`,
+    tabQM:            'Quality Management',
+    tabSAP:           'SAP Universe',
+    tabMED:           'Medical Devices',
+    qmProgressLabel:  'Learning Progress',
+    qmModulesOf:      (d:number,t:number) => `${d} / ${t} Modules`,
+    qmPhiloTitle:     'QM Philosophy & Strategy',
+    qmPhiloSub:       'Mission, PDCA, roles, standards and QM KPIs — with comprehensive knowledge test.',
+    qmPhiloMeta:      ['5 Chapters','12 Questions','~15 Min.'],
+    qmOpenModule:     'Open Module',
+    qmIsoTag:         'ISO 13485:2016 · EU MDR 2017/745',
+    finalTestReady:   'Final Test & Certificate',
+    finalTestLocked:  'Final Test — Locked',
+    finalTestReadySub:'All modules completed. Start the test now.',
+    finalTestLockedSub:(n:number) => `${n} more modules until unlock.`,
+    finalTestBtn:     'Start Exam',
+    shLogistik:       'Logistics & Warehouse',
+    shEinkauf:        'Purchasing & Suppliers',
+    shRegulatorik:    'Regulatory & MDR',
+    modLager1:        'Storage Conditions',
+    modLager2:        'Traceability',
+    modLager3:        'Blocked Stock',
+    modLager4:        'Inventory',
+    modEink1:         'Supplier Evaluation',
+    modEink2:         'Purchasing Process',
+    modReg1:          'Importer Obligations',
+    modReg2:          'Distributor Obligations',
+    modReg3:          'PRRC',
+    modReg4:          'Audits',
+    cardDone:         'Completed',
+    cardDraft:        'In Preparation',
+    cardRepeat:       'Repeat',
+    cardStart:        'Start',
+    medHeading:       'Manufacturers & Product Training',
+    medBack:          '← All Manufacturers',
+    medOpenModule:    'Open Module',
+    sapEyebrow:        'SAP Business One · Emig GmbH',
+    sapTitleHighlight: 'Business One',
+    sapSubtitle:       'End-to-end digitization of all business processes — MDR-compliant & auditable.',
+    sapNavTabs:        ['Process Map','Modules','MDR Compliance','Roles & SoD','Project Timeline','UAT Protocol'],
+    sapMapTitle:       'Process Map',
+    sapMapSub:         'All core processes at a glance — from goods receipt to invoice.',
+    sapModTitle:       'SAP Modules',
+    sapModSub:         (n:number) => `${n} modules in use — from sales to service.`,
+    sapMdrTitle:       'MDR Compliance',
+    sapMdrSub:         'MDR process chain from goods receipt to traceability.',
+    sapEscTitle:       'Escalation Protocol',
+    sapEscSub:         '3-stage escalation process for service reports and Field Safety Notices.',
+    sapRolesTitle:     'Roles & Permissions',
+    sapRolesSub:       'Role-based access control — no user receives more rights than necessary.',
+    sapSodTitle:       'Segregation of Duties',
+    sapSodSub:         'Critical function combinations that are separated at system level.',
+  },
+  ru: {
+    heroEyebrow:      'Emig GmbH · Внутренняя учебная платформа · Ройтлинген',
+    heroTagline:      'Качество · Знания · Превосходство',
+    statQM:           'Модули КМ',
+    statMfr:          'Производители',
+    statSAP:          'Фазы SAP',
+    greetMorning:     'Доброе утро',
+    greetDay:         'Добрый день',
+    greetEvening:     'Добрый вечер',
+    welcomeBack:      'с возвращением.',
+    progressDone:     (d:number,t:number) => `${d} из ${t} модулей КМ пройдено`,
+    progressStart:    'Начните свой первый учебный модуль.',
+    progressPill:     (p:number) => `${p}% выполнено`,
+    tabQM:            'Управление качеством',
+    tabSAP:           'Вселенная SAP',
+    tabMED:           'Медизделия',
+    qmProgressLabel:  'Прогресс обучения',
+    qmModulesOf:      (d:number,t:number) => `${d} / ${t} модулей`,
+    qmPhiloTitle:     'Философия и стратегия КМ',
+    qmPhiloSub:       'Миссия, PDCA, роли, стандарты и KPI — с комплексным тестом.',
+    qmPhiloMeta:      ['5 глав','12 вопросов','~15 мин.'],
+    qmOpenModule:     'Открыть модуль',
+    qmIsoTag:         'ISO 13485:2016 · EU MDR 2017/745',
+    finalTestReady:   'Финальный тест и сертификат',
+    finalTestLocked:  'Финальный тест — заблокирован',
+    finalTestReadySub:'Все модули пройдены. Начать тест.',
+    finalTestLockedSub:(n:number) => `Ещё ${n} модулей до разблокировки.`,
+    finalTestBtn:     'Начать экзамен',
+    shLogistik:       'Логистика и склад',
+    shEinkauf:        'Закупки и поставщики',
+    shRegulatorik:    'Регуляторика и MDR',
+    modLager1:        'Условия хранения',
+    modLager2:        'Прослеживаемость',
+    modLager3:        'Заблокированный товар',
+    modLager4:        'Инвентаризация',
+    modEink1:         'Оценка поставщиков',
+    modEink2:         'Процесс закупок',
+    modReg1:          'Обязанности импортёра',
+    modReg2:          'Обязанности дистрибьютора',
+    modReg3:          'PRRC',
+    modReg4:          'Аудиты',
+    cardDone:         'Завершено',
+    cardDraft:        'В разработке',
+    cardRepeat:       'Повторить',
+    cardStart:        'Начать',
+    medHeading:       'Производители и обучение по продуктам',
+    medBack:          '← Все производители',
+    medOpenModule:    'Открыть модуль',
+    sapEyebrow:        'SAP Business One · Emig GmbH',
+    sapTitleHighlight: 'Business One',
+    sapSubtitle:       'Комплексная цифровизация всех бизнес-процессов — MDR-совместимо и с возможностью аудита.',
+    sapNavTabs:        ['Карта процессов','Модули','MDR-Соответствие','Роли и SoD','График проекта','UAT-Протокол'],
+    sapMapTitle:       'Карта процессов',
+    sapMapSub:         'Все ключевые процессы: от поступления товара до выставления счёта.',
+    sapModTitle:       'Модули SAP',
+    sapModSub:         (n:number) => `${n} модулей в работе — от продаж до сервиса.`,
+    sapMdrTitle:       'MDR-Соответствие',
+    sapMdrSub:         'Цепочка MDR от поступления товара до прослеживаемости.',
+    sapEscTitle:       'Протокол эскалации',
+    sapEscSub:         '3-уровневый процесс эскалации при сервисных обращениях и уведомлениях FSN.',
+    sapRolesTitle:     'Роли и права доступа',
+    sapRolesSub:       'Ролевое управление доступом — ни один пользователь не получает лишних прав.',
+    sapSodTitle:       'Разделение обязанностей',
+    sapSodSub:         'Критические комбинации функций, разделённые на уровне системы.',
+  },
+};
+
+function getT(lang: string) {
+  const d = TRANSLATIONS[lang] ?? TRANSLATIONS['de'];
+  return (key: string, ...args: any[]) => {
+    const val = d[key];
+    if (typeof val === 'function') return val(...args);
+    return val ?? (TRANSLATIONS['de'][key] ?? key);
+  };
+}
+
 // ─── LANGUAGE SWITCHER ───────────────────────────────────────────────────────
 
-function LanguageSwitcher({ lang, setLang }) {
+function LanguageSwitcher({ lang, setLang }: { lang: string; setLang: (code: string) => void }) {
   return (
     <div className="ea-lang">
       {LANGS.map(l => (
@@ -1255,16 +1521,17 @@ function LanguageSwitcher({ lang, setLang }) {
 
 // ─── SAP UNIVERSE ────────────────────────────────────────────────────────────
 
-function SAPUniverse({ lang }) {
+function SAPUniverse({ lang: langProp }: { lang?: string } = {}) {
+  const [lang, setLang] = useState(langProp ?? 'de');
   const t = getT(lang);
   const [tab, setTab]    = useState('map');
-  const [step, setStep]  = useState(null);
-  const [mod, setMod]    = useState(null);
+  const [step, setStep]  = useState<string | null>(null);
+  const [mod, setMod]    = useState<string | null>(null);
   const [uf, setUF]      = useState('all');
   const [st, setSt]      = useState(() =>
     Object.fromEntries(SAP_UAT.map(t=>[t.id,'open'])));
 
-  const toggle = (id, s) =>
+  const toggle = (id: string, s: string) =>
     setSt(p=>({...p,[id]:p[id]===s?'open':s}));
 
   const pass  = Object.values(st).filter(v=>v==='pass').length;
@@ -1309,7 +1576,7 @@ function SAPUniverse({ lang }) {
             <div className="sap-flow">
               {SAP_PROC.map((s,i)=>(
                 <React.Fragment key={s.id}>
-                  <div className={`sap-fc ${step===s.id?'on':''}`} style={{'--fc-col':s.col}} onClick={()=>setStep(step===s.id?null:s.id)}>
+                  <div className={`sap-fc ${step===s.id?'on':''}`} style={{'--fc-col':s.col} as React.CSSProperties} onClick={()=>setStep(step===s.id?null:s.id)}>
                     <span className="sap-fc-em">{s.em}</span>
                     <span className="sap-fc-lbl">{s.title}</span>
                   </div>
@@ -1319,6 +1586,7 @@ function SAPUniverse({ lang }) {
             </div>
             {step && (()=>{
               const s=SAP_PROC.find(x=>x.id===step);
+              if (!s) return null;
               return (
                 <div className="sap-dp" style={{borderLeftColor:s.col}}>
                   <div className="sap-dp-top">
@@ -1341,7 +1609,7 @@ function SAPUniverse({ lang }) {
             })()}
             <div className="sap-pgrid">
               {SAP_PROC.map(s=>(
-                <div key={s.id} className={`sap-pcard ${step===s.id?'on':''}`} style={{'--pc':s.col}} onClick={()=>setStep(step===s.id?null:s.id)}>
+                <div key={s.id} className={`sap-pcard ${step===s.id?'on':''}`} style={{'--pc':s.col} as React.CSSProperties} onClick={()=>setStep(step===s.id?null:s.id)}>
                   <div className="sap-pcard-bar" style={{background:s.col}}/>
                   <div className="sap-pcard-top">
                     <span className="sap-pcard-em">{s.em}</span>
@@ -1552,7 +1820,7 @@ function SAPUniverse({ lang }) {
                     return (
                       <tr key={t.id}>
                         <td><span className="sap-tid">{t.id}</span></td>
-                        <td><span className="sap-mbadge" style={{background:MB[t.mod]||'#ffffff0d',color:MC[t.mod]||'#fff'}}>{t.mod}</span></td>
+                        <td><span className="sap-mbadge" style={{background:(MB as Record<string,string>)[t.mod]||'#ffffff0d',color:(MC as Record<string,string>)[t.mod]||'#fff'}}>{t.mod}</span></td>
                         <td><span className="sap-ttitle">{t.title}</span></td>
                         <td><span className={`sap-mbadge ${t.p==='P1'?'sap-p1':'sap-p2'}`}>{t.p}</span></td>
                         <td>
@@ -1577,12 +1845,12 @@ function SAPUniverse({ lang }) {
 
 // ─── MANUFACTURER BANNER ─────────────────────────────────────────────────────
 
-function MfrBanner({m, onClick}) {
+function MfrBanner({m, onClick}: {m: any; onClick: () => void}) {
   const [err, setErr] = useState(false);
   const logo = useBaseUrl(m.logo);
   const hasProducts = m.products && m.products.length > 0;
   return (
-    <div className="med-banner" style={{'--accent-glow': m.accent + '22'}} onClick={onClick}>
+    <div className="med-banner" style={{'--accent-glow': m.accent + '22'} as React.CSSProperties} onClick={onClick}>
       <div className="med-banner-bg" style={{background: m.bg}} />
       <div className="med-banner-overlay" />
       <div className="med-banner-accent" style={{background: m.accent}} />
@@ -1608,12 +1876,12 @@ function MfrBanner({m, onClick}) {
 
 // ─── GENERIC MFR DETAIL ───────────────────────────────────────────────────────
 
-function MfrDetail({m, onBack}) {
+function MfrDetail({m, onBack}: {m: any; onBack: () => void}) {
   const [err, setErr] = useState(false);
   const logo = useBaseUrl(m.logo);
   const hasProducts = m.products && m.products.length > 0;
   const focusTags = m.focus
-    ? m.focus.map(f => (typeof f === 'string' ? f : f.label))
+    ? m.focus.map((f: any) => (typeof f === 'string' ? f : f.label))
     : [];
   return (
     <div className="med-detail">
@@ -1637,7 +1905,7 @@ function MfrDetail({m, onBack}) {
         <div className="med-info-card">
           <div className="med-info-card-t">Unternehmensdaten</div>
           <div className="med-facts">
-            {m.facts.map((f, i) => (
+            {m.facts.map((f: any, i: number) => (
               <div className="med-fact" key={i}>
                 <span className="med-fact-l">{f.label}</span>
                 <span className="med-fact-v">{f.value}</span>
@@ -1650,7 +1918,7 @@ function MfrDetail({m, onBack}) {
           <p className="med-desc">{m.description}</p>
           <div className="med-info-card-t" style={{marginBottom:'.75rem'}}>Schwerpunkte</div>
           <div className="med-focus-tags">
-            {focusTags.map((f, i) => (
+            {focusTags.map((f: any, i: number) => (
               <span className="med-focus-tag" key={i}>{f}</span>
             ))}
           </div>
@@ -1663,7 +1931,7 @@ function MfrDetail({m, onBack}) {
       </div>
       {hasProducts ? (
         <div className="med-prod-list">
-          {m.products.map((p, i) => (
+          {m.products.map((p: any, i: number) => (
             <Link key={p.code} to={p.link} className="med-prod-card">
               <div className="med-prod-accent" style={{background: m.accent}}/>
               <div className="med-prod-num">0{i+1}</div>
@@ -1690,7 +1958,7 @@ function MfrDetail({m, onBack}) {
 
 // ─── RIWOSPINE DETAIL ─────────────────────────────────────────────────────────
 
-function RiwoMap({ loc }) {
+function RiwoMap({ loc }: { loc: any }) {
   const mapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${loc.lng - 0.08}%2C${loc.lat - 0.05}%2C${loc.lng + 0.08}%2C${loc.lat + 0.05}&layer=mapnik&marker=${loc.lat}%2C${loc.lng}`;
   return (
     <div className="riwo-map-card riwo-anim-3">
@@ -1714,7 +1982,7 @@ function RiwoMap({ loc }) {
   );
 }
 
-function RiwoProdCard({ p, idx }) {
+function RiwoProdCard({ p, idx }: { p: any; idx: number }) {
   const [imgErr, setImgErr] = useState(false);
   const imgSrc = useBaseUrl(p.image);
   return (
@@ -1741,7 +2009,7 @@ function RiwoProdCard({ p, idx }) {
         <div className="riwo-prod-title">{p.title}</div>
         <div className="riwo-prod-desc">{p.desc}</div>
         <div className="riwo-prod-specs">
-          {p.specs.map((s,i)=>(
+          {p.specs.map((s: any,i: number)=>(
             <div className="riwo-prod-spec" key={i}>
               <span className="riwo-prod-spec-icon">{s.icon}</span>
               <div>
@@ -1752,7 +2020,7 @@ function RiwoProdCard({ p, idx }) {
           ))}
         </div>
         <div className="riwo-prod-highlights">
-          {p.highlights.map((h,i)=>(
+          {p.highlights.map((h: any,i: number)=>(
             <div className="riwo-prod-hl" key={i}>{h}</div>
           ))}
         </div>
@@ -1765,8 +2033,8 @@ function RiwoProdCard({ p, idx }) {
   );
 }
 
-function RIWOspineDetail({ onBack }) {
-  const m = MFRS.find(x => x.id === 'riwo');
+function RIWOspineDetail({ onBack }: { onBack: () => void }) {
+  const m = MFRS.find(x => x.id === 'riwo')!;
   const [logoErr, setLogoErr] = useState(false);
   const logoSrc = useBaseUrl(m.logo);
   return (
@@ -1796,7 +2064,7 @@ function RIWOspineDetail({ onBack }) {
             <div className="riwo-hero-tag">{m.tagline}</div>
             <div className="riwo-hero-actions">
               <a href={m.website} target="_blank" rel="noopener noreferrer" className="riwo-btn-primary">🌐 riwospine.com ↗</a>
-              <span className="riwo-btn-ghost">📍 {m.location.city}, DE</span>
+              <span className="riwo-btn-ghost">📍 {m.location?.city}, DE</span>
             </div>
           </div>
         </div>
@@ -1853,7 +2121,7 @@ function RIWOspineDetail({ onBack }) {
 
 // ─── INOMED DETAIL ───────────────────────────────────────────────────────────
 
-function InoMap({ loc }) {
+function InoMap({ loc }: { loc: any }) {
   const mapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${loc.lng - 0.08}%2C${loc.lat - 0.05}%2C${loc.lng + 0.08}%2C${loc.lat + 0.05}&layer=mapnik&marker=${loc.lat}%2C${loc.lng}`;
   return (
     <div className="ino-map-card ino-anim-3">
@@ -1877,7 +2145,7 @@ function InoMap({ loc }) {
   );
 }
 
-function InoProdCard({ p, idx }) {
+function InoProdCard({ p, idx }: { p: any; idx: number }) {
   const [imgErr, setImgErr] = useState(false);
   const imgSrc = useBaseUrl(p.image);
   return (
@@ -1904,7 +2172,7 @@ function InoProdCard({ p, idx }) {
         <div className="ino-prod-title">{p.title}</div>
         <div className="ino-prod-desc">{p.desc}</div>
         <div className="ino-prod-specs">
-          {p.specs.map((s,i)=>(
+          {p.specs.map((s: any,i: number)=>(
             <div className="ino-prod-spec" key={i}>
               <span className="ino-prod-spec-icon">{s.icon}</span>
               <div>
@@ -1915,7 +2183,7 @@ function InoProdCard({ p, idx }) {
           ))}
         </div>
         <div className="ino-prod-highlights">
-          {p.highlights.map((h,i)=>(
+          {p.highlights.map((h: any,i: number)=>(
             <div className="ino-prod-hl" key={i}>{h}</div>
           ))}
         </div>
@@ -1928,8 +2196,8 @@ function InoProdCard({ p, idx }) {
   );
 }
 
-function InomedDetail({ onBack }) {
-  const m = MFRS.find(x => x.id === 'inomed');
+function InomedDetail({ onBack }: { onBack: () => void }) {
+  const m = MFRS.find(x => x.id === 'inomed')!;
   const [logoErr, setLogoErr] = useState(false);
   const logoSrc = useBaseUrl(m.logo);
   return (
@@ -1960,7 +2228,7 @@ function InomedDetail({ onBack }) {
             <div className="ino-hero-tag">{m.tagline}</div>
             <div className="ino-hero-actions">
               <a href={m.website} target="_blank" rel="noopener noreferrer" className="ino-btn-primary">🌐 inomed.com ↗</a>
-              <span className="ino-btn-ghost">📍 {m.location.city}, DE</span>
+              <span className="ino-btn-ghost">📍 {m.location?.city}, DE</span>
             </div>
           </div>
         </div>
@@ -2017,7 +2285,7 @@ function InomedDetail({ onBack }) {
 
 // ─── MEYER-HAAKE DETAIL ──────────────────────────────────────────────────────
 
-function MhMap({ loc }) {
+function MhMap({ loc }: { loc: any }) {
   const mapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${loc.lng - 0.08}%2C${loc.lat - 0.05}%2C${loc.lng + 0.08}%2C${loc.lat + 0.05}&layer=mapnik&marker=${loc.lat}%2C${loc.lng}`;
   return (
     <div style={{background:'var(--card)',border:'1px solid var(--card-border)',borderRadius:16,overflow:'hidden',boxShadow:'0 1px 4px rgba(0,0,0,.05)',display:'flex',flexDirection:'column'}}>
@@ -2043,107 +2311,153 @@ function MhMap({ loc }) {
   );
 }
 
-function MhProdCard({ p, idx }) {
+function MhProdCard({ p, idx }: { p: any; idx: number }) {
   const [imgErr, setImgErr] = useState(false);
   const [hovered, setHovered] = useState(false);
   const imgSrc = useBaseUrl(p.image);
   return (
     <Link to={p.link}
-      style={{background:'var(--card)',border:`1px solid ${hovered?'rgba(230,81,0,.2)':'var(--card-border)'}`,borderRadius:20,overflow:'hidden',display:'flex',flexDirection:'column',boxShadow:hovered?'0 20px 48px rgba(0,0,0,.13),0 0 0 1.5px rgba(230,81,0,.25)':'0 2px 8px rgba(0,0,0,.06)',transform:hovered?'translateY(-6px)':'none',transition:'transform .3s cubic-bezier(.2,.8,.3,1),box-shadow .3s ease,border-color .2s',textDecoration:'none',color:'inherit',position:'relative'}}
+      style={{
+        background:'var(--card)',
+        border:`1px solid ${hovered?'rgba(230,81,0,.35)':'var(--card-border)'}`,
+        borderRadius:24,overflow:'hidden',display:'flex',flexDirection:'column',
+        boxShadow:hovered?'0 28px 64px rgba(0,0,0,.22),0 0 0 1.5px rgba(230,81,0,.3),0 0 48px rgba(230,81,0,.08)':'var(--shadow-md)',
+        transform:hovered?'translateY(-10px)':'none',
+        transition:'transform .4s cubic-bezier(.2,.8,.3,1),box-shadow .4s ease,border-color .25s',
+        textDecoration:'none',color:'inherit',position:'relative'
+      }}
       onMouseEnter={()=>setHovered(true)} onMouseLeave={()=>setHovered(false)}>
-      <div style={{position:'absolute',top:0,left:0,right:0,height:3,background:'#e65100',zIndex:1}}/>
-      <div style={{position:'relative',height:200,overflow:'hidden',flexShrink:0}}>
+
+      {/* IMAGE AREA */}
+      <div style={{position:'relative',height:260,overflow:'hidden',flexShrink:0}}>
         {!imgErr ? (
-          <img src={imgSrc} alt={p.title} onError={()=>setImgErr(true)} style={{width:'100%',height:'100%',objectFit:'cover',display:'block',transform:hovered?'scale(1.06)':'scale(1)',transition:'transform .5s ease'}}/>
+          <img src={imgSrc} alt={p.title} onError={()=>setImgErr(true)}
+            style={{width:'100%',height:'100%',objectFit:'cover',display:'block',
+              transform:hovered?'scale(1.08)':'scale(1)',transition:'transform .6s cubic-bezier(.25,.46,.45,.94)'}}/>
         ) : (
-          <div style={{width:'100%',height:'100%',background:`linear-gradient(135deg,${p.imagePlaceholderColor} 0%,rgba(0,0,0,.8) 100%)`,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',gap:10,position:'relative',overflow:'hidden'}}>
-            <div style={{position:'absolute',inset:0,opacity:.06,backgroundImage:'linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px)',backgroundSize:'32px 32px'}}/>
-            <span style={{fontSize:'2.8rem',position:'relative',zIndex:1}}>🔩</span>
-            <span style={{fontFamily:'DM Mono,monospace',fontSize:'.68rem',color:'rgba(255,255,255,.3)',letterSpacing:'.12em',position:'relative',zIndex:1,textTransform:'uppercase'}}>{p.code}</span>
-            <div style={{position:'absolute',bottom:0,left:0,right:0,background:'linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 100%)',padding:'2rem 1.25rem .8rem',fontFamily:'Bebas Neue,sans-serif',fontSize:'1.4rem',color:'rgba(255,255,255,.18)',letterSpacing:'.1em',lineHeight:1}}>{p.title}</div>
+          <div style={{width:'100%',height:'100%',background:`linear-gradient(145deg,${p.imagePlaceholderColor} 0%,#000 100%)`,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',gap:12,position:'relative',overflow:'hidden'}}>
+            <div style={{position:'absolute',inset:0,opacity:.07,backgroundImage:'repeating-linear-gradient(45deg,rgba(230,81,0,.4) 0,rgba(230,81,0,.4) 1px,transparent 0,transparent 50%)',backgroundSize:'20px 20px'}}/>
+            <span style={{fontSize:'3.5rem',position:'relative',zIndex:1,filter:'drop-shadow(0 4px 12px rgba(230,81,0,.5))'}}>⚡</span>
+            <span style={{fontFamily:'DM Mono,monospace',fontSize:'.7rem',color:'rgba(255,255,255,.35)',letterSpacing:'.14em',position:'relative',zIndex:1,textTransform:'uppercase'}}>{p.code}</span>
           </div>
         )}
-        <span style={{position:'absolute',top:'1rem',left:'1rem',zIndex:2,padding:'4px 12px',borderRadius:99,fontSize:'.62rem',fontWeight:800,textTransform:'uppercase',letterSpacing:'.1em',color:'#fff',background:p.badgeColor+'cc',backdropFilter:'blur(8px)',boxShadow:'0 2px 10px rgba(0,0,0,.3)'}}>{p.badge}</span>
-        <span style={{position:'absolute',top:'1rem',right:'1rem',zIndex:2,width:32,height:32,borderRadius:8,background:'rgba(0,0,0,.45)',backdropFilter:'blur(8px)',border:'1px solid rgba(255,255,255,.15)',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:'DM Mono,monospace',fontSize:'.72rem',fontWeight:700,color:'rgba(255,255,255,.6)'}}>0{idx+1}</span>
-      </div>
-      <div style={{padding:'1.5rem',flex:1,display:'flex',flexDirection:'column'}}>
-        <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:'.6rem'}}>
-          <span style={{fontFamily:'DM Mono,monospace',fontSize:'.62rem',color:'var(--text-faint)',background:'var(--bg2)',border:'1px solid var(--section-border)',padding:'2px 8px',borderRadius:4}}>{p.code}</span>
-          <span style={{fontSize:'.68rem',color:'#ff6d00',fontWeight:600,textTransform:'uppercase',letterSpacing:'.08em'}}>{p.tagline}</span>
+
+        {/* Cinematic gradient overlay */}
+        <div style={{position:'absolute',inset:0,background:'linear-gradient(to top,rgba(0,0,0,.85) 0%,rgba(0,0,0,.3) 45%,transparent 100%)',zIndex:1,transition:'opacity .3s',opacity:hovered?.95:1}}/>
+        {/* Subtle color leak from brand */}
+        <div style={{position:'absolute',inset:0,background:`radial-gradient(ellipse at 20% 80%,${p.badgeColor}22 0%,transparent 60%)`,zIndex:1,pointerEvents:'none'}}/>
+
+        {/* BADGE */}
+        <span style={{position:'absolute',top:'1.1rem',left:'1.1rem',zIndex:3,padding:'5px 14px',borderRadius:99,fontSize:'.6rem',fontWeight:900,textTransform:'uppercase',letterSpacing:'.12em',color:'#fff',background:p.badgeColor,backdropFilter:'blur(8px)',boxShadow:`0 4px 16px ${p.badgeColor}66`}}>{p.badge}</span>
+
+        {/* NUMBER */}
+        <span style={{position:'absolute',top:'1.1rem',right:'1.1rem',zIndex:3,width:34,height:34,borderRadius:10,background:'rgba(0,0,0,.5)',backdropFilter:'blur(12px)',border:'1px solid rgba(255,255,255,.18)',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:'DM Mono,monospace',fontSize:'.75rem',fontWeight:700,color:'rgba(255,255,255,.7)'}}>0{idx+1}</span>
+
+        {/* TITLE OVERLAY AT BOTTOM OF IMAGE */}
+        <div style={{position:'absolute',bottom:0,left:0,right:0,zIndex:2,padding:'1.5rem 1.5rem .9rem'}}>
+          <div style={{fontSize:'.65rem',color:'rgba(255,107,0,.85)',fontWeight:700,textTransform:'uppercase',letterSpacing:'.1em',marginBottom:'.3rem'}}>{p.tagline}</div>
+          <div style={{fontFamily:'Bebas Neue,sans-serif',fontSize:'1.8rem',color:'#fff',letterSpacing:'.06em',lineHeight:.95,textShadow:'0 2px 12px rgba(0,0,0,.6)'}}>{p.title}</div>
         </div>
-        <div style={{fontSize:'1.2rem',fontWeight:800,color:'var(--text)',marginBottom:'.5rem',lineHeight:1.2}}>{p.title}</div>
-        <div style={{fontSize:'.8rem',color:'var(--text-dim)',lineHeight:1.65,marginBottom:'1.2rem'}}>{p.desc}</div>
-        <div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:7,marginBottom:'1.2rem'}}>
-          {p.specs.map((s,i)=>(
-            <div key={i} style={{background:'var(--bg2)',borderRadius:9,padding:'8px 10px',display:'flex',alignItems:'flex-start',gap:7,border:'1px solid var(--section-border)'}}>
-              <span style={{fontSize:'.9rem',flexShrink:0,marginTop:1}}>{s.icon}</span>
+      </div>
+
+      {/* BODY */}
+      <div style={{padding:'1.4rem 1.5rem 1.5rem',flex:1,display:'flex',flexDirection:'column'}}>
+        {/* CODE PILL */}
+        <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:'1rem'}}>
+          <span style={{fontFamily:'DM Mono,monospace',fontSize:'.62rem',color:'#ff6d00',background:'rgba(230,81,0,.1)',border:'1px solid rgba(230,81,0,.25)',padding:'3px 10px',borderRadius:6,fontWeight:600,letterSpacing:'.07em'}}>{p.code}</span>
+        </div>
+
+        {/* DESC */}
+        <div style={{fontSize:'.82rem',color:'var(--text-dim)',lineHeight:1.7,marginBottom:'1.2rem',flex:1}}>{p.desc}</div>
+
+        {/* SPECS GRID */}
+        <div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:7,marginBottom:'1.1rem'}}>
+          {p.specs.map((s: any,i: number)=>(
+            <div key={i} style={{background:'var(--bg2)',borderRadius:11,padding:'9px 11px',display:'flex',alignItems:'flex-start',gap:8,border:`1px solid ${hovered?'rgba(230,81,0,.18)':'var(--section-border)'}`,transition:'border-color .2s'}}>
+              <span style={{fontSize:'.95rem',flexShrink:0,marginTop:1}}>{s.icon}</span>
               <div>
-                <div style={{fontSize:'.58rem',color:'var(--text-faint)',textTransform:'uppercase',letterSpacing:'.09em',fontWeight:600}}>{s.label}</div>
-                <div style={{fontSize:'.74rem',color:'var(--text)',fontWeight:700,lineHeight:1.25}}>{s.value}</div>
+                <div style={{fontSize:'.56rem',color:'var(--text-faint)',textTransform:'uppercase',letterSpacing:'.1em',fontWeight:700}}>{s.label}</div>
+                <div style={{fontSize:'.76rem',color:'var(--text)',fontWeight:700,lineHeight:1.3,marginTop:1}}>{s.value}</div>
               </div>
             </div>
           ))}
         </div>
-        <div style={{display:'flex',flexDirection:'column',gap:5,marginBottom:'1.25rem'}}>
-          {p.highlights.map((h,i)=>(
-            <div key={i} style={{display:'flex',alignItems:'flex-start',gap:8,fontSize:'.76rem',color:'var(--text-dim)',lineHeight:1.45}}>
-              <span style={{color:'#e65100',fontWeight:700,flexShrink:0,fontSize:'.9rem',marginTop:-1}}>›</span>{h}
+
+        {/* HIGHLIGHTS */}
+        <div style={{display:'flex',flexDirection:'column',gap:5,marginBottom:'1.3rem'}}>
+          {p.highlights.map((h: any,i: number)=>(
+            <div key={i} style={{display:'flex',alignItems:'flex-start',gap:9,fontSize:'.77rem',color:'var(--text-dim)',lineHeight:1.5}}>
+              <span style={{color:'#e65100',fontWeight:900,flexShrink:0,fontSize:'.85rem',marginTop:1,textShadow:`0 0 8px rgba(230,81,0,${hovered?.4:.2})`}}>›</span>{h}
             </div>
           ))}
         </div>
-        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'11px 16px',borderRadius:11,marginTop:'auto',background:hovered?'#e65100':'var(--mh-orange-dim)',border:'1px solid rgba(230,81,0,.25)',fontFamily:'Outfit,sans-serif',fontWeight:700,fontSize:'.82rem',color:hovered?'#fff':'#ff6d00',transition:'all .2s'}}>
-          <span>Modul öffnen</span><span style={{transform:hovered?'translateX(4px)':'none',transition:'transform .2s'}}>→</span>
+
+        {/* CTA */}
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'13px 18px',borderRadius:14,marginTop:'auto',
+          background:hovered?'#e65100':'rgba(230,81,0,.1)',
+          border:hovered?'1px solid #e65100':'1px solid rgba(230,81,0,.25)',
+          fontFamily:'Outfit,sans-serif',fontWeight:800,fontSize:'.84rem',
+          color:hovered?'#fff':'#ff6d00',
+          transition:'all .25s ease',
+          boxShadow:hovered?'0 4px 20px rgba(230,81,0,.4)':'none'}}>
+          <span>Modul öffnen</span>
+          <span style={{transform:hovered?'translateX(5px)':'none',transition:'transform .25s',fontSize:'1.1rem'}}>→</span>
         </div>
       </div>
     </Link>
   );
 }
 
-function MeyerHaakeDetail({ onBack }) {
-  const m = MFRS.find(x => x.id === 'meyer');
+function MeyerHaakeDetail({ onBack }: { onBack: () => void }) {
+  const m = MFRS.find(x => x.id === 'meyer')!;
   const [logoErr, setLogoErr] = useState(false);
   const logoSrc = useBaseUrl(m.logo);
   const cardStyle = {background:'var(--card)',border:'1px solid var(--card-border)',borderRadius:16,padding:'1.5rem',boxShadow:'0 1px 4px rgba(0,0,0,.05)'};
   const labelStyle = {fontSize:'.62rem',fontWeight:700,color:'var(--text-faint)',textTransform:'uppercase',letterSpacing:'.14em',marginBottom:'1rem',display:'flex',alignItems:'center',gap:8};
   return (
     <div>
-      <button style={{display:'inline-flex',alignItems:'center',gap:9,padding:'10px 20px',borderRadius:11,border:'1px solid var(--section-border)',background:'var(--card)',fontFamily:'Outfit,sans-serif',fontWeight:600,fontSize:'.84rem',cursor:'pointer',marginBottom:'2rem',color:'var(--text)',boxShadow:'0 1px 3px rgba(0,0,0,.05)'}}
+      <button style={{display:'inline-flex',alignItems:'center',gap:9,padding:'11px 22px',borderRadius:13,border:'1px solid var(--section-border)',background:'var(--card)',fontFamily:'Outfit,sans-serif',fontWeight:700,fontSize:'.84rem',cursor:'pointer',marginBottom:'2.25rem',color:'var(--text)',boxShadow:'var(--shadow-sm)',transition:'all .2s',letterSpacing:'.02em'}}
         onClick={onBack}>← Alle Hersteller
       </button>
 
       {/* HERO */}
-      <div style={{position:'relative',overflow:'hidden',borderRadius:22,minHeight:320,display:'flex',alignItems:'flex-end',marginBottom:'1.75rem',boxShadow:'0 12px 48px rgba(0,0,0,.2),0 0 0 1px rgba(230,81,0,.15)'}}>
-        <div style={{position:'absolute',inset:0,zIndex:0,background:'linear-gradient(160deg,#0e0400 0%,#1c0900 35%,#271200 60%,#1c0900 100%)'}}/>
-        <div style={{position:'absolute',inset:0,zIndex:1,opacity:.06,backgroundImage:'linear-gradient(rgba(230,81,0,.6) 1px,transparent 1px),linear-gradient(90deg,rgba(230,81,0,.6) 1px,transparent 1px)',backgroundSize:'48px 48px'}}/>
-        <div style={{position:'absolute',top:-100,right:-100,width:400,height:400,borderRadius:'50%',background:'radial-gradient(circle,rgba(230,81,0,.08) 0%,transparent 70%)',zIndex:1,pointerEvents:'none'}}/>
-        <div style={{position:'absolute',inset:0,zIndex:2,background:'linear-gradient(to top,rgba(0,0,0,.9) 0%,rgba(0,0,0,.45) 50%,rgba(0,0,0,.05) 100%),linear-gradient(100deg,rgba(230,81,0,.1) 0%,transparent 60%)'}}/>
-        <div style={{position:'absolute',top:'1.5rem',right:'1.5rem',zIndex:4,display:'flex',gap:8,flexWrap:'wrap',justifyContent:'flex-end'}}>
+      <div style={{position:'relative',overflow:'hidden',borderRadius:28,minHeight:380,display:'flex',alignItems:'flex-end',marginBottom:'2rem',boxShadow:'0 24px 80px rgba(0,0,0,.35),0 0 0 1px rgba(230,81,0,.2),0 0 80px rgba(230,81,0,.05)'}}>
+        <div style={{position:'absolute',inset:0,zIndex:0,background:'linear-gradient(160deg,#0a0200 0%,#180600 35%,#221000 60%,#180600 100%)'}}/>
+        {/* Grid texture */}
+        <div style={{position:'absolute',inset:0,zIndex:1,opacity:.05,backgroundImage:'linear-gradient(rgba(230,81,0,.8) 1px,transparent 1px),linear-gradient(90deg,rgba(230,81,0,.8) 1px,transparent 1px)',backgroundSize:'56px 56px'}}/>
+        {/* Ambient glow */}
+        <div style={{position:'absolute',top:-60,right:-60,width:500,height:500,borderRadius:'50%',background:'radial-gradient(circle,rgba(230,81,0,.12) 0%,transparent 65%)',zIndex:1,pointerEvents:'none'}}/>
+        <div style={{position:'absolute',bottom:-80,left:-80,width:400,height:400,borderRadius:'50%',background:'radial-gradient(circle,rgba(230,81,0,.06) 0%,transparent 65%)',zIndex:1,pointerEvents:'none'}}/>
+        <div style={{position:'absolute',inset:0,zIndex:2,background:'linear-gradient(to top,rgba(0,0,0,.95) 0%,rgba(0,0,0,.5) 50%,rgba(0,0,0,.08) 100%),linear-gradient(105deg,rgba(230,81,0,.14) 0%,transparent 55%)'}}/>
+        {/* Stats pills */}
+        <div style={{position:'absolute',top:'1.75rem',right:'1.75rem',zIndex:4,display:'flex',gap:8,flexWrap:'wrap',justifyContent:'flex-end'}}>
           {[{n:'1981',l:'Gegründet'},{n:'MiG',l:'Produktion'},{n:'50+',l:'Länder'}].map((s,i)=>(
-            <div key={i} style={{background:'rgba(0,0,0,.35)',border:'1px solid rgba(230,81,0,.3)',backdropFilter:'blur(10px)',borderRadius:99,padding:'5px 13px',display:'flex',alignItems:'center',gap:6}}>
-              <span style={{fontFamily:'Bebas Neue,sans-serif',fontSize:'1.1rem',color:'#ff6d00',lineHeight:1}}>{s.n}</span>
-              <span style={{fontSize:'.58rem',color:'rgba(255,255,255,.4)',textTransform:'uppercase',letterSpacing:'.1em',fontWeight:600}}>{s.l}</span>
+            <div key={i} style={{background:'rgba(0,0,0,.45)',border:'1px solid rgba(230,81,0,.35)',backdropFilter:'blur(14px)',borderRadius:99,padding:'6px 15px',display:'flex',alignItems:'center',gap:7,boxShadow:'0 4px 16px rgba(0,0,0,.3)'}}>
+              <span style={{fontFamily:'Bebas Neue,sans-serif',fontSize:'1.2rem',color:'#ff6d00',lineHeight:1,textShadow:'0 0 12px rgba(255,109,0,.5)'}}>{s.n}</span>
+              <span style={{fontSize:'.57rem',color:'rgba(255,255,255,.4)',textTransform:'uppercase',letterSpacing:'.12em',fontWeight:700}}>{s.l}</span>
             </div>
           ))}
         </div>
-        <div style={{position:'relative',zIndex:3,padding:'2.5rem 3rem',width:'100%',display:'flex',alignItems:'flex-end',gap:'2.5rem',flexWrap:'wrap'}}>
-          <div style={{width:200,height:80,background:'#fff',borderRadius:14,display:'flex',alignItems:'center',justifyContent:'center',padding:'14px 22px',flexShrink:0,boxShadow:'0 4px 24px rgba(0,0,0,.4),0 0 0 1px rgba(230,81,0,.2)'}}>
+        {/* Content */}
+        <div style={{position:'relative',zIndex:3,padding:'3rem 3.5rem',width:'100%',display:'flex',alignItems:'flex-end',gap:'2.75rem',flexWrap:'wrap'}}>
+          <div style={{width:210,height:86,background:'#fff',borderRadius:16,display:'flex',alignItems:'center',justifyContent:'center',padding:'14px 22px',flexShrink:0,boxShadow:'0 8px 32px rgba(0,0,0,.5),0 0 0 1px rgba(230,81,0,.25)',transition:'transform .3s ease'}}>
             {!logoErr
               ? <img src={logoSrc} alt={m.name} style={{maxWidth:'100%',maxHeight:'100%',objectFit:'contain',mixBlendMode:'multiply'}} onError={()=>setLogoErr(true)}/>
               : <span style={{fontFamily:'Bebas Neue,sans-serif',fontSize:'1rem',color:'#e65100',fontWeight:700}}>{m.name}</span>}
           </div>
           <div style={{flex:1,minWidth:0}}>
-            <div style={{fontSize:'.6rem',letterSpacing:'.22em',textTransform:'uppercase',color:'#ff6d00',fontWeight:700,marginBottom:'.5rem',display:'flex',alignItems:'center',gap:8}}>
-              <span style={{display:'block',width:24,height:1,background:'#ff6d00'}}/>Medizinprodukt · Radiochirurgie & Wundversorgung
+            <div style={{fontSize:'.58rem',letterSpacing:'.26em',textTransform:'uppercase',color:'#ff6d00',fontWeight:700,marginBottom:'.6rem',display:'flex',alignItems:'center',gap:10}}>
+              <span style={{display:'block',width:28,height:1,background:'linear-gradient(90deg,#ff6d00,transparent)'}}/>Medizinprodukt · Radiochirurgie & Wundversorgung
             </div>
-            <div style={{fontFamily:'Bebas Neue,sans-serif',fontSize:'clamp(2.2rem,5vw,3.8rem)',color:'#fff',letterSpacing:'.06em',lineHeight:.95,marginBottom:'.5rem'}}>{m.name}</div>
-            <div style={{fontSize:'.82rem',color:'rgba(255,255,255,.55)',fontWeight:300,letterSpacing:'.1em',textTransform:'uppercase',marginBottom:'1.2rem'}}>{m.tagline}</div>
+            <div style={{fontFamily:'Bebas Neue,sans-serif',fontSize:'clamp(2.5rem,5.5vw,4.4rem)',color:'#fff',letterSpacing:'.05em',lineHeight:.9,marginBottom:'.6rem',textShadow:'0 4px 24px rgba(0,0,0,.4)'}}>{m.name}</div>
+            <div style={{fontSize:'.84rem',color:'rgba(255,255,255,.5)',fontWeight:300,letterSpacing:'.12em',textTransform:'uppercase',marginBottom:'1.4rem'}}>{m.tagline}</div>
             <div style={{display:'flex',gap:10,flexWrap:'wrap',alignItems:'center'}}>
               <a href={m.website} target="_blank" rel="noopener noreferrer"
-                style={{display:'inline-flex',alignItems:'center',gap:8,padding:'10px 20px',borderRadius:10,background:'#e65100',color:'#fff',fontFamily:'Outfit,sans-serif',fontWeight:700,fontSize:'.82rem',textDecoration:'none',boxShadow:'0 4px 16px rgba(230,81,0,.4)'}}>
+                style={{display:'inline-flex',alignItems:'center',gap:8,padding:'11px 22px',borderRadius:12,background:'#e65100',color:'#fff',fontFamily:'Outfit,sans-serif',fontWeight:700,fontSize:'.84rem',textDecoration:'none',boxShadow:'0 6px 24px rgba(230,81,0,.5)',letterSpacing:'.03em'}}>
                 🌐 meyer-haake.com ↗
               </a>
-              <span style={{display:'inline-flex',alignItems:'center',gap:8,padding:'9px 18px',borderRadius:10,background:'rgba(255,255,255,.08)',color:'rgba(255,255,255,.7)',border:'1px solid rgba(255,255,255,.15)',fontFamily:'Outfit,sans-serif',fontWeight:600,fontSize:'.82rem',backdropFilter:'blur(8px)'}}>
-                📍 {m.location.city}, DE
+              <span style={{display:'inline-flex',alignItems:'center',gap:8,padding:'10px 20px',borderRadius:12,background:'rgba(255,255,255,.07)',color:'rgba(255,255,255,.65)',border:'1px solid rgba(255,255,255,.14)',fontFamily:'Outfit,sans-serif',fontWeight:600,fontSize:'.84rem',backdropFilter:'blur(10px)'}}>
+                📍 {m.location?.city}, DE
               </span>
             </div>
           </div>
@@ -2204,16 +2518,18 @@ function MeyerHaakeDetail({ onBack }) {
 
 export default function Home() {
   const bgImg    = useBaseUrl('/img/emig-gebaeude.png');
-  const videoRef = useRef(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [paused, setPaused] = useState(false);
   const [tab, setTab]       = useState('QM');
   const [tabDir, setTabDir] = useState('right');
   const tabOrder            = ['QM','SAP','MED'];
-  const [done, setDone]     = useState([]);
-  const [mfr, setMfr]       = useState(null);
+  const [done, setDone]     = useState<string[]>([]);
+  const [mfr, setMfr]       = useState<any>(null);
   const [greet, setGreet]   = useState('');
+  const [lang, setLang]     = useState('de');
+  const t = getT(lang);
 
-  const switchTab = (id) => {
+  const switchTab = (id: string) => {
     const fromIdx = tabOrder.indexOf(tab);
     const toIdx   = tabOrder.indexOf(id);
     setTabDir(toIdx > fromIdx ? 'right' : 'left');
@@ -2222,10 +2538,18 @@ export default function Home() {
   };
 
   useEffect(()=>{
-    try{ const s=localStorage.getItem('emig_progress'); if(s) setDone(JSON.parse(s)); }catch(_){}
+    try{
+      const s=localStorage.getItem('emig_progress'); if(s) setDone(JSON.parse(s));
+      const l=localStorage.getItem('emig_lang'); if(l) setLang(l);
+    }catch(_){}
     const h=new Date().getHours();
-    setGreet(h<12?'Guten Morgen':h<17?'Guten Tag':'Guten Abend');
+    setGreet(h<12?'greetMorning':h<17?'greetDay':'greetEvening');
   },[]);
+
+  const handleLang = (code:string) => {
+    setLang(code);
+    try{ localStorage.setItem('emig_lang',code); }catch(_){}
+  };
 
   useEffect(()=>{
     const v=videoRef.current; if(!v) return;
@@ -2245,11 +2569,12 @@ export default function Home() {
   const CQM   = '#92400e';
   const CMED  = '#dc2626';
 
-  function ModCard({title,code,color,link='#',draft=false,num=''}){
+  function ModCard({title,code,color,link='#',draft=false,num='',lang:_l='de'}: {title:string;code:string;color:string;link?:string;draft?:boolean;num?:string;lang?:string}){
+    const ct = getT(_l);
     const isDone=done.includes(code);
-    const accentBg = draft ? '#e5e1da' : isDone ? '#10b981' : color;
+    const accentBg = draft ? 'var(--text-faint)' : isDone ? '#10b981' : color;
     return (
-      <div className={"ea-card"+(isDone?" ea-card-done-glow":"")} style={{opacity:draft?.62:1,paddingLeft:'1.1rem'}}>
+      <div className={"ea-card"+(isDone?" ea-card-done-glow":"")} style={{opacity:draft?.6:1,paddingLeft:'1.1rem'}}>
         <div className="ea-card-stripe" style={{background:accentBg}}/>
         {num && <div className="ea-card-num">{num}</div>}
         <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:4}}>
@@ -2258,13 +2583,13 @@ export default function Home() {
         <div className="ea-card-status">
           <div className="ea-card-code">{code}</div>
           {isDone && (
-            <div className="ea-card-chip" style={{background:'#d1fae5',color:'#065f46'}}>
-              <div className="ea-card-chip-dot" style={{background:'#10b981'}}/>Abgeschlossen
+            <div className="ea-card-chip" style={{background:'rgba(16,185,129,.12)',color:'#059669',border:'1px solid rgba(16,185,129,.25)'}}>
+              <div className="ea-card-chip-dot" style={{background:'#10b981'}}/>{ct('cardDone')}
             </div>
           )}
           {draft && (
-            <div className="ea-card-chip" style={{background:'#f0ede8',color:'#9ca3af'}}>
-              <div className="ea-card-chip-dot" style={{background:'#d1cec8'}}/>In Vorbereitung
+            <div className="ea-card-chip" style={{background:'var(--bg2)',color:'var(--text-faint)',border:'1px solid var(--section-border)'}}>
+              <div className="ea-card-chip-dot" style={{background:'var(--text-faint)'}}/>{ct('cardDraft')}
             </div>
           )}
         </div>
@@ -2273,8 +2598,8 @@ export default function Home() {
         </div>
         {!draft && (
           <Link className="ea-card-btn" to={link}
-            style={{background:isDone?'rgba(16,185,129,.1)':'rgba(0,0,0,.04)',color:isDone?'#059669':color,border:`1.5px solid ${isDone?'rgba(16,185,129,.3)':color+'44'}`}}>
-            <span>{isDone?'Wiederholen':'Starten'}</span>
+            style={{background:isDone?'rgba(16,185,129,.1)':'var(--bg2)',color:isDone?'#059669':color,border:`1.5px solid ${isDone?'rgba(16,185,129,.3)':color+'33'}`}}>
+            <span>{isDone?ct('cardRepeat'):ct('cardStart')}</span>
             <span className="ea-card-btn-arrow">{isDone?'↻':'→'}</span>
           </Link>
         )}
@@ -2282,7 +2607,7 @@ export default function Home() {
     );
   }
 
-  function SH({children,color='#374151',count=''}){
+  function SH({children,color='#374151',count=''}: {children:React.ReactNode;color?:string;count?:string}){
     return(
       <div className="ea-sh">
         <div className="ea-sh-bar" style={{background:color}}/>
@@ -2314,16 +2639,20 @@ export default function Home() {
             <div className="ea-frame-b"/>
             <button className="ea-vidctl" onClick={toggleVid} title={paused?'Play':'Pause'}>{paused?'▶':'⏸'}</button>
             <div className="ea-hero-inner">
-              <div className="ea-eyebrow"><span>Emig GmbH · Interne Lernplattform · Reutlingen</span></div>
+              {/* Language switcher oben rechts im Hero */}
+              <div style={{position:'absolute',top:'2rem',right:'5%',zIndex:10}}>
+                <LanguageSwitcher lang={lang} setLang={handleLang}/>
+              </div>
+              <div className="ea-eyebrow"><span>{t('heroEyebrow')}</span></div>
               <h1 className="ea-h1">
-                <span className="ea-h1-top">EMIG</span>
+                <span className="ea-h1-brand">EMIG</span>
                 <span className="ea-h1-main">ACADEMY</span>
               </h1>
-              <p className="ea-tagline">Qualität · Wissen · Exzellenz</p>
+              <p className="ea-tagline">{t('heroTagline')}</p>
               <div className="ea-stats">
-                <div className="ea-stat"><span className="ea-stat-n">{ALL_QM.length}</span><span className="ea-stat-l">QM Module</span></div>
-                <div className="ea-stat"><span className="ea-stat-n">{MFRS.length}</span><span className="ea-stat-l">Hersteller</span></div>
-                <div className="ea-stat"><span className="ea-stat-n">10</span><span className="ea-stat-l">SAP Phasen</span></div>
+                <div className="ea-stat"><span className="ea-stat-n">{ALL_QM.length}</span><span className="ea-stat-l">{t('statQM')}</span></div>
+                <div className="ea-stat"><span className="ea-stat-n">{MFRS.length}</span><span className="ea-stat-l">{t('statMfr')}</span></div>
+                <div className="ea-stat"><span className="ea-stat-n">10</span><span className="ea-stat-l">{t('statSAP')}</span></div>
               </div>
             </div>
           </div>
@@ -2334,18 +2663,18 @@ export default function Home() {
             {greet&&(
               <div className="ea-welcome">
                 <div>
-                  <div className="ea-welcome-name">{greet}, willkommen zurück.</div>
-                  <div className="ea-welcome-sub">{done.length>0?`${done.length} von ${ALL_QM.length} QM-Modulen abgeschlossen`:'Starten Sie Ihr erstes Lernmodul.'}</div>
+                  <div className="ea-welcome-name">{t(greet)}, {t('welcomeBack')}</div>
+                  <div className="ea-welcome-sub">{done.length>0?t('progressDone',done.length,ALL_QM.length):t('progressStart')}</div>
                 </div>
-                <div className="ea-welcome-pill">{pct}% abgeschlossen</div>
+                <div className="ea-welcome-pill">{t('progressPill',pct)}</div>
               </div>
             )}
 
             {(()=>{
               const TABS = [
-                {id:'QM',   icon:'◈', label:'Quality Management'},
-                {id:'SAP',  icon:'◉', label:'SAP Universum'},
-                {id:'MED',  icon:'◎', label:'Medizinprodukte'},
+                {id:'QM',   icon:'◈', label:t('tabQM')},
+                {id:'SAP',  icon:'◉', label:t('tabSAP')},
+                {id:'MED',  icon:'◎', label:t('tabMED')},
               ];
               const n = TABS.length;
               const activeIdx = TABS.findIndex(t=>t.id===tab);
@@ -2369,59 +2698,69 @@ export default function Home() {
           {/* QM TAB */}
           {tab==='QM' && (
             <div className={`ea-wrap tab-enter-${tabDir}`} key="qm">
-              <div className="ea-prog">
-                <div className="ea-prog-info">
-                  <div className="ea-prog-lbl">QM Gesamtfortschritt</div>
-                  <div className="ea-prog-track"><div className="ea-prog-fill" style={{width:`${pct}%`}}/></div>
-                  <div className="ea-prog-sub">{done.length} von {ALL_QM.length} Modulen abgeschlossen</div>
+              {/* ── NEUES PROGRESS DESIGN ── */}
+              <div className="ea-prog-wrap">
+                <div className="ea-prog-header">
+                  <div className="ea-prog-title">{t('qmProgressLabel')}</div>
+                  <div className="ea-prog-count">
+                    <span>{done.length}</span>/{ALL_QM.length}
+                  </div>
                 </div>
-                <div className="ea-prog-pct">{pct}%</div>
+                <div className="ea-prog-track">
+                  <div className="ea-prog-fill" style={{width:`${pct}%`}}/>
+                </div>
+                <div className="ea-prog-tiles">
+                  {ALL_QM.map((code,i)=>(
+                    <div key={code} className={`ea-prog-tile ${done.includes(code)?'done':'open'}`}
+                      title={code} style={{transitionDelay:`${i*60}ms`}}/>
+                  ))}
+                </div>
               </div>
 
-              <div style={{position:'relative',borderRadius:'18px',overflow:'hidden',marginBottom:'1.75rem',minHeight:'195px',display:'flex',alignItems:'flex-end',boxShadow:'0 4px 28px rgba(0,0,0,0.14)'}}>
+              <div style={{position:'relative',borderRadius:'22px',overflow:'hidden',marginBottom:'2rem',minHeight:'210px',display:'flex',alignItems:'flex-end',boxShadow:'var(--shadow-lg)'}}>
                 <div style={{position:'absolute',inset:0,zIndex:0}}>
                   <img src={bgImg} alt="Emig GmbH Standort Reutlingen" style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center 40%',display:'block'}}/>
                 </div>
-                <div style={{position:'absolute',inset:0,zIndex:1,background:'linear-gradient(to top,rgba(6,6,10,0.92) 0%,rgba(6,6,10,0.52) 45%,rgba(6,6,10,0.14) 100%)'}}/>
-                <div style={{position:'relative',zIndex:3,padding:'1.75rem 2.25rem',width:'100%'}}>
-                  <div style={{display:'inline-block',background:'rgba(200,152,58,0.15)',border:'1px solid rgba(200,152,58,0.28)',color:'#e8d5a8',fontSize:'0.62rem',fontWeight:700,letterSpacing:'0.18em',textTransform:'uppercase',padding:'4px 11px',borderRadius:'5px',marginBottom:'0.7rem'}}>ISO 13485:2016 · EU MDR 2017/745</div>
-                  <div style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:'clamp(1.5rem,3vw,2.1rem)',color:'#fff',letterSpacing:'0.06em',lineHeight:1,marginBottom:'0.45rem'}}>QM Philosophie & Strategie</div>
-                  <p style={{color:'rgba(255,255,255,0.42)',fontSize:'0.82rem',margin:'0 0 1.1rem',fontWeight:300,lineHeight:1.55}}>Leitbild, PDCA, Rollen, Normen und QM-KPIs — mit umfangreichem Wissenstest.</p>
+                <div style={{position:'absolute',inset:0,zIndex:1,background:'linear-gradient(to top,rgba(6,6,10,0.95) 0%,rgba(6,6,10,0.55) 45%,rgba(6,6,10,0.1) 100%)'}}/>
+                <div style={{position:'relative',zIndex:3,padding:'2rem 2.5rem',width:'100%'}}>
+                  <div style={{display:'inline-block',background:'rgba(212,163,64,.14)',border:'1px solid rgba(212,163,64,.3)',color:'#e8d5a8',fontSize:'0.6rem',fontWeight:700,letterSpacing:'0.2em',textTransform:'uppercase',padding:'4px 12px',borderRadius:'6px',marginBottom:'0.8rem'}}>{t('qmIsoTag')}</div>
+                  <div style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:'clamp(1.6rem,3vw,2.3rem)',color:'#fff',letterSpacing:'0.06em',lineHeight:1,marginBottom:'0.5rem'}}>{t('qmPhiloTitle')}</div>
+                  <p style={{color:'rgba(255,255,255,0.4)',fontSize:'0.84rem',margin:'0 0 1.2rem',fontWeight:300,lineHeight:1.6}}>{t('qmPhiloSub')}</p>
                   <div style={{display:'flex',gap:'10px',flexWrap:'wrap',alignItems:'center'}}>
-                    <Link to="/docs/quality-management/qm-philosophie" style={{display:'inline-flex',alignItems:'center',gap:'7px',background:'#92400e',color:'#fff',padding:'9px 20px',borderRadius:'10px',fontFamily:"'Outfit',sans-serif",fontWeight:600,fontSize:'0.84rem',textDecoration:'none'}}>Modul öffnen →</Link>
-                    {['5 Kapitel','12 Fragen','~15 Min.'].map(t=>(
-                      <span key={t} style={{background:'rgba(255,255,255,0.07)',border:'1px solid rgba(255,255,255,0.11)',color:'rgba(255,255,255,0.45)',fontSize:'0.66rem',fontWeight:600,padding:'3px 10px',borderRadius:'99px',letterSpacing:'0.08em'}}>{t}</span>
+                    <Link to="/docs/quality-management/qm-philosophie" style={{display:'inline-flex',alignItems:'center',gap:'8px',background:'#92400e',color:'#fff',padding:'10px 22px',borderRadius:'12px',fontFamily:"'Outfit',sans-serif",fontWeight:700,fontSize:'0.86rem',textDecoration:'none',boxShadow:'0 4px 16px rgba(146,64,14,.5)'}}>{t('qmOpenModule')} →</Link>
+                    {(t('qmPhiloMeta') as string[]).map((m:string)=>(
+                      <span key={m} style={{background:'rgba(255,255,255,0.07)',border:'1px solid rgba(255,255,255,0.11)',color:'rgba(255,255,255,0.45)',fontSize:'0.68rem',fontWeight:600,padding:'4px 12px',borderRadius:'99px',letterSpacing:'0.08em'}}>{m}</span>
                     ))}
                   </div>
                 </div>
               </div>
 
-              <div className="ea-test" style={{background:ready?'#f0fdf4':'#f8f7f3',borderColor:ready?'#bbf7d0':'#dedad4'}}>
+              <div className="ea-test" style={{background:ready?'rgba(16,185,129,.08)':'var(--card)',borderColor:ready?'rgba(16,185,129,.3)':'var(--card-border)',boxShadow:'var(--shadow-sm)'}}>
                 <div>
-                  <div style={{fontWeight:600,fontSize:'1rem',color:ready?'#065f46':'#9ca3af'}}>{ready?'Finaler Test & Zertifikat':'Finaler Test — gesperrt'}</div>
-                  <div style={{fontSize:'.77rem',color:'#9ca3af',marginTop:4}}>{ready?'Alle Module abgeschlossen. Jetzt testen.':`Noch ${ALL_QM.length-done.length} Module bis zur Freischaltung.`}</div>
+                  <div style={{fontWeight:700,fontSize:'1rem',color:ready?'#10b981':'var(--text-dim)'}}>{ready?t('finalTestReady'):t('finalTestLocked')}</div>
+                  <div style={{fontSize:'.8rem',color:'var(--text-faint)',marginTop:4}}>{ready?t('finalTestReadySub'):t('finalTestLockedSub',ALL_QM.length-done.length)}</div>
                 </div>
-                <button disabled={!ready} className="ea-test-btn" style={{background:ready?'#059669':'#e5e1da',color:ready?'#fff':'#9ca3af',cursor:ready?'pointer':'not-allowed'}}>Prüfung starten</button>
+                <button disabled={!ready} className="ea-test-btn" style={{background:ready?'#059669':'var(--bg2)',color:ready?'#fff':'var(--text-faint)',cursor:ready?'pointer':'not-allowed',fontWeight:700}}>{t('finalTestBtn')}</button>
               </div>
 
-              <SH color={CQM} count="4 Module">Logistik & Lager</SH>
+              <SH color={CQM} count="4">{t('shLogistik')}</SH>
               <div className="ea-grid">
-                <ModCard title="Lagerbedingungen"    code="SOP-LOG-01" num="01" color={CQM} link="/docs/logistik-lager/SOP_LOG-01"/>
-                <ModCard title="Rückverfolgbarkeit"  code="SOP-LOG-02" num="02" color={CQM} link="/docs/logistik-lager/SOP_LOG-02"/>
-                <ModCard title="Sperrware"            code="SOP-LOG-03" num="03" color={CQM} link="/docs/logistik-lager/SOP_LOG-03"/>
-                <ModCard title="Inventur"             code="SOP-LOG-04" num="04" color={CQM} draft/>
+                <ModCard title={t('modLager1')} code="SOP-LOG-01" num="01" color={CQM} link="/docs/logistik-lager/SOP_LOG-01" lang={lang}/>
+                <ModCard title={t('modLager2')} code="SOP-LOG-02" num="02" color={CQM} link="/docs/logistik-lager/SOP_LOG-02" lang={lang}/>
+                <ModCard title={t('modLager3')} code="SOP-LOG-03" num="03" color={CQM} link="/docs/logistik-lager/SOP_LOG-03" lang={lang}/>
+                <ModCard title={t('modLager4')} code="SOP-LOG-04" num="04" color={CQM} draft lang={lang}/>
               </div>
-              <SH color={CQM} count="2 Module">Einkauf & Lieferanten</SH>
+              <SH color={CQM} count="2">{t('shEinkauf')}</SH>
               <div className="ea-grid">
-                <ModCard title="Lieferantenbewertung" code="SOP-EINK-01" num="05" color={CQM} link="/docs/einkauf-lieferanten/SOP_EINK-01"/>
-                <ModCard title="Einkaufsprozess"      code="SOP-EINK-02" num="06" color={CQM} link="/docs/einkauf-lieferanten/SOP_EINK-02"/>
+                <ModCard title={t('modEink1')} code="SOP-EINK-01" num="05" color={CQM} link="/docs/einkauf-lieferanten/SOP_EINK-01" lang={lang}/>
+                <ModCard title={t('modEink2')} code="SOP-EINK-02" num="06" color={CQM} link="/docs/einkauf-lieferanten/SOP_EINK-02" lang={lang}/>
               </div>
-              <SH color={CQM} count="4 Module">Regulatorik & MDR</SH>
+              <SH color={CQM} count="4">{t('shRegulatorik')}</SH>
               <div className="ea-grid">
-                <ModCard title="Importeurpflichten" code="SOP-REG-01" num="07" color={CQM} link="/docs/regulatorik-mdr/SOP_REG-01"/>
-                <ModCard title="Händlerpflichten"   code="SOP-REG-02" num="08" color={CQM} link="/docs/regulatorik-mdr/SOP_REG-02"/>
-                <ModCard title="PRRC"               code="SOP-REG-03" num="09" color={CQM} link="/docs/regulatorik-mdr/SOP_REG-03"/>
-                <ModCard title="Audits"             code="SOP-REG-05" num="10" color={CQM} link="/docs/regulatorik-mdr/SOP_REG-05"/>
+                <ModCard title={t('modReg1')} code="SOP-REG-01" num="07" color={CQM} link="/docs/regulatorik-mdr/SOP_REG-01" lang={lang}/>
+                <ModCard title={t('modReg2')} code="SOP-REG-02" num="08" color={CQM} link="/docs/regulatorik-mdr/SOP_REG-02" lang={lang}/>
+                <ModCard title={t('modReg3')} code="SOP-REG-03" num="09" color={CQM} link="/docs/regulatorik-mdr/SOP_REG-03" lang={lang}/>
+                <ModCard title={t('modReg4')} code="SOP-REG-05" num="10" color={CQM} link="/docs/regulatorik-mdr/SOP_REG-05" lang={lang}/>
               </div>
             </div>
           )}
@@ -2434,7 +2773,7 @@ export default function Home() {
             <div className={`ea-wrap tab-enter-${tabDir}`} key="med">
               {!mfr ? (
                 <>
-                  <SH color={CMED}>Hersteller & Produktschulungen</SH>
+                  <SH color={CMED}>{t('medHeading')}</SH>
                   <div className="med-list">
                     {MFRS.map(m => (
                       <MfrBanner key={m.id} m={m} onClick={() => setMfr(m)} />
