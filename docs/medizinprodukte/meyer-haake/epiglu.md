@@ -5,6 +5,9 @@ sidebar_label: EPIGLU® Gewebekleber
 ---
 
 import Admonition from '@theme/Admonition';
+import { LangSwitcherBar } from '@site/src/components/LanguageSwitcher';
+
+<LangSwitcherBar/>
 
 # 🩹 EPIGLU® — MH-02
 

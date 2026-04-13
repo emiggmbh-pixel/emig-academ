@@ -6,6 +6,7 @@ sidebar_label: EUDAMED & Registrierung
 
 import React, { useState, useEffect } from 'react';
 import SopQuiz from '@site/src/components/SopQuiz';
+import { useLanguage, LanguageSwitcher, getSopT, SopTitle } from '@site/src/components/LanguageSwitcher';
 
 export const quizData = [
   { id:1, question:"Wofür steht EUDAMED?", options:["European Union Database for Advanced Medical Engineering","European Database on Medical Devices — die europäische Datenbank für Medizinprodukte","European Unified Data Administration for Medical Exports","Extended Union Data Authentication for Medical Devices"], correct:1, explanation:"EUDAMED = European Database on Medical Devices. Die zentrale EU-Datenbank für Medizinprodukte, in der Wirtschaftsakteure, Produkte, UDI-Daten, Benannte Stellen und Vigilanzmeldungen registriert werden." },
@@ -613,6 +614,8 @@ export const quizData = [
 export function SopReg04Page() {
   const [activeSection, setActiveSection] = useState('zweck');
   const [scrollPct, setScrollPct] = useState(0);
+  const [lang, setLang] = useLanguage();
+  const st = getSopT(lang);
   useEffect(() => {
     const ids = ['zweck','srn','produktregistrierung','datenpflege','risiken','wissenstest'];
     const onScroll = () => {
@@ -635,11 +638,14 @@ export function SopReg04Page() {
   ];
   return (
     <div className="sop-page">
+      <div style={{display:'flex',justifyContent:'flex-end',marginBottom:'1rem'}}>
+        <LanguageSwitcher lang={lang} setLang={setLang}/>
+      </div>
       <div className="sop-hero">
         <div>
           <div className="sop-hero-eyebrow"><div className="sop-hero-eyebrow-line"/><span className="sop-hero-eyebrow-text">SOP-REG-04 · Regulatorik & MDR</span></div>
-          <div className="sop-hero-title">Registrierung<br/>&amp; EUDAMED</div>
-          <p className="sop-hero-desc">Prozesse zur Registrierung der EMIG GmbH und der von ihr in Verkehr gebrachten Medizinprodukte in EUDAMED — SRN-Erhalt, Produktverifizierung, Datenpflege innerhalb einer Woche und jährliches QM-Review.</p>
+          <div className="sop-hero-title"><SopTitle sopT={st} sopKey='SOP-REG-04-title'/></div>
+          <p className="sop-hero-desc">{st('SOP-REG-04-desc')}</p>
           <div className="sop-hero-meta">
             <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>MDR Art. 30 & 31</div>
             <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>Gültig ab 31.01.2026</div>
@@ -751,17 +757,17 @@ export function SopReg04Page() {
             <div className="sop-norms"><span className="sop-norm">MDR Art. 30 & 31</span><span className="sop-norm">SOP-REG-01 Importeurpflichten</span><span className="sop-norm">QMH Kapitel 4.1</span></div>
           </div>
           <div className="sop-divider"/>
-          <div id="wissenstest"><div className="sop-quiz-header"><div className="sop-quiz-header-icon">★</div><div><div className="sop-quiz-header-title">Wissenstest — SOP-REG-04</div><div className="sop-quiz-header-sub">10 Fragen · EUDAMED-Registrierung & Datenpflege</div></div></div></div>
+          <div id="wissenstest"><div className="sop-quiz-header"><div className="sop-quiz-header-icon">★</div><div><div className="sop-quiz-header-title">{st('quizLabel')} — SOP-REG-04</div><div className="sop-quiz-header-sub">{quizData.length} {st('questions')} · {st('SOP-REG-04-title').split('\n')[0]}</div></div></div></div>
         </div>
         <div className="sop-sidenav">
-          <div className="sop-sidenav-title">Inhalt</div>
+          <div className="sop-sidenav-title">{st('contents')}</div>
           {nav.map(({id,num,label}) => (
             <a key={id} href={`#${id}`} className={`sop-nav-item${activeSection===id?' active':''}`}>
               <div className="sop-nav-num">{num}</div><div className="sop-nav-label">{label}</div>
             </a>
           ))}
           <div className="sop-nav-progress">
-            <div className="sop-nav-progress-label"><span>Fortschritt</span><span className="sop-nav-progress-pct">{scrollPct}%</span></div>
+            <div className="sop-nav-progress-label"><span>{st('progress')}</span><span className="sop-nav-progress-pct">{scrollPct}%</span></div>
             <div className="sop-nav-bar-bg"><div className="sop-nav-bar-fill" style={{width:`${scrollPct}%`}}/></div>
           </div>
           <a href="#wissenstest" className="sop-nav-quiz-btn">Zum Wissenstest →</a>

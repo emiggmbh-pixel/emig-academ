@@ -5,6 +5,9 @@ sidebar_label: Elektroden & BIO-CONE
 ---
 
 import Admonition from '@theme/Admonition';
+import { LangSwitcherBar } from '@site/src/components/LanguageSwitcher';
+
+<LangSwitcherBar/>
 
 # 🔌 Elektroden & BIO-CONE — MH-04
 

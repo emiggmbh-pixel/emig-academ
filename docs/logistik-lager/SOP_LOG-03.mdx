@@ -6,6 +6,7 @@ sidebar_label: Umgang mit Sperrware
 
 import React, { useState, useEffect } from 'react';
 import SopQuiz from '@site/src/components/SopQuiz';
+import { useLanguage, LanguageSwitcher, getSopT, SopTitle } from '@site/src/components/LanguageSwitcher';
 
 export const quizData = [
   {
@@ -723,6 +724,8 @@ export const quizData = [
 export function SopLog03Page() {
   const [activeSection, setActiveSection] = useState('zweck');
   const [scrollPct, setScrollPct] = useState(0);
+  const [lang, setLang] = useLanguage();
+  const st = getSopT(lang);
 
   useEffect(() => {
     const sections = ['zweck','identifikation','kennzeichnung','entscheidung','wissenstest'];
@@ -754,6 +757,9 @@ export function SopLog03Page() {
 
   return (
     <div className="sop-page">
+      <div style={{display:'flex',justifyContent:'flex-end',marginBottom:'1rem'}}>
+        <LanguageSwitcher lang={lang} setLang={setLang}/>
+      </div>
 
       {/* ── HERO ── */}
       <div className="sop-hero">
@@ -762,10 +768,8 @@ export function SopLog03Page() {
             <div className="sop-hero-eyebrow-line"/>
             <span className="sop-hero-eyebrow-text">SOP-LOG-03 · Logistik & Lager</span>
           </div>
-          <div className="sop-hero-title">Umgang mit<br/>Sperrware</div>
-          <p className="sop-hero-desc">
-            Verfahrensanweisung zur Verhinderung der unbeabsichtigten Auslieferung von Produkten, die nicht den Qualitätsanforderungen entsprechen — Identifikation, Kennzeichnung, Trennung und Entscheidung.
-          </p>
+          <div className="sop-hero-title"><SopTitle sopT={st} sopKey='SOP-LOG-03-title'/></div>
+          <p className="sop-hero-desc">{st('SOP-LOG-03-desc')}</p>
           <div className="sop-hero-meta">
             <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>ISO 13485:2016 §8.3</div>
             <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>Gültig ab 31.01.2026</div>
@@ -1054,8 +1058,8 @@ export function SopLog03Page() {
             <div className="sop-quiz-header">
               <div className="sop-quiz-header-icon">★</div>
               <div>
-                <div className="sop-quiz-header-title">Wissenstest — SOP-LOG-03</div>
-                <div className="sop-quiz-header-sub">10 Fragen · Beantworten Sie alle Fragen um das Modul abzuschließen</div>
+                <div className="sop-quiz-header-title">{st('quizLabel')} — SOP-LOG-03</div>
+                <div className="sop-quiz-header-sub">{quizData.length} {st('questions')} · {st('SOP-LOG-03-title').split('\n')[0]}</div>
               </div>
             </div>
           </div>
@@ -1064,7 +1068,7 @@ export function SopLog03Page() {
 
         {/* ── STICKY SIDE NAV ── */}
         <div className="sop-sidenav">
-          <div className="sop-sidenav-title">Inhalt</div>
+          <div className="sop-sidenav-title">{st('contents')}</div>
           {navItems.map(({id, num, label}) => (
             <a key={id} href={`#${id}`}
                className={`sop-nav-item${activeSection === id ? ' active' : ''}`}>
@@ -1074,7 +1078,7 @@ export function SopLog03Page() {
           ))}
           <div className="sop-nav-progress">
             <div className="sop-nav-progress-label">
-              <span>Fortschritt</span>
+              <span>{st('progress')}</span>
               <span className="sop-nav-progress-pct">{scrollPct}%</span>
             </div>
             <div className="sop-nav-bar-bg">

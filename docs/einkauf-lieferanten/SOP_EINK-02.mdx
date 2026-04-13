@@ -6,6 +6,7 @@ sidebar_label: Einkaufsprozess
 
 import React, { useState, useEffect } from 'react';
 import SopQuiz from '@site/src/components/SopQuiz';
+import { useLanguage, LanguageSwitcher, getSopT, SopTitle } from '@site/src/components/LanguageSwitcher';
 
 export const quizData = [
   {
@@ -723,6 +724,8 @@ export const quizData = [
 export function SopEink02Page() {
   const [activeSection, setActiveSection] = useState('zweck');
   const [scrollPct, setScrollPct] = useState(0);
+  const [lang, setLang] = useLanguage();
+  const st = getSopT(lang);
 
   useEffect(() => {
     const sections = ['zweck','bestellanforderung','pruefung','auftragsbestaetigung','wissenstest'];
@@ -754,6 +757,9 @@ export function SopEink02Page() {
 
   return (
     <div className="sop-page">
+      <div style={{display:'flex',justifyContent:'flex-end',marginBottom:'1rem'}}>
+        <LanguageSwitcher lang={lang} setLang={setLang}/>
+      </div>
 
       {/* ── HERO ── */}
       <div className="sop-hero">
@@ -762,10 +768,8 @@ export function SopEink02Page() {
             <div className="sop-hero-eyebrow-line"/>
             <span className="sop-hero-eyebrow-text">SOP-EINK-02 · Einkauf & Lieferanten</span>
           </div>
-          <div className="sop-hero-title">Beschaffung von<br/>Medizinprodukten</div>
-          <p className="sop-hero-desc">
-            Steuerung von Beschaffungsvorgängen damit bestellte Produkte exakt den spezifizierten Anforderungen entsprechen — Pflichtangaben, PRRC-Prüfung und Auftragsbestätigung nach MDR Art. 13.
-          </p>
+          <div className="sop-hero-title"><SopTitle sopT={st} sopKey='SOP-EINK-02-title'/></div>
+          <p className="sop-hero-desc">{st('SOP-EINK-02-desc')}</p>
           <div className="sop-hero-meta">
             <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>MDR Art. 13 Importeurpflichten</div>
             <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>Gültig ab 31.01.2026</div>
@@ -1064,8 +1068,8 @@ export function SopEink02Page() {
             <div className="sop-quiz-header">
               <div className="sop-quiz-header-icon">★</div>
               <div>
-                <div className="sop-quiz-header-title">Wissenstest — SOP-EINK-02</div>
-                <div className="sop-quiz-header-sub">10 Fragen · Beantworten Sie alle Fragen um das Modul abzuschließen</div>
+                <div className="sop-quiz-header-title">{st('quizLabel')} — SOP-EINK-02</div>
+                <div className="sop-quiz-header-sub">{quizData.length} {st('questions')} · {st('SOP-EINK-02-title').split('\n')[0]}</div>
               </div>
             </div>
           </div>
@@ -1074,7 +1078,7 @@ export function SopEink02Page() {
 
         {/* ── STICKY SIDE NAV ── */}
         <div className="sop-sidenav">
-          <div className="sop-sidenav-title">Inhalt</div>
+          <div className="sop-sidenav-title">{st('contents')}</div>
           {navItems.map(({id, num, label}) => (
             <a key={id} href={`#${id}`}
                className={`sop-nav-item${activeSection === id ? ' active' : ''}`}>
@@ -1084,7 +1088,7 @@ export function SopEink02Page() {
           ))}
           <div className="sop-nav-progress">
             <div className="sop-nav-progress-label">
-              <span>Fortschritt</span>
+              <span>{st('progress')}</span>
               <span className="sop-nav-progress-pct">{scrollPct}%</span>
             </div>
             <div className="sop-nav-bar-bg">

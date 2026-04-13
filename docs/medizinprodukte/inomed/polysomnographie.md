@@ -5,6 +5,9 @@ sidebar_label: somno·medics PSG
 ---
 
 import Admonition from '@theme/Admonition';
+import { LangSwitcherBar } from '@site/src/components/LanguageSwitcher';
+
+<LangSwitcherBar/>
 
 # 😴 somno·medics PSG — INO-03
 

@@ -6,6 +6,7 @@ sidebar_label: Audits & Inspektionen
 
 import React, { useState, useEffect } from 'react';
 import SopQuiz from '@site/src/components/SopQuiz';
+import { useLanguage, LanguageSwitcher, getSopT, SopTitle } from '@site/src/components/LanguageSwitcher';
 
 export const quizData = [
   { id:1, question:"Was ist das Ziel der SOP-REG-05?", options:["Minimierung der Behördenkontakte durch interne Lösungen","Transparente, gesetzeskonforme und zeitnahe Berichterstattung sowie Vorbereitung auf angekündigte und unangekündigte Inspektionen","Vermeidung jeglicher Behördenkommunikation","Optimierung der Zertifizierungskosten"], correct:1, explanation:"SOP-REG-05 zielt auf transparente, gesetzeskonforme und zeitnahe Berichterstattung gemäß MDR und bereitet die EMIG GmbH auf unangekündigte oder angekündigte Inspektionen vor." },
@@ -613,6 +614,8 @@ export const quizData = [
 export function SopReg05Page() {
   const [activeSection, setActiveSection] = useState('zweck');
   const [scrollPct, setScrollPct] = useState(0);
+  const [lang, setLang] = useLanguage();
+  const st = getSopT(lang);
   useEffect(() => {
     const ids = ['zweck','behoerden','benannte','inspektion','risiken','wissenstest'];
     const onScroll = () => {
@@ -635,11 +638,14 @@ export function SopReg05Page() {
   ];
   return (
     <div className="sop-page">
+      <div style={{display:'flex',justifyContent:'flex-end',marginBottom:'1rem'}}>
+        <LanguageSwitcher lang={lang} setLang={setLang}/>
+      </div>
       <div className="sop-hero">
         <div>
           <div className="sop-hero-eyebrow"><div className="sop-hero-eyebrow-line"/><span className="sop-hero-eyebrow-text">SOP-REG-05 · Regulatorik & MDR</span></div>
-          <div className="sop-hero-title">Benannte Stellen<br/>&amp; Behörden</div>
-          <p className="sop-hero-desc">Verantwortlichkeiten und Abläufe für die Kommunikation mit nationalen und internationalen Behörden sowie Benannten Stellen — zentralisiert über die PRRC, gesetzeskonforme Fristen und Inspektionsvorbereitung.</p>
+          <div className="sop-hero-title"><SopTitle sopT={st} sopKey='SOP-REG-05-title'/></div>
+          <p className="sop-hero-desc">{st('SOP-REG-05-desc')}</p>
           <div className="sop-hero-meta">
             <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>BfArM · MPDG · MDR</div>
             <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>Gültig ab 31.01.2026</div>
@@ -832,18 +838,18 @@ export function SopReg05Page() {
           </div>
 
           <div className="sop-divider"/>
-          <div id="wissenstest"><div className="sop-quiz-header"><div className="sop-quiz-header-icon">★</div><div><div className="sop-quiz-header-title">Wissenstest — SOP-REG-05</div><div className="sop-quiz-header-sub">10 Fragen · Benannte Stellen & Behörden</div></div></div></div>
+          <div id="wissenstest"><div className="sop-quiz-header"><div className="sop-quiz-header-icon">★</div><div><div className="sop-quiz-header-title">{st('quizLabel')} — SOP-REG-05</div><div className="sop-quiz-header-sub">{quizData.length} {st('questions')} · {st('SOP-REG-05-title').split('\n')[0]}</div></div></div></div>
         </div>
 
         <div className="sop-sidenav">
-          <div className="sop-sidenav-title">Inhalt</div>
+          <div className="sop-sidenav-title">{st('contents')}</div>
           {nav.map(({id,num,label}) => (
             <a key={id} href={`#${id}`} className={`sop-nav-item${activeSection===id?' active':''}`}>
               <div className="sop-nav-num">{num}</div><div className="sop-nav-label">{label}</div>
             </a>
           ))}
           <div className="sop-nav-progress">
-            <div className="sop-nav-progress-label"><span>Fortschritt</span><span className="sop-nav-progress-pct">{scrollPct}%</span></div>
+            <div className="sop-nav-progress-label"><span>{st('progress')}</span><span className="sop-nav-progress-pct">{scrollPct}%</span></div>
             <div className="sop-nav-bar-bg"><div className="sop-nav-bar-fill" style={{width:`${scrollPct}%`}}/></div>
           </div>
           <a href="#wissenstest" className="sop-nav-quiz-btn">Zum Wissenstest →</a>

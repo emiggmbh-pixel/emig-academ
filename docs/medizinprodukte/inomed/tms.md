@@ -5,6 +5,9 @@ sidebar_label: Rapid² TMS
 ---
 
 import Admonition from '@theme/Admonition';
+import { LangSwitcherBar } from '@site/src/components/LanguageSwitcher';
+
+<LangSwitcherBar/>
 
 # ⚡ Rapid² TMS — INO-02
 

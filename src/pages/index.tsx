@@ -1876,7 +1876,8 @@ function MfrBanner({m, onClick}: {m: any; onClick: () => void}) {
 
 // ─── GENERIC MFR DETAIL ───────────────────────────────────────────────────────
 
-function MfrDetail({m, onBack}: {m: any; onBack: () => void}) {
+function MfrDetail({m, onBack, lang='de'}: {m: any; onBack: () => void; lang?: string}) {
+  const t = getT(lang);
   const [err, setErr] = useState(false);
   const logo = useBaseUrl(m.logo);
   const hasProducts = m.products && m.products.length > 0;
@@ -1885,7 +1886,7 @@ function MfrDetail({m, onBack}: {m: any; onBack: () => void}) {
     : [];
   return (
     <div className="med-detail">
-      <button className="med-back" onClick={onBack}>&#8592; Alle Hersteller</button>
+      <button className="med-back" onClick={onBack}>&#8592; {t('medBack')}</button>
       <div className="med-detail-hero">
         <div className="med-detail-hero-bg" style={{background: m.bg}} />
         <div className="med-detail-hero-overlay" />
@@ -2033,13 +2034,14 @@ function RiwoProdCard({ p, idx }: { p: any; idx: number }) {
   );
 }
 
-function RIWOspineDetail({ onBack }: { onBack: () => void }) {
+function RIWOspineDetail({ onBack, lang='de' }: { onBack: () => void; lang?: string }) {
+  const t = getT(lang);
   const m = MFRS.find(x => x.id === 'riwo')!;
   const [logoErr, setLogoErr] = useState(false);
   const logoSrc = useBaseUrl(m.logo);
   return (
     <div>
-      <button className="riwo-back riwo-anim" onClick={onBack}>← Alle Hersteller</button>
+      <button className="riwo-back riwo-anim" onClick={onBack}>← {t('medBack')}</button>
       <div className="riwo-hero riwo-anim">
         <div className="riwo-hero-bg"/>
         <div className="riwo-hero-grid"/>
@@ -2196,13 +2198,14 @@ function InoProdCard({ p, idx }: { p: any; idx: number }) {
   );
 }
 
-function InomedDetail({ onBack }: { onBack: () => void }) {
+function InomedDetail({ onBack, lang='de' }: { onBack: () => void; lang?: string }) {
+  const t = getT(lang);
   const m = MFRS.find(x => x.id === 'inomed')!;
   const [logoErr, setLogoErr] = useState(false);
   const logoSrc = useBaseUrl(m.logo);
   return (
     <div>
-      <button className="ino-back ino-anim" onClick={onBack}>← Alle Hersteller</button>
+      <button className="ino-back ino-anim" onClick={onBack}>← {t('medBack')}</button>
       <div className="ino-hero ino-anim">
         <div className="ino-hero-bg"/>
         <div className="ino-hero-grid"/>
@@ -2408,7 +2411,8 @@ function MhProdCard({ p, idx }: { p: any; idx: number }) {
   );
 }
 
-function MeyerHaakeDetail({ onBack }: { onBack: () => void }) {
+function MeyerHaakeDetail({ onBack, lang='de' }: { onBack: () => void; lang?: string }) {
+  const t = getT(lang);
   const m = MFRS.find(x => x.id === 'meyer')!;
   const [logoErr, setLogoErr] = useState(false);
   const logoSrc = useBaseUrl(m.logo);
@@ -2417,7 +2421,7 @@ function MeyerHaakeDetail({ onBack }: { onBack: () => void }) {
   return (
     <div>
       <button style={{display:'inline-flex',alignItems:'center',gap:9,padding:'11px 22px',borderRadius:13,border:'1px solid var(--section-border)',background:'var(--card)',fontFamily:'Outfit,sans-serif',fontWeight:700,fontSize:'.84rem',cursor:'pointer',marginBottom:'2.25rem',color:'var(--text)',boxShadow:'var(--shadow-sm)',transition:'all .2s',letterSpacing:'.02em'}}
-        onClick={onBack}>← Alle Hersteller
+        onClick={onBack}>← {t('medBack')}
       </button>
 
       {/* HERO */}
@@ -2638,11 +2642,11 @@ export default function Home() {
             <div className="ea-frame-t"/>
             <div className="ea-frame-b"/>
             <button className="ea-vidctl" onClick={toggleVid} title={paused?'Play':'Pause'}>{paused?'▶':'⏸'}</button>
+            {/* Language switcher — oben rechts, relativ zum Hero (nicht zur inner Box) */}
+            <div style={{position:'absolute',top:'1.5rem',right:'5%',zIndex:20}}>
+              <LanguageSwitcher lang={lang} setLang={handleLang}/>
+            </div>
             <div className="ea-hero-inner">
-              {/* Language switcher oben rechts im Hero */}
-              <div style={{position:'absolute',top:'2rem',right:'5%',zIndex:10}}>
-                <LanguageSwitcher lang={lang} setLang={handleLang}/>
-              </div>
               <div className="ea-eyebrow"><span>{t('heroEyebrow')}</span></div>
               <h1 className="ea-h1">
                 <span className="ea-h1-brand">EMIG</span>
@@ -2766,7 +2770,7 @@ export default function Home() {
           )}
 
           {/* SAP TAB */}
-          {tab==='SAP' && <div className={`tab-enter-${tabDir}`} key="sap"><SAPUniverse/></div>}
+          {tab==='SAP' && <div className={`tab-enter-${tabDir}`} key="sap"><SAPUniverse lang={lang}/></div>}
 
           {/* MED TAB */}
           {tab==='MED' && (
@@ -2781,13 +2785,13 @@ export default function Home() {
                   </div>
                 </>
               ) : mfr.id === 'riwo' ? (
-                <RIWOspineDetail onBack={() => setMfr(null)} />
+                <RIWOspineDetail onBack={() => setMfr(null)} lang={lang} />
               ) : mfr.id === 'inomed' ? (
-                <InomedDetail onBack={() => setMfr(null)} />
+                <InomedDetail onBack={() => setMfr(null)} lang={lang} />
               ) : mfr.id === 'meyer' ? (
-                <MeyerHaakeDetail onBack={() => setMfr(null)} />
+                <MeyerHaakeDetail onBack={() => setMfr(null)} lang={lang} />
               ) : (
-                <MfrDetail m={mfr} onBack={() => setMfr(null)} />
+                <MfrDetail m={mfr} onBack={() => setMfr(null)} lang={lang} />
               )}
             </div>
           )}

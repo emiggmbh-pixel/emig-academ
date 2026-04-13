@@ -6,6 +6,7 @@ sidebar_label: PRRC
 
 import React, { useState, useEffect } from 'react';
 import SopQuiz from '@site/src/components/SopQuiz';
+import { useLanguage, LanguageSwitcher, getSopT, SopTitle } from '@site/src/components/LanguageSwitcher';
 
 export const quizData = [
   { id:1, question:"Wofür steht PRRC?", options:["Product Registration and Regulatory Control","Person Responsible for Regulatory Compliance — die für die Einhaltung der Regulierungsvorschriften verantwortliche Person","Process Review and Risk Control","Product Release and Review Coordinator"], correct:1, explanation:"PRRC = Person Responsible for Regulatory Compliance. Die Rolle ist in MDR Art. 15 definiert und ist eine Pflichtrolle für alle Hersteller, Importeure und Händler von Medizinprodukten in der EU." },
@@ -613,6 +614,8 @@ export const quizData = [
 export function SopReg03Page() {
   const [activeSection, setActiveSection] = useState('zweck');
   const [scrollPct, setScrollPct] = useState(0);
+  const [lang, setLang] = useLanguage();
+  const st = getSopT(lang);
   useEffect(() => {
     const ids = ['zweck','benennung','kernaufgaben','qualifikation','schnittstellen','wissenstest'];
     const onScroll = () => {
@@ -635,11 +638,14 @@ export function SopReg03Page() {
   ];
   return (
     <div className="sop-page">
+      <div style={{display:'flex',justifyContent:'flex-end',marginBottom:'1rem'}}>
+        <LanguageSwitcher lang={lang} setLang={setLang}/>
+      </div>
       <div className="sop-hero">
         <div>
           <div className="sop-hero-eyebrow"><div className="sop-hero-eyebrow-line"/><span className="sop-hero-eyebrow-text">SOP-REG-03 · Regulatorik & MDR</span></div>
-          <div className="sop-hero-title">Rolle & Aufgaben<br/>der PRRC</div>
-          <p className="sop-hero-desc">Definition der Rolle, Verantwortlichkeiten und Befugnisse der Person Responsible for Regulatory Compliance (PRRC) gemäß MDR Art. 15 — Benennung, 5 Kernaufgaben, Qualifikation und organisatorische Unabhängigkeit.</p>
+          <div className="sop-hero-title"><SopTitle sopT={st} sopKey='SOP-REG-03-title'/></div>
+          <p className="sop-hero-desc">{st('SOP-REG-03-desc')}</p>
           <div className="sop-hero-meta">
             <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>MDR Art. 15 PRRC-Pflicht</div>
             <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>Gültig ab 31.01.2026</div>
@@ -762,17 +768,17 @@ export function SopReg03Page() {
             <div className="sop-norms"><span className="sop-norm">SOP-REG-01 Importeurpflichten</span><span className="sop-norm">SOP-REG-02 Händlerpflichten</span></div>
           </div>
           <div className="sop-divider"/>
-          <div id="wissenstest"><div className="sop-quiz-header"><div className="sop-quiz-header-icon">★</div><div><div className="sop-quiz-header-title">Wissenstest — SOP-REG-03</div><div className="sop-quiz-header-sub">10 Fragen · Rolle und Aufgaben der PRRC</div></div></div></div>
+          <div id="wissenstest"><div className="sop-quiz-header"><div className="sop-quiz-header-icon">★</div><div><div className="sop-quiz-header-title">{st('quizLabel')} — SOP-REG-03</div><div className="sop-quiz-header-sub">{quizData.length} {st('questions')} · {st('SOP-REG-03-title').split('\n')[0]}</div></div></div></div>
         </div>
         <div className="sop-sidenav">
-          <div className="sop-sidenav-title">Inhalt</div>
+          <div className="sop-sidenav-title">{st('contents')}</div>
           {nav.map(({id,num,label}) => (
             <a key={id} href={`#${id}`} className={`sop-nav-item${activeSection===id?' active':''}`}>
               <div className="sop-nav-num">{num}</div><div className="sop-nav-label">{label}</div>
             </a>
           ))}
           <div className="sop-nav-progress">
-            <div className="sop-nav-progress-label"><span>Fortschritt</span><span className="sop-nav-progress-pct">{scrollPct}%</span></div>
+            <div className="sop-nav-progress-label"><span>{st('progress')}</span><span className="sop-nav-progress-pct">{scrollPct}%</span></div>
             <div className="sop-nav-bar-bg"><div className="sop-nav-bar-fill" style={{width:`${scrollPct}%`}}/></div>
           </div>
           <a href="#wissenstest" className="sop-nav-quiz-btn">Zum Wissenstest →</a>

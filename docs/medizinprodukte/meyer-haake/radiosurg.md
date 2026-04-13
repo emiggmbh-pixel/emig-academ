@@ -5,6 +5,9 @@ sidebar_label: radioSURG® 2200
 ---
 
 import Admonition from '@theme/Admonition';
+import { LangSwitcherBar } from '@site/src/components/LanguageSwitcher';
+
+<LangSwitcherBar/>
 
 # ⚡ radioSURG® 2200 — MH-01
 

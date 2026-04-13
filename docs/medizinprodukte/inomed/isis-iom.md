@@ -5,6 +5,9 @@ sidebar_label: ISIS IOM
 ---
 
 import Admonition from '@theme/Admonition';
+import { LangSwitcherBar } from '@site/src/components/LanguageSwitcher';
+
+<LangSwitcherBar/>
 
 # 🧠 ISIS IOM — INO-01
 

@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { getSopT } from './LanguageSwitcher';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -14,6 +15,7 @@ interface SopQuizProps {
   refCode: string;
   questions: QuizQuestion[];
   onComplete?: (score: number, total: number) => void;
+  lang?: string;
 }
 
 // ─── Styles ──────────────────────────────────────────────────────────────────
@@ -393,12 +395,19 @@ const CSS = `
 
 const LETTERS = ['A', 'B', 'C', 'D', 'E'];
 
-export default function SopQuiz({ refCode, questions, onComplete }: SopQuizProps) {
+export default function SopQuiz({ refCode, questions, onComplete, lang: langProp }: SopQuizProps) {
   const [current, setCurrent]   = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [answers, setAnswers]   = useState<(number | null)[]>(Array(questions.length).fill(null));
   const [finished, setFinished] = useState(false);
+  const [lang, setLang]         = useState(langProp ?? 'de');
   const bodyRef = useRef<HTMLDivElement>(null);
+  const qt = getSopT(lang);
+
+  useEffect(() => {
+    if (langProp) { setLang(langProp); return; }
+    try { const s = localStorage.getItem('emig_lang'); if (s && ['de','en','ru'].includes(s)) setLang(s); } catch {}
+  }, [langProp]);
 
   const q         = questions[current];
   const answered  = selected !== null;
@@ -445,19 +454,19 @@ export default function SopQuiz({ refCode, questions, onComplete }: SopQuizProps
       <div className="sq-root" id="wissenstest">
         {/* Header */}
         <div className="sq-header">
-          <div className="sq-header-label">Wissenstest</div>
+          <div className="sq-header-label">{qt('quizLabel')}</div>
           <div className="sq-header-title">{refCode} — Quiz</div>
           <div className="sq-header-sub">
             {finished
-              ? `${questions.length} Fragen abgeschlossen`
-              : `${questions.length} Fragen · Wählen Sie die richtige Antwort`}
+              ? qt('questionsDone', questions.length)
+              : qt('questionsOf', questions.length)}
           </div>
           <div className="sq-progress-row">
             <div className="sq-progress-track">
               <div className="sq-progress-fill" style={{ width: `${finished ? 100 : progressPct}%` }} />
             </div>
             <div className="sq-progress-label">
-              {finished ? 'Fertig' : `${current + 1} / ${questions.length}`}
+              {finished ? '✓' : `${current + 1} / ${questions.length}`}
             </div>
           </div>
         </div>
@@ -466,7 +475,7 @@ export default function SopQuiz({ refCode, questions, onComplete }: SopQuizProps
         <div className="sq-body" ref={bodyRef}>
           {!finished ? (
             <div style={{ animation: 'sq-fade 0.28s ease' }} key={current}>
-              <div className="sq-q-num">Frage {current + 1} von {questions.length}</div>
+              <div className="sq-q-num">{`${current + 1} / ${questions.length}`}</div>
               <p className="sq-q-text">{q.question}</p>
 
               <div className="sq-options">
@@ -498,7 +507,7 @@ export default function SopQuiz({ refCode, questions, onComplete }: SopQuizProps
               {answered && (
                 <div className={`sq-explanation ${isCorrect ? 'correct' : 'wrong'}`}>
                   <div className="sq-exp-label">
-                    {isCorrect ? 'Richtig!' : 'Leider falsch'}
+                    {isCorrect ? qt('correct') : qt('wrong')}
                   </div>
                   <div className="sq-exp-text">{q.explanation}</div>
                 </div>
@@ -506,7 +515,7 @@ export default function SopQuiz({ refCode, questions, onComplete }: SopQuizProps
 
               {answered && (
                 <button className="sq-next-btn" onClick={handleNext}>
-                  {current < questions.length - 1 ? 'Nächste Frage →' : 'Ergebnis anzeigen →'}
+                  {current < questions.length - 1 ? qt('nextQ') : qt('showResult')}
                 </button>
               )}
             </div>
@@ -526,39 +535,43 @@ export default function SopQuiz({ refCode, questions, onComplete }: SopQuizProps
                 </svg>
                 <div className="sq-result-score-text">
                   <span className="sq-result-pct">{pct}%</span>
-                  <span className="sq-result-pct-label">Score</span>
+                  <span className="sq-result-pct-label">{qt('scoreLabel')}</span>
                 </div>
               </div>
 
               <div className="sq-result-title">
-                {pct >= 80 ? 'Ausgezeichnet!' : pct >= 50 ? 'Gut gemacht!' : 'Nochmal versuchen'}
+                {pct >= 80
+                  ? ({de:'Ausgezeichnet!',en:'Excellent!',ru:'Отлично!'}[lang]||'Ausgezeichnet!')
+                  : pct >= 50
+                  ? ({de:'Gut gemacht!',en:'Well done!',ru:'Хорошо!'}[lang]||'Gut gemacht!')
+                  : ({de:'Nochmal versuchen',en:'Try again',ru:'Попробуйте ещё раз'}[lang]||'Nochmal versuchen')}
               </div>
               <p className="sq-result-sub">
                 {pct >= 80
-                  ? 'Sie haben das Modul erfolgreich abgeschlossen. Ihr Wissen ist auf einem sehr guten Niveau.'
+                  ? ({de:'Sie haben das Modul erfolgreich abgeschlossen. Ihr Wissen ist auf einem sehr guten Niveau.',en:'You have successfully completed the module. Your knowledge is at a very good level.',ru:'Вы успешно завершили модуль. Ваши знания на очень высоком уровне.'}[lang]||'')
                   : pct >= 50
-                  ? 'Sie sind auf dem richtigen Weg. Lesen Sie die markierten Abschnitte nochmals durch.'
-                  : 'Lesen Sie das Modul bitte erneut durch und versuchen Sie es dann nochmal.'}
+                  ? ({de:'Sie sind auf dem richtigen Weg. Lesen Sie die markierten Abschnitte nochmals durch.',en:'You are on the right track. Please review the highlighted sections again.',ru:'Вы на правильном пути. Пожалуйста, повторите отмеченные разделы.'}[lang]||'')
+                  : ({de:'Lesen Sie das Modul bitte erneut durch und versuchen Sie es dann nochmal.',en:'Please review the module again and then try once more.',ru:'Пожалуйста, повторно изучите модуль и попробуйте снова.'}[lang]||'')}
               </p>
 
               <div className="sq-result-breakdown">
                 <div className="sq-rb-item">
                   <div className="sq-rb-num" style={{ color: '#10b981' }}>{score}</div>
-                  <div className="sq-rb-lbl">Richtig</div>
+                  <div className="sq-rb-lbl">{qt('rightLabel')}</div>
                 </div>
                 <div className="sq-rb-item">
                   <div className="sq-rb-num" style={{ color: '#ef4444' }}>{questions.length - score}</div>
-                  <div className="sq-rb-lbl">Falsch</div>
+                  <div className="sq-rb-lbl">{qt('wrongLabel')}</div>
                 </div>
                 <div className="sq-rb-item">
                   <div className="sq-rb-num" style={{ color: '#111' }}>{questions.length}</div>
-                  <div className="sq-rb-lbl">Gesamt</div>
+                  <div className="sq-rb-lbl">Total</div>
                 </div>
               </div>
 
               <div>
                 <button className="sq-restart-btn" onClick={handleRestart}>
-                  Quiz wiederholen
+                  {qt('repeatQuiz')}
                 </button>
                 {pct >= 80 && (
                   <button className="sq-cert-btn">

@@ -5,6 +5,9 @@ sidebar_label: Instrumentarium & Optiken
 ---
 
 import Admonition from '@theme/Admonition';
+import { LangSwitcherBar } from '@site/src/components/LanguageSwitcher';
+
+<LangSwitcherBar/>
 
 # ⚙️ Instrumentarium & Optiken — RIWO-04
 

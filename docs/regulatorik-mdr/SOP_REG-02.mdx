@@ -6,6 +6,7 @@ sidebar_label: Händlerpflichten
 
 import React, { useState, useEffect } from 'react';
 import SopQuiz from '@site/src/components/SopQuiz';
+import { useLanguage, LanguageSwitcher, getSopT, SopTitle } from '@site/src/components/LanguageSwitcher';
 
 export const quizData = [
   { id:1, question:"Wann gilt die EMIG GmbH als Händler (nicht Importeur)?", options:["Immer wenn sie Produkte verkauft","Wenn sie Medizinprodukte innerhalb der EU nach dem Inverkehrbringen bereitstellt oder vertreibt (nicht aus Drittländern importiert)","Nur wenn sie eigene Lager betreibt","Wenn der Umsatz unter 1 Mio. € liegt"], correct:1, explanation:"Als Händler gilt EMIG, wenn Produkte innerhalb der EU bereitgestellt werden — also nach dem bereits erfolgten Inverkehrbringen durch einen Hersteller oder Importeur. Import aus Drittländern = SOP-REG-01 Importeurpflichten." },
@@ -613,6 +614,8 @@ export const quizData = [
 export function SopReg02Page() {
   const [activeSection, setActiveSection] = useState('zweck');
   const [scrollPct, setScrollPct] = useState(0);
+  const [lang, setLang] = useLanguage();
+  const st = getSopT(lang);
   useEffect(() => {
     const ids = ['zweck','grundpflichten','konformitaet','lagerung','nichtkonform','wissenstest'];
     const onScroll = () => {
@@ -635,11 +638,14 @@ export function SopReg02Page() {
   ];
   return (
     <div className="sop-page">
+      <div style={{display:'flex',justifyContent:'flex-end',marginBottom:'1rem'}}>
+        <LanguageSwitcher lang={lang} setLang={setLang}/>
+      </div>
       <div className="sop-hero">
         <div>
           <div className="sop-hero-eyebrow"><div className="sop-hero-eyebrow-line"/><span className="sop-hero-eyebrow-text">SOP-REG-02 · Regulatorik & MDR</span></div>
-          <div className="sop-hero-title">Händlerpflichten<br/>gemäß MDR Art. 14</div>
-          <p className="sop-hero-desc">Sicherstellung dass Medizinprodukte innerhalb der EU während Lagerung, Vertrieb und After-Sales jederzeit konform, sicher und rückverfolgbar bleiben — Stichprobenprüfung, Lagerung, Nichtkonformität und BfArM-Meldung.</p>
+          <div className="sop-hero-title"><SopTitle sopT={st} sopKey='SOP-REG-02-title'/></div>
+          <p className="sop-hero-desc">{st('SOP-REG-02-desc')}</p>
           <div className="sop-hero-meta">
             <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>MDR Art. 14 Händlerpflichten</div>
             <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>Gültig ab 01.02.2026</div>
@@ -736,17 +742,17 @@ export function SopReg02Page() {
             <div className="sop-norms"><span className="sop-norm">MDR Art. 14 §4</span><span className="sop-norm">BfArM Vigilanz</span><span className="sop-norm">SOP-LOG-03 Sperrware</span></div>
           </div>
           <div className="sop-divider"/>
-          <div id="wissenstest"><div className="sop-quiz-header"><div className="sop-quiz-header-icon">★</div><div><div className="sop-quiz-header-title">Wissenstest — SOP-REG-02</div><div className="sop-quiz-header-sub">10 Fragen · Händlerpflichten gemäß MDR Art. 14</div></div></div></div>
+          <div id="wissenstest"><div className="sop-quiz-header"><div className="sop-quiz-header-icon">★</div><div><div className="sop-quiz-header-title">{st('quizLabel')} — SOP-REG-02</div><div className="sop-quiz-header-sub">{quizData.length} {st('questions')} · {st('SOP-REG-02-title').split('\n')[0]}</div></div></div></div>
         </div>
         <div className="sop-sidenav">
-          <div className="sop-sidenav-title">Inhalt</div>
+          <div className="sop-sidenav-title">{st('contents')}</div>
           {nav.map(({id,num,label}) => (
             <a key={id} href={`#${id}`} className={`sop-nav-item${activeSection===id?' active':''}`}>
               <div className="sop-nav-num">{num}</div><div className="sop-nav-label">{label}</div>
             </a>
           ))}
           <div className="sop-nav-progress">
-            <div className="sop-nav-progress-label"><span>Fortschritt</span><span className="sop-nav-progress-pct">{scrollPct}%</span></div>
+            <div className="sop-nav-progress-label"><span>{st('progress')}</span><span className="sop-nav-progress-pct">{scrollPct}%</span></div>
             <div className="sop-nav-bar-bg"><div className="sop-nav-bar-fill" style={{width:`${scrollPct}%`}}/></div>
           </div>
           <a href="#wissenstest" className="sop-nav-quiz-btn">Zum Wissenstest →</a>

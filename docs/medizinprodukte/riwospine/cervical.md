@@ -5,6 +5,9 @@ sidebar_label: Vertebris Cervical
 ---
 
 import Admonition from '@theme/Admonition';
+import { LangSwitcherBar } from '@site/src/components/LanguageSwitcher';
+
+<LangSwitcherBar/>
 
 # 🦴 Vertebris Cervical — RIWO-03
 

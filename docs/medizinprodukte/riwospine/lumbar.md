@@ -5,6 +5,9 @@ sidebar_label: Vertebris Lumbar
 ---
 
 import Admonition from '@theme/Admonition';
+import { LangSwitcherBar } from '@site/src/components/LanguageSwitcher';
+
+<LangSwitcherBar/>
 
 # 🦴 Vertebris Lumbar — RIWO-02
 

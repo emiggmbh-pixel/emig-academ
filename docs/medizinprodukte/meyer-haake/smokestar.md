@@ -5,6 +5,9 @@ sidebar_label: smokeSTAR Rauchgasabsaugung
 ---
 
 import Admonition from '@theme/Admonition';
+import { LangSwitcherBar } from '@site/src/components/LanguageSwitcher';
+
+<LangSwitcherBar/>
 
 # 💨 smokeSTAR — MH-03
 

@@ -5,6 +5,9 @@ sidebar_label: Vertebris Stenose
 ---
 
 import Admonition from '@theme/Admonition';
+import { LangSwitcherBar } from '@site/src/components/LanguageSwitcher';
+
+<LangSwitcherBar/>
 
 # 🦴 Vertebris Stenose — RIWO-01
 

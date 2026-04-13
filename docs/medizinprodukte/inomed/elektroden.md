@@ -5,6 +5,9 @@ sidebar_label: Elektroden & Zubehör
 ---
 
 import Admonition from '@theme/Admonition';
+import { LangSwitcherBar } from '@site/src/components/LanguageSwitcher';
+
+<LangSwitcherBar/>
 
 # 🔌 Elektroden & Zubehör — INO-04
 

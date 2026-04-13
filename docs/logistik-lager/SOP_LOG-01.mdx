@@ -6,6 +6,7 @@ sidebar_label: Lagerbedingungen
 
 import React, { useState, useEffect } from 'react';
 import SopQuiz from '@site/src/components/SopQuiz';
+import { useLanguage, LanguageSwitcher, getSopT, SopTitle } from '@site/src/components/LanguageSwitcher';
 
 export const quizData = [
   {
@@ -723,6 +724,8 @@ export const quizData = [
 export function SopLogPage() {
   const [activeSection, setActiveSection] = useState('zweck');
   const [scrollPct, setScrollPct] = useState(0);
+  const [lang, setLang] = useLanguage();
+  const st = getSopT(lang);
 
   useEffect(() => {
     const sections = ['zweck','umgebung','fifo','zugang','wissenstest'];
@@ -760,6 +763,9 @@ export function SopLogPage() {
 
   return (
     <div className="sop-page">
+      <div style={{display:'flex',justifyContent:'flex-end',marginBottom:'1rem'}}>
+        <LanguageSwitcher lang={lang} setLang={setLang}/>
+      </div>
 
       {/* ── HERO ── */}
       <div className="sop-hero">
@@ -768,10 +774,8 @@ export function SopLogPage() {
             <div className="sop-hero-eyebrow-line"/>
             <span className="sop-hero-eyebrow-text">SOP-LOG-01 · Logistik & Lager</span>
           </div>
-          <div className="sop-hero-title">Lagerung von<br/>Medizinprodukten</div>
-          <p className="sop-hero-desc">
-            Verfahrensanweisung für die sachgerechte Lagerung aller Medizinprodukte — von der Einlagerung bis zur Auslieferung, konform mit ISO 13485 und EU-MDR 2017/745.
-          </p>
+          <div className="sop-hero-title"><SopTitle sopT={st} sopKey='SOP-LOG-01-title'/></div>
+          <p className="sop-hero-desc">{st('SOP-LOG-01-desc')}</p>
           <div className="sop-hero-meta">
             <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>ISO 13485:2016 §7.5.1</div>
             <div className="sop-hero-meta-item"><div className="sop-hero-meta-dot"/>Gültig ab 31.01.2026</div>
@@ -953,8 +957,8 @@ export function SopLogPage() {
             <div className="sop-quiz-header">
               <div className="sop-quiz-header-icon">★</div>
               <div>
-                <div className="sop-quiz-header-title">Wissenstest — SOP-LOG-01</div>
-                <div className="sop-quiz-header-sub">10 Fragen · Beantworten Sie alle Fragen um das Modul abzuschließen</div>
+                <div className="sop-quiz-header-title">{st('quizLabel')} — SOP-LOG-01</div>
+                <div className="sop-quiz-header-sub">{quizData.length} {st('questions')} · {st('SOP-LOG-01-title').split('\n')[0]}</div>
               </div>
             </div>
           </div>
@@ -963,7 +967,7 @@ export function SopLogPage() {
 
         {/* ── STICKY SIDE NAVIGATION ── */}
         <div className="sop-sidenav">
-          <div className="sop-sidenav-title">Inhalt</div>
+          <div className="sop-sidenav-title">{st('contents')}</div>
           {navItems.map(({id, num, label}) => (
             <a
               key={id}
@@ -976,7 +980,7 @@ export function SopLogPage() {
           ))}
           <div className="sop-nav-progress">
             <div className="sop-nav-progress-label">
-              <span>Fortschritt</span>
+              <span>{st('progress')}</span>
               <span className="sop-nav-progress-pct">{scrollPct}%</span>
             </div>
             <div className="sop-nav-bar-bg">
