@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from '@docusaurus/Link';
 import Layout from '@theme/Layout';
 import useBaseUrl from '@docusaurus/useBaseUrl';
@@ -604,24 +604,26 @@ body{background:var(--bg);}
 .ea{font-family:'Outfit',sans-serif;color:var(--text);font-size:1rem;line-height:1.6;}
 
 /* ── HERO ── */
-.ea-hero{position:relative;width:100vw;margin-left:calc(-50vw + 50%);min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:#05040a;}
-.ea-hero-media{position:absolute;inset:0;z-index:0;}
-.ea-hero-video{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(1.1) contrast(1.05);}
-.ea-vignette{position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(5,4,10,.97) 0%,rgba(5,4,10,.72) 30%,rgba(5,4,10,.28) 65%,transparent 100%),linear-gradient(105deg,rgba(5,4,10,.65) 0%,transparent 55%);}
-.ea-grain{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.028;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='280' height='280' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px;}
-.ea-frame-t,.ea-frame-b{position:absolute;left:0;right:0;height:1px;z-index:3;background:linear-gradient(90deg,transparent,rgba(200,169,110,.3),transparent);}
+.ea-hero{position:relative;width:100vw;margin-left:calc(-50vw + 50%);min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:#04030a;}
+.ea-hero-bg{position:absolute;inset:0;z-index:0;}
+.ea-hero-bg-img{width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block;opacity:.14;filter:saturate(.35) contrast(1.3) brightness(.8);}
+.ea-hero-grid{position:absolute;inset:0;z-index:1;background-image:radial-gradient(circle,rgba(200,169,110,.09) 1px,transparent 1px);background-size:44px 44px;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.9) 25%,rgba(0,0,0,.9) 75%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.9) 25%,rgba(0,0,0,.9) 75%,transparent 100%);}
+.ea-hero-orbs{position:absolute;inset:0;z-index:2;overflow:hidden;pointer-events:none;}
+@keyframes orb-a{0%,100%{transform:translate(0,0) scale(1);opacity:.22;}50%{transform:translate(-40px,30px) scale(1.12);opacity:.3;}}
+@keyframes orb-b{0%,100%{transform:translate(0,0) scale(1.05);opacity:.18;}50%{transform:translate(50px,-35px) scale(.95);opacity:.26;}}
+@keyframes orb-c{0%,100%{transform:translate(0,0) scale(1);opacity:.14;}50%{transform:translate(-25px,-50px) scale(1.08);opacity:.2;}}
+.ea-orb{position:absolute;border-radius:50%;filter:blur(90px);}
+.ea-orb-1{width:700px;height:700px;background:radial-gradient(circle,rgba(212,163,64,.55) 0%,transparent 65%);top:-15%;left:55%;animation:orb-a 14s ease-in-out infinite;}
+.ea-orb-2{width:550px;height:550px;background:radial-gradient(circle,rgba(124,58,237,.5) 0%,transparent 65%);top:25%;left:-8%;animation:orb-b 18s ease-in-out infinite 2s;}
+.ea-orb-3{width:450px;height:450px;background:radial-gradient(circle,rgba(21,101,192,.45) 0%,transparent 65%);bottom:5%;right:5%;animation:orb-c 22s ease-in-out infinite 5s;}
+.ea-vignette{position:absolute;inset:0;z-index:3;background:linear-gradient(to top,rgba(4,3,10,.98) 0%,rgba(4,3,10,.75) 28%,rgba(4,3,10,.25) 60%,rgba(4,3,10,.1) 100%),linear-gradient(100deg,rgba(4,3,10,.7) 0%,transparent 50%);}
+.ea-grain{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='280' height='280' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px;}
+.ea-frame-t,.ea-frame-b{position:absolute;left:0;right:0;height:1px;z-index:5;background:linear-gradient(90deg,transparent,rgba(200,169,110,.28),transparent);}
 .ea-frame-t{top:0;}.ea-frame-b{bottom:0;}
-.ea-hero-inner{position:relative;z-index:4;padding:0 5% 8vh;width:100%;max-width:1600px;margin:0 auto;}
+.ea-hero-inner{position:relative;z-index:6;padding:0 5% 8vh;width:100%;max-width:1600px;margin:0 auto;}
 /* ── HERO TITLE ── */
-@keyframes title-shimmer{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
-}
-@keyframes eyebrow-glow{
-  0%,100%{opacity:.7}
-  50%{opacity:1}
-}
+@keyframes title-shimmer{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes eyebrow-glow{0%,100%{opacity:.7}50%{opacity:1}}
 .ea-eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:1.6rem;}
 .ea-eyebrow::before{content:'';display:block;width:40px;height:1px;background:linear-gradient(90deg,transparent,#c8a96e);opacity:.8;}
 .ea-eyebrow span{font-size:.65rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:rgba(200,169,110,.75);animation:eyebrow-glow 4s ease-in-out infinite;}
@@ -629,14 +631,19 @@ body{background:var(--bg);}
 .ea-h1-sub{display:block;font-family:'Outfit',sans-serif;font-size:clamp(.9rem,1.4vw,1.1rem);font-weight:300;color:rgba(255,255,255,.38);letter-spacing:.55em;text-transform:uppercase;margin-bottom:.6rem;}
 .ea-h1-main{display:block;font-family:'Bebas Neue',sans-serif;font-size:clamp(6rem,13vw,12rem);letter-spacing:.02em;line-height:.85;background:linear-gradient(110deg,#fff 0%,#ffe8b0 20%,#ffb347 38%,#ff6b35 52%,#e8368e 65%,#a855f7 78%,#60a5fa 90%,#fff 100%);background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:title-shimmer 8s ease infinite;filter:drop-shadow(0 0 60px rgba(255,107,53,.15));}
 .ea-h1-brand{display:block;font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,4.5vw,4rem);letter-spacing:.35em;color:rgba(255,255,255,.22);line-height:1;margin-bottom:-.4rem;}
-.ea-tagline{font-size:clamp(.85rem,1.1vw,.95rem);color:rgba(238,234,224,.32);font-weight:300;letter-spacing:.22em;text-transform:uppercase;margin:1.5rem 0 0;}
+.ea-hero-desc{font-size:clamp(.85rem,1.1vw,1rem);color:rgba(238,234,224,.45);font-weight:300;line-height:1.7;margin:1.25rem 0 0;max-width:620px;}
+.ea-hero-areas{display:flex;gap:10px;margin-top:2rem;flex-wrap:wrap;}
+@keyframes area-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.ea-area-card{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:12px;padding:10px 16px;cursor:pointer;transition:all .25s ease;backdrop-filter:blur(12px);animation:area-in .5s ease both;}
+.ea-area-card:hover{background:rgba(255,255,255,.09);border-color:rgba(200,169,110,.35);transform:translateY(-2px);}
+.ea-area-icon{font-size:.9rem;color:rgba(200,169,110,.7);flex-shrink:0;}
+.ea-area-name{font-size:.78rem;font-weight:700;color:rgba(255,255,255,.75);letter-spacing:.03em;display:block;}
+.ea-area-sub{font-size:.6rem;color:rgba(255,255,255,.3);letter-spacing:.06em;display:block;margin-top:1px;}
 .ea-stats{display:flex;align-items:stretch;gap:0;margin-top:2.5rem;flex-wrap:wrap;}
 .ea-stat{padding-right:2rem;margin-right:2rem;border-right:1px solid rgba(200,169,110,.16);}
 .ea-stat:last-child{border-right:none;padding-right:0;margin-right:0;}
 .ea-stat-n{font-family:'Bebas Neue',sans-serif;font-size:2.6rem;color:#fff;line-height:1;display:block;letter-spacing:.04em;}
 .ea-stat-l{font-size:.6rem;color:rgba(238,234,224,.3);text-transform:uppercase;letter-spacing:.18em;font-weight:500;display:block;margin-top:3px;}
-.ea-vidctl{position:absolute;bottom:2rem;right:3%;z-index:5;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.4);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;backdrop-filter:blur(14px);font-size:.7rem;}
-.ea-vidctl:hover{background:rgba(200,169,110,.15);color:#e8d5a8;border-color:#c8a96e;}
 
 /* ── MAIN ── */
 .ea-main{background:var(--bg);padding:2.5rem 0 5rem;}
@@ -1504,8 +1511,8 @@ const LANGS = [
 const TRANSLATIONS: Record<string, Record<string, any>> = {
   de: {
     // ── HERO ──
-    heroEyebrow:      'Emig GmbH · Interne Lernplattform · Reutlingen',
-    heroTagline:      'Qualität · Wissen · Exzellenz',
+    heroEyebrow:      'Emig GmbH · Reutlingen · Interne Lernplattform',
+    heroDesc:         'Erkunden Sie alle Bereiche der EMIG GmbH — von internen Qualitätsprozessen und SAP-Digitalisierung bis zu Medizinprodukt-Schulungen und After-Sales Service.',
     statQM:           'QM Module',
     statMfr:          'Hersteller',
     statSAP:          'SAP Phasen',
@@ -1578,8 +1585,8 @@ const TRANSLATIONS: Record<string, Record<string, any>> = {
     sapSodSub:         'Kritische Funktionskombinationen, die systemseitig getrennt sind.',
   },
   en: {
-    heroEyebrow:      'Emig GmbH · Internal Learning Platform · Reutlingen',
-    heroTagline:      'Quality · Knowledge · Excellence',
+    heroEyebrow:      'Emig GmbH · Reutlingen · Internal Learning Platform',
+    heroDesc:         'Explore all areas of EMIG GmbH — from internal quality processes and SAP digitalization to medical device training and after-sales service.',
     statQM:           'QM Modules',
     statMfr:          'Manufacturers',
     statSAP:          'SAP Phases',
@@ -1644,8 +1651,8 @@ const TRANSLATIONS: Record<string, Record<string, any>> = {
     sapSodSub:         'Critical function combinations that are separated at system level.',
   },
   ru: {
-    heroEyebrow:      'Emig GmbH · Внутренняя учебная платформа · Ройтлинген',
-    heroTagline:      'Качество · Знания · Превосходство',
+    heroEyebrow:      'Emig GmbH · Ройтлинген · Внутренняя учебная платформа',
+    heroDesc:         'Изучите все направления EMIG GmbH — от внутренних процессов качества и SAP-цифровизации до обучения по медизделиям и послепродажного сервиса.',
     statQM:           'Модули КМ',
     statMfr:          'Производители',
     statSAP:          'Фазы SAP',
@@ -2925,8 +2932,6 @@ function ServiceSection() {
 
 export default function Home() {
   const bgImg    = useBaseUrl('/img/emig-gebaeude.png');
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [paused, setPaused] = useState(false);
   const [tab, setTab]       = useState('QM');
   const [tabDir, setTabDir] = useState('right');
   const tabOrder            = ['QM','SAP','MED','SVC'];
@@ -2956,19 +2961,6 @@ export default function Home() {
   const handleLang = (code:string) => {
     setLang(code);
     try{ localStorage.setItem('emig_lang',code); }catch(_){}
-  };
-
-  useEffect(()=>{
-    const v=videoRef.current; if(!v) return;
-    let dead=false;
-    const t=setTimeout(()=>{ if(!dead) v.play().catch(()=>{}); },150);
-    return()=>{ dead=true; clearTimeout(t); if(!v.paused) v.pause(); };
-  },[]);
-
-  const toggleVid=()=>{
-    const v=videoRef.current; if(!v) return;
-    if(v.paused){v.play().catch(()=>{}); setPaused(false);}
-    else{v.pause(); setPaused(true);}
   };
 
   const pct   = Math.round((done.length/ALL_QM.length)*100);
@@ -3034,18 +3026,21 @@ export default function Home() {
       <div className="ea">
         <div style={{width:'100%',overflow:'hidden'}}>
           <div className="ea-hero">
-            <div className="ea-hero-media">
-              <video ref={videoRef} className="ea-hero-video" autoPlay={false} muted loop playsInline poster={bgImg} preload="auto">
-                <source src="/video/emig-hero.mp4" type="video/mp4"/>
-                <source src="/video/5762407-uhd_3840_2160_24fps%20(1).mp4" type="video/mp4"/>
-              </video>
+            {/* Static animated background */}
+            <div className="ea-hero-bg">
+              <img src={bgImg} alt="" className="ea-hero-bg-img" aria-hidden="true"/>
+            </div>
+            <div className="ea-hero-grid"/>
+            <div className="ea-hero-orbs">
+              <div className="ea-orb ea-orb-1"/>
+              <div className="ea-orb ea-orb-2"/>
+              <div className="ea-orb ea-orb-3"/>
             </div>
             <div className="ea-vignette"/>
             <div className="ea-grain"/>
             <div className="ea-frame-t"/>
             <div className="ea-frame-b"/>
-            <button className="ea-vidctl" onClick={toggleVid} title={paused?'Play':'Pause'}>{paused?'▶':'⏸'}</button>
-            {/* Language switcher — oben rechts, relativ zum Hero (nicht zur inner Box) */}
+            {/* Language switcher */}
             <div style={{position:'absolute',top:'1.5rem',right:'5%',zIndex:20}}>
               <LanguageSwitcher lang={lang} setLang={handleLang}/>
             </div>
@@ -3055,7 +3050,24 @@ export default function Home() {
                 <span className="ea-h1-brand">EMIG</span>
                 <span className="ea-h1-main">ACADEMY</span>
               </h1>
-              <p className="ea-tagline">{t('heroTagline')}</p>
+              <p className="ea-hero-desc">{t('heroDesc')}</p>
+              {/* Area navigation cards */}
+              <div className="ea-hero-areas">
+                {[
+                  {id:'QM',  icon:'◈', name:t('tabQM'),  sub:'SOPs · Normen · Audits',          delay:'0ms'},
+                  {id:'SAP', icon:'◉', name:t('tabSAP'), sub:'Business One · MDR · Prozesse',   delay:'80ms'},
+                  {id:'MED', icon:'◎', name:t('tabMED'), sub:'Hersteller · Produktschulungen',  delay:'160ms'},
+                  {id:'SVC', icon:'◆', name:t('tabSVC'), sub:'After-Sales · 3-Stufen-Eskalation', delay:'240ms'},
+                ].map(a=>(
+                  <div key={a.id} className="ea-area-card" style={{animationDelay:a.delay}} onClick={()=>switchTab(a.id)}>
+                    <span className="ea-area-icon">{a.icon}</span>
+                    <div>
+                      <span className="ea-area-name">{a.name}</span>
+                      <span className="ea-area-sub">{a.sub}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
               <div className="ea-stats">
                 <div className="ea-stat"><span className="ea-stat-n">{ALL_QM.length}</span><span className="ea-stat-l">{t('statQM')}</span></div>
                 <div className="ea-stat"><span className="ea-stat-n">{MFRS.length}</span><span className="ea-stat-l">{t('statMfr')}</span></div>
@@ -3067,15 +3079,6 @@ export default function Home() {
 
         <main className="ea-main">
           <div className="ea-wrap">
-            {greet&&(
-              <div className="ea-welcome">
-                <div>
-                  <div className="ea-welcome-name">{t(greet)}, {t('welcomeBack')}</div>
-                  <div className="ea-welcome-sub">{done.length>0?t('progressDone',done.length,ALL_QM.length):t('progressStart')}</div>
-                </div>
-                <div className="ea-welcome-pill">{t('progressPill',pct)}</div>
-              </div>
-            )}
 
             {(()=>{
               const TABS = [
@@ -3106,6 +3109,16 @@ export default function Home() {
           {/* QM TAB */}
           {tab==='QM' && (
             <div className={`ea-wrap tab-enter-${tabDir}`} key="qm">
+              {/* Greeting — nur im QM Tab */}
+              {greet&&(
+                <div className="ea-welcome">
+                  <div>
+                    <div className="ea-welcome-name">{t(greet)}, {t('welcomeBack')}</div>
+                    <div className="ea-welcome-sub">{done.length>0?t('progressDone',done.length,ALL_QM.length):t('progressStart')}</div>
+                  </div>
+                  <div className="ea-welcome-pill">{t('progressPill',pct)}</div>
+                </div>
+              )}
               {/* ── NEUES PROGRESS DESIGN ── */}
               <div className="ea-prog-wrap">
                 <div className="ea-prog-header">
