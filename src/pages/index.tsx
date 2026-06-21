@@ -463,6 +463,76 @@ const SAP_TL = [
   { ph:'Q1 2027',      em:'🌍', title:'Go-Live MiaMed UA', desc:'Ukraine-Mandant + Intercompany aktiv',   done:false },
 ];
 
+// ─── SERVICE DATA ─────────────────────────────────────────────────────────────
+
+const SVC_STEPS = [
+  {
+    id: 'remote',   num: 1, icon: '📞',
+    title: 'Kontakt & Remote-Support',
+    sub:   'Ferndiagnose per Telefon oder Video',
+    sla:   '4 Stunden',
+    status: 'available' as const,
+    statusLabel: 'Sofort verfügbar',
+    col: '#10b981',
+    desc: 'Erste Anlaufstelle für alle Serviceanfragen. Über 60 % der Fälle werden remote gelöst — per Telefon, Videokonferenz oder Fernzugriff. Der Techniker greift live auf Geräteakte und Knowledge Base zu.',
+    kpis: [{v:'>60%',l:'Remote-Lösungsrate'},{v:'4h',l:'SLA'},{v:'24/7',l:'Hotline'}],
+    actions: ['Ticket via Seriennummer — sofortige Gerätehistorie','Ferndiagnose per Video (Teams / FaceTime / Zoom)','Knowledge-Base-Abgleich in Echtzeit','Remote-Konfiguration bei Software-Problemen'],
+  },
+  {
+    id: 'onsite',   num: 2, icon: '🔧',
+    title: 'Vor-Ort-Analyse',
+    sub:   'EMIG-Techniker kommt zum Kunden',
+    sla:   '24 Stunden',
+    status: 'available' as const,
+    statusLabel: 'Sofort verfügbar',
+    col: '#3b82f6',
+    desc: 'Wenn Remote-Diagnose keine Lösung bringt, fährt ein EMIG-Servicetechniker direkt zur Klinik — mit vollständigem Fahrzeuglager und Echtzeiteinblick in die Geräteakte.',
+    kpis: [{v:'24h',l:'SLA Vor-Ort'},{v:'BW/Umgebung',l:'Einsatzgebiet'},{v:'100%',l:'Fahrzeuglager'}],
+    actions: ['Techniker-Cockpit: vollständige Geräteakte offline','Fahrzeuglager: Ersatz- & Verschleißteile direkt dabei','Vor-Ort-Reparatur oder sofortiger Leihgeräte-Tausch','Serviceprotokoll mit Fotos, Maßnahmen und Signatur'],
+  },
+  {
+    id: 'inhouse',  num: 3, icon: '🏭',
+    title: 'EMIG Service-Center',
+    sub:   'Inhouse-Reparatur nach ISO-Standard',
+    sla:   '5 Werktage',
+    status: 'building' as const,
+    statusLabel: 'Im Aufbau',
+    col: '#f59e0b',
+    desc: 'Das EMIG Service-Center Reutlingen führt Inhouse-Reparaturen und STK-Prüfungen nach ISO 13485 durch. Das RMA-Lager ist physisch vom Warenlager getrennt — vollständig MDR-konform.',
+    kpis: [{v:'Q4/26',l:'Verfügbar ab'},{v:'ISO 13485',l:'Standard'},{v:'RMA getrennt',l:'MDR-konform'}],
+    actions: ['RMA-Eingang physisch getrennt vom Hauptlager','Reparatur nach Original-Herstelleranleitung','STK-Prüfung vollständig MDR-dokumentiert','BfArM-Meldung bei sicherheitsrelevanten Defekten'],
+  },
+  {
+    id: 'manufacturer', num: 4, icon: '🏢',
+    title: 'Hersteller-Support',
+    sub:   'Eskalation zum Werk (Level 2)',
+    sla:   '2h bei FSN',
+    status: 'available' as const,
+    statusLabel: 'Sofort verfügbar',
+    col: '#8b5cf6',
+    desc: 'Bei Field Safety Notices oder wenn EMIG keine Lösung findet, eskaliert das System automatisch — Seriennummer, Fehlerprotokoll und Chargeninformation werden direkt übermittelt.',
+    kpis: [{v:'2h',l:'SLA FSN'},{v:'Auto',l:'BfArM-Meldung'},{v:'5+',l:'Hersteller-Partner'}],
+    actions: ['Automatische Seriennummer + Fehlerprotokoll-Übermittlung','Field Safety Notice: BfArM-Workflow startet automatisch','Vorwärtssuche: alle betroffenen Geräte identifiziert','Rückruf-Koordination — EMIG als einziger Ansprechpartner'],
+  },
+];
+
+const SVC_ESC = [
+  {s:'1',e:'🔍',t:'Interne Diagnose',sla:'4 Stunden',trig:'Eingang Servicemeldung',c:'#34d399',
+   acts:['Geräteakte (Equipment Card) geladen','Knowledge Base durchsucht','Interne Lösung angewendet','Falls keine Lösung → Eskalation Stufe 2']},
+  {s:'2',e:'📡',t:'Herstellermeldung',sla:'24 Stunden',trig:'Keine interne Lösung oder sicherheitsrelevant',c:'#fbbf24',
+   acts:['Auto: Seriennummer + Fehlerprotokoll','Fotos/Anhänge am Serviceabruf','Status: Eskaliert — Hersteller informiert','SLA-Uhr für Herstellerantwort gestartet']},
+  {s:'3',e:'🚨',t:'Field Safety / Rückruf',sla:'2 Stunden (!)',trig:'Systematischer Defekt oder FSN des Herstellers',c:'#f87171',
+   acts:['Vorwärtssuche: alle Empfänger der Charge','Rückwärtssuche: Ursprungslieferant','Status Under Recall systemweit gesetzt','BfArM-Berichte automatisch generiert']},
+];
+
+const SVC_KPIS = [
+  {v:'4h',     l:'SLA Reaktionszeit',    e:'⚡', c:'#10b981'},
+  {v:'24/7',   l:'Notfall-Hotline',      e:'📞', c:'#3b82f6'},
+  {v:'>60%',   l:'Remote-Lösungsrate',   e:'🖥️', c:'#8b5cf6'},
+  {v:'ISO 13485', l:'Servicenorm',       e:'🛡️', c:'#f59e0b'},
+  {v:'3 Stufen', l:'Eskalationsprotokoll', e:'📊', c:'#f87171'},
+];
+
 // ─── CSS ────────────────────────────────────────────────────────────────────
 
 const CSS = `
@@ -1210,73 +1280,216 @@ body{background:var(--bg);}
   .riwo-hero-logo-wrap{width:150px;height:62px;}
 }
 @media(max-width:479px){
-  .ea-wrap{padding:0 16px;}
+  .ea-wrap{padding:0 14px;}
   .ea-hero-inner{padding:0 5% 10vw;}
   .ea-h1-top{font-size:1.75rem;}
-  .ea-h1-main{font-size:clamp(4rem,18vw,5.5rem);}
-  .ea-tagline{font-size:.75rem;}
-  .ea-stats{gap:0;margin-top:1.5rem;}
-  .ea-stat{padding-right:1.25rem;margin-right:1.25rem;}
-  .ea-stat-n{font-size:1.9rem;}
-  .ea-welcome{padding:1rem 1.2rem;flex-direction:column;gap:.75rem;}
-  .ea-welcome-pill{align-self:flex-start;}
-  .ea-tabs{flex-wrap:nowrap;padding:3px;}
-  .ea-tab{flex:0 0 auto;padding:10px 13px;font-size:.8rem;}
+  .ea-h1-brand{font-size:clamp(1.8rem,7vw,2.5rem);letter-spacing:.25em;}
+  .ea-h1-main{font-size:clamp(3.2rem,17vw,5rem);}
+  .ea-tagline{font-size:.72rem;letter-spacing:.14em;margin-top:1rem;}
+  .ea-eyebrow{margin-bottom:1rem;}
+  .ea-eyebrow span{font-size:.58rem;letter-spacing:.18em;}
+  .ea-stats{gap:0;margin-top:1.25rem;flex-wrap:nowrap;}
+  .ea-stat{padding-right:.9rem;margin-right:.9rem;}
+  .ea-stat-n{font-size:1.6rem;}
+  .ea-stat-l{font-size:.54rem;letter-spacing:.12em;}
+  /* Compact language switcher in hero */
+  .ea-lang{padding:3px;}
+  .ea-lang-btn{padding:5px 8px;font-size:.65rem;gap:3px;}
+  .ea-lang-flag{font-size:.78rem;}
+  .ea-welcome{padding:.9rem 1.1rem;flex-direction:column;gap:.65rem;}
+  .ea-welcome-pill{align-self:flex-start;font-size:.72rem;padding:5px 12px;}
+  .ea-tabs{flex-wrap:nowrap;padding:3px;margin-bottom:1.75rem;}
+  .ea-tab{flex:1 1 0;padding:9px 8px;}
+  .ea-tab .tab-icon{font-size:.85rem;margin-bottom:2px;}
+  .ea-tab .tab-label{font-size:.68rem;letter-spacing:.02em;}
   .ea-grid{grid-template-columns:1fr;gap:9px;}
-  .ea-prog{padding:1.2rem;gap:1rem;}
-  .ea-prog-pct{font-size:2.2rem;min-width:56px;}
-  .ea-philo{padding:1.35rem 1.2rem;}
+  .ea-prog{padding:1.1rem;gap:.9rem;}
+  .ea-prog-pct{font-size:2rem;min-width:52px;}
+  .ea-philo{padding:1.25rem 1.1rem;}
   .ea-philo::before{display:none;}
-  .ea-test{padding:1.2rem;flex-direction:column;gap:.9rem;}
-  .ea-test-btn{width:100%;}
-  .med-banner{min-height:120px;border-radius:12px;margin-bottom:10px;}
-  .med-banner-content{padding:1.25rem;gap:1rem;}
-  .med-banner-logo-wrap{width:90px;height:44px;padding:8px 12px;}
-  .med-banner-name{font-size:1.4rem;}
+  .ea-test{padding:1.1rem;flex-direction:column;gap:.85rem;}
+  .ea-test-btn{width:100%;justify-content:center;}
+  /* Medizinprodukte cards */
+  .med-banner{min-height:110px;border-radius:12px;margin-bottom:9px;}
+  .med-banner-content{padding:1.1rem .9rem;gap:.75rem;}
+  .med-banner-logo-wrap{width:80px;height:40px;padding:7px 10px;}
+  .med-banner-name{font-size:1.3rem;}
   .med-banner-tagline{display:none;}
-  .med-banner-origin{font-size:.65rem;}
-  .med-banner-arrow{width:36px;height:36px;font-size:.9rem;}
-  .med-banner-badge{font-size:.58rem;padding:3px 9px;top:.9rem;right:1rem;}
+  .med-banner-origin{font-size:.62rem;}
+  .med-banner-arrow{width:32px;height:32px;font-size:.85rem;}
+  .med-banner-badge{font-size:.56rem;padding:3px 8px;top:.8rem;right:.9rem;}
   .med-info-grid{grid-template-columns:1fr;}
-  .med-prod-card{padding:1.1rem 1.25rem;gap:1rem;flex-wrap:wrap;}
-  .med-prod-num{font-size:1.6rem;min-width:36px;}
+  .med-prod-card{padding:1rem 1.1rem;gap:.9rem;flex-wrap:wrap;}
+  .med-prod-num{font-size:1.5rem;min-width:32px;}
   .med-prod-divider{display:none;}
   .med-prod-cta{display:none;}
+  /* RIWOspine */
   .riwo-info-grid{grid-template-columns:1fr;}
-  .riwo-prod-grid{grid-template-columns:1fr;gap:12px;}
-  .riwo-hero{min-height:200px;border-radius:12px;}
-  .riwo-hero-content{padding:1.25rem;flex-direction:column;align-items:flex-start;gap:1rem;}
-  .riwo-hero-logo-wrap{width:130px;height:54px;}
-  .riwo-hero-stats{top:.75rem;right:.75rem;gap:5px;}
-  .riwo-stat-pill{padding:3px 8px;}
-  .riwo-prod-image{height:160px;}
+  .riwo-prod-grid{grid-template-columns:1fr;gap:11px;}
+  .riwo-hero{min-height:180px;border-radius:12px;}
+  .riwo-hero-content{padding:1.1rem;flex-direction:column;align-items:flex-start;gap:.85rem;}
+  .riwo-hero-logo-wrap{width:120px;height:48px;}
+  .riwo-hero-stats{top:.65rem;right:.65rem;gap:4px;}
+  .riwo-stat-pill{padding:2px 6px;font-size:.6rem;}
+  .riwo-prod-image{height:140px;}
   .riwo-prod-specs{grid-template-columns:1fr;}
   .riwo-focus-grid{grid-template-columns:1fr;}
-  .sap-hd{padding:2rem 4% 1.75rem;}
+  /* Inomed */
+  .ino-hero{min-height:180px;border-radius:12px;}
+  .ino-hero-content{padding:1.1rem;flex-direction:column;align-items:flex-start;gap:.85rem;}
+  .ino-hero-logo-wrap{width:120px;height:48px;}
+  .ino-hero-stats{top:.65rem;right:.65rem;gap:4px;}
+  /* SAP */
+  .sap-hd{padding:1.75rem 4% 1.5rem;}
   .sap-hd::before{display:none;}
-  .sap-hd-title{font-size:2.2rem;}
-  .sap-content{padding:1.5rem 4% 3rem;}
-  .sap-nav-inner{padding:0 4%;}
-  .sap-ntab{padding:.8rem .9rem;font-size:.74rem;}
-  .sap-sh{font-size:1.5rem;}
-  .sap-pgrid{grid-template-columns:1fr;gap:9px;}
-  .sap-pcard{padding:1.2rem;}
-  .sap-dp{padding:1.25rem;}
+  .sap-hd-title{font-size:2rem;}
+  .sap-content{padding:1.25rem 4% 2.5rem;}
+  .sap-nav-inner{padding:0 4%;gap:0;}
+  .sap-ntab{padding:.7rem .8rem;font-size:.7rem;white-space:nowrap;}
+  .sap-sh{font-size:1.4rem;}
+  .sap-pgrid{grid-template-columns:1fr;gap:8px;}
+  .sap-pcard{padding:1.1rem;}
+  .sap-dp{padding:1.1rem;}
   .sap-dp-grid{grid-template-columns:1fr;gap:8px;}
-  .sap-mgrid{grid-template-columns:1fr;gap:10px;}
-  .sap-mdr-step{min-width:105px;max-width:118px;}
+  .sap-mgrid{grid-template-columns:1fr;gap:9px;}
+  .sap-mdr-step{min-width:95px;max-width:108px;}
   .sap-esc-acts{grid-template-columns:1fr;}
-  .sap-rgrid{grid-template-columns:repeat(2,1fr);gap:9px;}
-  .sap-sod{grid-template-columns:1fr;gap:.6rem;}
+  .sap-rgrid{grid-template-columns:repeat(2,1fr);gap:8px;}
+  .sap-sod{grid-template-columns:1fr;gap:.5rem;}
   .sap-tl-wrap{grid-template-columns:1fr;}
-  .sap-tl-col{padding-left:1.4rem;}
-  .sap-tl-dot{left:-1.4rem;width:11px;height:11px;}
-  .sap-uat-stats{gap:8px;}
+  .sap-tl-col{padding-left:1.3rem;}
+  .sap-tl-dot{left:-1.3rem;width:10px;height:10px;}
+  .sap-uat-stats{gap:7px;}
   .sap-pbar-wrap{flex:1 1 100%;}
   .sap-filters{overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px;}
   .sap-filters::-webkit-scrollbar{display:none;}
   .sap-fb{flex-shrink:0;}
   .sap-table th:nth-child(2),.sap-table td:nth-child(2){display:none;}
+}
+/* ── Extra small phones (< 360px) ── */
+@media(max-width:359px){
+  .ea-h1-brand{font-size:1.6rem;letter-spacing:.2em;}
+  .ea-h1-main{font-size:clamp(2.8rem,16vw,4rem);}
+  .ea-lang-btn{padding:4px 6px;font-size:.62rem;}
+  .ea-stat{padding-right:.7rem;margin-right:.7rem;}
+  .ea-stat-n{font-size:1.45rem;}
+  .ea-tab .tab-label{font-size:.62rem;}
+}
+
+/* ══ SERVICE SECTION ══════════════════════════════════════════════════════════ */
+.svc-section{width:100%;}
+.svc-hd{background:linear-gradient(160deg,#05040e 0%,#0c0824 40%,#0f0a2a 70%,#0c0824 100%);padding:4rem 5% 3rem;position:relative;overflow:hidden;}
+.svc-hd::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 60% 30%,rgba(139,92,246,.12) 0%,transparent 70%);pointer-events:none;}
+.svc-hd-inner{max-width:860px;position:relative;z-index:1;}
+.svc-eyebrow{font-size:.6rem;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:rgba(139,92,246,.75);margin-bottom:.9rem;}
+.svc-hd-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.6rem,5vw,4rem);color:#fff;letter-spacing:.06em;line-height:1;margin:0 0 .6rem;}
+.svc-hd-title span{background:linear-gradient(90deg,#a78bfa,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.svc-hd-sub{font-size:.88rem;color:rgba(255,255,255,.38);font-weight:300;letter-spacing:.06em;margin:0 0 1.75rem;}
+.svc-pills{display:flex;gap:8px;flex-wrap:wrap;}
+.svc-pill{font-size:.62rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:6px;border:1px solid rgba(139,92,246,.3);color:rgba(139,92,246,.8);background:rgba(139,92,246,.08);}
+
+/* KPI bar */
+.svc-kpi-row{display:flex;gap:0;background:var(--card);border-bottom:1px solid var(--card-border);flex-wrap:wrap;}
+.svc-kpi-chip{flex:1;min-width:120px;padding:1.25rem 1.5rem;border-right:1px solid var(--card-border);display:flex;align-items:center;gap:12px;}
+.svc-kpi-chip:last-child{border-right:none;}
+.svc-kpi-em{font-size:1.4rem;flex-shrink:0;}
+.svc-kpi-v{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;line-height:1;letter-spacing:.03em;}
+.svc-kpi-l{font-size:.64rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:.1em;margin-top:2px;}
+
+/* View toggle */
+.svc-content{padding:2.5rem 5% 4rem;}
+.svc-view-toggle{display:flex;gap:0;background:var(--bg2);border:1px solid var(--section-border);border-radius:12px;padding:4px;width:fit-content;margin-bottom:2rem;}
+.svc-vbtn{padding:8px 22px;border-radius:9px;border:none;background:transparent;color:var(--text-dim);font-family:'Outfit',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;}
+.svc-vbtn.on{background:var(--card);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,.1);}
+
+/* Process flow */
+.svc-flow{display:flex;align-items:flex-start;gap:0;overflow-x:auto;padding-bottom:1rem;margin-bottom:0;}
+.svc-step{flex:1;min-width:180px;display:flex;flex-direction:column;align-items:center;text-align:center;cursor:pointer;padding:1.2rem .5rem;border-radius:16px;transition:background .18s;}
+.svc-step:hover{background:var(--bg2);}
+.svc-step.active{background:var(--bg2);}
+.svc-step-top{display:flex;align-items:center;justify-content:center;gap:0;position:relative;width:100%;}
+.svc-step-circle{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6rem;border:2px solid;transition:all .2s;flex-shrink:0;}
+.svc-connector{flex:1;height:2px;background:var(--section-border);margin-top:27px;min-width:20px;position:relative;}
+.svc-connector::after{content:'›';position:absolute;right:-6px;top:-12px;color:var(--text-faint);font-size:1rem;}
+.svc-step-num{position:absolute;top:-8px;right:calc(50% - 36px);width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:700;background:var(--card);border:1.5px solid var(--section-border);color:var(--text-faint);}
+.svc-step.active .svc-step-num{border-color:currentColor;}
+.svc-step-title{font-size:.82rem;font-weight:700;color:var(--text);margin-top:.85rem;line-height:1.3;}
+.svc-step-sub{font-size:.7rem;color:var(--text-faint);margin-top:.3rem;line-height:1.4;}
+.svc-badge{display:inline-flex;align-items:center;gap:5px;margin-top:.65rem;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:5px;}
+.svc-badge.available{background:rgba(16,185,129,.1);color:#059669;border:1px solid rgba(16,185,129,.25);}
+[data-theme="dark"] .svc-badge.available{background:rgba(16,185,129,.15);color:#6ee7b7;}
+.svc-badge.building{background:rgba(245,158,11,.1);color:#b45309;border:1px solid rgba(245,158,11,.25);}
+[data-theme="dark"] .svc-badge.building{background:rgba(245,158,11,.15);color:#fcd34d;}
+.svc-badge::before{content:'●';font-size:.45rem;}
+
+/* Step detail */
+.svc-detail{background:var(--card);border:1px solid var(--card-border);border-radius:18px;padding:2rem;margin-top:1.25rem;box-shadow:var(--shadow-md);animation:svc-slide-in .22s ease;}
+@keyframes svc-slide-in{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.svc-detail-top{display:flex;align-items:flex-start;gap:1.25rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+.svc-detail-icon{font-size:2.5rem;flex-shrink:0;}
+.svc-detail-meta{flex:1;}
+.svc-detail-sla{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.18em;margin-bottom:.35rem;}
+.svc-detail-title{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.04em;line-height:1;margin-bottom:.4rem;}
+.svc-detail-desc{font-size:.84rem;color:var(--text-dim);line-height:1.65;}
+.svc-detail-kpis{display:flex;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap;}
+.svc-dkpi{flex:1;min-width:90px;background:var(--bg2);border:1px solid var(--section-border);border-radius:10px;padding:.75rem 1rem;text-align:center;}
+.svc-dkpi-v{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.03em;line-height:1;}
+.svc-dkpi-l{font-size:.6rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:.08em;margin-top:3px;}
+.svc-detail-acts-title{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:var(--text-faint);margin-bottom:.6rem;}
+.svc-detail-acts{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+.svc-act{display:flex;gap:9px;align-items:flex-start;font-size:.8rem;color:var(--text-dim);background:var(--bg2);border-radius:8px;padding:.6rem .75rem;}
+.svc-act-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+
+/* Timeline view */
+.svc-tl{position:relative;padding-left:2.5rem;}
+.svc-tl::before{content:'';position:absolute;left:1rem;top:1.5rem;bottom:1.5rem;width:2px;background:linear-gradient(to bottom,var(--section-border) 0%,rgba(139,92,246,.35) 50%,var(--section-border) 100%);}
+.svc-tl-item{position:relative;padding-bottom:2rem;}
+.svc-tl-item:last-child{padding-bottom:0;}
+.svc-tl-dot{position:absolute;left:-2.5rem;top:.25rem;width:2rem;height:2rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9rem;border:2px solid;background:var(--card);z-index:1;}
+.svc-tl-body{background:var(--card);border:1px solid var(--card-border);border-radius:14px;padding:1.25rem 1.5rem;border-left-width:3px;box-shadow:var(--shadow-sm);}
+.svc-tl-top{display:flex;align-items:center;gap:10px;margin-bottom:.5rem;flex-wrap:wrap;}
+.svc-tl-sla{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.15em;padding:2px 9px;border-radius:5px;}
+.svc-tl-title{font-weight:700;font-size:1rem;color:var(--text);}
+.svc-tl-sub{font-size:.76rem;color:var(--text-faint);margin-bottom:.85rem;}
+.svc-tl-acts{display:flex;flex-direction:column;gap:5px;}
+.svc-tl-act{display:flex;gap:8px;font-size:.78rem;color:var(--text-dim);align-items:flex-start;}
+
+/* Escalation section */
+.svc-esc-section{margin-top:3rem;}
+.svc-esc-title{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.05em;color:var(--text);margin-bottom:.3rem;}
+.svc-esc-sub{font-size:.82rem;color:var(--text-faint);margin-bottom:1.5rem;}
+.svc-esc{background:var(--card);border:1px solid var(--card-border);border-left-width:3px;border-radius:14px;padding:1.25rem 1.5rem;margin-bottom:.85rem;box-shadow:var(--shadow-sm);}
+.svc-esc-hd{display:flex;align-items:flex-start;gap:1rem;margin-bottom:.85rem;flex-wrap:wrap;}
+.svc-esc-num{font-size:1.5rem;flex-shrink:0;}
+.svc-esc-badge{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;padding:2px 8px;border-radius:5px;display:inline-block;}
+.svc-esc-etitle{font-weight:700;font-size:1rem;color:var(--text);margin:.2rem 0 .15rem;}
+.svc-esc-trig{font-size:.73rem;color:var(--text-faint);}
+.svc-esc-acts{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.svc-esc-act{display:flex;gap:8px;font-size:.78rem;color:var(--text-dim);}
+
+@media(max-width:767px){
+  .svc-hd{padding:2.5rem 5% 2rem;}
+  .svc-content{padding:1.75rem 5% 3rem;}
+  .svc-flow{gap:0;}
+  .svc-step{min-width:140px;}
+  .svc-step-title{font-size:.75rem;}
+  .svc-detail-acts{grid-template-columns:1fr;}
+  .svc-esc-acts{grid-template-columns:1fr;}
+  .svc-detail-kpis{flex-direction:row;}
+  .svc-kpi-chip{min-width:100px;padding:.85rem 1rem;}
+}
+@media(max-width:479px){
+  .svc-hd{padding:2rem 4% 1.75rem;}
+  .svc-content{padding:1.5rem 4% 2.5rem;}
+  .svc-step{min-width:110px;padding:.75rem .25rem;}
+  .svc-step-circle{width:44px;height:44px;font-size:1.25rem;}
+  .svc-connector{margin-top:21px;}
+  .svc-kpi-row{flex-direction:column;}
+  .svc-kpi-chip{border-right:none;border-bottom:1px solid var(--card-border);}
+  .svc-kpi-chip:last-child{border-bottom:none;}
+  .svc-tl{padding-left:1.75rem;}
+  .svc-tl::before{left:.7rem;}
+  .svc-tl-dot{left:-1.75rem;width:1.4rem;height:1.4rem;font-size:.7rem;}
 }
 `;
 
@@ -1308,6 +1521,7 @@ const TRANSLATIONS: Record<string, Record<string, any>> = {
     tabQM:            'Quality Management',
     tabSAP:           'SAP Universum',
     tabMED:           'Medizinprodukte',
+    tabSVC:           'Service',
     // ── QM ──
     qmProgressLabel:  'Lernfortschritt',
     qmModulesOf:      (d:number,t:number) => `${d} / ${t} Module`,
@@ -1379,6 +1593,7 @@ const TRANSLATIONS: Record<string, Record<string, any>> = {
     tabQM:            'Quality Management',
     tabSAP:           'SAP Universe',
     tabMED:           'Medical Devices',
+    tabSVC:           'Service',
     qmProgressLabel:  'Learning Progress',
     qmModulesOf:      (d:number,t:number) => `${d} / ${t} Modules`,
     qmPhiloTitle:     'QM Philosophy & Strategy',
@@ -1444,6 +1659,7 @@ const TRANSLATIONS: Record<string, Record<string, any>> = {
     tabQM:            'Управление качеством',
     tabSAP:           'Вселенная SAP',
     tabMED:           'Медизделия',
+    tabSVC:           'Сервис',
     qmProgressLabel:  'Прогресс обучения',
     qmModulesOf:      (d:number,t:number) => `${d} / ${t} модулей`,
     qmPhiloTitle:     'Философия и стратегия КМ',
@@ -2520,13 +2736,200 @@ function MeyerHaakeDetail({ onBack, lang='de' }: { onBack: () => void; lang?: st
   );
 }
 
+// ─── SERVICE SECTION ──────────────────────────────────────────────────────────
+
+function ServiceSection() {
+  const [view, setView]     = useState<'flow'|'timeline'>('flow');
+  const [active, setActive] = useState<string|null>(null);
+
+  const toggle = (id: string) => setActive(prev => prev === id ? null : id);
+  const activeStep = SVC_STEPS.find(s => s.id === active);
+
+  return (
+    <div className="svc-section">
+      {/* Header */}
+      <div className="svc-hd">
+        <div className="svc-hd-inner">
+          <div className="svc-eyebrow">EMIG GmbH · After-Sales · Reutlingen</div>
+          <h2 className="svc-hd-title">EMIG <span>Service</span></h2>
+          <p className="svc-hd-sub">4-stufiger Serviceprozess — von der Ferndiagnose bis zur Field Safety Notice.</p>
+          <div className="svc-pills">
+            <span className="svc-pill">4h SLA</span>
+            <span className="svc-pill">ISO 13485</span>
+            <span className="svc-pill">3-Stufen Eskalation</span>
+            <span className="svc-pill">MDR 2017/745</span>
+          </div>
+        </div>
+      </div>
+
+      {/* KPI row */}
+      <div className="svc-kpi-row">
+        {SVC_KPIS.map(k => (
+          <div className="svc-kpi-chip" key={k.l}>
+            <span className="svc-kpi-em">{k.e}</span>
+            <div>
+              <div className="svc-kpi-v" style={{color: k.c}}>{k.v}</div>
+              <div className="svc-kpi-l">{k.l}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Content */}
+      <div className="svc-content">
+        {/* View toggle */}
+        <div className="svc-view-toggle">
+          <button className={`svc-vbtn${view==='flow'?' on':''}`} onClick={()=>setView('flow')}>Prozessablauf</button>
+          <button className={`svc-vbtn${view==='timeline'?' on':''}`} onClick={()=>setView('timeline')}>Als Timeline</button>
+        </div>
+
+        {/* ── FLOW VIEW ── */}
+        {view === 'flow' && (
+          <div>
+            <div className="svc-flow">
+              {SVC_STEPS.map((s, i) => (
+                <React.Fragment key={s.id}>
+                  <div
+                    className={`svc-step${active===s.id?' active':''}`}
+                    onClick={() => toggle(s.id)}
+                  >
+                    <div className="svc-step-top">
+                      <div
+                        className="svc-step-circle"
+                        style={{
+                          borderColor: active===s.id ? s.col : 'var(--section-border)',
+                          background: active===s.id ? s.col+'18' : 'var(--card)',
+                          color: s.col,
+                        }}
+                      >
+                        {s.icon}
+                      </div>
+                      <span className="svc-step-num" style={{color: active===s.id ? s.col : undefined}}>{s.num}</span>
+                    </div>
+                    <div className="svc-step-title">{s.title}</div>
+                    <div className="svc-step-sub">{s.sub}</div>
+                    <div className={`svc-badge ${s.status}`}>
+                      {s.statusLabel}
+                    </div>
+                  </div>
+                  {i < SVC_STEPS.length - 1 && (
+                    <div className="svc-connector" />
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
+
+            {/* Expanded detail */}
+            {activeStep && (
+              <div className="svc-detail">
+                <div className="svc-detail-top">
+                  <span className="svc-detail-icon">{activeStep.icon}</span>
+                  <div className="svc-detail-meta">
+                    <div className="svc-detail-sla" style={{color: activeStep.col}}>
+                      SLA: {activeStep.sla} · Stufe {activeStep.num} von 4
+                    </div>
+                    <div className="svc-detail-title" style={{color: activeStep.col}}>
+                      {activeStep.title}
+                    </div>
+                    <div className="svc-detail-desc">{activeStep.desc}</div>
+                  </div>
+                </div>
+                <div className="svc-detail-kpis">
+                  {activeStep.kpis.map(k => (
+                    <div className="svc-dkpi" key={k.l} style={{borderColor: activeStep.col+'30'}}>
+                      <div className="svc-dkpi-v" style={{color: activeStep.col}}>{k.v}</div>
+                      <div className="svc-dkpi-l">{k.l}</div>
+                    </div>
+                  ))}
+                </div>
+                <div className="svc-detail-acts-title">Maßnahmen & Workflow</div>
+                <div className="svc-detail-acts">
+                  {activeStep.actions.map((a, i) => (
+                    <div className="svc-act" key={i}>
+                      <span className="svc-act-dot" style={{background: activeStep.col}}/>
+                      <span>{a}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ── TIMELINE VIEW ── */}
+        {view === 'timeline' && (
+          <div className="svc-tl">
+            {SVC_STEPS.map(s => (
+              <div className="svc-tl-item" key={s.id}>
+                <div
+                  className="svc-tl-dot"
+                  style={{borderColor: s.col, color: s.col}}
+                >
+                  {s.icon}
+                </div>
+                <div className="svc-tl-body" style={{borderLeftColor: s.col}}>
+                  <div className="svc-tl-top">
+                    <span className="svc-tl-sla" style={{background: s.col+'18', color: s.col}}>
+                      SLA {s.sla}
+                    </span>
+                    <span className={`svc-badge ${s.status}`}>{s.statusLabel}</span>
+                  </div>
+                  <div className="svc-tl-title">{s.title}</div>
+                  <div className="svc-tl-sub">{s.sub}</div>
+                  <div className="svc-tl-acts">
+                    {s.actions.map((a, i) => (
+                      <div className="svc-tl-act" key={i}>
+                        <span style={{color: s.col, flexShrink: 0}}>›</span>
+                        <span>{a}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Escalation protocol */}
+        <div className="svc-esc-section">
+          <div className="svc-esc-title">Eskalationsprotokoll</div>
+          <div className="svc-esc-sub">3-stufiger Prozess bei Servicemeldungen und Field Safety Notices — SLA-gesichert.</div>
+          {SVC_ESC.map(esc => (
+            <div className="svc-esc" key={esc.s} style={{borderLeftColor: esc.c, background: esc.c+'08'}}>
+              <div className="svc-esc-hd">
+                <span className="svc-esc-num">{esc.e}</span>
+                <div style={{flex:1}}>
+                  <div style={{display:'flex',alignItems:'center',gap:8,flexWrap:'wrap',marginBottom:'.25rem'}}>
+                    <span style={{fontSize:'.6rem',textTransform:'uppercase',letterSpacing:'.18em',color:esc.c,fontWeight:700}}>Stufe {esc.s}</span>
+                    <span className="svc-esc-badge" style={{background: esc.c+'20', color: esc.c}}>SLA: {esc.sla}</span>
+                  </div>
+                  <div className="svc-esc-etitle">{esc.t}</div>
+                  <div className="svc-esc-trig">Auslöser: {esc.trig}</div>
+                </div>
+              </div>
+              <div className="svc-esc-acts">
+                {esc.acts.map((a, i) => (
+                  <div className="svc-esc-act" key={i}>
+                    <span style={{color: esc.c, flexShrink:0}}>›</span>
+                    <span>{a}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const bgImg    = useBaseUrl('/img/emig-gebaeude.png');
   const videoRef = useRef<HTMLVideoElement>(null);
   const [paused, setPaused] = useState(false);
   const [tab, setTab]       = useState('QM');
   const [tabDir, setTabDir] = useState('right');
-  const tabOrder            = ['QM','SAP','MED'];
+  const tabOrder            = ['QM','SAP','MED','SVC'];
   const [done, setDone]     = useState<string[]>([]);
   const [mfr, setMfr]       = useState<any>(null);
   const [greet, setGreet]   = useState('');
@@ -2679,6 +3082,7 @@ export default function Home() {
                 {id:'QM',   icon:'◈', label:t('tabQM')},
                 {id:'SAP',  icon:'◉', label:t('tabSAP')},
                 {id:'MED',  icon:'◎', label:t('tabMED')},
+                {id:'SVC',  icon:'◆', label:t('tabSVC')},
               ];
               const n = TABS.length;
               const activeIdx = TABS.findIndex(t=>t.id===tab);
@@ -2793,6 +3197,13 @@ export default function Home() {
               ) : (
                 <MfrDetail m={mfr} onBack={() => setMfr(null)} lang={lang} />
               )}
+            </div>
+          )}
+
+          {/* SVC TAB */}
+          {tab==='SVC' && (
+            <div className={`tab-enter-${tabDir}`} key="svc">
+              <ServiceSection />
             </div>
           )}
         </main>
