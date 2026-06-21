@@ -242,24 +242,36 @@ const MFRS = [
     id: 'bfmg',
     name: 'Black Forest Medical',
     logo: '/img/logo-bfmg.png',
-    tagline: 'Transplantationsmedizin & Gefäßchirurgie',
+    tagline: 'Neurochirurgie · Craniale Fixation · Bildgebung',
     origin: 'Deutschland · Freiburg im Breisgau',
-    accent: '#4a148c',
-    bg: 'linear-gradient(160deg,#080210 0%,#0e0519 35%,#150822 60%,#0e0519 100%)',
-    description: 'Black Forest Medical Group spezialisiert sich auf hochwertige Implantate und Instrumente für die Transplantationsmedizin, Gefäßchirurgie und rekonstruktive Chirurgie.',
+    accent: '#1565C0',
+    bg: 'linear-gradient(160deg,#010b1a 0%,#021428 35%,#031c38 60%,#021428 100%)',
+    description: 'Black Forest Medical Group ist Spezialist für neurochirurgische Kopfpositionierungssysteme. Das DORO®-Produktprogramm umfasst Skull Clamps, radioluzente Systeme und kombinierte Bildgebungslösungen — Made in Germany, ISO 13485-zertifiziert.',
     focus: [
-      { icon: '🫀', label: 'Transplantationsmedizin', desc: 'Organ- und Gewebetransplantation' },
-      { icon: '🩸', label: 'Gefäßchirurgie', desc: 'Vaskuläre Implantate & Instrumente' },
-      { icon: '🔩', label: 'Implantate', desc: 'Präzisionsfertigung Schwarzwald' },
-      { icon: '🏗️', label: 'Rekonstruktive Chirurgie', desc: 'Gewebeaufbau & Wiederherstellung' },
+      { icon: '🧠', label: 'Neurochirurgie', desc: 'Craniale Stabilisierung & Positionierung' },
+      { icon: '📡', label: 'Bildgebung (Radioluzent)', desc: 'DORO LUCENT® für ICT/Angio/MRT' },
+      { icon: '👶', label: 'Pädiatrie', desc: 'Lösungen für alle Altersgruppen' },
+      { icon: '🔧', label: 'Mix & Match', desc: 'Modulares Quick-Rail® System' },
     ],
     facts: [
-      { label: 'Region', value: 'Schwarzwald, DE' },
-      { label: 'Fokus', value: 'Transplantation' },
-      { label: 'Qualität', value: 'Made in Germany' },
-      { label: 'Zertifizierung', value: 'ISO 13485' },
+      { label: 'Hauptsitz', value: 'Freiburg i.Br., DE' },
+      { label: 'Produktion', value: 'Made in Germany' },
+      { label: 'Zertifizierung', value: 'ISO 13485 · CE' },
+      { label: 'Kernprodukt', value: 'DORO® QR3 · DORO LUCENT®' },
     ],
-    products: [],
+    products: [
+      { code:'1001.001', cat:'qr3', title:'DORO® QR3 Skull Clamp', type:'Skull Clamp ALU', typeColor:'#1565C0', application:'Kraniale Stabilisierung', patients:'Erwachsene', op:'Standard / ICT', features:['Quick-Rail® Technologie','Mix & Match','Navigation-Adaptor beidseitig','Spielfreies Bogenlager','Drehmomentraste'], image:'/img/medizinprodukte/bfmg/bfmg-1001-001.jpg' },
+      { code:'1001.100', cat:'qr3', title:'DORO® QR3 Cranial Stabilization System', type:'Komplett-Set ALU', typeColor:'#1565C0', application:'Kraniale Stabilisierung', patients:'Erw. & Pädiatrisch', op:'Standard / ICT', features:['4-Pin pädiatrisch','90N Drehmomentoption','Schwenkadapter & Basiseinheit','Quick-Rail®'], image:'/img/medizinprodukte/bfmg/bfmg-1001-100.jpg' },
+      { code:'1101.100', cat:'qr3', title:'DORO® QR3 Skull Clamp – Erweitertes Set', type:'Erweitertes Set ALU', typeColor:'#1565C0', application:'Kraniale Stabilisierung', patients:'Erw. & Pädiatrisch', op:'Standard', features:['Kombi Gel + Pin','verstärkte Quick-Rail®','enge Toleranzen','Gelpolster inklusive'], image:'/img/medizinprodukte/bfmg/bfmg-1101-100.jpg' },
+      { code:'3020.00-4P', cat:'multi', title:'DORO® QR3 Multi-Purpose – 4-Pin Invasiv Pädiatrisch', type:'Multi-Purpose', typeColor:'#2E7D32', application:'Invasive Lagerung Pädiatrisch', patients:'Neugeborene – Senior', op:'Standard / Navigation', features:['Edelstahl-Starburst','90N Drehmomentoption','Navigation-Adaptor','Mix & Match','alle Altersgruppen'], image:'/img/medizinprodukte/bfmg/bfmg-3020-4p.jpg' },
+      { code:'3020.00-3P', cat:'multi', title:'DORO® QR3 Multi-Purpose – 3-Pin Invasiv Pädiatrisch', type:'Multi-Purpose', typeColor:'#2E7D32', application:'Invasive Lagerung Pädiatrisch', patients:'Neugeborene – Jugendlich', op:'Standard / Navigation', features:['3-Pin-Konfiguration','schnell umrüstbar','Navigation-Adaptor am Starburst','nah am OP-Feld'], image:'/img/medizinprodukte/bfmg/bfmg-3020-3p.jpg' },
+      { code:'3020.00-U', cat:'multi', title:'DORO® QR3 Multi-Purpose Skull Clamp Set – Universal', type:'Multi-Purpose', typeColor:'#2E7D32', application:'Invasiv & Nicht-invasiv', patients:'Neugeborene – Senior', op:'Standard / ICT / Navigation', features:['Pinnhalter wechselbar','Gelpolster wechselbar','Mix & Match','altersübergreifend','alle Eingriffe'], image:'/img/medizinprodukte/bfmg/bfmg-3020-u.jpg' },
+      { code:'3021.00', cat:'multi', title:'DORO® QR3 Multi-Purpose – Nicht-Invasiv', type:'Multi-Purpose Nicht-Invasiv', typeColor:'#558B2F', application:'Nicht-invasive Lagerung', patients:'Neugeborene – Jugendlich', op:'Standard / ICT', features:['Pinfreie Gelpolster-Fixierung','werkzeuglos umbaubar','empfindliche Patienten','schneller Aufbau'], image:'/img/medizinprodukte/bfmg/bfmg-3021-00.jpg' },
+      { code:'1101.001', cat:'lucent', title:'DORO LUCENT® Skull Clamp', type:'Skull Clamp Radioluzent', typeColor:'#B71C1C', application:'Bildgebungsgestützte Chirurgie', patients:'Erwachsene', op:'ICT / Angio / MRT', features:['Vollständig metallfrei','Selbstbetrieb-Mechanismus','abgerundete Konturen','Quick-Rail® beidseitig','Druckanzeige'], image:'/img/medizinprodukte/bfmg/bfmg-1101-001.jpg' },
+      { code:'1101.020', cat:'lucent', title:'DORO LUCENT® Cranial Stabilization System', type:'Komplettsystem Radioluzent', typeColor:'#B71C1C', application:'Bildgebungsgestützte Chirurgie', patients:'Erw. & Pädiatrisch', op:'ICT / Angio / MRT', features:['Schwenkadapter RDL','Basiseinheit LUCENT','Interchangeable Pinholder','Mix & Match','Pädiatrie-Option'], image:'/img/medizinprodukte/bfmg/bfmg-1101-020.jpg' },
+      { code:'1203.200', cat:'kombi', title:'DORO LUCENT® + DORO LUNA® Retractor System', type:'Kombisystem LUCENT + LUNA', typeColor:'#6A1B9A', application:'Bildgebung + Retraktion', patients:'Erwachsene', op:'ICT / Angio', features:['LUNA Retraktor integriert','Carbon-Tischhalterung','flexible Retraktorklingen','Schlauchhalter Edelstahl'], image:'/img/medizinprodukte/bfmg/bfmg-1203-200.jpg' },
+      { code:'1203.200-K', cat:'kombi', title:'DORO LUCENT® Komplettsystem mit Erweiterungszubehör', type:'Vollsystem', typeColor:'#4A148C', application:'Komplexe Neurochirurgie', patients:'Erwachsene', op:'ICT / Angio / MRT', features:['Parallelogramm-Adapter','LUNA + LUCENT kombiniert','Carbon Crossbar','beidseitige Tischklemmen'], image:'/img/medizinprodukte/bfmg/bfmg-1203-200k.jpg' },
+    ],
   },
   {
     id: 'meyer',
@@ -2511,6 +2523,186 @@ function InomedDetail({ onBack, lang='de' }: { onBack: () => void; lang?: string
 
 // ─── MEYER-HAAKE DETAIL ──────────────────────────────────────────────────────
 
+const BFMG_CATS = [
+  { id:'qr3',    label:'DORO® QR3 — Standard Skull Clamps',        color:'#1565C0', bg:'rgba(21,101,192,.08)', border:'rgba(21,101,192,.25)' },
+  { id:'multi',  label:'DORO® QR3 — Multi-Purpose Skull Clamps',   color:'#2E7D32', bg:'rgba(46,125,50,.08)',  border:'rgba(46,125,50,.25)'  },
+  { id:'lucent', label:'DORO LUCENT® — Radioluzente Systeme',      color:'#B71C1C', bg:'rgba(183,28,28,.08)',  border:'rgba(183,28,28,.25)'  },
+  { id:'kombi',  label:'DORO LUCENT® — Kombisysteme',              color:'#6A1B9A', bg:'rgba(106,27,154,.08)', border:'rgba(106,27,154,.25)'  },
+];
+
+function BfmgProdRow({ p, isLast }: { p: any; isLast: boolean }) {
+  const [imgErr, setImgErr] = useState(false);
+  const imgSrc = useBaseUrl(p.image);
+  return (
+    <div style={{display:'grid',gridTemplateColumns:'90px 1fr 160px 150px 140px 1fr',gap:0,borderBottom:isLast?'none':'1px solid rgba(255,255,255,.06)',transition:'background .2s'}}
+      onMouseEnter={e=>(e.currentTarget.style.background='rgba(255,255,255,.03)')}
+      onMouseLeave={e=>(e.currentTarget.style.background='transparent')}>
+      {/* Art.Nr */}
+      <div style={{padding:'14px 12px',display:'flex',alignItems:'center'}}>
+        <span style={{fontFamily:'DM Mono,monospace',fontSize:'.65rem',color:'var(--text-faint)',letterSpacing:'.05em'}}>{p.code}</span>
+      </div>
+      {/* Bild + Name */}
+      <div style={{padding:'10px 12px',display:'flex',alignItems:'center',gap:12}}>
+        <div style={{width:68,height:52,borderRadius:8,overflow:'hidden',flexShrink:0,background:'rgba(255,255,255,.04)',border:'1px solid rgba(255,255,255,.08)',display:'flex',alignItems:'center',justifyContent:'center'}}>
+          {!imgErr
+            ? <img src={imgSrc} alt={p.title} onError={()=>setImgErr(true)} style={{width:'100%',height:'100%',objectFit:'contain',padding:4}}/>
+            : <span style={{fontSize:'1.4rem',opacity:.4}}>🔩</span>}
+        </div>
+        <span style={{fontSize:'.78rem',fontWeight:600,color:'var(--text)',lineHeight:1.35}}>{p.title}</span>
+      </div>
+      {/* Typ-Badge */}
+      <div style={{padding:'14px 12px',display:'flex',alignItems:'center'}}>
+        <span style={{fontSize:'.58rem',fontWeight:700,padding:'4px 9px',borderRadius:6,background:`rgba(${p.typeColor.replace('#','').match(/../g)?.map(h=>parseInt(h,16)).join(',')||'0,0,0'},.15)`,color:p.typeColor,border:`1px solid ${p.typeColor}40`,letterSpacing:'.05em',lineHeight:1.3,display:'inline-block'}}>{p.type}</span>
+      </div>
+      {/* Anwendung */}
+      <div style={{padding:'14px 12px',display:'flex',alignItems:'center'}}>
+        <span style={{fontSize:'.73rem',color:'var(--text-dim)',lineHeight:1.3}}>{p.application}</span>
+      </div>
+      {/* Patienten */}
+      <div style={{padding:'14px 12px',display:'flex',alignItems:'center'}}>
+        <span style={{fontSize:'.73rem',color:'var(--text-dim)'}}>{p.patients}</span>
+      </div>
+      {/* Features */}
+      <div style={{padding:'14px 12px',display:'flex',alignItems:'center',flexWrap:'wrap',gap:4}}>
+        {p.features.slice(0,3).map((f: string,i: number)=>(
+          <span key={i} style={{fontSize:'.58rem',padding:'2px 7px',borderRadius:4,background:'var(--bg2)',color:'var(--text-faint)',border:'1px solid var(--section-border)',whiteSpace:'nowrap'}}>{f}</span>
+        ))}
+        {p.features.length>3 && <span style={{fontSize:'.58rem',color:'var(--text-faint)',opacity:.5}}>+{p.features.length-3}</span>}
+      </div>
+    </div>
+  );
+}
+
+function BlackForestDetail({ onBack, lang='de' }: { onBack: () => void; lang?: string }) {
+  const t = getT(lang);
+  const m = MFRS.find(x => x.id === 'bfmg')!;
+  const [logoErr, setLogoErr] = useState(false);
+  const logoSrc = useBaseUrl(m.logo);
+  return (
+    <div>
+      <button style={{display:'inline-flex',alignItems:'center',gap:9,padding:'11px 22px',borderRadius:13,border:'1px solid var(--section-border)',background:'var(--card)',fontFamily:'Outfit,sans-serif',fontWeight:700,fontSize:'.84rem',cursor:'pointer',marginBottom:'2.25rem',color:'var(--text)',boxShadow:'var(--shadow-sm)',transition:'all .2s'}}
+        onClick={onBack}>← {t('medBack')}
+      </button>
+
+      {/* HERO */}
+      <div style={{position:'relative',overflow:'hidden',borderRadius:28,minHeight:340,display:'flex',alignItems:'flex-end',marginBottom:'2rem',boxShadow:'0 24px 80px rgba(0,0,0,.35),0 0 0 1px rgba(21,101,192,.2)'}}>
+        <div style={{position:'absolute',inset:0,zIndex:0,background:'linear-gradient(160deg,#010b1a 0%,#021428 45%,#031c38 100%)'}}/>
+        <div style={{position:'absolute',inset:0,zIndex:1,opacity:.05,backgroundImage:'linear-gradient(rgba(21,101,192,.8) 1px,transparent 1px),linear-gradient(90deg,rgba(21,101,192,.8) 1px,transparent 1px)',backgroundSize:'48px 48px'}}/>
+        <div style={{position:'absolute',top:-80,right:-80,width:560,height:560,borderRadius:'50%',background:'radial-gradient(circle,rgba(21,101,192,.18) 0%,transparent 65%)',zIndex:1}}/>
+        <div style={{position:'absolute',inset:0,zIndex:2,background:'linear-gradient(to top,rgba(0,0,0,.95) 0%,rgba(0,0,0,.4) 55%,rgba(0,0,0,.05) 100%)'}}/>
+        <div style={{position:'absolute',top:'1.75rem',right:'1.75rem',zIndex:4,display:'flex',gap:8,flexWrap:'wrap',justifyContent:'flex-end'}}>
+          {[{n:'11',l:'Produkte'},{n:'4',l:'Serien'},{n:'ISO',l:'13485'}].map((s,i)=>(
+            <div key={i} style={{background:'rgba(0,0,0,.45)',border:'1px solid rgba(21,101,192,.45)',backdropFilter:'blur(14px)',borderRadius:99,padding:'6px 15px',display:'flex',alignItems:'center',gap:7}}>
+              <span style={{fontFamily:'Bebas Neue,sans-serif',fontSize:'1.2rem',color:'#42a5f5',lineHeight:1}}>{s.n}</span>
+              <span style={{fontSize:'.57rem',color:'rgba(255,255,255,.4)',textTransform:'uppercase',letterSpacing:'.12em',fontWeight:700}}>{s.l}</span>
+            </div>
+          ))}
+        </div>
+        <div style={{position:'relative',zIndex:3,padding:'2.5rem 3rem',width:'100%',display:'flex',alignItems:'flex-end',gap:'2.5rem',flexWrap:'wrap'}}>
+          <div style={{width:200,height:80,background:'#fff',borderRadius:14,display:'flex',alignItems:'center',justifyContent:'center',padding:'12px 20px',flexShrink:0,boxShadow:'0 8px 32px rgba(0,0,0,.5),0 0 0 1px rgba(21,101,192,.3)'}}>
+            {!logoErr
+              ? <img src={logoSrc} alt={m.name} style={{maxWidth:'100%',maxHeight:'100%',objectFit:'contain',mixBlendMode:'multiply'}} onError={()=>setLogoErr(true)}/>
+              : <span style={{fontFamily:'Bebas Neue,sans-serif',fontSize:'.95rem',color:'#1565C0',fontWeight:700}}>{m.name}</span>}
+          </div>
+          <div>
+            <div style={{fontSize:'.55rem',letterSpacing:'.24em',textTransform:'uppercase',color:'#42a5f5',fontWeight:700,marginBottom:'.5rem',display:'flex',alignItems:'center',gap:10}}>
+              <span style={{display:'block',width:24,height:1,background:'linear-gradient(90deg,#42a5f5,transparent)'}}/>Neurochirurgie · Craniale Positionierung
+            </div>
+            <div style={{fontFamily:'Bebas Neue,sans-serif',fontSize:'clamp(2.2rem,5vw,4rem)',color:'#fff',letterSpacing:'.05em',lineHeight:.9,marginBottom:'.5rem'}}>{m.name}</div>
+            <div style={{fontSize:'.8rem',color:'rgba(255,255,255,.45)',fontWeight:300,letterSpacing:'.1em',textTransform:'uppercase'}}>{m.tagline}</div>
+          </div>
+        </div>
+      </div>
+
+      {/* INFO GRID */}
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:14,marginBottom:'1.75rem'}}>
+        <div style={{background:'var(--card)',border:'1px solid var(--card-border)',borderRadius:16,padding:'1.5rem'}}>
+          <div style={{fontSize:'.62rem',fontWeight:700,color:'var(--text-faint)',textTransform:'uppercase',letterSpacing:'.14em',marginBottom:'1rem',display:'flex',alignItems:'center',gap:8}}>
+            <span>Über Black Forest Medical</span><div style={{flex:1,height:1,background:'var(--section-border)'}}/>
+          </div>
+          <p style={{fontSize:'.85rem',color:'var(--text-dim)',lineHeight:1.75,margin:'0 0 1.25rem'}}>{m.description}</p>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:8}}>
+            {m.focus.map((f,i)=>(
+              <div key={i} style={{display:'flex',alignItems:'center',gap:10,padding:'9px 12px',borderRadius:10,background:'var(--bg2)',border:'1px solid var(--section-border)'}}>
+                <div style={{width:30,height:30,borderRadius:8,flexShrink:0,background:'rgba(21,101,192,.12)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'.95rem'}}>{f.icon}</div>
+                <div>
+                  <div style={{fontSize:'.73rem',fontWeight:700,color:'var(--text)',lineHeight:1.2}}>{f.label}</div>
+                  <div style={{fontSize:'.63rem',color:'var(--text-faint)',marginTop:1}}>{f.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div style={{background:'var(--card)',border:'1px solid var(--card-border)',borderRadius:16,padding:'1.5rem'}}>
+          <div style={{fontSize:'.62rem',fontWeight:700,color:'var(--text-faint)',textTransform:'uppercase',letterSpacing:'.14em',marginBottom:'1rem',display:'flex',alignItems:'center',gap:8}}>
+            <span>Unternehmensdaten</span><div style={{flex:1,height:1,background:'var(--section-border)'}}/>
+          </div>
+          <div style={{display:'flex',flexDirection:'column',gap:7}}>
+            {m.facts.map((f,i)=>(
+              <div key={i} style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'8px 12px',background:'var(--bg2)',borderRadius:9}}>
+                <span style={{fontSize:'.72rem',color:'var(--text-dim)',fontWeight:500}}>{f.label}</span>
+                <span style={{fontSize:'.78rem',color:'var(--text)',fontWeight:700}}>{f.value}</span>
+              </div>
+            ))}
+          </div>
+          <div style={{marginTop:'1rem',padding:'10px 14px',borderRadius:10,background:'rgba(21,101,192,.08)',border:'1px solid rgba(21,101,192,.25)',display:'flex',gap:8,alignItems:'center'}}>
+            <span style={{fontSize:'1rem'}}>📞</span>
+            <div>
+              <div style={{fontSize:'.68rem',fontWeight:700,color:'#42a5f5'}}>Anfragen über EMIG GmbH</div>
+              <div style={{fontSize:'.63rem',color:'var(--text-faint)',marginTop:1}}>info@emig-gmbh.de</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* CATALOG TABLE */}
+      <div style={{display:'flex',alignItems:'center',gap:12,margin:'2rem 0 1rem',fontSize:'.75rem',fontWeight:700,textTransform:'uppercase',letterSpacing:'.14em',color:'var(--text)'}}>
+        <div style={{width:3,height:18,borderRadius:99,background:'#1565C0',flexShrink:0}}/>
+        Produktkatalog
+        <span style={{fontFamily:'DM Mono,monospace',fontSize:'.62rem',padding:'2px 9px',borderRadius:99,background:'rgba(21,101,192,.12)',border:'1px solid rgba(21,101,192,.25)',color:'#42a5f5'}}>{m.products.length} Produkte</span>
+        <div style={{flex:1,height:1,background:'linear-gradient(90deg,var(--section-border),transparent)'}}/>
+      </div>
+
+      {/* TABLE HEADER */}
+      <div style={{background:'var(--card)',border:'1px solid var(--card-border)',borderRadius:16,overflow:'hidden'}}>
+        <div style={{display:'grid',gridTemplateColumns:'90px 1fr 160px 150px 140px 1fr',gap:0,background:'var(--bg2)',borderBottom:'1px solid var(--section-border)'}}>
+          {['Art.-Nr.','Produkt','Typ','Anwendung','Altersgruppe','Merkmale'].map((h,i)=>(
+            <div key={i} style={{padding:'10px 12px',fontSize:'.6rem',fontWeight:700,color:'var(--text-faint)',textTransform:'uppercase',letterSpacing:'.12em'}}>{h}</div>
+          ))}
+        </div>
+        {BFMG_CATS.map(cat=>{
+          const prods = m.products.filter((p: any)=>p.cat===cat.id);
+          if(!prods.length) return null;
+          return (
+            <div key={cat.id}>
+              <div style={{padding:'9px 14px',background:cat.bg,borderBottom:`1px solid ${cat.border}`,borderTop:'1px solid var(--section-border)',display:'flex',alignItems:'center',gap:10}}>
+                <div style={{width:3,height:14,borderRadius:2,background:cat.color,flexShrink:0}}/>
+                <span style={{fontSize:'.63rem',fontWeight:800,color:cat.color,letterSpacing:'.1em',textTransform:'uppercase'}}>{cat.label}</span>
+                <span style={{fontSize:'.6rem',color:'var(--text-faint)',marginLeft:'auto'}}>{prods.length} Produkte</span>
+              </div>
+              {prods.map((p: any,i: number)=>(
+                <BfmgProdRow key={p.code} p={p} isLast={i===prods.length-1}/>
+              ))}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* CONTACT */}
+      <div style={{marginTop:'1.5rem',padding:'1.25rem 1.5rem',background:'var(--card)',border:'1px solid rgba(21,101,192,.2)',borderRadius:16,display:'flex',alignItems:'center',gap:16}}>
+        <div style={{width:40,height:40,borderRadius:12,background:'rgba(21,101,192,.15)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'1.2rem',flexShrink:0}}>📋</div>
+        <div style={{flex:1}}>
+          <div style={{fontSize:'.82rem',fontWeight:700,color:'var(--text)'}}>Produktanfrage — Black Forest Medical</div>
+          <div style={{fontSize:'.75rem',color:'var(--text-faint)',marginTop:3}}>Für Preise, Verfügbarkeit und technische Beratung wenden Sie sich an EMIG GmbH Reutlingen.</div>
+        </div>
+        <a href="mailto:info@emig-gmbh.de" style={{display:'inline-flex',alignItems:'center',gap:8,padding:'10px 20px',borderRadius:12,background:'#1565C0',color:'#fff',fontFamily:'Outfit,sans-serif',fontWeight:700,fontSize:'.82rem',textDecoration:'none',flexShrink:0,boxShadow:'0 4px 16px rgba(21,101,192,.4)'}}>
+          Anfrage senden ↗
+        </a>
+      </div>
+    </div>
+  );
+}
+
 function MhMap({ loc }: { loc: any }) {
   const mapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${loc.lng - 0.08}%2C${loc.lat - 0.05}%2C${loc.lng + 0.08}%2C${loc.lat + 0.05}&layer=mapnik&marker=${loc.lat}%2C${loc.lng}`;
   return (
@@ -2555,7 +2747,7 @@ function MhProdCard({ p, idx }: { p: any; idx: number }) {
       onMouseEnter={()=>setHovered(true)} onMouseLeave={()=>setHovered(false)}>
 
       {/* IMAGE AREA */}
-      <div style={{position:'relative',height:260,overflow:'hidden',flexShrink:0}}>
+      <div style={{position:'relative',height:200,overflow:'hidden',flexShrink:0}}>
         {!imgErr ? (
           <img src={imgSrc} alt={p.title} onError={()=>setImgErr(true)}
             style={{width:'100%',height:'100%',objectFit:'cover',display:'block',
@@ -2734,7 +2926,7 @@ function MeyerHaakeDetail({ onBack, lang='de' }: { onBack: () => void; lang?: st
         <span style={{fontFamily:'DM Mono,monospace',fontSize:'.62rem',padding:'2px 9px',borderRadius:99,background:'var(--mh-orange-dim)',border:'1px solid rgba(230,81,0,.25)',color:'#ff6d00',letterSpacing:'.06em'}}>{m.products.length} Module</span>
         <div style={{flex:1,height:1,background:'linear-gradient(90deg,var(--section-border),transparent)'}}/>
       </div>
-      <div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:16,marginBottom:'2rem'}}>
+      <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(280px,1fr))',gap:16,marginBottom:'2rem'}}>
         {m.products.map((p,i)=>(
           <MhProdCard key={p.code} p={p} idx={i}/>
         ))}
@@ -3205,6 +3397,8 @@ export default function Home() {
                 <RIWOspineDetail onBack={() => setMfr(null)} lang={lang} />
               ) : mfr.id === 'inomed' ? (
                 <InomedDetail onBack={() => setMfr(null)} lang={lang} />
+              ) : mfr.id === 'bfmg' ? (
+                <BlackForestDetail onBack={() => setMfr(null)} lang={lang} />
               ) : mfr.id === 'meyer' ? (
                 <MeyerHaakeDetail onBack={() => setMfr(null)} lang={lang} />
               ) : (
